@@ -87,6 +87,7 @@ class HomeBody extends StatelessWidget {
                 itemBuilder: (c, i) => InkWell(
                   onTap: () async {
                     final logINState = context.read<LoginBloc>().state;
+
                     if (logINState is LoginSuccess) {
                       print(logINState.successLoginEntity.token);
 
