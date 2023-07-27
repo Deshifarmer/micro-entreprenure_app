@@ -19,6 +19,7 @@ class ProductData {
     required this.subcategory,
     required this.total_order,
     required this.unit_id,
+    required this.image,
   });
 
   /// factory.
@@ -27,6 +28,8 @@ class ProductData {
   // ignore: avoid_multiple_declarations_per_line, non_constant_identifier_names
   final String? product_id;
   final String? name;
+  final String image;
+
   final String? description;
   final String? preferred;
   final String? category;
