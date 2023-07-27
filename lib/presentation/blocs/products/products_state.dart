@@ -7,7 +7,7 @@ abstract class ProductsSState extends Equatable {
   List<Object> get props => [];
 }
 
-class ProductsInitial extends ProductsSState {}
+class ProductsIInitial extends ProductsSState {}
 
 class ProductFailed extends ProductsSState {}
 
