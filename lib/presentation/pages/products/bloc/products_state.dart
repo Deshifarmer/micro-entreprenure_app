@@ -1,8 +1,5 @@
 part of 'products_bloc.dart';
 
-/// {@template products_state}
-/// ProductsState description
-/// {@endtemplate}
 class ProductsState extends Equatable {
   /// {@macro products_state}
   const ProductsState({
@@ -25,10 +22,12 @@ class ProductsState extends Equatable {
   }
 }
 
-/// {@template products_initial}
-/// The initial state of ProductsState
-/// {@endtemplate}
 class ProductsInitial extends ProductsState {
   /// {@macro products_initial}
   const ProductsInitial() : super();
+}
+
+class ProductComanySelect extends ProductsState {
+  const ProductComanySelect(this.companyID);
+  final String companyID;
 }
