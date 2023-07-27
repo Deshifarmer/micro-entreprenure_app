@@ -1,0 +1,56 @@
+{
+    "order_id": "Ord-ba15-bb819",
+    "me_id": "ME-5cbb-0e310",
+    "channel_id": "Bamna",
+    "total_price": "500.00",
+    "sold_to": "far-a64a-66534",
+    "status": "pending",
+    "payment_method": "Cash on Delivery",
+    "payment_id": "pending",
+    "delivery_status": "pending",
+    "me_commission": "78.75",
+    "distributor_commission": "61.25",
+    "created_at": "2023-07-20 14:50:19",
+    "updated_at": "2023-07-20 14:50:19",
+    "farmer_details": {
+        "farmer_name": "test test",
+        "farmer_phone": "5423534543543"
+    },
+    "order_details": [
+        {
+            "id": 14,
+            "me_order_id": "Ord-ba15-bb819",
+            "me_id": "ME-5cbb-0e310",
+            "distributor_id": "DB-406a-b5753",
+            "distributor_name": "hasibur rahman",
+            "delivery_address": "Dhaka",
+            "delivery_contact": "23132654654",
+            "product_id": "pro-e6ec-6aa45",
+            "product_details": {
+                "product_id": "pro-e6ec-6aa45",
+                "name": "বারি লাউ এফ ১(২০গ্রাম)",
+                "image": "/image/product/pro-e6ec-6aa45.jpeg",
+                "description": "<p> সারাবছর মেয়াদি, অত্যন্ত সমৃদ্ধ, কোমল নরম ফল। ফলগুলি দীর্ঘ। গড় 1.5-2.0 কেজি। ভ্যারিটি- বারি লাউ, রঙ- হালকা সবুজ, সাইজ- ৪০-৪৫ সেমি, ওজন- ১.৫-২ কেজি, বপনের সময়- জুলাই-অক্টোবর, পরিপক্কতা- ৬০-৭০ দিন, ফলন/একর- ২০-২৫ মিটার&nbsp;</p>",
+                "preferred": null,
+                "category": "Seed",
+                "subcategory": null,
+                "company_id": "CO-2cd1-28b27",
+                "company": "Lal Teer Seed",
+                "unit_id": "4",
+                "sell_price": "100.00",
+                "discount": null,
+                "status": "active",
+                "total_order": 1
+            },
+            "unit": "packet",
+            "quantity": 5,
+            "total_price": 500,
+            "status": "pending",
+            "created_at": "2023-07-20 14:50:19",
+            "location": "Bamna",
+            "farmer_id": "far-a64a-66534",
+            "farmer_name": "test test",
+            "farmer_address": "Baridhara"
+        }
+    ]
+}

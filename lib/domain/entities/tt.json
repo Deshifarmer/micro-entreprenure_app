@@ -1,0 +1,54 @@
+
+{
+    "df_id": "ME-5cbb-0e310",
+    "full_name": "Nadia akther",
+    "nid": 77889966,
+    "phone": "77889966",
+    "email": "nadia@gmail.com",
+    "designation": null,
+    "previous_designation": null,
+    "previous_company": null,
+    "photo": "/image/employee/ME-5cbb-0e310.png",
+    "channel": "Bamna",
+    "date_of_birth": null,
+    "present_address": "dhaka",
+    "permanent_address": "dhaka",
+    "home_district": "Dhaka",
+    "joining_date": null,
+    "type": 3,
+    "gender": "female",
+    "department": null,
+    "work_place": null,
+    "commission": null,
+    "updated_at": "2023-07-09 18:07:04",
+    "target_volume": null,
+    "account_details": [
+        {
+            "acc_number": "ME-5cbb-0e310",
+            "net_balance": "0.00",
+            "total_credit": "0.00",
+            "total_debit": "0.00",
+            "last_transaction": null,
+            "last_transaction_amount": "0.00",
+            "created_at": "2023-07-09T12:06:10.000000Z",
+            "updated_at": "2023-07-17T10:57:05.000000Z"
+        }
+    ],
+    "transactions": [
+        {
+            "transaction_id": "Tr-29bb-7af05-20230717",
+            "amount": "296.55",
+            "order_id": "Ord-42d6-af948",
+            "cash_in_id": null,
+            "cash_out_id": null,
+            "method": "commission",
+            "credited_to": "ME-5cbb-0e310",
+            "debited_from": "HQ-01",
+            "authorized_by": "portal",
+            "created_at": "2023-07-17T10:57:05.000000Z",
+            "updated_at": "2023-07-17T10:57:05.000000Z"
+        }
+    ],
+    "total_sale": 8,
+    "total_farmer": 7
+}
