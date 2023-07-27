@@ -22,7 +22,7 @@ class ProductsBody extends StatelessWidget {
     return BlocConsumer<ProductsBBloc, ProductsSState>(
       listener: (context, ProductsSState state) {
         if (state is ProductSuccess) {
-          print('yesh ! doing success!');
+          // print('yesh ! doing success!');
           if (state.productEntity.data != null) {
             // _products.addAll(state.productEntity.data!);
           }
@@ -32,19 +32,6 @@ class ProductsBody extends StatelessWidget {
         if (state is ProductSuccess) {
           return ListView(
             physics: const BouncingScrollPhysics(),
-            // controller: _scrollController
-            //   ..addListener(() {
-            //     // print('offset -> ${_scrollController.offset}');
-            //     // print(
-            //     //     'maxScroll -> ${_scrollController.position.maxScrollExtent}');
-            //     if (_scrollController.offset >
-            //         _scrollController.position.maxScrollExtent * 0.8) {
-            //       // print('reached bottom\n\n\n\n');
-            //       // context.bloc<BeerBloc>()
-            //       //   ..isFetching = true
-            //       //   ..add(BeerFetchEvent());
-            //     }
-            //   }),
             controller: _scrollController
               ..addListener(() {
                 //? check if the next page is not [null]
@@ -52,24 +39,21 @@ class ProductsBody extends StatelessWidget {
                     state.productEntity.links?.next?.split('=').last;
                 if (_scrollController.offset >
                     _scrollController.position.maxScrollExtent * 0.8) {
-                  print('end of the page $nxtPage');
+                  // print('end of the page $nxtPage');
                   if (nxtPage != null) {
                     //? fetch the nxt page
                     if (loginState is LoginSuccess) {
-                      print(
-                          'nexty page $nxtPage ${loginState.successLoginEntity.token}',);
-                      context
-                          .read<ProductsBBloc>()
-                          .add(ProductFetchPaginationEvent(
-                            nextPage: int.parse(nxtPage),
-                            token: loginState.successLoginEntity.token,
-                          ),);
+                      // print(
+                      //   'nexty page $nxtPage ${loginState.successLoginEntity.token}',
+                      // );
+                      context.read<ProductsBBloc>().add(
+                            ProductFetchPaginationEvent(
+                              nextPage: int.parse(nxtPage),
+                              token: loginState.successLoginEntity.token,
+                            ),
+                          );
                     }
                   }
-                  // print('reach maxed ');
-                  // context.bloc<BeerBloc>()
-                  //   ..isFetching = true
-                  //   ..add(BeerFetchEvent());
                 }
               }),
             children: [
@@ -93,7 +77,7 @@ class ProductsBody extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            'text $i',
+                            'test $i',
                             style: const TextStyle(fontSize: 16),
                           ),
                         ),
@@ -149,13 +133,8 @@ class ProductsBody extends StatelessWidget {
               ),
 
               /// product LIST GridView
-              //   ProductGridViewPaginationWidgets(
-              //     token: loginState.successLoginEntity.token,
-              //   ),
-              // if (loginState is LoginSuccess)
-              const ProductGridViewWidgets(
-                  // token: loginState.successLoginEntity.token,
-                  ),
+
+              const ProductGridViewWidgets(),
             ],
           );
         }
