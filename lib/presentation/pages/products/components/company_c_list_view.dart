@@ -25,33 +25,30 @@ class CampanyCircularListView extends StatelessWidget {
               itemBuilder: (context, index) {
                 final currentCompany = allCompany.allCompany.elementAt(index);
                 // print('${Strings.domain}/storage${currentCompany.photo}');
-                return Container(
-                  margin: const EdgeInsets.all(5),
-                  padding: const EdgeInsets.all(5),
-                  child: Column(
-                    children: [
-                      // CircleAvatar(
-                      //   radius: 30,
-                      //   child: Text(index.toString()),
-                      // ),
-                      // Text(currentCompany.photo),
-                      SizedBox(
-                        height: 50,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            '${Strings.domain}/storage${currentCompany.photo}',
+                return InkWell(
+                  child: Container(
+                    margin: const EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 50,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              '${Strings.domain}/storage${currentCompany.photo}',
+                            ),
                           ),
                         ),
-                      ),
-                      Text(
-                        currentCompany.full_name ?? '',
-                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                              fontWeight: FontWeight.normal,
-                              overflow: TextOverflow.fade,
-                            ),
-                      )
-                    ],
+                        Text(
+                          currentCompany.full_name ?? '',
+                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                fontWeight: FontWeight.normal,
+                                overflow: TextOverflow.fade,
+                              ),
+                        )
+                      ],
+                    ),
                   ),
                 );
               },
