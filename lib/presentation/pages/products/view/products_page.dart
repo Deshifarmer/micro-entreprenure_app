@@ -17,20 +17,17 @@ class ProductsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ProductsBloc(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('পণ্য কিনুন'),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.shopping_cart),
-              onPressed: () {},
-            ),
-          ],
-        ),
-        body: const ProductsView(),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('পণ্য কিনুন'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.shopping_cart),
+            onPressed: () {},
+          ),
+        ],
       ),
+      body: const ProductsView(),
     );
   }
 }
