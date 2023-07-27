@@ -10,7 +10,7 @@ part 'products_event.dart';
 part 'products_state.dart';
 
 class ProductsBBloc extends Bloc<ProductsEEvent, ProductsSState> {
-  ProductsBBloc() : super(ProductsInitial()) {
+  ProductsBBloc() : super(ProductsIInitial()) {
     on<ProductFetchEvent>((ProductFetchEvent event, emit) async {
       final products = await productListRepoImpl.getProductListo(event.token);
       final value = switch (products) {
@@ -21,10 +21,12 @@ class ProductsBBloc extends Bloc<ProductsEEvent, ProductsSState> {
         if (value.data != null) {
           _productDatas.addAll(value.data!);
         }
-        emit(ProductSuccess(
-          productEntity: value,
-          productDatas: _productDatas,
-        ),);
+        emit(
+          ProductSuccess(
+            productEntity: value,
+            productDatas: _productDatas,
+          ),
+        );
       } else {
         emit(ProductFailed());
       }
@@ -43,10 +45,12 @@ class ProductsBBloc extends Bloc<ProductsEEvent, ProductsSState> {
         if (value.data != null) {
           _productDatas.addAll(value.data!);
         }
-        emit(ProductSuccess(
-          productEntity: value,
-          productDatas: _productDatas,
-        ),);
+        emit(
+          ProductSuccess(
+            productEntity: value,
+            productDatas: _productDatas,
+          ),
+        );
       }
     });
   }
