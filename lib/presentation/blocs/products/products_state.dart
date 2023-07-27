@@ -12,6 +12,12 @@ class ProductsInitial extends ProductsSState {}
 class ProductFailed extends ProductsSState {}
 
 class ProductSuccess extends ProductsSState {
-  const ProductSuccess(this.productEntity);
+  const ProductSuccess({
+    required this.productEntity,
+    required this.productDatas,
+  });
   final ProductEntity productEntity;
+  final List<ProductData> productDatas;
+  @override
+  List<Object> get props => [productEntity];
 }
