@@ -19,9 +19,8 @@ class LoginBody extends StatelessWidget {
     return BlocBuilder<LoginBloc, LoginState>(
       builder: (context, state) {
         if (state is LoginFailed) {
-          // show a snack bar
-          return const Center(child: Text('failed'));
-          // print('login in failed from UI');
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text('Login Failed')));
         }
         if (state is LoginSuccess) {
           context.read<UserProfileBloc>().add(
