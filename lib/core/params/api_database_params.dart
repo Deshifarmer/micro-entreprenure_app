@@ -30,4 +30,8 @@ class ApiDatabaseParams {
 
   ///! Product List api
   static const productListAPI = '${Strings.domain}/api/v1/product/sort';
+
+  ///! Product List api PAGINATION
+  static const productListPaginationAPI =
+      '${Strings.domain}/api/v1/product/sort?page=';
 }
