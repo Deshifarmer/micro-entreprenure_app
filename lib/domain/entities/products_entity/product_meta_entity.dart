@@ -22,12 +22,12 @@ class ProductMeta {
   factory ProductMeta.fromJson(Map<String, dynamic> json) =>
       _$ProductMetaFromJson(json);
   // ignore: avoid_multiple_declarations_per_line, non_constant_identifier_names
-  final String? current_page;
-  final int form;
-  final int last_page;
+  final int? current_page;
+  final int? form;
+  final int? last_page;
   final String? path;
-  final int per_page;
-  final int to;
-  final int total;
+  final int? per_page;
+  final int? to;
+  final int? total;
   final List<ProductMetaLinks> links;
 }
