@@ -7,6 +7,7 @@ import 'package:deshifarmer/presentation/pages/home/home.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/view/login_page.dart';
 import 'package:deshifarmer/presentation/pages/order/order.dart';
+import 'package:deshifarmer/presentation/pages/products/bloc/products_bloc.dart';
 import 'package:deshifarmer/presentation/pages/profile/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -43,6 +44,9 @@ class App extends StatelessWidget {
         ),
         BlocProvider<ProductsBBloc>(
           create: (BuildContext context) => ProductsBBloc(),
+        ),
+        BlocProvider<ProductsBloc>(
+          create: (BuildContext context) => ProductsBloc(),
         ),
       ],
       // create: (context) => SubjectBloc(),
