@@ -243,6 +243,12 @@ class DeshiFarmerAPI {
   }
 
   ///*-------------------------------------------------------------*///
+  ///! get PRODUCTS [DO NOT MODIFY THE ABOVE CONTENT]
+  ///!(DANGER)
+  ///!(DANGER)
+  ///!(DANGER)
+
+  ///! get PRODUCTS (DONOTEDIT)
   Future<Result<ProductEntity, Exception>> getProducts(String token) async {
     Map<String, String> auth = <String, String>{
       'Authorization': 'Bearer $token',
@@ -265,7 +271,7 @@ class DeshiFarmerAPI {
         } catch (e) {
           print('error -> $e');
           result.forEach((key, value) {
-            print('${value.runtimeType} $key $value');
+            print('${value.runtimeType} $key ${value["name"]}');
           });
         }
         return ServerFailor<ProductEntity, Exception>(
@@ -283,4 +289,54 @@ class DeshiFarmerAPI {
       );
     }
   }
+
+  ///! Get Product Paginate
+  Future<Result<ProductEntity, Exception>> getProductsPaginate(
+    String token,
+    int page,
+  ) async {
+    Map<String, String> auth = <String, String>{
+      'Authorization': 'Bearer $token',
+    };
+    final Uri url = Uri.parse(
+      '${ApiDatabaseParams.productListPaginationAPI}$page',
+    );
+    try {
+      _headers.addAll(auth);
+      final http.Response response = await http.get(
+        url,
+        headers: _headers,
+      );
+      if (response.statusCode == 200) {
+        print(response.statusCode);
+        final result = json.decode(response.body) as Map<String, dynamic>;
+        try {
+          ProductEntity successResonse = ProductEntity.fromJson(result);
+          print('${ApiDatabaseParams.productListPaginationAPI}$page');
+          print('returing the success paginated result $page');
+          return Success<ProductEntity, Exception>(successResonse);
+        } catch (e) {
+          print('error -> $e');
+          result.forEach((key, value) {
+            print('${value.runtimeType} $key ${value["name"]}');
+          });
+        }
+        return ServerFailor<ProductEntity, Exception>(
+          Exception('Server failor'),
+        );
+      } else {
+        print('status code : ${response.statusCode}');
+        return ServerFailor<ProductEntity, Exception>(
+          Exception('Server failor'),
+        );
+      }
+    } catch (e) {
+      return ServerFailor<ProductEntity, Exception>(
+        Exception('Server failor -> $e'),
+      );
+    }
+  }
+
+  ///! DO NOT MODIFY THE ABOVE CONTENT (DANGER)
+  ///*-------------------------------------------------------------*///
 }
