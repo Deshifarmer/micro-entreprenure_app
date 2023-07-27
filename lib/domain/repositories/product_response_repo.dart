@@ -6,4 +6,6 @@ abstract class ProductRepo {
   Future<Result<ProductEntity, Exception>> getProductListo(
     String token,
   );
+  Future<Result<ProductEntity, Exception>> getProductListoPaginate(
+      String token, int page,);
 }
