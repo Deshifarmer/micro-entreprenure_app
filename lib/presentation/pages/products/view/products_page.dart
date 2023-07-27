@@ -20,12 +20,15 @@ class ProductsPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => ProductsBloc(),
       child: Scaffold(
-        appBar: AppBar(title: const Text('পণ্য কিনুন'), actions: [
-          IconButton(
-            icon: const Icon(Icons.shopping_cart),
-            onPressed: () {},
-          ),
-        ],),
+        appBar: AppBar(
+          title: const Text('পণ্য কিনুন'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.shopping_cart),
+              onPressed: () {},
+            ),
+          ],
+        ),
         body: const ProductsView(),
       ),
     );
@@ -41,6 +44,6 @@ class ProductsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ProductsBody();
+    return ProductsBody();
   }
 }
