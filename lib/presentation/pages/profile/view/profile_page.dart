@@ -16,13 +16,10 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ProfileBloc(),
-      child: const Scaffold(
-        body: ProfileView(),
-      ),
+    return const Scaffold(
+      body: ProfileView(),
     );
-  }    
+  }
 }
 
 /// {@template profile_view}
