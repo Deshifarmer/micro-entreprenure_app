@@ -16,20 +16,32 @@ class LoginBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return BlocBuilder<LoginBloc, LoginState>(
-      builder: (context, state) {
-        if (state is LoginFailed) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text('Login Failed')));
-        }
+
+    return BlocConsumer<LoginBloc, LoginState>(
+      listener: (context, state) {
         if (state is LoginSuccess) {
-          context.read<UserProfileBloc>().add(
-                GetUserProfileEvent(
-                  token: state.successLoginEntity.token,
-                ),
-              );
-          print(state.successLoginEntity.token);
+          // print('successfully logged in ${state.successLoginEntity.token}');
+          context
+              .read<UserProfileBloc>()
+              .add(GetUserProfileEvent(token: state.successLoginEntity.token));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.green[700],
+              content: const Text('Successfully Logged In'),
+            ),
+          );
         }
+        if (state is LoginFailed) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              backgroundColor: Colors.redAccent,
+              content: Text('Login Failed'),
+            ),
+          );
+        }
+      },
+      builder: (context, LoginState state) {
         return Column(
           children: [
             const SizedBox(
@@ -93,10 +105,12 @@ class LoginBody extends StatelessWidget {
                   ),
                 ),
                 if (state is LoginLoading)
-                  const CircularProgressIndicator()
+                  CircularProgressIndicator(
+                    color: Colors.green[600],
+                  )
                 else
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       context.read<LoginBloc>().add(
                             CheckLoginEvent(
                               context: context,
