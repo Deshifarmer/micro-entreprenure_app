@@ -4,6 +4,7 @@ import 'package:deshifarmer/domain/entities/company_entity/product_list_entity.d
 import 'package:json_annotation/json_annotation.dart';
 part 'company_response_entity.g.dart';
 
+// ignore: duplicate_ignore
 @JsonSerializable()
 class CompanyEntity {
   CompanyEntity({
@@ -29,7 +30,7 @@ class CompanyEntity {
   /// factory.
   factory CompanyEntity.fromJson(Map<String, dynamic> json) =>
       _$CompanyEntityFromJson(json);
-  // ignore: avoid_multiple_declarations_per_line, non_constant_identifier_names
+
   final String? df_id,
       full_name,
       phone,
