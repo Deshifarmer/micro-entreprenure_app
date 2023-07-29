@@ -138,8 +138,10 @@ class ProductsBody extends StatelessWidget {
             ],
           );
         }
-        return const Center(
-          child: CircularProgressIndicator(),
+        return Center(
+          child: CircularProgressIndicator(
+            color: Colors.green[600],
+          ),
         );
       },
     );
