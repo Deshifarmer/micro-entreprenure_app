@@ -1,5 +1,3 @@
-import 'package:deshifarmer/core/app_strings.dart';
-import 'package:deshifarmer/domain/entities/products_entity/product_data_entity.dart';
 import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
 import 'package:deshifarmer/presentation/pages/commision/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/bloc/products_bloc.dart';
@@ -18,9 +16,7 @@ class ProductGridViewWidgets extends StatelessWidget {
         if (state is ProductSuccess) {
           // final companyState = context.read<ProductsBloc>().state;
           return BlocConsumer<ProductsBloc, ProductsState>(
-            listener: (context, companyState) {
-              // TODO: implement listener
-            },
+            listener: (context, companyState) {},
             builder: (context, companyState) {
               final allProducts = companyState is ProductComanySelect
                   ? state.productDatas
@@ -36,7 +32,7 @@ class ProductGridViewWidgets extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  mainAxisExtent: 300,
+                  mainAxisExtent: 320,
                 ),
                 itemBuilder: (context, index) {
                   final product = allProducts.elementAt(index);
