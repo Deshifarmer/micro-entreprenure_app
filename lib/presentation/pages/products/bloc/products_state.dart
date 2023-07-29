@@ -30,4 +30,6 @@ class ProductsInitial extends ProductsState {
 class ProductComanySelect extends ProductsState {
   const ProductComanySelect(this.companyID);
   final String companyID;
+  @override
+  List<Object> get props => [companyID];
 }
