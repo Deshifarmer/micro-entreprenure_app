@@ -20,6 +20,7 @@ class ProductData {
     required this.total_order,
     required this.unit_id,
     required this.image,
+    required this.company,
   });
 
   /// factory.
@@ -29,7 +30,7 @@ class ProductData {
   final String? product_id;
   final String? name;
   final String image;
-
+  final String? company;
   final String? description;
   final String? preferred;
   final String? category;
