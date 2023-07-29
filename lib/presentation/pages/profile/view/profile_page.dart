@@ -1,4 +1,3 @@
-import 'package:deshifarmer/presentation/pages/profile/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/profile/widgets/profile_body.dart';
 import 'package:flutter/material.dart';
 
