@@ -1,6 +1,7 @@
-import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
 import 'package:deshifarmer/presentation/pages/commision/bloc/bloc.dart';
+import 'package:deshifarmer/presentation/pages/products/bloc/products_bloc.dart';
+import 'package:deshifarmer/presentation/pages/products/components/company_card_view.dart';
 import 'package:flutter/material.dart';
 
 class CampanyCircularListView extends StatelessWidget {
@@ -20,42 +21,60 @@ class CampanyCircularListView extends StatelessWidget {
             final allCompany = state.allCompanyListResp;
             return ListView.builder(
               shrinkWrap: true,
+              reverse: true,
               scrollDirection: Axis.horizontal,
               itemCount: allCompany.allCompany.length,
               itemBuilder: (context, index) {
                 final currentCompany = allCompany.allCompany.elementAt(index);
+                // final companyState = context.read<ProductsBloc>().state;
                 // print('${Strings.domain}/storage${currentCompany.photo}');
-                return InkWell(
-                  child: Container(
-                    margin: const EdgeInsets.all(5),
-                    padding: const EdgeInsets.all(5),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 50,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.network(
-                              '${Strings.domain}/storage${currentCompany.photo}',
-                            ),
-                          ),
+                return BlocConsumer<ProductsBloc, ProductsState>(
+                  listener: (context, companyState) {
+                    print('company states -> $companyState');
+                  },
+                  builder: (context, companyState) {
+                    return InkWell(
+                      onTap: () {
+                        if (companyState is ProductComanySelect) {
+                          if (currentCompany.df_id == companyState.companyID) {
+                            context
+                                .read<ProductsBloc>()
+                                .add(const UnSelectCompanyEvent());
+                          } else {
+                            context.read<ProductsBloc>().add(
+                                SelectCompanysEvent(
+                                    currentCompany.df_id ?? ''));
+                          }
+                        } else {
+                          context.read<ProductsBloc>().add(
+                              SelectCompanysEvent(currentCompany.df_id ?? ''));
+                        }
+                        print("company ID -> ${currentCompany.df_id ?? ''}");
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: companyState is ProductComanySelect
+                              ? currentCompany.df_id == companyState.companyID
+                                  ? Colors.green[400]!.withOpacity(0.4)
+                                  : null
+                              : null,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(20)),
                         ),
-                        Text(
-                          currentCompany.full_name ?? '',
-                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                fontWeight: FontWeight.normal,
-                                overflow: TextOverflow.fade,
-                              ),
-                        )
-                      ],
-                    ),
-                  ),
+                        child: CompanyCardView(currentCompany: currentCompany),
+                      ),
+                    );
+                  },
                 );
               },
             );
           }
-          return const Center(
-            child: CircularProgressIndicator(),
+          return Center(
+            child: CircularProgressIndicator(
+              color: Colors.green[600],
+            ),
           );
         },
       ),
