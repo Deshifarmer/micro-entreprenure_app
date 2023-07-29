@@ -134,7 +134,11 @@ class HomeBody extends StatelessWidget {
             child: Text('Data Fetching failed'),
           );
         }
-        return const Center(child: CircularProgressIndicator());
+        return Center(
+          child: CircularProgressIndicator(
+            color: Colors.green[600],
+          ),
+        );
       },
     );
   }
