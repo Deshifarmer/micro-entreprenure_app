@@ -120,24 +120,26 @@ class DeshiFarmerAPI {
       ApiDatabaseParams.profileApi,
     );
     try {
+      print('trying..................');
       _headers.addAll(auth);
       final http.Response response = await http.get(
         url,
         headers: _headers,
       );
       if (response.statusCode == 200) {
-        // print('status 200');
+        print('status 200');
         final result = json.decode(response.body);
         UserProfileEntity successResonse =
             UserProfileEntity.fromJson(result as Map<String, dynamic>);
         return Success<UserProfileEntity, Exception>(successResonse);
       } else {
-        // print(response.statusCode);
+        print('status CODE -> ${response.statusCode}');
         return ServerFailor<UserProfileEntity, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
+      print('an exception occured -> $e');
       return ServerFailor<UserProfileEntity, Exception>(
         Exception('Server failor -> $e'),
       );
