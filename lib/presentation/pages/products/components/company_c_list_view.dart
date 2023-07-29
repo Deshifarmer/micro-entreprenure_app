@@ -43,11 +43,11 @@ class CampanyCircularListView extends StatelessWidget {
                           } else {
                             context.read<ProductsBloc>().add(
                                 SelectCompanysEvent(
-                                    currentCompany.df_id ?? ''));
+                                    currentCompany.df_id ?? '',),);
                           }
                         } else {
                           context.read<ProductsBloc>().add(
-                              SelectCompanysEvent(currentCompany.df_id ?? ''));
+                              SelectCompanysEvent(currentCompany.df_id ?? ''),);
                         }
                         print("company ID -> ${currentCompany.df_id ?? ''}");
                       },
