@@ -1,3 +1,5 @@
+import 'package:deshifarmer/presentation/blocs/cart/cart_bloc.dart';
+import 'package:deshifarmer/presentation/pages/pdetail/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/widgets/products_body.dart';
 import 'package:flutter/material.dart';
 
@@ -15,14 +17,13 @@ class ProductsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const prevItem = 0;
+    final cartBloc = context.read<CartBloc>().state;
     return Scaffold(
       appBar: AppBar(
         title: const Text('পণ্য কিনুন'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.shopping_cart),
-            onPressed: () {},
-          ),
+        actions: const [
+          CartBtnPP(),
         ],
       ),
       body: const ProductsView(),
@@ -40,5 +41,45 @@ class ProductsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProductsBody();
+  }
+}
+
+class CartBtnPP extends StatelessWidget {
+  const CartBtnPP({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<CartBloc, CartState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        if (state is CartAddingState) {
+          var prevItem = 0;
+          // void prevItemF() {
+          for (final element in state.carts.values) {
+            if (element.$2 > 0) {
+              prevItem = prevItem + element.$2;
+            }
+          }
+
+          return IconButton(
+            onPressed: () {},
+            icon: Badge(
+              label: Text('$prevItem'),
+              child: const Icon(
+                Icons.shopping_bag,
+              ),
+            ),
+          );
+        }
+        return IconButton(
+          onPressed: () {},
+          icon: const Badge(
+            // isLabelVisible: false,
+            child: Icon(
+              Icons.shopping_bag,
+            ),
+          ),
+        );
+      },
+    );
   }
 }
