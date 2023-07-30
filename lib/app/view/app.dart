@@ -4,6 +4,7 @@ import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
+import 'package:deshifarmer/presentation/cubit/dropdown_cubit.dart';
 import 'package:deshifarmer/presentation/pages/home/home.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/view/login_page.dart';
@@ -58,6 +59,10 @@ class App extends StatelessWidget {
         //? Cart BLoc
         BlocProvider<CartBloc>(
           create: (BuildContext context) => CartBloc(),
+        ),
+        // DropdownCubit
+        BlocProvider<DropdownCubit>(
+          create: (BuildContext context) => DropdownCubit(),
         ),
       ],
       // create: (context) => SubjectBloc(),
