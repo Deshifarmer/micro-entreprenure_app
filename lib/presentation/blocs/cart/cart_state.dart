@@ -11,7 +11,8 @@ class CartInitial extends CartState {}
 
 class CartAddingState extends CartState {
   const CartAddingState(this.carts);
-  final Map<String, CartModel> carts;
+  final Map<String, (ProductData, int)> carts;
+
   @override
   List<Object> get props => [carts];
 }
