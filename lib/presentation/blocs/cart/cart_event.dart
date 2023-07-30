@@ -10,9 +10,9 @@ abstract class CartEvent extends Equatable {
 class AddtoCartEvent extends CartEvent {
   const AddtoCartEvent({
     required this.productData,
-    required this.quantity,
+    // required this.quantity,
   });
-  final int quantity;
+  // final int quantity;
   final ProductData productData;
 }
 
@@ -20,8 +20,8 @@ class AddtoCartEvent extends CartEvent {
 class RemoveFromCart extends CartEvent {
   const RemoveFromCart({
     required this.productData,
-    required this.quantity,
+    // required this.quantity,
   });
-  final int quantity;
+  // final int quantity;
   final ProductData productData;
 }
