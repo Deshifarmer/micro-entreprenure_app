@@ -39,29 +39,28 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   FutureOr<void> _removeFromCart(RemoveFromCart event, emit) async {
+    emit(CartInitial());
+
     //! check if the key exists
     if (_carts.containsKey(event.productData.product_id)) {
       var currentQ = _carts[event.productData.product_id]!.$2;
-      currentQ--;
+      print('product exists -> $currentQ');
+      // currentQ--;
+
       //! if quantity is being 01 then remove the element
-      if (currentQ < 1) {
+      if (currentQ == 1) {
         _carts.remove(event.productData.product_id);
 
         ///* emitting the states
+        print('less then zero item goin to DIE');
         emit(CartAddingState(_carts));
       } else {
         //! if exists then remove it's quantity
-        // _carts.update(
-        //   event.productData.product_id ?? '',
-        //   (value) => CartModel(
-        //     productData: event.productData,
-        //     quantity: ++currentQ,
-        //   ),
-        // );
         _carts.update(
           event.productData.product_id ?? '',
           (value) => (event.productData, --currentQ),
         );
+        print('removing its q -> $currentQ');
 
         ///* emitting the states
         emit(CartAddingState(_carts));
