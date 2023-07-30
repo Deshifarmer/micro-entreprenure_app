@@ -1,4 +1,6 @@
+import 'package:deshifarmer/presentation/animations/page_animations.dart';
 import 'package:deshifarmer/presentation/blocs/cart/cart_bloc.dart';
+import 'package:deshifarmer/presentation/pages/cartz/view/cartz_page.dart';
 import 'package:deshifarmer/presentation/pages/pdetail/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/widgets/products_body.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +63,13 @@ class CartBtnPP extends StatelessWidget {
           }
 
           return IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  PageAnimationWrapper.sharedAxisTransitionPageWrapper(
+                    const CartzPage(),
+                  ));
+            },
             icon: Badge(
               label: Text('$prevItem'),
               child: const Icon(
@@ -71,7 +79,13 @@ class CartBtnPP extends StatelessWidget {
           );
         }
         return IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+                context,
+                PageAnimationWrapper.sharedAxisTransitionPageWrapper(
+                  const CartzPage(),
+                ));
+          },
           icon: const Badge(
             // isLabelVisible: false,
             child: Icon(

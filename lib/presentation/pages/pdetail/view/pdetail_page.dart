@@ -1,5 +1,7 @@
 import 'package:deshifarmer/domain/entities/products_entity/product_data_entity.dart';
+import 'package:deshifarmer/presentation/animations/page_animations.dart';
 import 'package:deshifarmer/presentation/blocs/cart/cart_bloc.dart';
+import 'package:deshifarmer/presentation/pages/cartz/view/cartz_page.dart';
 import 'package:deshifarmer/presentation/pages/pdetail/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/pdetail/widgets/pdetail_body.dart';
 import 'package:flutter/material.dart';
@@ -40,13 +42,19 @@ class _PdetailPageState extends State<PdetailPage> {
                 var prevItem = 0;
                 // void prevItemF() {
                 for (final element in state.carts.values) {
-                    if (element.$2 > 0) {
-                      prevItem = prevItem + element.$2;
-                    }
+                  if (element.$2 > 0) {
+                    prevItem = prevItem + element.$2;
                   }
+                }
 
                 return IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        PageAnimationWrapper.sharedAxisTransitionPageWrapper(
+                          const CartzPage(),
+                        ));
+                  },
                   icon: Badge(
                     label: Text('$prevItem'),
                     // isLabelVisible: false,
@@ -57,7 +65,13 @@ class _PdetailPageState extends State<PdetailPage> {
                 );
               }
               return IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      PageAnimationWrapper.sharedAxisTransitionPageWrapper(
+                        const CartzPage(),
+                      ));
+                },
                 icon: const Badge(
                   // isLabelVisible: false,
                   child: Icon(
@@ -104,8 +118,10 @@ class _PdetailPageState extends State<PdetailPage> {
             /// add to cart button
             ElevatedButton(
               style: ButtonStyle(
-                  minimumSize: MaterialStateProperty.all(
-                      Size(MediaQuery.of(context).size.width / 2, 80),),),
+                minimumSize: MaterialStateProperty.all(
+                  Size(MediaQuery.of(context).size.width / 2, 80),
+                ),
+              ),
               onPressed: () {
                 for (var i = 0; i < _itemBag; i++) {
                   // print(i);
