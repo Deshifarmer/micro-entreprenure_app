@@ -4,6 +4,7 @@ import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
+import 'package:deshifarmer/presentation/pages/add_farmer/view/add_farmer_page.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/products.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class HomeBody extends StatelessWidget {
               // circular avater
               if (usrProfile.photo != null)
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20), // Image border
                     child: SizedBox.fromSize(
@@ -45,13 +46,6 @@ class HomeBody extends StatelessWidget {
                     ),
                   ),
                 )
-              // CircleAvatar(
-              //   radius: 75,
-              //   child: Image.network(
-              //     '${Strings.domain}/storage${usrProfile.photo}',
-              //     // fit: BoxFit.fill,
-              //   ),
-              // )
               else
                 const SizedBox.shrink(),
               // row -> name , balance
@@ -99,6 +93,7 @@ class HomeBody extends StatelessWidget {
                 itemCount: HomePageParams.categories.length,
                 itemBuilder: (c, i) => InkWell(
                   onTap: () async {
+                    print("$i ${HomePageParams.categories.elementAt(i)}");
                     final logINState = context.read<LoginBloc>().state;
 
                     if (logINState is LoginSuccess) {
@@ -124,9 +119,13 @@ class HomeBody extends StatelessWidget {
                               logINState.successLoginEntity.token,
                             ),
                           );
+                      if (i == 4) {
+                        await Navigator.push(context, AddFarmerPage.route());
+                      } else {
+                        // ProductsPage.route();
+                        await Navigator.push(context, ProductsPage.route());
+                      }
                     }
-                    // ProductsPage.route();
-                    await Navigator.push(context, ProductsPage.route());
                   },
                   child: Card(
                     color: Colors.greenAccent,
