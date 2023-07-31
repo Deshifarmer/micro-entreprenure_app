@@ -1,3 +1,4 @@
+import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/pages/profile/bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -24,10 +25,17 @@ class ProfileBody extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            const CircleAvatar(
-              radius: 50,
-            ),
             if (userProfile is UserProfileFetchSuccess) ...[
+              Padding(
+                padding: const EdgeInsets.all(25),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Image.network(
+                    '${Strings.domain}/storage/${userProfile.userProfile.photo}',
+                    // height: 100,
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: Text(
