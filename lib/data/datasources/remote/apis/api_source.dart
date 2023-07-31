@@ -8,6 +8,8 @@ import 'package:deshifarmer/domain/entities/category_entity/all_categorys.dart';
 import 'package:deshifarmer/domain/entities/category_entity/category_entity.dart';
 import 'package:deshifarmer/domain/entities/company_entity/all_company_entity.dart';
 import 'package:deshifarmer/domain/entities/company_entity/company_response_entity.dart';
+import 'package:deshifarmer/domain/entities/farmer_entity/all_farmer_entity.dart';
+import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
 import 'package:deshifarmer/domain/entities/login_entity/login_response_entity.dart';
 import 'package:deshifarmer/domain/entities/orders_entity/all_orders.dart';
 import 'package:deshifarmer/domain/entities/orders_entity/order_response_entity.dart';
@@ -32,14 +34,20 @@ class DeshiFarmerAPI {
     try {
       final http.Response response = await http.post(url);
       if (response.statusCode == 200) {
-        // print(response.statusCode);
+        print(response.statusCode);
         final result = json.decode(response.body);
-        // print(result);
+        print(result);
+        try {
+          SuccessLoginEntity successResonse =
+              SuccessLoginEntity.fromJson(result as Map<String, dynamic>);
 
-        SuccessLoginEntity successResonse =
-            SuccessLoginEntity.fromJson(result as Map<String, dynamic>);
-
-        return Success<SuccessLoginEntity, Exception>(successResonse);
+          return Success<SuccessLoginEntity, Exception>(successResonse);
+        } catch (e) {
+          print('Converting error -> $e');
+          return ServerFailor<SuccessLoginEntity, Exception>(
+            Exception('Server failor'),
+          );
+        }
         // return ServerFailor<SuccessLoginEntity, Exception>(
         //   Exception('Server failor'),
         // );
@@ -341,4 +349,55 @@ class DeshiFarmerAPI {
 
   ///! DO NOT MODIFY THE ABOVE CONTENT (DANGER)
   ///*-------------------------------------------------------------*///
+  ///
+  ///* Get the Farmer LIST
+  Future<Result<AllFarmerListResp, Exception>> getFarmers(String token) async {
+    Map<String, String> auth = <String, String>{
+      'Authorization': 'Bearer $token',
+    };
+    final Uri url = Uri.parse(
+      ApiDatabaseParams.myFarmerApi,
+    );
+    try {
+      _headers.addAll(auth);
+      final http.Response response = await http.get(
+        url,
+        headers: _headers,
+      );
+      if (response.statusCode == 200) {
+        final result = json.decode(response.body) as List<dynamic>;
+        print(
+            'successfuly got the result -> ${result.runtimeType} ${result.length}',);
+        List<FarmerEntity> companyE = [];
+        for (int i = 0; i < result.length; i++) {
+          final element = result[i] as Map<String, dynamic>;
+          // print('element runtime -> ${element.runtimeType}');
+          try {
+            companyE.add(
+              FarmerEntity.fromJson(element),
+            );
+          } catch (e) {
+            print('error comverting data ->  ${element.runtimeType}, $e \n');
+            // final e2 = element as Map<String, dynamic>;
+            // e2.forEach((key, value) {
+            //   if (value.runtimeType != String) {
+            //     print('${value.runtimeType} $key $value');
+            //   }
+            // });
+          }
+        }
+        AllFarmerListResp successResonse = AllFarmerListResp(companyE);
+
+        return Success<AllFarmerListResp, Exception>(successResonse);
+      } else {
+        return ServerFailor<AllFarmerListResp, Exception>(
+          Exception('Server failor'),
+        );
+      }
+    } catch (e) {
+      return ServerFailor<AllFarmerListResp, Exception>(
+        Exception('Server failor -> $e'),
+      );
+    }
+  }
 }
