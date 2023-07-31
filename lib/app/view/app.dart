@@ -2,9 +2,10 @@ import 'package:deshifarmer/l10n/l10n.dart';
 import 'package:deshifarmer/presentation/blocs/cart/cart_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
+import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
-import 'package:deshifarmer/presentation/cubit/dropdown_cubit.dart';
+import 'package:deshifarmer/presentation/cubit/dropdown/dropdown_cubit.dart';
 import 'package:deshifarmer/presentation/pages/home/home.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/view/login_page.dart';
@@ -63,6 +64,10 @@ class App extends StatelessWidget {
         // DropdownCubit
         BlocProvider<DropdownCubit>(
           create: (BuildContext context) => DropdownCubit(),
+        ),
+        // MyFarmerBloc
+        BlocProvider<MyFarmerBloc>(
+          create: (BuildContext context) => MyFarmerBloc(),
         ),
       ],
       // create: (context) => SubjectBloc(),
