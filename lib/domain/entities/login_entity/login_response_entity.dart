@@ -15,7 +15,6 @@ class SuccessLoginEntity {
   /// factory.
   factory SuccessLoginEntity.fromJson(Map<String, dynamic> json) =>
       _$SuccessLoginEntityFromJson(json);
-  // ignore: avoid_multiple_declarations_per_line, non_constant_identifier_names
   final String full_name;
   final String token;
   final String df_id;
