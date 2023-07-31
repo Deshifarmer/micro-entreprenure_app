@@ -30,15 +30,28 @@ class HomeBody extends StatelessWidget {
               ),
               // circular avater
               if (usrProfile.photo != null)
-                SizedBox(
-                  height: 100,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.network(
-                      '${Strings.domain}/storage${usrProfile.photo}',
+                    borderRadius: BorderRadius.circular(20), // Image border
+                    child: SizedBox.fromSize(
+                      size: const Size.fromRadius(
+                        100,
+                      ), // Image radius
+                      child: Image.network(
+                        '${Strings.domain}/storage${usrProfile.photo}',
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 )
+              // CircleAvatar(
+              //   radius: 75,
+              //   child: Image.network(
+              //     '${Strings.domain}/storage${usrProfile.photo}',
+              //     // fit: BoxFit.fill,
+              //   ),
+              // )
               else
                 const SizedBox.shrink(),
               // row -> name , balance
