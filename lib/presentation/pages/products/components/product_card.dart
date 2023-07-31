@@ -19,6 +19,9 @@ class ProductCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8),
       child: OpenContainer(
+        closedColor: Colors.green,
+        openColor: Colors.transparent,
+        middleColor: Colors.transparent,
         closedBuilder: (context, cb) {
           return Card(
             child: Column(
@@ -56,10 +59,16 @@ class ProductCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.labelSmall!.copyWith(
                         fontStyle: FontStyle.italic,
                       ),
+                  overflow: TextOverflow.ellipsis,
                 ),
 
                 // ammount
-                Text("${product.sell_price ?? ''} টাকা"),
+                Flexible(
+                  child: Text(
+                    "${product.sell_price ?? ''} টাকা",
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
               ],
             ),
           );
@@ -71,8 +80,10 @@ class ProductCard extends StatelessWidget {
         openShape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        openBuilder: (BuildContext context,
-            void Function({Object? returnValue}) action,) {
+        openBuilder: (
+          BuildContext context,
+          void Function({Object? returnValue}) action,
+        ) {
           return PdetailPage(
             productData: product,
           );
