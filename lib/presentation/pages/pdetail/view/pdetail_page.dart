@@ -1,7 +1,9 @@
 import 'package:deshifarmer/domain/entities/products_entity/product_data_entity.dart';
 import 'package:deshifarmer/presentation/animations/page_animations.dart';
 import 'package:deshifarmer/presentation/blocs/cart/cart_bloc.dart';
+import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/pages/cartz/view/cartz_page.dart';
+import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/pages/pdetail/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/pdetail/widgets/pdetail_body.dart';
 import 'package:flutter/material.dart';
@@ -48,12 +50,21 @@ class _PdetailPageState extends State<PdetailPage> {
                 }
 
                 return IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        PageAnimationWrapper.sharedAxisTransitionPageWrapper(
-                          const CartzPage(),
-                        ));
+                  onPressed: () async {
+                    final logINState = context.read<LoginBloc>().state;
+                    if (logINState is LoginSuccess) {
+                      context.read<MyFarmerBloc>().add(
+                            MyFarmerFetchEvent(
+                              logINState.successLoginEntity.token,
+                            ),
+                          );
+                    }
+                    await Navigator.push(
+                      context,
+                      PageAnimationWrapper.sharedAxisTransitionPageWrapper(
+                        const CartzPage(),
+                      ),
+                    );
                   },
                   icon: Badge(
                     label: Text('$prevItem'),
@@ -67,10 +78,11 @@ class _PdetailPageState extends State<PdetailPage> {
               return IconButton(
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      PageAnimationWrapper.sharedAxisTransitionPageWrapper(
-                        const CartzPage(),
-                      ));
+                    context,
+                    PageAnimationWrapper.sharedAxisTransitionPageWrapper(
+                      const CartzPage(),
+                    ),
+                  );
                 },
                 icon: const Badge(
                   // isLabelVisible: false,
@@ -133,7 +145,9 @@ class _PdetailPageState extends State<PdetailPage> {
                         ),
                       );
                 }
-                setState(() {});
+                setState(() {
+                  _itemBag = 0;
+                });
               },
               child: const Text('Add to Cart'),
             ),
