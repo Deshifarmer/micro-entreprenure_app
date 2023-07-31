@@ -1,6 +1,8 @@
 import 'package:deshifarmer/presentation/animations/page_animations.dart';
 import 'package:deshifarmer/presentation/blocs/cart/cart_bloc.dart';
+import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/pages/cartz/view/cartz_page.dart';
+import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/pages/pdetail/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/widgets/products_body.dart';
 import 'package:flutter/material.dart';
@@ -63,12 +65,21 @@ class CartBtnPP extends StatelessWidget {
           }
 
           return IconButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  PageAnimationWrapper.sharedAxisTransitionPageWrapper(
-                    const CartzPage(),
-                  ));
+            onPressed: () async {
+              final logINState = context.read<LoginBloc>().state;
+              if (logINState is LoginSuccess) {
+                context.read<MyFarmerBloc>().add(
+                      MyFarmerFetchEvent(
+                        logINState.successLoginEntity.token,
+                      ),
+                    );
+              }
+              await Navigator.push(
+                context,
+                PageAnimationWrapper.sharedAxisTransitionPageWrapper(
+                  const CartzPage(),
+                ),
+              );
             },
             icon: Badge(
               label: Text('$prevItem'),
@@ -81,10 +92,11 @@ class CartBtnPP extends StatelessWidget {
         return IconButton(
           onPressed: () {
             Navigator.push(
-                context,
-                PageAnimationWrapper.sharedAxisTransitionPageWrapper(
-                  const CartzPage(),
-                ));
+              context,
+              PageAnimationWrapper.sharedAxisTransitionPageWrapper(
+                const CartzPage(),
+              ),
+            );
           },
           icon: const Badge(
             // isLabelVisible: false,
