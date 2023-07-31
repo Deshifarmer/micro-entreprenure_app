@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:deshifarmer/data/models/cart_model.dart';
 import 'package:deshifarmer/domain/entities/products_entity/product_data_entity.dart';
 import 'package:equatable/equatable.dart';
 
@@ -22,7 +21,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     if (_carts.containsKey(event.productData.product_id)) {
       var currentQ = _carts[event.productData.product_id]!.$2;
       print(
-          'key already exists -> $currentQ : ${_carts[event.productData.product_id]?.$1.name}');
+          'key already exists -> $currentQ : ${_carts[event.productData.product_id]?.$1.name}',);
       _carts.update(
         event.productData.product_id ?? '',
         (value) => (event.productData, ++currentQ),
