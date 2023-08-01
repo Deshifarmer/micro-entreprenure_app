@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/widgets/add_farmer_body.dart';
+import 'package:flutter/material.dart';
 
 /// {@template add_farmer_page}
 /// A description for AddFarmerPage
@@ -20,7 +20,18 @@ class AddFarmerPage extends StatelessWidget {
       create: (context) => AddFarmerBloc(),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('কৃষকের রেজিস্ট্রেশন করুন'),
+          leading: IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon: Icon(
+                Icons.navigate_before,
+                color: Colors.green[600],
+              ),),
+          title: Text(
+            'কৃষকের রেজিস্ট্রেশন করুন',
+            style: TextStyle(
+              color: Colors.green[700],
+            ),
+          ),
         ),
         body: const AddFarmerView(),
       ),
