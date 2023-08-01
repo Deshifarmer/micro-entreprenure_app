@@ -34,4 +34,7 @@ class ApiDatabaseParams {
   ///! Product List api PAGINATION
   static const productListPaginationAPI =
       '${Strings.domain}/api/v1/product/sort?page=';
+
+  ///! Get Groups
+  static const getGroupsFormField = '${Strings.domain}/api/v1/me/group';
 }
