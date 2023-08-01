@@ -4,6 +4,7 @@ import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
+import 'package:deshifarmer/presentation/cubit/groups/get_group_cubit.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/view/add_farmer_page.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/products.dart';
@@ -93,7 +94,7 @@ class HomeBody extends StatelessWidget {
                 itemCount: HomePageParams.categories.length,
                 itemBuilder: (c, i) => InkWell(
                   onTap: () async {
-                    print("$i ${HomePageParams.categories.elementAt(i)}");
+                    print('$i ${HomePageParams.categories.elementAt(i)}');
                     final logINState = context.read<LoginBloc>().state;
 
                     if (logINState is LoginSuccess) {
@@ -120,6 +121,10 @@ class HomeBody extends StatelessWidget {
                             ),
                           );
                       if (i == 4) {
+                        context.read<GetGroupCubit>().addAllGroupFields(
+                              logINState.successLoginEntity.token,
+                            );
+                        // ignore: use_build_context_synchronously
                         await Navigator.push(context, AddFarmerPage.route());
                       } else {
                         // ProductsPage.route();
