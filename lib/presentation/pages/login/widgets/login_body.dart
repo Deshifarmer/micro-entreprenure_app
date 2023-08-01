@@ -76,6 +76,7 @@ class LoginBody extends StatelessWidget {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Phone Number',
+                  filled: true,
                 ),
               ),
             ),
@@ -88,6 +89,7 @@ class LoginBody extends StatelessWidget {
               child: TextFormField(
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
+                  filled: true,
                   labelText: 'Password',
                 ),
               ),
@@ -114,8 +116,9 @@ class LoginBody extends StatelessWidget {
                       context.read<LoginBloc>().add(
                             CheckLoginEvent(
                               context: context,
-                              mail: 'nadia@gmail.com',
-                              pass: 'password',
+                              mail: '01896267197',
+                              // mail: 'nadia@gmail.com',
+                              pass: 'df62me',
                               // pass: '123456',
                             ),
                           );
