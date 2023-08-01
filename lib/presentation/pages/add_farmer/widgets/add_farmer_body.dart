@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/bloc/bloc.dart';
+import 'package:deshifarmer/presentation/pages/add_farmer/components/farmer_dob_field.dart';
+import 'package:deshifarmer/presentation/pages/add_farmer/components/farmer_profile_field.dart';
+import 'package:flutter/material.dart';
 
 /// {@template add_farmer_body}
 /// Body of the AddFarmerPage.
@@ -16,6 +18,9 @@ class AddFarmerBody extends StatelessWidget {
       builder: (context, state) {
         return ListView(
           children: [
+            ///* picture upload
+            const FarmerProfilePicUpload(),
+
             /// first name
             Padding(
               padding: const EdgeInsets.all(8),
@@ -42,42 +47,11 @@ class AddFarmerBody extends StatelessWidget {
               ),
             ),
 
-            ///* picture upload
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'কৃষক এর ছবি',
-                  hintText: 'কৃষক এর ছবি আপলোড করুন',
-                  filled: true,
-                ),
-              ),
-            ),
-
-            ///* dob
-            // Padding(
-            //   padding: const EdgeInsets.all(8),
-            //   child: TextFormField(
-            //     keyboardType: TextInputType.datetime,
-            //     decoration: const InputDecoration(
-            //       border: OutlineInputBorder(),
-            //       labelText: 'কৃষকের জন্ম তারিখ',
-            //       // hintText: 'কৃষকের নামের প্রথম অংশ লিখুন',
-            //       filled: true,
-            //     ),
-            //   ),
-            // ),
             ElevatedButton(
-                onPressed: () async {
-                  await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(1880),
-                    lastDate: DateTime.now(),
-                  );
-                },
-                child: Text('DOB')),
+              onPressed: () async {},
+              child: const Text('DOB'),
+            ),
+            const FarmarDOB(),
 
             ///* phone
             Padding(
@@ -330,6 +304,24 @@ class AddFarmerBody extends StatelessWidget {
                   filled: true,
                 ),
               ),
+            ),
+
+            ///* A submit Button
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(Colors.green[600]),
+                ),
+                onPressed: () {},
+                child: const Text(
+                  'কৃষক যোগ',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
             ),
           ],
         );
