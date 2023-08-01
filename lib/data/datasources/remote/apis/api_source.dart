@@ -10,6 +10,8 @@ import 'package:deshifarmer/domain/entities/company_entity/all_company_entity.da
 import 'package:deshifarmer/domain/entities/company_entity/company_response_entity.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/all_farmer_entity.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
+import 'package:deshifarmer/domain/entities/group_field_entity/all_farmer_group_field.dart';
+import 'package:deshifarmer/domain/entities/group_field_entity/group_field_entity.dart';
 import 'package:deshifarmer/domain/entities/login_entity/login_response_entity.dart';
 import 'package:deshifarmer/domain/entities/orders_entity/all_orders.dart';
 import 'package:deshifarmer/domain/entities/orders_entity/order_response_entity.dart';
@@ -367,7 +369,8 @@ class DeshiFarmerAPI {
       if (response.statusCode == 200) {
         final result = json.decode(response.body) as List<dynamic>;
         print(
-            'successfuly got the result -> ${result.runtimeType} ${result.length}',);
+          'successfuly got the result -> ${result.runtimeType} ${result.length}',
+        );
         List<FarmerEntity> companyE = [];
         for (int i = 0; i < result.length; i++) {
           final element = result[i] as Map<String, dynamic>;
@@ -396,6 +399,63 @@ class DeshiFarmerAPI {
       }
     } catch (e) {
       return ServerFailor<AllFarmerListResp, Exception>(
+        Exception('Server failor -> $e'),
+      );
+    }
+  }
+
+  ///*-------------------------------------------------------------*///
+  ///
+  ///* Get Group Field LIST
+  Future<Result<AllFarmerGroupFieldResp, Exception>> getGroupFields(
+      String token) async {
+    Map<String, String> auth = <String, String>{
+      'Authorization': 'Bearer $token',
+    };
+    final Uri url = Uri.parse(
+      ApiDatabaseParams.getGroupsFormField,
+    );
+    try {
+      _headers.addAll(auth);
+      final http.Response response = await http.get(
+        url,
+        headers: _headers,
+      );
+      if (response.statusCode == 200) {
+        final result = json.decode(response.body) as List<dynamic>;
+        print(
+          'successfuly GROUP -> ${result.runtimeType} ${result.length}',
+        );
+        List<GroupFieldEntity> companyE = [];
+        for (int i = 0; i < result.length; i++) {
+          final element = result[i] as Map<String, dynamic>;
+          // print('element runtime -> ${element.runtimeType}');
+          try {
+            companyE.add(
+              GroupFieldEntity.fromJson(element),
+            );
+          } catch (e) {
+            print(
+                'error comverting data GROUP ->  ${element.runtimeType}, $e \n');
+            // final e2 = element as Map<String, dynamic>;
+            // e2.forEach((key, value) {
+            //   if (value.runtimeType != String) {
+            //     print('${value.runtimeType} $key $value');
+            //   }
+            // });
+          }
+        }
+        AllFarmerGroupFieldResp successResonse =
+            AllFarmerGroupFieldResp(companyE);
+
+        return Success<AllFarmerGroupFieldResp, Exception>(successResonse);
+      } else {
+        return ServerFailor<AllFarmerGroupFieldResp, Exception>(
+          Exception('Server failor'),
+        );
+      }
+    } catch (e) {
+      return ServerFailor<AllFarmerGroupFieldResp, Exception>(
         Exception('Server failor -> $e'),
       );
     }
