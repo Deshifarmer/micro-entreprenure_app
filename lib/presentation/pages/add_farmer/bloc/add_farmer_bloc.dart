@@ -2,11 +2,12 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 part 'add_farmer_event.dart';
 part 'add_farmer_state.dart';
 
 class AddFarmerBloc extends Bloc<AddFarmerEvent, AddFarmerState> {
-  AddFarmerBloc() : super(const AddFarmerInitial()) {
+  AddFarmerBloc() : super(AddFarmerInitial()) {
     on<CustomAddFarmerEvent>(_onCustomAddFarmerEvent);
   }
 
