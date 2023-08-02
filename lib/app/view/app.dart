@@ -2,6 +2,7 @@ import 'package:deshifarmer/l10n/l10n.dart';
 import 'package:deshifarmer/presentation/blocs/cart/cart_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
+import 'package:deshifarmer/presentation/blocs/farmer_api/add_farmer_api_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
@@ -73,6 +74,11 @@ class App extends StatelessWidget {
         // add group form field CUBIT
         BlocProvider<GetGroupCubit>(
           create: (BuildContext context) => GetGroupCubit(),
+        ),
+//AddFarmerApiBloc
+
+        BlocProvider<AddFarmerApiBloc>(
+          create: (BuildContext context) => AddFarmerApiBloc(),
         ),
       ],
       // create: (context) => SubjectBloc(),
