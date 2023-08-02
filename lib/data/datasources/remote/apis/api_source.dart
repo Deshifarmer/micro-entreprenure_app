@@ -1,9 +1,11 @@
 // ignore_for_file: omit_local_variable_types, prefer_final_locals
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:deshifarmer/core/app_core.dart';
 import 'package:deshifarmer/core/params/api_database_params.dart';
+import 'package:deshifarmer/data/models/add_farmer_model.dart';
 import 'package:deshifarmer/domain/entities/category_entity/all_categorys.dart';
 import 'package:deshifarmer/domain/entities/category_entity/category_entity.dart';
 import 'package:deshifarmer/domain/entities/company_entity/all_company_entity.dart';
@@ -437,12 +439,6 @@ class DeshiFarmerAPI {
           } catch (e) {
             print(
                 'error comverting data GROUP ->  ${element.runtimeType}, $e \n');
-            // final e2 = element as Map<String, dynamic>;
-            // e2.forEach((key, value) {
-            //   if (value.runtimeType != String) {
-            //     print('${value.runtimeType} $key $value');
-            //   }
-            // });
           }
         }
         AllFarmerGroupFieldResp successResonse =
@@ -456,6 +452,97 @@ class DeshiFarmerAPI {
       }
     } catch (e) {
       return ServerFailor<AllFarmerGroupFieldResp, Exception>(
+        Exception('Server failor -> $e'),
+      );
+    }
+  }
+
+  ///! * ------------------------- POST METHODS -----------------------
+  ///
+  /// adding Farmers
+  Future<Result<bool, Exception>> addFarmer(
+    AddFarmerModel farmerModel,
+    String token,
+  ) async {
+    Map<String, String> body = <String, String>{
+      // 'image': File(farmerModel.image!),
+      'farmer_type': "farmerModel.farmerType",
+      // 'onboard_by': farmerModel.onboardBy,
+      // 'nid': farmerModel.nid,
+      // 'gov_farmer_id': farmerModel.govtFarmerID,
+      // 'first_name': farmerModel.firstName,
+      // 'last_name': farmerModel.lastName,
+      // 'fathers_name': farmerModel.fathersName,
+      // 'phone': farmerModel.phone,
+      // 'is_married': farmerModel.isMarried,
+      // 'gender': farmerModel.gender,
+      // 'date_of_birth': farmerModel.dateOfBirth,
+      'address': "farmerModel.address",
+      // 'village': farmerModel.village,
+      // 'union': farmerModel.union,
+      // 'upazila': farmerModel.upazila,
+      // 'district': farmerModel.district,
+      // 'division': farmerModel.division,
+      // 'credit_score': farmerModel.creditScore,
+      'nid': '123456678',
+      // 'resident_tope': farmerModel.residentType,
+      // 'family_member': farmerModel.familyMember,
+      // 'number_of_children': farmerModel.numberOfChildren,
+      // 'yearly_income': farmerModel.yearlyIncome,
+      // 'group_id': farmerModel.groupId,
+      // 'farm_area': farmerModel.farmArea,
+      // 'farm_type': farmerModel.farmType,
+      // 'bank_details': farmerModel.bankDetails,
+      // 'mfs_account': farmerModel.mfsAccount,
+      // 'current_producing_crop': farmerModel.currentProducingCrop,
+      // 'focused_crop': farmerModel.focusedCrop,
+      // 'farm_id': farmerModel.farmId,
+    };
+    Map<String, String> headers = <String, String>{
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    print('token from API -> $token');
+    final Uri url = Uri.parse(
+      ApiDatabaseParams.addFarmerApi,
+      // 'https://core.deshifarmer.co/api/v1/me/add_farmer'
+    );
+    try {
+      _headers.addAll(headers);
+      final http.MultipartRequest request = http.MultipartRequest(
+        'POST',
+        url,
+        // headers: _headers,
+        // body: body,
+      );
+      print('image path from API -> ${farmerModel.image}');
+      request.fields.addAll(body);
+      // request.files
+      //     .add(await http.MultipartFile.fromPath('image', farmerModel.image!));
+
+      // request.files.add(
+      //   http.MultipartFile.fromString('image', farmerModel.image!),
+      // );
+      request.files
+          .add(await http.MultipartFile.fromPath('image', farmerModel.image!));
+
+      request.headers.addAll(headers);
+      final http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        print('server success resp -> 200 -> ${response.reasonPhrase}');
+
+        return Success<bool, Exception>(true);
+      } else {
+        print(
+            'server resp -> ${response.statusCode}\n${response.reasonPhrase} ${await response.stream.bytesToString()}');
+        return ServerFailor<bool, Exception>(
+          Exception('Server failor'),
+        );
+      }
+    } catch (e) {
+      print('Unknown Errors -> $e');
+      return ServerFailor<bool, Exception>(
         Exception('Server failor -> $e'),
       );
     }
