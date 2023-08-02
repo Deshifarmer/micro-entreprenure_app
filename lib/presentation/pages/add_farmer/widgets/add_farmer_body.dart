@@ -13,6 +13,7 @@ import 'package:deshifarmer/presentation/pages/add_farmer/components/living_type
 import 'package:deshifarmer/presentation/pages/add_farmer/components/living_year_field.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/components/m_bank_ac_type_field.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/components/upozilla_form_field.dart';
+import 'package:deshifarmer/presentation/pages/add_farmer/widgets/add_farmer_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 
@@ -35,101 +36,112 @@ class AddFarmerBody extends StatelessWidget {
             const FarmerProfilePicUpload(),
 
             /// first name
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: TextFormField(
-                keyboardType: TextInputType.name,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
+            if (state is AddFarmerInitial)
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: TextFormField(
+                  keyboardType: TextInputType.name,
+                  controller: state.firstNameController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    labelText: 'নামের প্রথম অংশ',
+                    hintText: 'কৃষকের নামের প্রথম অংশ লিখুন',
+                    filled: true,
                   ),
-                  labelText: 'নামের প্রথম অংশ',
-                  hintText: 'কৃষকের নামের প্রথম অংশ লিখুন',
-                  filled: true,
                 ),
               ),
-            ),
 
             ///* last name
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: TextFormField(
-                keyboardType: TextInputType.name,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
+            if (state is AddFarmerInitial)
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: TextFormField(
+                  keyboardType: TextInputType.name,
+                  controller: state.lastNameController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    labelText: 'নামের শেষ অংশ',
+                    hintText: 'কৃষকের নামের শেষ অংশ লিখুন',
+                    filled: true,
                   ),
-                  labelText: 'নামের শেষ অংশ',
-                  hintText: 'কৃষকের নামের শেষ অংশ লিখুন',
-                  filled: true,
                 ),
               ),
-            ),
 
             ///* dob field
             const FarmarDOB(),
 
             ///* father's name (farmar)
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: TextFormField(
-                keyboardType: TextInputType.name,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
+            if (state is AddFarmerInitial)
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: TextFormField(
+                  controller: state.farmerFatherController,
+                  keyboardType: TextInputType.name,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    labelText: 'কৃষকের পিতার নাম',
+                    filled: true,
                   ),
-                  labelText: 'কৃষকের পিতার নাম',
-                  filled: true,
                 ),
               ),
-            ),
 
             ///* nid
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: TextFormField(
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
+            if (state is AddFarmerInitial)
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  controller: state.farmerNIDController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    labelText: 'কৃষকের এনআইডি নম্বর',
+                    hintText: 'কৃষকের এনআইডি নম্বর লিখুন',
+                    filled: true,
                   ),
-                  labelText: 'কৃষকের এনআইডি নম্বর',
-                  hintText: 'কৃষকের এনআইডি নম্বর লিখুন',
-                  filled: true,
                 ),
               ),
-            ),
 
             ///* phone
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: TextFormField(
-                keyboardType: TextInputType.phone,
-                maxLength: 11,
-                decoration: const InputDecoration(
-                  // helperText: '019999999999',
-                  // icon: Text('+88'),
-                  // prefixIcon: Container(
-                  //   alignment: Alignment.centerLeft,
-                  //   child: Text(
-                  //     '+88',
-                  //     textAlign: TextAlign.center,
-                  //   ),
-                  // ),
-                  // prefix: Text('+88'),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
+            if (state is AddFarmerInitial)
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: TextFormField(
+                  keyboardType: TextInputType.phone,
+                  controller: state.farmerPhoneController,
+                  maxLength: 11,
+                  decoration: const InputDecoration(
+                    // helperText: '019999999999',
+                    // icon: Text('+88'),
+                    // prefixIcon: Container(
+                    //   alignment: Alignment.centerLeft,
+                    //   child: Text(
+                    //     '+88',
+                    //     textAlign: TextAlign.center,
+                    //   ),
+                    // ),
+                    // prefix: Text('+88'),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    labelText: 'কৃষকের ফোন নম্বর',
+                    hintText: 'কৃষকের ফোন নম্বর লিখুন',
+                    filled: true,
                   ),
-                  labelText: 'কৃষকের ফোন নম্বর',
-                  hintText: 'কৃষকের ফোন নম্বর লিখুন',
-                  filled: true,
                 ),
               ),
-            ),
 
             // PhoneWidget(),
 
             ///* gender & marital Status
+
             const Row(
               children: [
                 Expanded(child: GenderField()),
@@ -146,57 +158,63 @@ class AddFarmerBody extends StatelessWidget {
             const UpzillaFormField(),
 
             ///* union
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: TextFormField(
-                keyboardType: TextInputType.text,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
+            if (state is AddFarmerInitial)
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: TextFormField(
+                  keyboardType: TextInputType.text,
+                  controller: state.farmerUnionController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    labelText: 'ইউনিয়ন',
+                    // hintText: 'কৃষকের নামের প্রথম অংশ লিখুন',
+                    filled: true,
                   ),
-                  labelText: 'ইউনিয়ন',
-                  // hintText: 'কৃষকের নামের প্রথম অংশ লিখুন',
-                  filled: true,
                 ),
               ),
-            ),
 
             ///* village name
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: TextFormField(
-                keyboardType: TextInputType.text,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
+            if (state is AddFarmerInitial)
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: TextFormField(
+                  controller: state.farmerVillageController,
+                  keyboardType: TextInputType.text,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    labelText: 'গ্রামের নাম',
+                    // hintText: 'কৃষকের নামের প্রথম অংশ লিখুন',
+                    filled: true,
                   ),
-                  labelText: 'গ্রামের নাম',
-                  // hintText: 'কৃষকের নামের প্রথম অংশ লিখুন',
-                  filled: true,
                 ),
               ),
-            ),
 
             ///* address
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: TextFormField(
-                maxLines: 3,
-                keyboardType: TextInputType.multiline,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
+            if (state is AddFarmerInitial)
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: TextFormField(
+                  controller: state.farmerAddressController,
+                  maxLines: 3,
+                  keyboardType: TextInputType.multiline,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    labelText: 'ঠিকানা',
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: 20,
+                      horizontal: 15,
+                    ),
+                    // hintText: 'কৃষকের নামের প্রথম অংশ লিখুন',
+                    filled: true,
                   ),
-                  labelText: 'ঠিকানা',
-                  contentPadding: EdgeInsets.symmetric(
-                    vertical: 20,
-                    horizontal: 15,
-                  ),
-                  // hintText: 'কৃষকের নামের প্রথম অংশ লিখুন',
-                  filled: true,
                 ),
               ),
-            ),
 
             const Row(
               children: [
@@ -215,34 +233,38 @@ class AddFarmerBody extends StatelessWidget {
             const LivingYearFormField(),
 
             ///* yearly income
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: TextFormField(
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
+            if (state is AddFarmerInitial)
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  controller: state.farmerIncomeController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    labelText: 'কৃষকের বার্ষিক আয়',
+                    filled: true,
                   ),
-                  labelText: 'কৃষকের বার্ষিক আয়',
-                  filled: true,
                 ),
               ),
-            ),
 
             ///* farmar id (leave blank)
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: TextFormField(
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
+            if (state is AddFarmerInitial)
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  controller: state.farmerGovtIDController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    labelText: 'সরকারি কৃষক আইডি (না থাকলে ফাকা রাখুন)',
+                    filled: true,
                   ),
-                  labelText: 'সরকারি কৃষক আইডি (না থাকলে ফাকা রাখুন)',
-                  filled: true,
                 ),
               ),
-            ),
 
             ///* living house type (own/rantal)
 
@@ -255,19 +277,21 @@ class AddFarmerBody extends StatelessWidget {
             ),
 
             ///* land messure
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: TextFormField(
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
+            if (state is AddFarmerInitial)
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: TextFormField(
+                  controller: state.farmerQtLandController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    labelText: 'জমির পরিমাণ',
+                    filled: true,
                   ),
-                  labelText: 'জমির পরিমাণ',
-                  filled: true,
                 ),
               ),
-            ),
 
             ///! Expansion tile of farmer Bank account
             Container(
@@ -280,45 +304,51 @@ class AddFarmerBody extends StatelessWidget {
               child: ExpansionTile(
                 title: const Text('কৃষকের ব্যাংক একাউন্ট রয়েছে'),
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: TextFormField(
-                      keyboardType: TextInputType.text,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                  if (state is AddFarmerInitial)
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: TextFormField(
+                        keyboardType: TextInputType.text,
+                        controller: state.farmerBankNameController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                          ),
+                          labelText: 'ব্যাংকের নাম',
+                          filled: true,
                         ),
-                        labelText: 'ব্যাংকের নাম',
-                        filled: true,
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: TextFormField(
-                      keyboardType: TextInputType.text,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                  if (state is AddFarmerInitial)
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: TextFormField(
+                        keyboardType: TextInputType.text,
+                        controller: state.farmerBranchNameController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                          ),
+                          labelText: 'শাখার নাম',
+                          filled: true,
                         ),
-                        labelText: 'শাখার নাম',
-                        filled: true,
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                  if (state is AddFarmerInitial)
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        controller: state.farmerBankAccountNumberController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                          ),
+                          labelText: 'একাউন্ট নাম্বার',
+                          filled: true,
                         ),
-                        labelText: 'একাউন্ট নাম্বার',
-                        filled: true,
                       ),
                     ),
-                  ),
                 ],
               ),
             ),
@@ -337,19 +367,21 @@ class AddFarmerBody extends StatelessWidget {
                     const Text('বিকাশ /নগদ/উপায় বা অন্যান্য MFS একাউন্ট রয়েছে'),
                 children: [
                   const MBankAccountType(),
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                  if (state is AddFarmerInitial)
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        controller: state.farmerMFSAccountNumberController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                          ),
+                          labelText: 'এম-এফএস একাউন্ট নম্বর',
+                          filled: true,
                         ),
-                        labelText: 'এম-এফএস একাউন্ট নম্বর',
-                        filled: true,
                       ),
                     ),
-                  ),
                 ],
               ),
             ),
@@ -372,8 +404,6 @@ class AddFarmerBody extends StatelessWidget {
                 ],
               ),
             ),
-
-            //! TESting
 
             //! a multi select field
             Padding(
@@ -411,19 +441,7 @@ class AddFarmerBody extends StatelessWidget {
             ),
 
             ///* A submit Button
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(Colors.green[600]),
-                ),
-                onPressed: () {},
-                child: const Text(
-                  'কৃষক যোগ',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
+            const AddFarmerButton(),
             const SizedBox(
               height: 20,
             ),
