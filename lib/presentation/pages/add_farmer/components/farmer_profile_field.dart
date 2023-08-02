@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -74,6 +75,10 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.read<AddFarmerBloc>().state;
+    if (image != null && state is AddFarmerInitial) {
+      state.farmerImageController.text = image!.path;
+    }
     return Center(
       child: InkWell(
         onTap: myAlert,
@@ -85,7 +90,7 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
             alignment: Alignment.center,
             // padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Colors.greenAccent,
+              color: Colors.green,
               borderRadius: BorderRadius.circular(20),
             ),
             child: image != null
@@ -99,6 +104,7 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
                   )
                 : const Icon(
                     Icons.person,
+                    color: Colors.white,
                     size: 200,
                   ),
           ),
