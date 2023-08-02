@@ -1,6 +1,9 @@
 import 'package:deshifarmer/data/datasources/local/location_db/division_db.dart';
 import 'package:deshifarmer/data/models/location_model.dart';
+import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:flutter/material.dart';
+
+import '../bloc/add_farmer_bloc.dart';
 
 class DistFormField extends StatelessWidget {
   const DistFormField({
@@ -9,6 +12,7 @@ class DistFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.read<AddFarmerBloc>().state;
     return Padding(
       padding: const EdgeInsets.all(8),
       child: DropdownButtonFormField<DivisionModel>(
@@ -43,10 +47,12 @@ class DistFormField extends StatelessWidget {
           );
         }).toList(),
         onChanged: (DivisionModel? val) {
+          if (val != null && state is AddFarmerInitial) {
+            state.farmerDivisionController.text = val.id;
+          }
           // context.read<DropdownCubit>().changeDropdownValue(val ?? '');
         },
       ),
     );
   }
 }
-
