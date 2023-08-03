@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:deshifarmer/core/usecase/image_compress.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 class FarmerProfilePicUpload extends StatefulWidget {
   const FarmerProfilePicUpload({
@@ -19,12 +21,38 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
   final ImagePicker picker = ImagePicker();
 
   //we can upload image from camera or from gallery based on parameter
-  Future getImage(ImageSource media) async {
-    final img = await picker.pickImage(source: media);
+  Future<void> getImage(ImageSource media) async {
+    final appDocumentsDir = await getTemporaryDirectory();
+    final img = await picker.pickImage(
+      source: media,
+      imageQuality: 50,
+      maxHeight: 500,
+      maxWidth: 500,
+    );
+
+    if (img != null) {
+      print('image size -> ${await img.length()}');
+      try {
+        print(
+            'image path -> ${img.path}\n temp dir path -> ${appDocumentsDir.path}',);
+        final compressImageFile =
+            await testCompressAndGetFile(File(img.path), appDocumentsDir.path);
+        if (compressImageFile != null) {
+          image = compressImageFile;
+        } else {
+          print('compressor got NULLLLLLLLLLLLLLLLLLLLLL');
+        }
+      } catch (e) {
+        print('got error when compressing -> $e');
+      }
+    }
 
     setState(() {
       image = img;
     });
+    if (image != null) {
+      print('image size state -> ${await image!.length()}');
+    }
   }
 
   //show popup dialog
