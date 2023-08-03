@@ -1,3 +1,4 @@
+import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:flutter/material.dart';
 
 class FamilyMemberFormField extends StatelessWidget {
@@ -7,6 +8,7 @@ class FamilyMemberFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final addFarmerB = context.read<AddFarmerBloc>().state;
     return Padding(
       padding: const EdgeInsets.all(8),
       child: DropdownButtonFormField<int>(
@@ -41,7 +43,9 @@ class FamilyMemberFormField extends StatelessWidget {
           );
         }).toList(),
         onChanged: (int? val) {
-          // context.read<DropdownCubit>().changeDropdownValue(val ?? '');
+          if (addFarmerB is AddFarmerInitial) {
+            addFarmerB.farmerFamilyMembersController.text = val.toString();
+          }
         },
       ),
     );
