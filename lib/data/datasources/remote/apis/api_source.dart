@@ -1,7 +1,6 @@
 // ignore_for_file: omit_local_variable_types, prefer_final_locals
 
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:deshifarmer/core/app_core.dart';
 import 'package:deshifarmer/core/params/api_database_params.dart';
@@ -410,7 +409,8 @@ class DeshiFarmerAPI {
   ///
   ///* Get Group Field LIST
   Future<Result<AllFarmerGroupFieldResp, Exception>> getGroupFields(
-      String token) async {
+    String token,
+  ) async {
     Map<String, String> auth = <String, String>{
       'Authorization': 'Bearer $token',
     };
@@ -438,7 +438,8 @@ class DeshiFarmerAPI {
             );
           } catch (e) {
             print(
-                'error comverting data GROUP ->  ${element.runtimeType}, $e \n');
+              'error comverting data GROUP ->  ${element.runtimeType}, $e \n',
+            );
           }
         }
         AllFarmerGroupFieldResp successResonse =
@@ -464,78 +465,94 @@ class DeshiFarmerAPI {
     AddFarmerModel farmerModel,
     String token,
   ) async {
+    // var checkIfGovtID = {};
+    ///! POST BODY
     Map<String, String> body = <String, String>{
-      // 'image': File(farmerModel.image!),
-      'farmer_type': "farmerModel.farmerType",
-      // 'onboard_by': farmerModel.onboardBy,
-      // 'nid': farmerModel.nid,
-      // 'gov_farmer_id': farmerModel.govtFarmerID,
-      // 'first_name': farmerModel.firstName,
-      // 'last_name': farmerModel.lastName,
-      // 'fathers_name': farmerModel.fathersName,
-      // 'phone': farmerModel.phone,
-      // 'is_married': farmerModel.isMarried,
-      // 'gender': farmerModel.gender,
-      // 'date_of_birth': farmerModel.dateOfBirth,
-      'address': "farmerModel.address",
-      // 'village': farmerModel.village,
-      // 'union': farmerModel.union,
-      // 'upazila': farmerModel.upazila,
-      // 'district': farmerModel.district,
-      // 'division': farmerModel.division,
-      // 'credit_score': farmerModel.creditScore,
-      'nid': '123456678',
-      // 'resident_tope': farmerModel.residentType,
-      // 'family_member': farmerModel.familyMember,
-      // 'number_of_children': farmerModel.numberOfChildren,
-      // 'yearly_income': farmerModel.yearlyIncome,
-      // 'group_id': farmerModel.groupId,
-      // 'farm_area': farmerModel.farmArea,
-      // 'farm_type': farmerModel.farmType,
-      // 'bank_details': farmerModel.bankDetails,
-      // 'mfs_account': farmerModel.mfsAccount,
-      // 'current_producing_crop': farmerModel.currentProducingCrop,
-      // 'focused_crop': farmerModel.focusedCrop,
-      // 'farm_id': farmerModel.farmId,
+      'farmer_type': '1',
+      // 'onboard_by': farmerModel.onboardBy ?? '', //! NOT NEEDED
+      'nid': farmerModel.nid,
+      // 'gov_farmer_id': farmerModel.govtFarmerID.toString(), //? check if govt id or DO NOT ADD THE FIELD
+      'first_name': farmerModel.firstName,
+      'last_name': farmerModel.lastName,
+      'fathers_name': farmerModel.fathersName,
+      'phone': farmerModel.phone,
+      'is_married': farmerModel.isMarried,
+      'gender': farmerModel.gender,
+      // 'date_of_birth':
+      //     '${farmerModel.dateOfBirth.year}-${farmerModel.dateOfBirth.year}-${farmerModel.dateOfBirth.year}',
+      'date_of_birth': '1999-10-09',
+      'address': farmerModel.address,
+      'village': farmerModel.village,
+      'union': farmerModel.union,
+      'upazila': farmerModel.upazila,
+      'district': farmerModel.district,
+      'division': farmerModel.division,
+      // 'resident_type': 'Rental', //* OWN/Rental
+      'resident_type': farmerModel.residentType, //* OWN/Rental
+      'family_member': farmerModel.familyMember,
+      'number_of_children': farmerModel.numberOfChildren,
+      'yearly_income': farmerModel.yearlyIncome,
+      'group_id': farmerModel.groupId.toString(),
+      'farm_area': farmerModel.farmArea.toString(),
+      'farm_type': farmerModel.farmType.toString(),
+      'bank_details': farmerModel.bankDetails.toString(), //JSON
+      'mfs_account': farmerModel.mfsAccount.toString(), // JSON
+      'current_producing_crop':
+          farmerModel.currentProducingCrop.toString(), //JSON
+      'focused_crop': farmerModel.focusedCrop.toString(), // JSON
+      // 'farm_id': farmerModel.farmId.toString(),
+      'year_of_stay_in': farmerModel.yearOfStayIn,
     };
+
+    ///! POST HEADER
     Map<String, String> headers = <String, String>{
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
     print('token from API -> $token');
+
+    ///! url to URI
     final Uri url = Uri.parse(
       ApiDatabaseParams.addFarmerApi,
       // 'https://core.deshifarmer.co/api/v1/me/add_farmer'
     );
+
+    ///! Trying request to SErVER
     try {
       _headers.addAll(headers);
-      final http.MultipartRequest request = http.MultipartRequest(
-        'POST',
-        url,
-        // headers: _headers,
-        // body: body,
-      );
+      var request = http.MultipartRequest('POST', url);
       print('image path from API -> ${farmerModel.image}');
+      print('dob -> ${body["date_of_birth"]}');
       request.fields.addAll(body);
-      // request.files
-      //     .add(await http.MultipartFile.fromPath('image', farmerModel.image!));
 
-      // request.files.add(
-      //   http.MultipartFile.fromString('image', farmerModel.image!),
+      ///! COMPRESSE The image
+      // var compressFile = await compressAndGetFile(
+      //   File(farmerModel.image!),
+      //   farmerModel.image!,
       // );
+      // if (compressFile == null) {
+      //   print('compressor is NULL');
+      // } else {
+      //   print('successfully Completed');
+      // }
+
+      // request.files
+      //     .add(await http.MultipartFile.fromPath('image', compressFile!.path));
       request.files
           .add(await http.MultipartFile.fromPath('image', farmerModel.image!));
-
       request.headers.addAll(headers);
-      final http.StreamedResponse response = await request.send();
+      http.StreamedResponse response = await request.send();
 
-      if (response.statusCode == 200) {
-        print('server success resp -> 200 -> ${response.reasonPhrase}');
+      if (response.statusCode == 201) {
+        print(
+          'server success resp -> 201 -> ${response.reasonPhrase} ${await response.stream.bytesToString()}',
+        );
 
         return Success<bool, Exception>(true);
       } else {
         print(
-            'server resp -> ${response.statusCode}\n${response.reasonPhrase} ${await response.stream.bytesToString()}');
+          'server resp -> ${response.statusCode}\n${response.reasonPhrase} ${await response.stream.bytesToString()}',
+        );
         return ServerFailor<bool, Exception>(
           Exception('Server failor'),
         );
