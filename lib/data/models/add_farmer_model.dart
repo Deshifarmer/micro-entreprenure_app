@@ -33,7 +33,7 @@ class AddFarmerModel {
     this.govtFarmerID,
     this.onboardBy,
   });
-  final int nid;
+  final String nid;
   final String firstName;
   final String? image;
   final String? farmerType;
@@ -42,27 +42,27 @@ class AddFarmerModel {
   final String lastName;
   final String fathersName;
   final String phone;
-  final bool isMarried;
+  final String isMarried;
   final String gender;
   final DateTime dateOfBirth;
   final String address;
   final String village;
   final String union;
-  final int upazila;
-  final int district;
-  final int division;
+  final String upazila;
+  final String district;
+  final String division;
   // final double? creditScore;
   final String residentType;
-  final int familyMember;
-  final int numberOfChildren;
-  final int yearlyIncome;
-  final double yearOfStayIn;
+  final String familyMember;
+  final String numberOfChildren;
+  final String yearlyIncome;
+  final String yearOfStayIn;
   final String? groupId;
   final String? farmArea;
   final String? farmType;
   final Map<String, dynamic>? bankDetails;
   final Map<String, dynamic>? mfsAccount;
-  final Map<String, dynamic>? currentProducingCrop;
-  final Map<String, dynamic>? focusedCrop;
+  final String? currentProducingCrop;
+  final String? focusedCrop;
   final Map<String, dynamic>? farmId;
 }
