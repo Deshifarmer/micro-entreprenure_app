@@ -137,6 +137,14 @@ class AddFarmerInitial extends AddFarmerState {
   final TextEditingController farmerMFSAccountNumberController =
       TextEditingController();
 
+  ///! focusedCORP
+  final TextEditingController farmerFocusedCorpController =
+      TextEditingController();
+
+  ///! number
+  final TextEditingController farmerCurrentProducingCorpController =
+      TextEditingController();
+
   ///! -----------------------------------------------------
   // add farmer to a Group
   ///! -----------------------------------------------------
