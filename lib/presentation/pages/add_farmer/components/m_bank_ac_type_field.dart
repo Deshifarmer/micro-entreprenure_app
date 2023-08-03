@@ -44,7 +44,7 @@ class MBankAccountType extends StatelessWidget {
         }).toList(),
         onChanged: (String? val) {
           if (addFarmerB is AddFarmerInitial) {
-            addFarmerB.farmerChildrenController.text = val.toString();
+            addFarmerB.farmerMFSAccountTypeController.text = val.toString();
           }
         },
       ),

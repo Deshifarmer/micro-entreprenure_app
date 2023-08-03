@@ -55,8 +55,7 @@ class GroupSelector extends StatelessWidget {
             }).toList(),
             onChanged: (GroupFieldEntity? val) {
               if (addFarmerB is AddFarmerInitial && val != null) {
-                addFarmerB.farmerChildrenController.text =
-                    val.farmer_group_id.toString();
+                addFarmerB.farmerGroupIDController.text = val.farmer_group_id;
               }
               // context.read<DropdownCubit>().changeDropdownValue(val ?? '');
             },
