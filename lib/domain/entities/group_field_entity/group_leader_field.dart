@@ -46,6 +46,9 @@ class GroupLeaderFormField {
     required this.division,
     required this.group_id,
   });
+
+  factory GroupLeaderFormField.fromJson(Map<String, dynamic> json) =>
+      _$GroupLeaderFormFieldFromJson(json);
   final String? gov_farmer_id,
       credit_score,
       land_status,
@@ -85,7 +88,4 @@ class GroupLeaderFormField {
       cultivation_practice,
       is_active,
       onboard_date;
-
-  factory GroupLeaderFormField.fromJson(Map<String, dynamic> json) =>
-      _$GroupLeaderFormFieldFromJson(json);
 }

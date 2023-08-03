@@ -38,6 +38,9 @@ class GroupFieldEntity {
     required this.isActive,
     required this.updated_at,
   });
+
+  factory GroupFieldEntity.fromJson(Map<String, dynamic> json) =>
+      _$GroupFieldEntityFromJson(json);
   final String farmer_group_id;
   final String farmer_group_name;
   final String? cluster_id;
@@ -48,7 +51,4 @@ class GroupFieldEntity {
   final String updated_at;
   final String? color;
   final int total_farmers;
-
-  factory GroupFieldEntity.fromJson(Map<String, dynamic> json) =>
-      _$GroupFieldEntityFromJson(json);
 }
