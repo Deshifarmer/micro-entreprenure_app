@@ -1,8 +1,6 @@
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:flutter/material.dart';
 
-import '../bloc/add_farmer_bloc.dart';
-
 class GenderField extends StatelessWidget {
   const GenderField({
     super.key,

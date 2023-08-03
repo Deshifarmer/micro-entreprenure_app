@@ -3,8 +3,6 @@ import 'package:deshifarmer/data/models/location_model.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:flutter/material.dart';
 
-import '../bloc/add_farmer_bloc.dart';
-
 class DistFormField extends StatelessWidget {
   const DistFormField({
     super.key,

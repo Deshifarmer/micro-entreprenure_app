@@ -1,8 +1,6 @@
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:flutter/material.dart';
 
-import '../bloc/add_farmer_bloc.dart';
-
 class LivingTypeFormField extends StatelessWidget {
   const LivingTypeFormField({
     super.key,
@@ -48,7 +46,7 @@ class LivingTypeFormField extends StatelessWidget {
           // context.read<DropdownCubit>().changeDropdownValue(val ?? '');
 
           if (addFarmerB is AddFarmerInitial) {
-            addFarmerB.farmerChildrenController.text = val.toString();
+            addFarmerB.farmerLivingTypeController.text = val.toString();
           }
         },
       ),

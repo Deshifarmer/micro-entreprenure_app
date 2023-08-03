@@ -1,8 +1,6 @@
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:flutter/material.dart';
 
-import '../bloc/add_farmer_bloc.dart';
-
 class LivingYearFormField extends StatelessWidget {
   const LivingYearFormField({
     super.key,
@@ -46,7 +44,7 @@ class LivingYearFormField extends StatelessWidget {
         }).toList(),
         onChanged: (int? val) {
           if (addFarmerB is AddFarmerInitial) {
-            addFarmerB.farmerChildrenController.text = val.toString();
+            addFarmerB.farmerLivingYearController.text = val.toString();
           }
           // context.read<DropdownCubit>().changeDropdownValue(val ?? '');
         },
