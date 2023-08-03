@@ -121,7 +121,7 @@ class HomeBody extends StatelessWidget {
                             ),
                           );
                       if (i == 4) {
-                        context.read<GetGroupCubit>().addAllGroupFields(
+                        await context.read<GetGroupCubit>().addAllGroupFields(
                               logINState.successLoginEntity.token,
                             );
                         // ignore: use_build_context_synchronously
