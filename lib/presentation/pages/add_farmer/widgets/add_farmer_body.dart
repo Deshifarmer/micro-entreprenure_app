@@ -395,50 +395,75 @@ class AddFarmerBody extends StatelessWidget {
               ),
               padding: const EdgeInsets.all(8),
               margin: const EdgeInsets.all(8),
-              child: ExpansionTile(
-                title: const Text(
+              child: const ExpansionTile(
+                title: Text(
                   'গ্রুপে যোগ করতে চাইলে এইখানে ক্লিক করুন এবং গ্রুপ সিলেক্ট করুন',
                 ),
                 children: [
-                  const GroupSelector(),
+                  GroupSelector(),
                 ],
               ),
             ),
 
             //! a multi select field
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: MultiSelectDropDown(
-                hint: 'বর্তমান উৎপাদনকারী ফসল নির্বাচন করুন',
-                chipConfig: ChipConfig(
-                  wrapType: WrapType.wrap,
-                  backgroundColor: Colors.green[400],
-                ),
-                selectedOptionTextColor: Colors.green,
-                options:
-                    cropsDatabase.map((e) => ValueItem(label: e.name)).toList(),
-                onOptionSelected: (selectedOptions) {},
-                padding: const EdgeInsets.all(8),
-                dropdownHeight: MediaQuery.of(context).size.height / 2.5,
-              ),
-            ),
 
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: MultiSelectDropDown(
-                hint: 'প্রধান ফসল নির্বাচন',
-                chipConfig: ChipConfig(
-                  wrapType: WrapType.wrap,
-                  backgroundColor: Colors.green[400],
-                ),
-                selectedOptionTextColor: Colors.green,
-                options:
-                    cropsDatabase.map((e) => ValueItem(label: e.name)).toList(),
-                onOptionSelected: (selectedOptions) {},
+            if (state is AddFarmerInitial)
+              Padding(
                 padding: const EdgeInsets.all(8),
-                dropdownHeight: MediaQuery.of(context).size.height / 2.5,
+                child: MultiSelectDropDown(
+                  hint: 'বর্তমান উৎপাদনকারী ফসল নির্বাচন করুন',
+                  chipConfig: ChipConfig(
+                    wrapType: WrapType.wrap,
+                    backgroundColor: Colors.green[400],
+                  ),
+                  selectedOptionTextColor: Colors.green,
+                  options: cropsDatabase
+                      .map((e) => ValueItem(label: e.name))
+                      .toList(),
+                  onOptionSelected: (selectedOptions) {
+                    final values = [];
+                    // print(selectedOptions);
+                    for (final vi in selectedOptions) {
+                      // print(vi.label);
+                      values.add(vi.label);
+                    }
+
+                    state.farmerCurrentProducingCorpController.text =
+                        values.toSet().toString();
+                  },
+                  padding: const EdgeInsets.all(8),
+                  dropdownHeight: MediaQuery.of(context).size.height / 2.5,
+                ),
               ),
-            ),
+
+            if (state is AddFarmerInitial)
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: MultiSelectDropDown(
+                  hint: 'প্রধান ফসল নির্বাচন',
+                  chipConfig: ChipConfig(
+                    wrapType: WrapType.wrap,
+                    backgroundColor: Colors.green[400],
+                  ),
+                  selectedOptionTextColor: Colors.green,
+                  options: cropsDatabase
+                      .map((e) => ValueItem(label: e.name))
+                      .toList(),
+                  onOptionSelected: (selectedOptions) {
+                    final values = [];
+                    // print(selectedOptions);
+                    for (final vi in selectedOptions) {
+                      // print(vi.label);
+                      values.add(vi.label);
+                    }
+
+                    state.farmerFocusedCorpController.text =
+                        values.toSet().toString();
+                  },
+                  padding: const EdgeInsets.all(8),
+                  dropdownHeight: MediaQuery.of(context).size.height / 2.5,
+                ),
+              ),
 
             ///* A submit Button
             const AddFarmerButton(),
