@@ -3,6 +3,7 @@ import 'package:deshifarmer/presentation/pages/add_farmer/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/components/children_form_field.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/components/dist_select_field.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/components/division_form_field.dart';
+import 'package:deshifarmer/presentation/pages/add_farmer/components/famer_focused_corp_multi.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/components/family_member_field.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/components/farmer_dob_field.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/components/farmer_gender_field.dart';
@@ -34,6 +35,7 @@ class AddFarmerBody extends StatelessWidget {
           children: [
             ///* picture upload
             const FarmerProfilePicUpload(),
+            // FarmerPicUploadStateCompo(),
 
             /// first name
             if (state is AddFarmerInitial)
@@ -406,64 +408,39 @@ class AddFarmerBody extends StatelessWidget {
             ),
 
             //! a multi select field
+            const FarmerCurrentProducingCorp(),
 
-            if (state is AddFarmerInitial)
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: MultiSelectDropDown(
-                  hint: 'বর্তমান উৎপাদনকারী ফসল নির্বাচন করুন',
-                  chipConfig: ChipConfig(
-                    wrapType: WrapType.wrap,
-                    backgroundColor: Colors.green[400],
-                  ),
-                  selectedOptionTextColor: Colors.green,
-                  options: cropsDatabase
-                      .map((e) => ValueItem(label: e.name))
-                      .toList(),
-                  onOptionSelected: (selectedOptions) {
-                    final values = [];
-                    // print(selectedOptions);
-                    for (final vi in selectedOptions) {
-                      // print(vi.label);
-                      values.add(vi.label);
-                    }
+            // if (state is AddFarmerInitial)
+            //   Padding(
+            //     padding: const EdgeInsets.all(8),
+            //     child: MultiSelectDropDown(
+            //       hint: 'বর্তমান উৎপাদনকারী ফসল নির্বাচন করুন',
+            //       chipConfig: ChipConfig(
+            //         wrapType: WrapType.wrap,
+            //         backgroundColor: Colors.green[400],
+            //       ),
+            //       selectedOptionTextColor: Colors.green,
+            //       options: cropsDatabase
+            //           .map((e) => ValueItem(label: e.name))
+            //           .toList(),
+            //       onOptionSelected: (selectedOptions) {
+            //         final values = [];
+            //         // print(selectedOptions);
+            //         for (final vi in selectedOptions) {
+            //           // print(vi.label);
+            //           values.add(vi.label);
+            //         }
 
-                    state.farmerCurrentProducingCorpController.text =
-                        values.toSet().toString();
-                  },
-                  padding: const EdgeInsets.all(8),
-                  dropdownHeight: MediaQuery.of(context).size.height / 2.5,
-                ),
-              ),
+            //         state.farmerCurrentProducingCorpController.text =
+            //             values.toSet().toString();
+            //       },
+            //       padding: const EdgeInsets.all(8),
+            //       dropdownHeight: MediaQuery.of(context).size.height / 2.5,
+            //     ),
+            //   ),
 
-            if (state is AddFarmerInitial)
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: MultiSelectDropDown(
-                  hint: 'প্রধান ফসল নির্বাচন',
-                  chipConfig: ChipConfig(
-                    wrapType: WrapType.wrap,
-                    backgroundColor: Colors.green[400],
-                  ),
-                  selectedOptionTextColor: Colors.green,
-                  options: cropsDatabase
-                      .map((e) => ValueItem(label: e.name))
-                      .toList(),
-                  onOptionSelected: (selectedOptions) {
-                    final values = [];
-                    // print(selectedOptions);
-                    for (final vi in selectedOptions) {
-                      // print(vi.label);
-                      values.add(vi.label);
-                    }
-
-                    state.farmerFocusedCorpController.text =
-                        values.toSet().toString();
-                  },
-                  padding: const EdgeInsets.all(8),
-                  dropdownHeight: MediaQuery.of(context).size.height / 2.5,
-                ),
-              ),
+            // if (state is AddFarmerInitial)
+            const FarmerFocusedCorpMulti(),
 
             ///* A submit Button
             const AddFarmerButton(),
