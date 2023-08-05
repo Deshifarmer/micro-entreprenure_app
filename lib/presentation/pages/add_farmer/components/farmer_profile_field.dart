@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:deshifarmer/core/usecase/image_compress.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -48,7 +47,7 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
           title: const Text('Please choose media to select'),
           content: SizedBox(
             height: MediaQuery.of(context).size.height / 6,
-            child: Column(
+            child: ListView(
               children: [
                 ElevatedButton(
                   //if user click this button, user can upload image from gallery

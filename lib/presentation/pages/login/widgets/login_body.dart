@@ -42,7 +42,7 @@ class LoginBody extends StatelessWidget {
         }
       },
       builder: (context, LoginState state) {
-        return Column(
+        return ListView(
           children: [
             const SizedBox(
               height: 100,
@@ -116,10 +116,11 @@ class LoginBody extends StatelessWidget {
                       context.read<LoginBloc>().add(
                             CheckLoginEvent(
                               context: context,
-                              mail: '01896267197',
-                              // mail: 'nadia@gmail.com',
-                              pass: 'df62me',
+                              // mail: '01896267197',
+                              mail: 'nadia@gmail.com',
+                              // pass: 'df62me',
                               // pass: '123456',
+                              pass: 'password',
                             ),
                           );
                     },
