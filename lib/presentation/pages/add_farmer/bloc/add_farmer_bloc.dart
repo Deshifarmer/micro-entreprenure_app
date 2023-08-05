@@ -15,6 +15,6 @@ class AddFarmerBloc extends Bloc<AddFarmerEvent, AddFarmerState> {
     CustomAddFarmerEvent event,
     Emitter<AddFarmerState> emit,
   ) {
-    // TODO: Add Logic
+    emit(AddFarmerInitial());
   }
 }
