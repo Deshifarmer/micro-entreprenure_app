@@ -30,23 +30,6 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
       maxWidth: 500,
     );
 
-    if (img != null) {
-      print('image size -> ${await img.length()}');
-      try {
-        print(
-            'image path -> ${img.path}\n temp dir path -> ${appDocumentsDir.path}',);
-        final compressImageFile =
-            await testCompressAndGetFile(File(img.path), appDocumentsDir.path);
-        if (compressImageFile != null) {
-          image = compressImageFile;
-        } else {
-          print('compressor got NULLLLLLLLLLLLLLLLLLLLLL');
-        }
-      } catch (e) {
-        print('got error when compressing -> $e');
-      }
-    }
-
     setState(() {
       image = img;
     });
@@ -103,6 +86,7 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
 
   @override
   Widget build(BuildContext context) {
+    print('this is image path -> ${image?.path} from Build Widget');
     final state = context.read<AddFarmerBloc>().state;
     if (image != null && state is AddFarmerInitial) {
       state.farmerImageController.text = image!.path;
@@ -121,15 +105,21 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
               color: Colors.green,
               borderRadius: BorderRadius.circular(20),
             ),
-            child: image != null
-                ? ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Image.file(
-                      File(image!.path),
-                      fit: BoxFit.cover,
-                      height: 250,
-                    ),
-                  )
+            child: state is AddFarmerInitial
+                ? image != null || state.farmerImageController.text.isNotEmpty
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.file(
+                          File(image?.path ?? state.farmerImageController.text),
+                          fit: BoxFit.cover,
+                          height: 250,
+                        ),
+                      )
+                    : const Icon(
+                        Icons.person,
+                        color: Colors.white,
+                        size: 200,
+                      )
                 : const Icon(
                     Icons.person,
                     color: Colors.white,
