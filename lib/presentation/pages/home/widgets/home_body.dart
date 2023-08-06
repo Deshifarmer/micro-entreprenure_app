@@ -2,10 +2,12 @@ import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/core/params/home_page_params.dart';
 import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
+import 'package:deshifarmer/presentation/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/cubit/groups/get_group_cubit.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/view/add_farmer_page.dart';
+import 'package:deshifarmer/presentation/pages/add_group/view/add_group_page.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/products.dart';
 import 'package:flutter/material.dart';
@@ -94,6 +96,7 @@ class HomeBody extends StatelessWidget {
                 itemCount: HomePageParams.categories.length,
                 itemBuilder: (c, i) => InkWell(
                   onTap: () async {
+                    // print(i);
                     print('$i ${HomePageParams.categories.elementAt(i)}');
                     final logINState = context.read<LoginBloc>().state;
 
@@ -121,14 +124,26 @@ class HomeBody extends StatelessWidget {
                             ),
                           );
                       if (i == 4) {
-                        await context.read<GetGroupCubit>().addAllGroupFields(
+                        context.read<GetGroupCubit>().addAllGroupFields(
                               logINState.successLoginEntity.token,
                             );
                         // ignore: use_build_context_synchronously
-                        await Navigator.push(context, AddFarmerPage.route());
+                        Navigator.push(context, AddFarmerPage.route());
+                      } else if (i == 5) {
+                        context.read<GetGroupCubit>().addAllGroupFields(
+                              logINState.successLoginEntity.token,
+                            );
+// MyUnassignFamersBloc
+
+                        context.read<MyUnassignFamersBloc>().add(
+                              MyUnassignFarmerFetchEvent(
+                                logINState.successLoginEntity.token,
+                              ),
+                            );
+                        Navigator.push(context, AddGroupPage.route());
                       } else {
                         // ProductsPage.route();
-                        await Navigator.push(context, ProductsPage.route());
+                        Navigator.push(context, ProductsPage.route());
                       }
                     }
                   },
