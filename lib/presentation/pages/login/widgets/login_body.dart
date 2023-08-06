@@ -56,17 +56,23 @@ class LoginBody extends StatelessWidget {
               ),
             ),
             // Company Name
-            Text(
-              LoginPageParams.companyName,
-              style: theme.textTheme.titleSmall,
-              textAlign: TextAlign.start,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                LoginPageParams.companyName,
+                style: theme.textTheme.titleSmall,
+                textAlign: TextAlign.start,
+              ),
             ),
             // a Title
-            Text(
-              LoginPageParams.title,
-              style: theme.textTheme.headlineLarge!.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Text(
+                LoginPageParams.title,
+                style: theme.textTheme.headlineLarge!.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
               ),
             ),
             // a form field for mail
