@@ -37,4 +37,11 @@ class ApiDatabaseParams {
 
   ///! Get Groups
   static const getGroupsFormField = '${Strings.domain}/api/v1/me/group';
+
+  ///! Unassign Farmers in Group
+  static const unassignFarmersApi =
+      '${Strings.domain}/api/v1/me/unassign_farmer';
+
+  ///! Create Group
+  static const createGroupAPI = '${Strings.domain}/api/v1/me/create_group';
 }
