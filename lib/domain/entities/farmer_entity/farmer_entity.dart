@@ -79,8 +79,8 @@ class FarmerEntity {
   final String? group_id;
   final String? bank_details;
   final String? mfs_account;
-  final String current_producing_crop;
-  final String focused_crop;
+  final String? current_producing_crop;
+  final String? focused_crop;
   final String? cropping_intensity;
   final String? cultivation_practice;
   final String? farmer_role;
