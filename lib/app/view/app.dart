@@ -4,6 +4,7 @@ import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/farmer_api/add_farmer_api_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
+import 'package:deshifarmer/presentation/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/cubit/dropdown/dropdown_cubit.dart';
@@ -85,6 +86,11 @@ class App extends StatelessWidget {
 
         BlocProvider<AddFarmerBloc>(
           create: (BuildContext context) => AddFarmerBloc(),
+        ),
+
+        ///* My Unassing Farmer List
+        BlocProvider<MyUnassignFamersBloc>(
+          create: (BuildContext context) => MyUnassignFamersBloc(),
         ),
       ],
       // create: (context) => SubjectBloc(),
