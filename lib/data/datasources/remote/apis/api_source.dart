@@ -405,6 +405,60 @@ class DeshiFarmerAPI {
     }
   }
 
+  ///* Get the Unassign Farmer LIST
+  Future<Result<AllFarmerListResp, Exception>> getUnassingFarmers(
+    String token,
+  ) async {
+    Map<String, String> auth = <String, String>{
+      'Authorization': 'Bearer $token',
+    };
+    final Uri url = Uri.parse(
+      ApiDatabaseParams.unassignFarmersApi,
+    );
+    try {
+      _headers.addAll(auth);
+      final http.Response response = await http.get(
+        url,
+        headers: _headers,
+      );
+      if (response.statusCode == 200) {
+        final result = json.decode(response.body) as List<dynamic>;
+        print(
+          'successfuly got the Unassing LISTO -> ${result.runtimeType} ${result.length}',
+        );
+        List<FarmerEntity> companyE = [];
+        for (int i = 0; i < result.length; i++) {
+          final element = result[i] as Map<String, dynamic>;
+          // print('element runtime -> ${element.runtimeType}');
+          try {
+            companyE.add(
+              FarmerEntity.fromJson(element),
+            );
+          } catch (e) {
+            print('error comverting data ->  ${element.runtimeType}, $e \n');
+            // final e2 = element as Map<String, dynamic>;
+            // e2.forEach((key, value) {
+            //   if (value.runtimeType != String) {
+            //     print('${value.runtimeType} $key $value');
+            //   }
+            // });
+          }
+        }
+        AllFarmerListResp successResonse = AllFarmerListResp(companyE);
+
+        return Success<AllFarmerListResp, Exception>(successResonse);
+      } else {
+        return ServerFailor<AllFarmerListResp, Exception>(
+          Exception('Server failor'),
+        );
+      }
+    } catch (e) {
+      return ServerFailor<AllFarmerListResp, Exception>(
+        Exception('Server failor -> $e'),
+      );
+    }
+  }
+
   ///*-------------------------------------------------------------*///
   ///
   ///* Get Group Field LIST
@@ -426,7 +480,7 @@ class DeshiFarmerAPI {
       if (response.statusCode == 200) {
         final result = json.decode(response.body) as List<dynamic>;
         print(
-          'successfuly GROUP -> ${result.runtimeType} ${result.length}',
+          'successfuly Unassign GROUP -> ${result.runtimeType} ${result.length}',
         );
         List<GroupFieldEntity> companyE = [];
         for (int i = 0; i < result.length; i++) {
@@ -438,7 +492,7 @@ class DeshiFarmerAPI {
             );
           } catch (e) {
             print(
-              'error comverting data GROUP ->  ${element.runtimeType}, $e \n',
+              'error comverting data Unassing GROUP ->  ${element.runtimeType}, $e \n',
             );
           }
         }
@@ -540,6 +594,64 @@ class DeshiFarmerAPI {
       //     .add(await http.MultipartFile.fromPath('image', compressFile!.path));
       request.files
           .add(await http.MultipartFile.fromPath('image', farmerModel.image!));
+      request.headers.addAll(headers);
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 201) {
+        print(
+          'server success resp -> 201 -> ${response.reasonPhrase} ${await response.stream.bytesToString()}',
+        );
+
+        return Success<bool, Exception>(true);
+      } else {
+        print(
+          'server resp -> ${response.statusCode}\n${response.reasonPhrase} ${await response.stream.bytesToString()}',
+        );
+        return ServerFailor<bool, Exception>(
+          Exception('Server failor'),
+        );
+      }
+    } catch (e) {
+      print('Unknown Errors -> $e');
+      return ServerFailor<bool, Exception>(
+        Exception('Server failor -> $e'),
+      );
+    }
+  }
+
+  /// Create Group API
+
+  Future<Result<bool, Exception>> createGroup(
+    String token,
+    String groupName,
+    String groupLeaderID,
+  ) async {
+    // var checkIfGovtID = {};
+    ///! POST BODY
+    Map<String, String> body = <String, String>{
+      'farmer_group_name': groupName,
+      // 'onboard_by': farmerModel.onboardBy ?? '', //! NOT NEEDED
+      'group_leader': groupLeaderID,
+    };
+
+    ///! POST HEADER
+    Map<String, String> headers = <String, String>{
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    print('token from API -> $token');
+
+    ///! url to URI
+    final Uri url = Uri.parse(
+      ApiDatabaseParams.createGroupAPI,
+    );
+
+    ///! Trying request to SErVER
+    try {
+      _headers.addAll(headers);
+      var request = http.MultipartRequest('POST', url);
+      request.fields.addAll(body);
+
       request.headers.addAll(headers);
       http.StreamedResponse response = await request.send();
 
