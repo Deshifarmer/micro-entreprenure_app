@@ -11,6 +11,7 @@ import 'package:deshifarmer/domain/entities/company_entity/all_company_entity.da
 import 'package:deshifarmer/domain/entities/company_entity/company_response_entity.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/all_farmer_entity.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
+import 'package:deshifarmer/domain/entities/group_detail_entity/group_detail_entity.dart';
 import 'package:deshifarmer/domain/entities/group_field_entity/all_farmer_group_field.dart';
 import 'package:deshifarmer/domain/entities/group_field_entity/group_field_entity.dart';
 import 'package:deshifarmer/domain/entities/login_entity/login_response_entity.dart';
@@ -512,6 +513,53 @@ class DeshiFarmerAPI {
     }
   }
 
+  ///! Get groupo Details from api
+  Future<Result<GroupDetailEntity, Exception>> getGroupDetails(
+    String token,
+    String groupID,
+  ) async {
+    Map<String, String> auth = <String, String>{
+      'Authorization': 'Bearer $token',
+    };
+    final Uri url = Uri.parse(
+      '${ApiDatabaseParams.getGroupDetailAPI}/$groupID',
+    );
+    try {
+      _headers.addAll(auth);
+      final http.Response response = await http.get(
+        url,
+        headers: _headers,
+      );
+      print('toekn $token \n groupid -> $groupID');
+      if (response.statusCode == 200) {
+        final result = json.decode(response.body) as Map<String, dynamic>;
+        print(
+          'successfuly got GROUP detail -> ${result.runtimeType} ${result.length}',
+        );
+
+        try {
+          GroupDetailEntity successResonse = GroupDetailEntity.fromJson(result);
+
+          return Success<GroupDetailEntity, Exception>(successResonse);
+        } catch (e) {
+          print('got error converting to model');
+
+          return ServerFailor<GroupDetailEntity, Exception>(
+            Exception('Converting Data Erro -> $e'),
+          );
+        }
+      } else {
+        return ServerFailor<GroupDetailEntity, Exception>(
+          Exception('Server failor'),
+        );
+      }
+    } catch (e) {
+      return ServerFailor<GroupDetailEntity, Exception>(
+        Exception('Server failor -> $e'),
+      );
+    }
+  }
+
   ///! * ------------------------- POST METHODS -----------------------
   ///
   /// adding Farmers
@@ -664,6 +712,116 @@ class DeshiFarmerAPI {
       } else {
         print(
           'server resp -> ${response.statusCode}\n${response.reasonPhrase} ${await response.stream.bytesToString()}',
+        );
+        return ServerFailor<bool, Exception>(
+          Exception('Server failor'),
+        );
+      }
+    } catch (e) {
+      print('Unknown Errors -> $e');
+      return ServerFailor<bool, Exception>(
+        Exception('Server failor -> $e'),
+      );
+    }
+  }
+
+  ///! Add farmer to group API
+
+  Future<Result<bool, Exception>> addFarmerToGroupAPI(
+    String token,
+    String farmerID,
+    String groupID,
+  ) async {
+    ///! POST BODY
+    var body = json.encode({
+      'list': [farmerID]
+    });
+
+    ///! POST HEADER
+    Map<String, String> headers = <String, String>{
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    ///! url to URI
+    final Uri url = Uri.parse(
+      ApiDatabaseParams.assignFarmerToGroup(groupID),
+    );
+
+    ///! Trying request to SErVER
+    try {
+      _headers.addAll(headers);
+      print('headers addde');
+      var resp = await http.post(
+        url,
+        body: json.encode({
+          'list': [farmerID]
+        }),
+        headers: headers,
+      );
+
+      print('farmer id -> $farmerID\n groupID -> $groupID\n token -> $token');
+
+      if (resp.statusCode == 200) {
+        print('successfully done -> ${resp.statusCode} ${resp.body}');
+        return Success<bool, Exception>(true);
+      } else {
+        print(
+          'server resp -> ${resp.statusCode}\n${resp.body} ',
+        );
+        return ServerFailor<bool, Exception>(
+          Exception('Server failor'),
+        );
+      }
+    } catch (e) {
+      print('Unknown Errors -> $e');
+      return ServerFailor<bool, Exception>(
+        Exception('Server failor -> $e'),
+      );
+    }
+  }
+
+  ///! Add leader to group API
+
+  Future<Result<bool, Exception>> updateLeaderToGroupAPI(
+    String token,
+    String leaderID,
+    String groupID,
+  ) async {
+    ///! POST BODY
+    // var body = json.encode({'group_leader': leaderID});
+
+    ///! POST HEADER
+    Map<String, String> headers = <String, String>{
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    ///! url to URI
+    final Uri url = Uri.parse(
+      ApiDatabaseParams.updateLeaderToGroup(groupID),
+    );
+
+    ///! Trying request to SErVER
+    try {
+      _headers.addAll(headers);
+      print('headers addde');
+      var resp = await http.put(
+        url,
+        body: json.encode({'group_leader': leaderID}),
+        headers: headers,
+      );
+
+      print('farmer id -> $leaderID\n groupID -> $groupID\n token -> $token');
+
+      if (resp.statusCode == 200) {
+        print('successfully done -> ${resp.statusCode} ${resp.body}');
+        return Success<bool, Exception>(true);
+      } else {
+        print(
+          'server resp -> ${resp.statusCode}\n${resp.body} ',
         );
         return ServerFailor<bool, Exception>(
           Exception('Server failor'),
