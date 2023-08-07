@@ -38,10 +38,22 @@ class ApiDatabaseParams {
   ///! Get Groups
   static const getGroupsFormField = '${Strings.domain}/api/v1/me/group';
 
+  ///! Get Groups
+  static const getGroupDetailAPI = '${Strings.domain}/api/v1/me/group';
+
   ///! Unassign Farmers in Group
   static const unassignFarmersApi =
       '${Strings.domain}/api/v1/me/unassign_farmer';
 
   ///! Create Group
   static const createGroupAPI = '${Strings.domain}/api/v1/me/create_group';
+
+  ///! assign a farmer
+  static String assignFarmerToGroup(String groupID) =>
+      '${Strings.domain}/api/v1/me/farmer_group/$groupID/assign';
+      // 'https://core.deshifarmer.co/api/v1/me/farmer_group/FG-10a2-48c21/assign'
+
+  ///! assign a farmer
+  static String updateLeaderToGroup(String groupID) =>
+      '${Strings.domain}/api/v1/me/farmer_group/$groupID';
 }
