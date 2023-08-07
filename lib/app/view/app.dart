@@ -7,9 +7,11 @@ import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
+import 'package:deshifarmer/presentation/cubit/add_group/add_farmer_to_group_cubit.dart';
 import 'package:deshifarmer/presentation/cubit/dropdown/dropdown_cubit.dart';
 import 'package:deshifarmer/presentation/cubit/groups/get_group_cubit.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
+import 'package:deshifarmer/presentation/pages/group_detail/bloc/group_detail_bloc.dart';
 import 'package:deshifarmer/presentation/pages/home/home.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/view/login_page.dart';
@@ -91,6 +93,20 @@ class App extends StatelessWidget {
         ///* My Unassing Farmer List
         BlocProvider<MyUnassignFamersBloc>(
           create: (BuildContext context) => MyUnassignFamersBloc(),
+        ),
+        // GroupDetailBloc detail
+        BlocProvider<GroupDetailBloc>(
+          create: (BuildContext context) => GroupDetailBloc(),
+        ),
+
+        /// add farmer to group cubit
+        BlocProvider<AddFarmerToGroupCubit>(
+          create: (BuildContext context) => AddFarmerToGroupCubit(),
+        ),
+
+        /// update leader to group cubit
+        BlocProvider<UpdateLeaderToGroupCubit>(
+          create: (BuildContext context) => UpdateLeaderToGroupCubit(),
         ),
       ],
       // create: (context) => SubjectBloc(),
