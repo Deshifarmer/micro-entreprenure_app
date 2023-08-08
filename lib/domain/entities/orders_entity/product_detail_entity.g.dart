@@ -25,7 +25,7 @@ ProductDetailEntity _$ProductDetailEntityFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$ProductDetailEntityToJson(
-        ProductDetailEntity instance) =>
+        ProductDetailEntity instance,) =>
     <String, dynamic>{
       'product_id': instance.product_id,
       'name': instance.name,

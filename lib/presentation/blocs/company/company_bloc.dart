@@ -22,10 +22,10 @@ class CompanyBloc extends Bloc<CompanyEvent, CompanyState> {
       ServerFailor(error: final err) => err,
     };
     if (value is AllCompanyListResp) {
-      // print('company success !');
+      print('company success !');
       emit(CompanySuccess(value));
     } else {
-      // print('company failor !');
+      print('company failor !');
 
       emit(CompanyFailed());
     }
