@@ -1,13 +1,18 @@
+// ignore_for_file: unawaited_futures
+
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/core/params/home_page_params.dart';
+import 'package:deshifarmer/presentation/animations/page_animations.dart';
 import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
+import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/cubit/groups/get_group_cubit.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/view/add_farmer_page.dart';
 import 'package:deshifarmer/presentation/pages/add_group/view/add_group_page.dart';
+import 'package:deshifarmer/presentation/pages/farmer_listo/farmer_listo.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/products.dart';
 import 'package:flutter/material.dart';
@@ -96,39 +101,29 @@ class HomeBody extends StatelessWidget {
                 itemCount: HomePageParams.categories.length,
                 itemBuilder: (c, i) => InkWell(
                   onTap: () async {
-                    // print(i);
                     print('$i ${HomePageParams.categories.elementAt(i)}');
                     final logINState = context.read<LoginBloc>().state;
 
                     if (logINState is LoginSuccess) {
                       print(logINState.successLoginEntity.token);
 
-                      ///! company BLOCK
-                      context.read<CompanyBloc>().add(
-                            CompanyFetchEvent(
-                              logINState.successLoginEntity.token,
-                            ),
-                          );
-
-                      ///! Category BLOCK
-                      context.read<CategoryBloc>().add(
-                            CategoryDataFetch(
-                              logINState.successLoginEntity.token,
-                            ),
-                          );
-
-                      ///! Fetch Products
-                      context.read<ProductsBBloc>().add(
-                            ProductFetchEvent(
-                              logINState.successLoginEntity.token,
-                            ),
-                          );
                       if (i == 4) {
                         context.read<GetGroupCubit>().addAllGroupFields(
                               logINState.successLoginEntity.token,
                             );
                         // ignore: use_build_context_synchronously
                         Navigator.push(context, AddFarmerPage.route());
+                      } else if (i == 3) {
+                        context.read<MyFarmerBloc>().add(
+                              MyFarmerFetchEvent(
+                                logINState.successLoginEntity.token,
+                              ),
+                            );
+                        Navigator.push(
+                            context,
+                            PageAnimationWrapper
+                                .sharedAxisTransitionPageWrapper(
+                                    FarmerListoPage()));
                       } else if (i == 5) {
                         context.read<GetGroupCubit>().addAllGroupFields(
                               logINState.successLoginEntity.token,
@@ -141,7 +136,27 @@ class HomeBody extends StatelessWidget {
                               ),
                             );
                         Navigator.push(context, AddGroupPage.route());
-                      } else {
+                      } else if (i == 0) {
+                        ///! company BLOCK
+                        context.read<CompanyBloc>().add(
+                              CompanyFetchEvent(
+                                logINState.successLoginEntity.token,
+                              ),
+                            );
+
+                        ///! Category BLOCK
+                        context.read<CategoryBloc>().add(
+                              CategoryDataFetch(
+                                logINState.successLoginEntity.token,
+                              ),
+                            );
+
+                        ///! Fetch Products
+                        context.read<ProductsBBloc>().add(
+                              ProductFetchEvent(
+                                logINState.successLoginEntity.token,
+                              ),
+                            );
                         // ProductsPage.route();
                         Navigator.push(context, ProductsPage.route());
                       }
