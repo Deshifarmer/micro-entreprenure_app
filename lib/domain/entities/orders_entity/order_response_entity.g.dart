@@ -14,7 +14,7 @@ OrderEntity _$OrderEntityFromJson(Map<String, dynamic> json) => OrderEntity(
       farmerDetail: json['farmerDetail'] == null
           ? null
           : FarmerDetailEntity.fromJson(
-              json['farmerDetail'] as Map<String, dynamic>),
+              json['farmerDetail'] as Map<String, dynamic>,),
       me_commission: json['me_commission'] as String?,
       me_id: json['me_id'] as String?,
       orderDetail: (json['orderDetail'] as List<dynamic>?)

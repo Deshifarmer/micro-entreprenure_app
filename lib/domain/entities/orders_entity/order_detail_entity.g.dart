@@ -23,7 +23,7 @@ OrderDetailEntity _$OrderDetailEntityFromJson(Map<String, dynamic> json) =>
       product_details: json['product_details'] == null
           ? null
           : ProductDetailEntity.fromJson(
-              json['product_details'] as Map<String, dynamic>),
+              json['product_details'] as Map<String, dynamic>,),
       product_id: json['product_id'] as String?,
       quantity: json['quantity'] as int?,
       status: json['status'] as String?,

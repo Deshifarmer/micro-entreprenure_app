@@ -19,12 +19,16 @@ ProductData _$ProductDataFromJson(Map<String, dynamic> json) => ProductData(
       subcategory: json['subcategory'] as String?,
       total_order: json['total_order'] as int?,
       unit_id: json['unit_id'] as String?,
+      image: json['image'] as String,
+      company: json['company'] as String?,
     );
 
 Map<String, dynamic> _$ProductDataToJson(ProductData instance) =>
     <String, dynamic>{
       'product_id': instance.product_id,
       'name': instance.name,
+      'image': instance.image,
+      'company': instance.company,
       'description': instance.description,
       'preferred': instance.preferred,
       'category': instance.category,

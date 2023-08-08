@@ -1,6 +1,3 @@
-import 'package:deshifarmer/core/app_strings.dart';
-import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
-import 'package:deshifarmer/presentation/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_group/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_group/components/get_farmer_listo.dart';
 import 'package:deshifarmer/presentation/pages/add_group/components/select_group_leader.dart';
@@ -50,11 +47,13 @@ class AddGroupBody extends StatelessWidget {
                     print('token -> ${loginState.successLoginEntity.token}');
                     print('Group NAME -> ${state.groupNameController.text}');
                     print('Leader ID -> ${state.leaderID}');
-                    context.read<AddGroupBloc>().add(CustomAddGroupEvent(
-                          groupName: state.groupNameController.text,
-                          leaderID: state.leaderID ?? '',
-                          token: loginState.successLoginEntity.token,
-                        ));
+                    context.read<AddGroupBloc>().add(
+                          CustomAddGroupEvent(
+                            groupName: state.groupNameController.text,
+                            leaderID: state.leaderID ?? '',
+                            token: loginState.successLoginEntity.token,
+                          ),
+                        );
                   }
                 },
                 child: const Text(

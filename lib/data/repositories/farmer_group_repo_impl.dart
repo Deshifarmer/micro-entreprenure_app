@@ -7,7 +7,7 @@ class FarmarGroupFieldImpl extends FarmarGroupFieldResponseRepo {
   final DeshiFarmerAPI _dfAPi = DeshiFarmerAPI();
   @override
   Future<Result<AllFarmerGroupFieldResp, Exception>> getFarmersGroup(
-      String token) {
+      String token,) {
     return _dfAPi.getGroupFields(token);
   }
 }

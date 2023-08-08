@@ -1,6 +1,5 @@
 import 'package:deshifarmer/data/datasources/local/corps/corps_db.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
-import 'package:deshifarmer/presentation/pages/add_farmer/bloc/add_farmer_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 

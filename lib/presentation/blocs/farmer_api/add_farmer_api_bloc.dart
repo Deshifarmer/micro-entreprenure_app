@@ -15,10 +15,10 @@ class AddFarmerApiBloc extends Bloc<AddFarmerApiEvent, AddFarmerApiState> {
     on<AddFarmerBtnPressEvent>(_onAddFarmerEvent);
   }
 
-  DeshiFarmerAPI _deshiFarmerAPI = DeshiFarmerAPI();
+  final DeshiFarmerAPI _deshiFarmerAPI = DeshiFarmerAPI();
   FutureOr<void> _onAddFarmerEvent(AddFarmerBtnPressEvent event, emit) async {
     emit(AddFarmerAPILoadingState());
-    var farmerAddingResp =
+    final farmerAddingResp =
         await _deshiFarmerAPI.addFarmer(event.farmerModel, event.token);
 
     final value = switch (farmerAddingResp) {

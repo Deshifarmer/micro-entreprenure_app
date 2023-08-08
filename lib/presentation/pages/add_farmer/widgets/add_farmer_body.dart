@@ -1,4 +1,3 @@
-import 'package:deshifarmer/data/datasources/local/corps/corps_db.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/components/children_form_field.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/components/dist_select_field.dart';
@@ -16,7 +15,6 @@ import 'package:deshifarmer/presentation/pages/add_farmer/components/m_bank_ac_t
 import 'package:deshifarmer/presentation/pages/add_farmer/components/upozilla_form_field.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/widgets/add_farmer_btn.dart';
 import 'package:flutter/material.dart';
-import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 /// {@template add_farmer_body}
 /// Body of the AddFarmerPage.
