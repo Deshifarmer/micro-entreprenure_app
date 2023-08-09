@@ -45,6 +45,7 @@ class FarmerEntity {
     required this.is_active,
     required this.onboard_date,
     required this.order_list,
+    this.farm_list,
   });
 
   factory FarmerEntity.fromJson(Map<String, dynamic> json) =>
@@ -88,4 +89,6 @@ class FarmerEntity {
   final String? is_active;
   final String? onboard_date;
   final List<dynamic> order_list;
+  // farm_list
+  final List<dynamic>? farm_list;
 }
