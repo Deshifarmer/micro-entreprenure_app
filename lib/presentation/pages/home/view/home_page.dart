@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.watch<HomeBloc>().state;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xffF5F8FF),
       // body: HomeView(),
       body: state is HomeInitial
           ? const HomeView()
