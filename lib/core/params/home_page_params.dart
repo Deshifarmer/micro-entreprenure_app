@@ -1,3 +1,14 @@
+import 'package:deshifarmer/data/models/home_page_icon_model.dart';
+
+import '../../presentation/shapes/agri_advisory_shape.dart';
+import '../../presentation/shapes/agri_input_shape.dart';
+import '../../presentation/shapes/crop_insurance_shape.dart';
+import '../../presentation/shapes/farms_shape.dart';
+import '../../presentation/shapes/my_farmers_shape.dart';
+import '../../presentation/shapes/orders_shape.dart';
+import '../../presentation/shapes/performance_shape.dart';
+import '../../presentation/shapes/track_activity_shape.dart';
+
 class HomePageParams {
   ///* home cat
   static const List<String> categories = <String>[
@@ -12,5 +23,23 @@ class HomePageParams {
     'কৃষি বীমা',
     'কৃষি পরামর্শ',
     'ট্র্যাক কার্যকলাপ',
+  ];
+
+  static List<HomeIconModel> homePageIconDatas = [
+    HomeIconModel(painter: AgriInputShape(), title: 'Agri Input'),
+    HomeIconModel(painter: TrackActivityShape(), title: 'Track Activity'),
+    HomeIconModel(painter: CropInsuranceShape(), title: 'Crop Insurance'),
+    HomeIconModel(painter: AgriAdvisoryShape(), title: 'Agri Input'),
+    HomeIconModel(painter: MyFarmersShape(), title: 'My Farmers'),
+    HomeIconModel(painter: FarmsShape(), title: 'Farms'),
+    HomeIconModel(painter: PerformaceShape(), title: 'Performance'),
+    HomeIconModel(painter: OrdersShape(), title: 'Orders'),
+  ];
+
+  static List<HomeIconModel> homePageShortCuts = [
+    HomeIconModel(painter: AgriInputShape(), title: 'Add new Farmer'),
+    HomeIconModel(painter: TrackActivityShape(), title: 'Add new Farm'),
+    HomeIconModel(painter: CropInsuranceShape(), title: 'Commission'),
+    HomeIconModel(painter: AgriAdvisoryShape(), title: 'Attendance'),
   ];
 }
