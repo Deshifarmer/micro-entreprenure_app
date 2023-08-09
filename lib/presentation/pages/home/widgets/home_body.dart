@@ -1,20 +1,28 @@
-// ignore_for_file: unawaited_futures
-
-import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/core/params/home_page_params.dart';
-import 'package:deshifarmer/presentation/animations/page_animations.dart';
-import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
+import 'package:deshifarmer/domain/entities/user_entity/user_profile_entity.dart';
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
-import 'package:deshifarmer/presentation/cubit/groups/get_group_cubit.dart';
-import 'package:deshifarmer/presentation/pages/add_farmer/view/add_farmer_page.dart';
-import 'package:deshifarmer/presentation/pages/add_group/view/add_group_page.dart';
 import 'package:deshifarmer/presentation/pages/farmer_listo/farmer_listo.dart';
+import 'package:deshifarmer/presentation/pages/home/components/appbar_top_user_detail.dart';
+import 'package:deshifarmer/presentation/pages/home/components/card_of_dashboard.dart';
+import 'package:deshifarmer/presentation/pages/home/components/card_of_info.dart';
+import 'package:deshifarmer/presentation/pages/home/components/farmer_weather_card.dart';
+import 'package:deshifarmer/presentation/pages/home/components/home_balance_card.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/products.dart';
+import 'package:deshifarmer/presentation/shapes/agri_advisory_shape.dart';
+import 'package:deshifarmer/presentation/shapes/agri_input_shape.dart';
+import 'package:deshifarmer/presentation/shapes/carrot_shape.dart';
+import 'package:deshifarmer/presentation/shapes/crop_insurance_shape.dart';
+import 'package:deshifarmer/presentation/shapes/farms_shape.dart';
+import 'package:deshifarmer/presentation/shapes/my_farmers_shape.dart';
+import 'package:deshifarmer/presentation/shapes/my_order_card_shape.dart';
+import 'package:deshifarmer/presentation/shapes/orders_shape.dart';
+import 'package:deshifarmer/presentation/shapes/performance_shape.dart';
+import 'package:deshifarmer/presentation/shapes/track_activity_shape.dart';
+import 'package:deshifarmer/presentation/widgets/constraints.dart';
+import 'package:deshifarmer/presentation/widgets/home_page_icon_widget.dart';
+import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// {@template home_body}
@@ -32,145 +40,264 @@ class HomeBody extends StatelessWidget {
       builder: (context, state) {
         if (state is UserProfileFetchSuccess) {
           final usrProfile = state.userProfile;
-          return ListView(
-            children: [
-              const SizedBox(
-                height: 60,
-              ),
-              // circular avater
-              if (usrProfile.photo != null)
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20), // Image border
-                    child: SizedBox.fromSize(
-                      size: const Size.fromRadius(
-                        100,
-                      ), // Image radius
-                      child: Image.network(
-                        '${Strings.domain}/storage${usrProfile.photo}',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+          // return HomeBodyListView(usrProfile: usrProfile);
+          return CustomScrollView(
+            slivers: [
+              ///! App Bar
+              SliverAppBar(
+                backgroundColor: const Color(0xff4C6E5E),
+                expandedHeight: 250,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                // flexibleSpace: Text('HOLA'),
+                floating: true,
+                centerTitle: true,
+                flexibleSpace: AppBarTopUserDetail(usrProfile: usrProfile),
+                bottom: PreferredSize(
+                  preferredSize: Size(
+                    MediaQuery.of(context).size.width / 1.2,
+                    65,
                   ),
-                )
-              else
-                const SizedBox.shrink(),
-              // row -> name , balance
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Welcome ${usrProfile.full_name}'),
-                    Text('BDT ${usrProfile.account_details.first.net_balance}'),
-                  ],
+                  child: HomeBalanceCard(usrProfile: usrProfile),
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              // row -> day , checked in
-              const Padding(
-                padding: EdgeInsets.all(8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Today'),
-                    Text('checked in'),
-                  ],
+
+              ///! total farmers/orders card
+              SliverGrid(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    return index == 0
+                        ? CardOfSmallInfo(
+                            ammount: usrProfile.total_farmer.toString(),
+                            icon: Icons.man,
+                            title: 'Farmers',
+                          )
+                        : CardOfSmallInfo(
+                            ammount: usrProfile.total_sale.toString(),
+                            icon: Icons.list,
+                            title: 'Orders',
+                          );
+                  },
+                  childCount: 2,
                 ),
-              ),
-              // some graph
-              Container(
-                margin: const EdgeInsets.all(10),
-                height: 200,
-                decoration: const BoxDecoration(
-                  color: Colors.green,
-                  borderRadius: BorderRadius.all(Radius.circular(25)),
-                ),
-              ),
-              // gridview of card
-              GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  mainAxisExtent: 80,
+                  mainAxisExtent: 120,
                 ),
-                itemCount: HomePageParams.categories.length,
-                itemBuilder: (c, i) => InkWell(
-                  onTap: () async {
-                    print('$i ${HomePageParams.categories.elementAt(i)}');
-                    final logINState = context.read<LoginBloc>().state;
+              ),
 
-                    if (logINState is LoginSuccess) {
-                      print(logINState.successLoginEntity.token);
-
-                      if (i == 4) {
-                        context.read<GetGroupCubit>().addAllGroupFields(
-                              logINState.successLoginEntity.token,
-                            );
-                        // ignore: use_build_context_synchronously
-                        Navigator.push(context, AddFarmerPage.route());
-                      } else if (i == 3) {
-                        context.read<MyFarmerBloc>().add(
-                              MyFarmerFetchEvent(
-                                logINState.successLoginEntity.token,
-                              ),
-                            );
-                        Navigator.push(
-                            context,
-                            PageAnimationWrapper
-                                .sharedAxisTransitionPageWrapper(
-                                    FarmerListoPage()));
-                      } else if (i == 5) {
-                        context.read<GetGroupCubit>().addAllGroupFields(
-                              logINState.successLoginEntity.token,
-                            );
-// MyUnassignFamersBloc
-
-                        context.read<MyUnassignFamersBloc>().add(
-                              MyUnassignFarmerFetchEvent(
-                                logINState.successLoginEntity.token,
-                              ),
-                            );
-                        Navigator.push(context, AddGroupPage.route());
-                      } else if (i == 0) {
-                        ///! company BLOCK
-                        context.read<CompanyBloc>().add(
-                              CompanyFetchEvent(
-                                logINState.successLoginEntity.token,
-                              ),
-                            );
-
-                        ///! Category BLOCK
-                        context.read<CategoryBloc>().add(
-                              CategoryDataFetch(
-                                logINState.successLoginEntity.token,
-                              ),
-                            );
-
-                        ///! Fetch Products
-                        context.read<ProductsBBloc>().add(
-                              ProductFetchEvent(
-                                logINState.successLoginEntity.token,
-                              ),
-                            );
-                        // ProductsPage.route();
-                        Navigator.push(context, ProductsPage.route());
-                      }
-                    }
-                  },
-                  child: Card(
-                    color: Colors.greenAccent,
-                    child: Center(
-                      child: Text(
-                        HomePageParams.categories.elementAt(i),
-                        style: Theme.of(context).textTheme.bodyLarge,
+              ///! Weather Card
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (_, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: 25,
                       ),
-                    ),
-                  ),
+                      child: FarmerWeatherCard(
+                        usrProfile: usrProfile,
+                      ),
+                    );
+                  },
+                  childCount: 1,
+                ),
+              ),
+
+              ///! Grid Icons List
+              SliverGrid(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    final currentIcon =
+                        HomePageParams.homePageIconDatas.elementAt(index);
+                    return HomePageIconWidget(
+                      title: currentIcon.title,
+                      painter: currentIcon.painter,
+                    );
+                  },
+                  childCount: 8,
+                ),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  mainAxisExtent: 120,
+                ),
+              ),
+
+              ///! A Simple Banner 1
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (_, int index) {
+                    return Container(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                      ),
+                      height: 80,
+                      width: MediaQuery.of(context).size.width / 1.3,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: const Color(0xffD9D9D9),
+                      ),
+                      child: const Center(child: Text('Banner 1')),
+                    );
+                  },
+                  childCount: 1,
+                ),
+              ),
+
+              ///! My KPIs -> (on board farmers | Monthly sales)
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (_, int index) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 20,
+                            left: 30,
+                          ),
+                          child: Text(
+                            'My KPIs',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .copyWith(
+                                  color: const Color(0xff4C6E5E),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                        ),
+                        CardOfDashboard(
+                          current: 189,
+                          target: 1000,
+                          title: 'On Board Farmers',
+                          painder: MyFarmersShape(),
+                          isSymbol: false,
+                        ),
+                        CardOfDashboard(
+                          current: 6150,
+                          target: 10000,
+                          title: 'Monthly Sale',
+                          isSymbol: true,
+                          painder: MyFarmersShape(),
+                        ),
+                      ],
+                    );
+                  },
+                  childCount: 1,
+                ),
+              ),
+
+              ///! My orders -> list of farmers
+
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (_, int index) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 20,
+                            left: 30,
+                            right: 30,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'My Orders',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge!
+                                    .copyWith(
+                                      color: const Color(0xff4C6E5E),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                              Text(
+                                'see all',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(
+                                      color: const Color(0xff4C6E5E),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const MyOrderCard(),
+                        const MyOrderCard(),
+                        const MyOrderCard(),
+                      ],
+                    );
+                  },
+                  childCount: 1,
+                ),
+              ),
+
+              ///! shortcuts
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (_, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 20,
+                      ),
+                      child: Text(
+                        'Shortcuts',
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                              color: const Color(0xff4C6E5E),
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                    );
+                  },
+                  childCount: 1,
+                ),
+              ),
+
+              SliverGrid(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    var currentShortCut =
+                        HomePageParams.homePageShortCuts.elementAt(index);
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: HomePageIconWidget(
+                          painter: currentShortCut.painter,
+                          title: currentShortCut.title),
+                    );
+                  },
+                  childCount: 4,
+                ),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  mainAxisExtent: 120,
+                ),
+              ),
+
+              ///! A Simple Banner 2
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (_, int index) {
+                    return Container(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                      ),
+                      height: 80,
+                      width: MediaQuery.of(context).size.width / 1.3,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: const Color(0xffD9D9D9),
+                      ),
+                      child: const Center(child: Text('Banner 1')),
+                    );
+                  },
+                  childCount: 1,
                 ),
               ),
             ],
@@ -181,10 +308,8 @@ class HomeBody extends StatelessWidget {
             child: Text('Data Fetching failed'),
           );
         }
-        return Center(
-          child: CircularProgressIndicator(
-            color: Colors.green[600],
-          ),
+        return const Center(
+          child: PrimaryLoadingIndicator(),
         );
       },
     );
