@@ -5,6 +5,7 @@ import 'package:deshifarmer/data/models/add_farmer_model.dart';
 import 'package:deshifarmer/presentation/blocs/farmer_api/add_farmer_api_bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/bloc/add_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
+import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -42,7 +43,7 @@ class AddFarmerButton extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           child: state is AddFarmerAPILoadingState
               ? const Center(
-                  child: CircularProgressIndicator(),
+                  child: PrimaryLoadingIndicator(),
                 )
               : ElevatedButton(
                   style: ButtonStyle(
@@ -137,7 +138,8 @@ class AddFarmerButton extends StatelessWidget {
                         farmerType: '',
                       );
                       print(
-                          '${farmerModel.dateOfBirth.year}-${farmerModel.dateOfBirth.month}-${farmerModel.dateOfBirth.day}',);
+                        '${farmerModel.dateOfBirth.year}-${farmerModel.dateOfBirth.month}-${farmerModel.dateOfBirth.day}',
+                      );
                       // print(DateFormat.yM(farmerModel.dateOfBirth));
 
                       final testD = {
