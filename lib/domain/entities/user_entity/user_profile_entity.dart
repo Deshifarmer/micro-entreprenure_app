@@ -39,7 +39,8 @@ class UserProfileEntity {
       _$UserProfileEntityFromJson(json);
   final String? df_id;
   final String? full_name;
-  final String nid;
+  // final String nid;
+  final int nid; //! on local its INT
   final String? phone;
   final String? email;
   final String? designation;
@@ -52,7 +53,8 @@ class UserProfileEntity {
   final String? permanent_address;
   final String? home_district;
   final String? joining_date;
-  final String? type;
+  // final String? type;
+  final int? type; //! on local its int
   final String? gender;
   final String? department;
   final String? work_place;

@@ -49,19 +49,20 @@ class GroupLeaderFormField {
 
   factory GroupLeaderFormField.fromJson(Map<String, dynamic> json) =>
       _$GroupLeaderFormFieldFromJson(json);
-  final String? gov_farmer_id,
-      credit_score,
+
+  final String? credit_score,
       land_status,
       bank_details,
       mfs_account,
       farmer_role,
       farm_id;
   final List<dynamic> order_list;
+
+  final int? nid, gov_farmer_id, number_of_children, is_active, family_member;
   final String farmer_id,
       image,
       farmer_type,
       onboard_by,
-      nid,
       first_name,
       last_name,
       full_name,
@@ -76,8 +77,6 @@ class GroupLeaderFormField {
       district,
       division,
       union,
-      family_member,
-      number_of_children,
       yearly_income,
       year_of_stay_in,
       group_id,
@@ -86,6 +85,45 @@ class GroupLeaderFormField {
       focused_crop,
       cropping_intensity,
       cultivation_practice,
-      is_active,
       onboard_date;
 }
+
+// final String? gov_farmer_id,
+//     credit_score,
+//     land_status,
+//     bank_details,
+//     mfs_account,
+//     farmer_role,
+//     farm_id;
+
+// final String farmer_id,
+//     image,
+//     farmer_type,
+//     onboard_by,
+//     nid,
+//     first_name,
+//     last_name,
+//     full_name,
+//     fathers_name,
+//     phone,
+//     is_married,
+//     gender,
+//     date_of_birth,
+//     address,
+//     village,
+//     upazila,
+//     district,
+//     division,
+//     union,
+//     family_member,
+//     number_of_children,
+//     yearly_income,
+//     year_of_stay_in,
+//     group_id,
+//     resident_type,
+//     current_producing_crop,
+//     focused_crop,
+//     cropping_intensity,
+//     cultivation_practice,
+//     is_active,
+//     onboard_date;
