@@ -22,7 +22,7 @@ class AddGroupBloc extends Bloc<AddGroupEvent, AddGroupState> {
     CustomAddGroupEvent event,
     Emitter<AddGroupState> emit,
   ) async {
-    var result = await deshiFarmerAPI.createGroup(
+    final result = await deshiFarmerAPI.createGroup(
       event.token,
       event.groupName,
       event.leaderID,
