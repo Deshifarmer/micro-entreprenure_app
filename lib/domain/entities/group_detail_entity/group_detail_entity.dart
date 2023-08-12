@@ -15,7 +15,7 @@ class GroupDetailEntity {
     required this.farmer_group_id,
     required this.farmer_group_name,
     required this.farmer_list,
-    required this.group_leader,
+    // required this.group_leader,
     required this.group_manager_id,
     required this.inactive_at,
     required this.isActive,
@@ -28,13 +28,15 @@ class GroupDetailEntity {
   final String? farmer_group_id;
   final String? farmer_group_name;
   final String? cluster_id;
-  final String? isActive;
+  final int? isActive;
+  // final String? isActive;
   final String? inactive_at;
   final String? group_manager_id;
   final String? created_at;
   final String? updated_at;
   final String? color;
   final int? total_farmers;
-  final GroupLeaderFormField? group_leader;
+  // final String? total_farmers;
+  // final GroupLeaderFormField? group_leader;
   final List<FarmerEntity?> farmer_list;
 }
