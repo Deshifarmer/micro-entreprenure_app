@@ -1,17 +1,10 @@
-import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:deshifarmer/presentation/pages/group_detail/widgets/group_detail_body.dart';
 import 'package:flutter/material.dart';
 
-import '../bloc/group_detail_bloc.dart';
-
-/// {@template group_detail_page}
 /// A description for GroupDetailPage
-/// {@endtemplate}
 class GroupDetailPage extends StatelessWidget {
-  /// {@macro group_detail_page}
   const GroupDetailPage({super.key});
 
-  /// The static route for GroupDetailPage
   static Route<dynamic> route() {
     return MaterialPageRoute<dynamic>(builder: (_) => const GroupDetailPage());
   }

@@ -1,8 +1,8 @@
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
 import 'package:deshifarmer/presentation/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
-import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:deshifarmer/presentation/pages/add_group/bloc/bloc.dart';
+import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:flutter/material.dart';
 
 class SelectGroupLeader extends StatelessWidget {
@@ -50,8 +50,9 @@ class SelectGroupLeader extends StatelessWidget {
                   // decoration: ShapeDecoration(),
                   // itemHeight: 300,
                   elevation: 16,
-                  value: state.allFarmerListResp.farmers.first,
-                  // value: state.allFarmerListResp.farmers.first,
+                  value: state.allFarmerListResp.farmers.length != 0
+                      ? state.allFarmerListResp.farmers.first
+                      : null,
                   items: state.allFarmerListResp.farmers
                       .map<DropdownMenuItem<FarmerEntity>>((value) {
                     return DropdownMenuItem<FarmerEntity>(
@@ -61,7 +62,9 @@ class SelectGroupLeader extends StatelessWidget {
                         leading: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.network(
-                            '${Strings.domain}/storage/${value.image}',
+                            checkDomain(Strings.domain)
+                                ? dummyImage
+                                : '${Strings.domain}/storage/${value.image}',
                             height: 50,
                             width: 50,
                           ),
@@ -72,8 +75,7 @@ class SelectGroupLeader extends StatelessWidget {
                     );
                   }).toList(),
                   onChanged: (FarmerEntity? val) {
-                    // context.read<DropdownCubit>().changeDropdownValue(val ?? '');
-                    var addGroupState = context.read<AddGroupBloc>().state;
+                    final addGroupState = context.read<AddGroupBloc>().state;
                     if (addGroupState is AddGroupInitial) {
                       addGroupState.leaderID = val!.farmer_id;
                     }
