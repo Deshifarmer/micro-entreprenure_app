@@ -14,7 +14,7 @@ class GroupDetailCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.all(8),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8),
         child: Column(
           children: [
             // column -> manager id, leader name & leader phone
@@ -32,7 +32,7 @@ class GroupDetailCard extends StatelessWidget {
               ],
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
@@ -48,7 +48,7 @@ class GroupDetailCard extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
@@ -63,7 +63,7 @@ class GroupDetailCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),
