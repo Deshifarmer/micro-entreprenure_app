@@ -18,5 +18,6 @@ class SuccessLoginEntity {
   final String full_name;
   final String token;
   final String df_id;
-  final String role;
+  // final String role;
+  final int role; //! on server this is int
 }
