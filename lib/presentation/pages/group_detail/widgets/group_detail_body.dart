@@ -1,5 +1,6 @@
 import 'package:deshifarmer/core/app_core.dart';
 import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
+import 'package:deshifarmer/data/repositories/group_detail_repo_imp.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
 import 'package:deshifarmer/presentation/cubit/add_group/add_farmer_to_group_cubit.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
@@ -7,16 +8,14 @@ import 'package:deshifarmer/presentation/pages/group_detail/bloc/group_detail_bl
 import 'package:deshifarmer/presentation/pages/group_detail/components/add_farmer_to_gc.dart';
 import 'package:deshifarmer/presentation/pages/group_detail/components/group_detail_card.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
+import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/farmer_card.dart';
 import 'package:deshifarmer/presentation/widgets/primary_btn.dart';
+import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:flutter/material.dart';
 
-/// {@template group_detail_body}
 /// Body of the GroupDetailPage.
-/// Add what it does
-/// {@endtemplate}
 class GroupDetailBody extends StatelessWidget {
-  /// {@macro group_detail_body}
   GroupDetailBody({super.key});
   final DeshiFarmerAPI deshiFarmerAPI = DeshiFarmerAPI();
   @override
@@ -26,7 +25,7 @@ class GroupDetailBody extends StatelessWidget {
       builder: (context, state) {
         if (state is GroupDetailLoading) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: PrimaryLoadingIndicator(),
           );
         }
         if (state is GroupDetailFetchFailed) {
@@ -35,6 +34,7 @@ class GroupDetailBody extends StatelessWidget {
           );
         }
         if (state is GroupDetailFetchSuccessFull) {
+          print('succes detail :)');
           return ListView(
             children: [
               GroupDetailCard(
@@ -42,7 +42,7 @@ class GroupDetailBody extends StatelessWidget {
               ),
               // select Farmer
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8),
                 child: Text(
                   'কৃষক সিলেক্ট করুন',
                   style: Theme.of(context).textTheme.labelMedium,
@@ -57,7 +57,7 @@ class GroupDetailBody extends StatelessWidget {
                   final loginState = context.read<LoginBloc>().state;
                   if (loginState is LoginSuccess) {
                     if (state.groupDetailEntity.farmer_group_id != null) {
-                      var res = await deshiFarmerAPI.addFarmerToGroupAPI(
+                      final res = await deshiFarmerAPI.addFarmerToGroupAPI(
                         loginState.successLoginEntity.token,
                         currentFarmer,
                         state.groupDetailEntity.farmer_group_id!,
@@ -71,13 +71,11 @@ class GroupDetailBody extends StatelessWidget {
                         ///! successfully added
                         if (value) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
+                            const SnackBar(
                               content: Text('Successfully added'),
                               backgroundColor: Colors.greenAccent,
                             ),
                           );
-                          //* TODO: referesh the page by adding new event to the BLOC
-
                           context.read<GroupDetailBloc>().add(
                                 GroupDetailFetchEvent(
                                   groupID:
@@ -103,7 +101,9 @@ class GroupDetailBody extends StatelessWidget {
                 },
                 title: 'কৃষক যোগ',
               ),
-              if (state.groupDetailEntity.farmer_list != null)
+              if (state.groupDetailEntity.farmer_list.isNotEmpty)
+
+                ///! TODO: BUG Found in here
                 Padding(
                   padding: const EdgeInsets.all(8),
                   child: DropdownButtonFormField<FarmerEntity>(
@@ -114,7 +114,7 @@ class GroupDetailBody extends StatelessWidget {
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
                     isExpanded: true,
                     decoration: const InputDecoration(
-                      label: Text(('গ্রুপ লিডার সিলেক্ট করুন')),
+                      label: Text('গ্রুপ লিডার সিলেক্ট করুন'),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(10),
@@ -144,7 +144,9 @@ class GroupDetailBody extends StatelessWidget {
                           leading: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: Image.network(
-                              '${Strings.domain}/storage/${value?.image}',
+                              checkDomain(Strings.domain)
+                                  ? dummyImage
+                                  : '${Strings.domain}/storage/${value?.image}',
                               height: 50,
                               width: 50,
                             ),
@@ -170,76 +172,79 @@ class GroupDetailBody extends StatelessWidget {
                   ),
                 ),
 
-              PrimaryButtonGreen(
-                onpress: () async {
-                  final updateLeader =
-                      context.read<UpdateLeaderToGroupCubit>().state;
-                  print('leader id -> $updateLeader');
+              if (state.groupDetailEntity.farmer_list.isNotEmpty)
+                PrimaryButtonGreen(
+                  onpress: () async {
+                    final updateLeader =
+                        context.read<UpdateLeaderToGroupCubit>().state;
+                    print('leader id -> $updateLeader');
 
-                  final loginState = context.read<LoginBloc>().state;
-                  if (loginState is LoginSuccess) {
-                    if (state.groupDetailEntity.farmer_group_id != null) {
-                      var res = await deshiFarmerAPI.updateLeaderToGroupAPI(
-                        loginState.successLoginEntity.token,
-                        updateLeader,
-                        state.groupDetailEntity.farmer_group_id!,
-                      );
+                    final loginState = context.read<LoginBloc>().state;
+                    if (loginState is LoginSuccess) {
+                      if (state.groupDetailEntity.farmer_group_id != null) {
+                        final res = await deshiFarmerAPI.updateLeaderToGroupAPI(
+                          loginState.successLoginEntity.token,
+                          updateLeader,
+                          state.groupDetailEntity.farmer_group_id!,
+                        );
 
-                      final value = switch (res) {
-                        Success(data: final succ) => succ,
-                        ServerFailor(error: final err) => err,
-                      };
-                      if (value is bool) {
-                        ///! successfully added
-                        if (value) {
+                        final value = switch (res) {
+                          Success(data: final succ) => succ,
+                          ServerFailor(error: final err) => err,
+                        };
+                        if (value is bool) {
+                          ///! successfully added
+                          if (value) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Successfully added'),
+                                backgroundColor: Colors.greenAccent,
+                              ),
+                            );
+
+                            ///* TODO: referesh the page by adding new event to the BLOC
+
+                            context.read<GroupDetailBloc>().add(
+                                  GroupDetailFetchEvent(
+                                    groupID: state.groupDetailEntity
+                                            .farmer_group_id ??
+                                        '',
+                                    token: loginState.successLoginEntity.token,
+                                    // token: logINState.successLoginEntity.token,
+                                  ),
+                                );
+                          }
+                        } else {
+                          ///! got an error
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text('Successfully added'),
-                              backgroundColor: Colors.greenAccent,
+                              content: Text('Got an Error $value'),
+                              backgroundColor: Colors.redAccent,
                             ),
                           );
-                          //* TODO: referesh the page by adding new event to the BLOC
-
-                          context.read<GroupDetailBloc>().add(
-                                GroupDetailFetchEvent(
-                                  groupID:
-                                      state.groupDetailEntity.farmer_group_id ??
-                                          '',
-                                  token: loginState.successLoginEntity.token,
-                                  // token: logINState.successLoginEntity.token,
-                                ),
-                              );
                         }
-                      } else {
-                        ///! got an error
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Got an Error $value'),
-                            backgroundColor: Colors.redAccent,
-                          ),
-                        );
                       }
                     }
-                  }
-                },
-                title: 'লিডার আপডেট',
-              ),
+                  },
+                  title: 'লিডার আপডেট',
+                ),
 
-              Text('এই গ্রুপ এর কৃষক সমূহ'),
+              const Text('এই গ্রুপ এর কৃষক সমূহ'),
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: state.groupDetailEntity.farmer_list?.length ?? 0,
+                itemCount: state.groupDetailEntity.farmer_list.length ?? 0,
                 itemBuilder: (context, index) {
-                  var currentFarmer =
-                      state.groupDetailEntity.farmer_list?.elementAt(index);
+                  final currentFarmer =
+                      state.groupDetailEntity.farmer_list.elementAt(index);
                   return FarmerCard(currentFarmer: currentFarmer);
                 },
               ),
             ],
           );
+          // return Text('hola');
         }
-        return SizedBox.shrink();
+        return const SizedBox.shrink();
       },
     );
   }
