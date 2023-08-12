@@ -34,8 +34,13 @@ class MBankAccountType extends StatelessWidget {
 
         elevation: 16,
         value: 'বিকাশ',
-        items: <String>['বিকাশ', 'নগদ', 'উপায়', 'রকেট', 'অন্যান্য']
-            .map<DropdownMenuItem<String>>((String value) {
+        items: <String>[
+          'বিকাশ',
+          'নগদ',
+          'উপায়',
+          'রকেট',
+          'অন্যান্য',
+        ].map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             // alignment: Alignment.center,
             value: value,
@@ -45,6 +50,22 @@ class MBankAccountType extends StatelessWidget {
         onChanged: (String? val) {
           if (addFarmerB is AddFarmerInitial) {
             addFarmerB.farmerMFSAccountTypeController.text = val.toString();
+            if ('বিকাশ' == val) {
+              print('bkash pressed');
+              addFarmerB.farmerMFSAccountTypeController.text = 'bkash';
+            } else if ('নগদ' == val) {
+              print('nagad pressed');
+              addFarmerB.farmerMFSAccountTypeController.text = 'nogod';
+            } else if ('উপায়' == val) {
+              print('upay pressed');
+              addFarmerB.farmerMFSAccountTypeController.text = 'upay';
+            } else if ('রকেট' == val) {
+              print('roket pressed');
+              addFarmerB.farmerMFSAccountTypeController.text = 'rocket';
+            } else if ('অন্যান্য' == val) {
+              print('other pressed');
+              addFarmerB.farmerMFSAccountTypeController.text = 'other';
+            }
           }
         },
       ),
