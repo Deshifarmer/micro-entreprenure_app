@@ -1,3 +1,5 @@
+import 'package:deshifarmer/presentation/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
+import 'package:deshifarmer/presentation/cubit/groups/get_group_cubit.dart';
 import 'package:deshifarmer/presentation/pages/add_group/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_group/components/get_farmer_listo.dart';
 import 'package:deshifarmer/presentation/pages/add_group/components/select_group_leader.dart';
@@ -15,7 +17,38 @@ class AddGroupBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AddGroupBloc, AddGroupState>(
+    return BlocConsumer<AddGroupBloc, AddGroupState>(
+      listener: (context, state) {
+        if (state is GroupCreatedFailed) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              backgroundColor: Colors.red,
+              content: Text('Group Created Failed'),
+            ),
+          );
+        }
+        if (state is GroupCreatedSuccessfully) {
+          // context.read<>()
+
+          final logINState = context.read<LoginBloc>().state;
+          if (logINState is LoginSuccess) {
+            context.read<GetGroupCubit>().addAllGroupFields(
+                  logINState.successLoginEntity.token,
+                );
+            context.read<MyUnassignFamersBloc>().add(
+                  MyUnassignFarmerFetchEvent(
+                    logINState.successLoginEntity.token,
+                  ),
+                );
+          }
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              backgroundColor: Colors.green,
+              content: Text('Group Created Succesfully'),
+            ),
+          );
+        }
+      },
       builder: (context, state) {
         return ListView(
           children: [
