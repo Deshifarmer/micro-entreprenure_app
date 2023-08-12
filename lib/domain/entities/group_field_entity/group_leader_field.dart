@@ -59,7 +59,7 @@ class GroupLeaderFormField {
   final List<dynamic> order_list;
 
   final int? nid, gov_farmer_id, number_of_children, is_active, family_member;
-  final String farmer_id,
+  final String? farmer_id,
       image,
       farmer_type,
       onboard_by,
