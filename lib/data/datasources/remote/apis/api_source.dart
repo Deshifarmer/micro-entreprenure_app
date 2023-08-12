@@ -140,10 +140,21 @@ class DeshiFarmerAPI {
       );
       if (response.statusCode == 200) {
         print('status 200');
-        final result = json.decode(response.body);
-        UserProfileEntity successResonse =
-            UserProfileEntity.fromJson(result as Map<String, dynamic>);
-        return Success<UserProfileEntity, Exception>(successResonse);
+        final result = json.decode(response.body) as Map<String, dynamic>;
+        try {
+          UserProfileEntity successResonse = UserProfileEntity.fromJson(result);
+          return Success<UserProfileEntity, Exception>(successResonse);
+        } catch (e) {
+          print('exception occured $e');
+          result.forEach(
+            (key, value) {
+              print('$key ${value.runtimeType} $value');
+            },
+          );
+          return ServerFailor<UserProfileEntity, Exception>(
+            Exception('Server failor'),
+          );
+        }
       } else {
         print('status CODE -> ${response.statusCode}');
         return ServerFailor<UserProfileEntity, Exception>(
@@ -383,12 +394,19 @@ class DeshiFarmerAPI {
             );
           } catch (e) {
             print('error comverting data ->  ${element.runtimeType}, $e \n');
-            // final e2 = element as Map<String, dynamic>;
             // e2.forEach((key, value) {
             //   if (value.runtimeType != String) {
             //     print('${value.runtimeType} $key $value');
             //   }
             // });
+
+            final e2 = element as Map<String, dynamic>;
+            print('exception occured $e');
+            e2.forEach(
+              (key, value) {
+                print('$key | ${value.runtimeType} | $value');
+              },
+            );
           }
         }
         AllFarmerListResp successResonse = AllFarmerListResp(companyE);
@@ -436,13 +454,14 @@ class DeshiFarmerAPI {
               FarmerEntity.fromJson(element),
             );
           } catch (e) {
-            print('error comverting data ->  ${element.runtimeType}, $e \n');
-            // final e2 = element as Map<String, dynamic>;
-            // e2.forEach((key, value) {
-            //   if (value.runtimeType != String) {
-            //     print('${value.runtimeType} $key $value');
-            //   }
-            // });
+            print(
+                'error comverting List<FarmerEntity> ->  ${element.runtimeType}, $e \n');
+            final e2 = element as Map<String, dynamic>;
+            e2.forEach((key, value) {
+              if (value.runtimeType != String) {
+                print('${value.runtimeType} $key $value');
+              }
+            });
           }
         }
         AllFarmerListResp successResonse = AllFarmerListResp(companyE);
@@ -481,7 +500,7 @@ class DeshiFarmerAPI {
       if (response.statusCode == 200) {
         final result = json.decode(response.body) as List<dynamic>;
         print(
-          'successfuly Unassign GROUP -> ${result.runtimeType} ${result.length}',
+          'successfuly Unassign GROUPs -> ${result.runtimeType} ${result.length}',
         );
         List<GroupFieldEntity> companyE = [];
         for (int i = 0; i < result.length; i++) {
@@ -493,8 +512,15 @@ class DeshiFarmerAPI {
             );
           } catch (e) {
             print(
-              'error comverting data Unassing GROUP ->  ${element.runtimeType}, $e \n',
+              'error comverting data Unassing GroupFieldEntity ->  ${element.runtimeType}, $e \n',
             );
+// getFarmersGroup
+            final e2 = element as Map<String, dynamic>;
+            e2.forEach((key, value) {
+              if (value.runtimeType != String) {
+                print('${value.runtimeType} $key $value');
+              }
+            });
           }
         }
         AllFarmerGroupFieldResp successResonse =
@@ -539,10 +565,15 @@ class DeshiFarmerAPI {
 
         try {
           GroupDetailEntity successResonse = GroupDetailEntity.fromJson(result);
+          // GroupDetailEntity successResonse = GroupDetailEntity.fromJson(result);
 
           return Success<GroupDetailEntity, Exception>(successResonse);
         } catch (e) {
-          print('got error converting to model');
+          print('got error converting to model $e');
+
+          result.forEach((key, value) {
+            print('$key ${key.runtimeType} $value');
+          });
 
           return ServerFailor<GroupDetailEntity, Exception>(
             Exception('Converting Data Erro -> $e'),
@@ -569,6 +600,24 @@ class DeshiFarmerAPI {
   ) async {
     // var checkIfGovtID = {};
     ///! POST BODY
+
+    var _d = farmerModel.focusedCrop
+        ?.replaceAll('{', '')
+        .replaceAll('}', '')
+        .split(',');
+    var focusedCorpFormat = {
+      'cropname': _d,
+    };
+    print(_d);
+
+    var _d2 = farmerModel.currentProducingCrop
+        ?.replaceAll('{', '')
+        .replaceAll('}', '')
+        .split(',');
+    var currentCorpFormat = {
+      'cropname': _d2,
+    };
+    print(_d2);
     Map<String, String> body = <String, String>{
       'farmer_type': '1',
       // 'onboard_by': farmerModel.onboardBy ?? '', //! NOT NEEDED
@@ -597,18 +646,40 @@ class DeshiFarmerAPI {
       'group_id': farmerModel.groupId.toString(),
       'farm_area': farmerModel.farmArea.toString(),
       'farm_type': farmerModel.farmType.toString(),
-      'bank_details': farmerModel.bankDetails.toString(), //JSON
-      'mfs_account': farmerModel.mfsAccount.toString(), // JSON
-      'current_producing_crop':
-          farmerModel.currentProducingCrop.toString(), //JSON
-      'focused_crop': farmerModel.focusedCrop.toString(), // JSON
+      // 'bank_details': json.encode(farmerModel.bankDetails), //JSON
+      // 'mfs_account': json.encode(farmerModel.mfsAccount), // JSON
+      'current_producing_crop': json.encode(currentCorpFormat), // JSON
+      'focused_crop': json.encode(focusedCorpFormat), // JSON
       // 'farm_id': farmerModel.farmId.toString(),
       'year_of_stay_in': farmerModel.yearOfStayIn,
     };
+    var bDetail = farmerModel.bankDetails as Map<String, String>;
+    if (bDetail['bank_name']!.isNotEmpty &&
+        bDetail['branch_name']!.isNotEmpty &&
+        bDetail['account_number']!.isNotEmpty) {
+      body['bank_details'] = json.encode(farmerModel.bankDetails); //JSON
+      print('bank detail -> ${json.encode(farmerModel.bankDetails)}');
+    }
+    var msfDetail = farmerModel.mfsAccount as Map<String, String>;
+
+    if (msfDetail['mfs_type']!.isNotEmpty &&
+        msfDetail['mfs_account']!.isNotEmpty) {
+      // 'mfs_account': json.encode(farmerModel.mfsAccount), // JSON
+      body['mfs_account'] = json.encode(farmerModel.mfsAccount); //JSON
+      print('msf account -> ${json.encode(farmerModel.mfsAccount)}');
+    }
+
+    // print(
+    //     'focused crop -> ${json.encode({'cropname':${_d.runtimeType} ${_d})}');
+    // print('-d -> ${json.encode(fFor)}');
+
+    // print(
+    //     'beauty -> ${farmerModel.focusedCrop?.replaceAll("{", "").replaceAll("}", "").split(" ")}');
 
     ///! POST HEADER
     Map<String, String> headers = <String, String>{
       'Accept': 'application/json',
+      'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
     };
     print('token from API -> $token');
@@ -623,23 +694,10 @@ class DeshiFarmerAPI {
     try {
       _headers.addAll(headers);
       var request = http.MultipartRequest('POST', url);
-      print('image path from API -> ${farmerModel.image}');
-      print('dob -> ${body["date_of_birth"]}');
+      // print('image path from API -> ${farmerModel.image}');
+      // print('dob -> ${body["date_of_birth"]}');
       request.fields.addAll(body);
 
-      ///! COMPRESSE The image
-      // var compressFile = await compressAndGetFile(
-      //   File(farmerModel.image!),
-      //   farmerModel.image!,
-      // );
-      // if (compressFile == null) {
-      //   print('compressor is NULL');
-      // } else {
-      //   print('successfully Completed');
-      // }
-
-      // request.files
-      //     .add(await http.MultipartFile.fromPath('image', compressFile!.path));
       request.files
           .add(await http.MultipartFile.fromPath('image', farmerModel.image!));
       request.headers.addAll(headers);
@@ -652,11 +710,16 @@ class DeshiFarmerAPI {
 
         return Success<bool, Exception>(true);
       } else {
+        var respMsg = await response.stream.bytesToString();
         print(
-          'server resp -> ${response.statusCode}\n${response.reasonPhrase} ${await response.stream.bytesToString()}',
+          'server resp -> ${response.statusCode}\n$respMsg',
+        );
+
+        print(
+          'message -> ${jsonDecode(respMsg)["message"]}',
         );
         return ServerFailor<bool, Exception>(
-          Exception('Server failor'),
+          Exception(jsonDecode(respMsg)['message']),
         );
       }
     } catch (e) {
