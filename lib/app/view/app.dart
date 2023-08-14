@@ -11,6 +11,8 @@ import 'package:deshifarmer/presentation/cubit/add_group/add_farmer_to_group_cub
 import 'package:deshifarmer/presentation/cubit/dropdown/dropdown_cubit.dart';
 import 'package:deshifarmer/presentation/cubit/groups/get_group_cubit.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
+import 'package:deshifarmer/presentation/pages/add_group/bloc/bloc.dart';
+import 'package:deshifarmer/presentation/pages/farmadd_form/bloc/farmadd_form_bloc.dart';
 import 'package:deshifarmer/presentation/pages/group_detail/bloc/group_detail_bloc.dart';
 import 'package:deshifarmer/presentation/pages/home/home.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
@@ -68,8 +70,12 @@ class App extends StatelessWidget {
           create: (BuildContext context) => CartBloc(),
         ),
         // DropdownCubit
-        BlocProvider<DropdownCubit>(
-          create: (BuildContext context) => DropdownCubit(),
+        BlocProvider<DropdownForPaymentCubit>(
+          create: (BuildContext context) => DropdownForPaymentCubit(),
+        ),
+
+        BlocProvider<SelectFarmerForPaymentCubit>(
+          create: (BuildContext context) => SelectFarmerForPaymentCubit(),
         ),
         // MyFarmerBloc
         BlocProvider<MyFarmerBloc>(
@@ -108,6 +114,16 @@ class App extends StatelessWidget {
         BlocProvider<UpdateLeaderToGroupCubit>(
           create: (BuildContext context) => UpdateLeaderToGroupCubit(),
         ),
+// AddGroupBloc
+
+        BlocProvider<AddGroupBloc>(
+          create: (BuildContext context) => AddGroupBloc(),
+        ),
+// FarmaddFormBloc
+
+        BlocProvider<FarmaddFormBloc>(
+          create: (BuildContext context) => FarmaddFormBloc(),
+        ),
       ],
       // create: (context) => SubjectBloc(),
       child: MaterialApp(
@@ -119,9 +135,6 @@ class App extends StatelessWidget {
             accentColor: Colors.green,
             backgroundColor: Colors.white,
           ),
-          // appBarTheme: AppBarTheme(
-          //   backgroundColor: Colors.green[200],
-          // ),
         ),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
