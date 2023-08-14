@@ -4,7 +4,9 @@ import 'dart:convert';
 
 import 'package:deshifarmer/core/app_core.dart';
 import 'package:deshifarmer/core/params/api_database_params.dart';
+import 'package:deshifarmer/data/models/add_farm_model.dart';
 import 'package:deshifarmer/data/models/add_farmer_model.dart';
+import 'package:deshifarmer/data/models/order_model.dart';
 import 'package:deshifarmer/domain/entities/category_entity/all_categorys.dart';
 import 'package:deshifarmer/domain/entities/category_entity/category_entity.dart';
 import 'package:deshifarmer/domain/entities/company_entity/all_company_entity.dart';
@@ -56,7 +58,7 @@ class DeshiFarmerAPI {
         //   Exception('Server failor'),
         // );
       } else {
-        print(response.statusCode);
+        print('${response.statusCode} ${response.body}');
         // print(response.)
         return ServerFailor<SuccessLoginEntity, Exception>(
           Exception('Server failor'),
@@ -880,6 +882,170 @@ class DeshiFarmerAPI {
       print('farmer id -> $leaderID\n groupID -> $groupID\n token -> $token');
 
       if (resp.statusCode == 200) {
+        print('successfully done -> ${resp.statusCode} ${resp.body}');
+        return Success<bool, Exception>(true);
+      } else {
+        print(
+          'server resp -> ${resp.statusCode}\n${resp.body} ',
+        );
+        return ServerFailor<bool, Exception>(
+          Exception('Server failor'),
+        );
+      }
+    } catch (e) {
+      print('Unknown Errors -> $e');
+      return ServerFailor<bool, Exception>(
+        Exception('Server failor -> $e'),
+      );
+    }
+  }
+
+  ///! Create Farm
+
+  Future<Result<bool, Exception>> addFarm(
+    AddFarmModel farmModel,
+    String token,
+    String lat,
+    String long,
+  ) async {
+    ///! POST BODY
+    var _d = farmModel.farmProducingCrop
+        .replaceAll('{', '')
+        .replaceAll('}', '')
+        .split(',');
+    var focusedCorpFormat = json.encode(_d);
+    print(_d);
+
+    Map<String, String> body = <String, String>{
+      'farmer_id': farmModel.farmerID,
+      'farm_name': farmModel.farmName,
+      'address': farmModel.farmLocation,
+      'union': farmModel.farmUnion,
+      'mouaza': farmModel.farmMouza,
+      // 'lat': '24.2625',
+      // 'long': '89.9305',
+      'lat': lat,
+      'long': long,
+      // 'soil_type': 'Sandy',
+      'soil_type': farmModel.farmSoilType,
+      'farm_area': farmModel.farmArea,
+      // 'farm_area': '20 Bagh',
+      'starting_date': farmModel.farmStartingDate,
+      'current_crop': focusedCorpFormat,
+    };
+    print('farm add body -> $body');
+
+    ///! POST HEADER
+    Map<String, String> headers = <String, String>{
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    ///! url to URI
+    final Uri url = Uri.parse(
+      ApiDatabaseParams.farmAddAPI,
+    );
+    try {
+      _headers.addAll(headers);
+      var request = http.MultipartRequest('POST', url);
+      request.fields.addAll(body);
+
+      int checkLoop = 0;
+      for (final img in farmModel.images.toSet().toList()) {
+        checkLoop++;
+        print('$checkLoop -> ${img.path}');
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            'gallery[]',
+            img.path,
+          ),
+        );
+      }
+      request.headers.addAll(headers);
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 201) {
+        print(
+          'server success resp -> 201 -> ${response.reasonPhrase} ${await response.stream.bytesToString()}',
+        );
+
+        return Success<bool, Exception>(true);
+      } else {
+        var respMsg = await response.stream.bytesToString();
+        print(
+          'server resp -> ${response.statusCode}\n$respMsg',
+        );
+
+        print(
+          'message -> ${jsonDecode(respMsg)["message"]}',
+        );
+        return ServerFailor<bool, Exception>(
+          Exception(jsonDecode(respMsg)['message']),
+        );
+      }
+    } catch (e) {
+      print('Unknown Errors -> $e');
+      return ServerFailor<bool, Exception>(
+        Exception('Server failor -> $e'),
+      );
+    }
+  }
+
+  ///! Placing an Order (Do Not Modify)
+
+  Future<Result<bool, Exception>> placeAnOrder(
+    String token,
+    String farmerID,
+    List<OrderModel> orders,
+  ) async {
+    List<Map<String, dynamic>> orderModelsToMaps(List<OrderModel> orderModels) {
+      return orderModels.map((orderModel) => orderModel.toMap()).toList();
+    }
+
+    ///! POST BODY
+    var body = json.encode({
+      'sold_to': farmerID,
+      'order': orderModelsToMaps(orders),
+      // 'order': [
+      //   for (final order in orders)
+      //     {
+      //       {
+      //         'product_id': order.product_id,
+      //         'unit': order.unit,
+      //         'quantity': order.quantity,
+      //       }
+      //     }
+      // ],
+    });
+    print('this is order body -> $body');
+    print('this is order body -> $orderModelsToMaps(orders)');
+
+    ///! POST HEADER
+    Map<String, String> headers = <String, String>{
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    ///! url to URI
+    final Uri url = Uri.parse(
+      ApiDatabaseParams.inputerOrderApi,
+    );
+
+    ///! Trying request to SErVER
+    try {
+      _headers.addAll(headers);
+      print('headers addde');
+      var resp = await http.post(
+        url,
+        body: body,
+        headers: headers,
+      );
+
+      // print('farmer id -> $farmerID\n groupID -> $groupID\n token -> $token');
+
+      if (resp.statusCode == 201) {
         print('successfully done -> ${resp.statusCode} ${resp.body}');
         return Success<bool, Exception>(true);
       } else {
