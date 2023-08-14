@@ -33,7 +33,8 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
     namespace "com.deshifarmer.org.deshifarmer"
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 33
+    // compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     compileOptions {
