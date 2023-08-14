@@ -1,13 +1,13 @@
 import 'package:deshifarmer/data/models/home_page_icon_model.dart';
 
-import '../../presentation/shapes/agri_advisory_shape.dart';
-import '../../presentation/shapes/agri_input_shape.dart';
-import '../../presentation/shapes/crop_insurance_shape.dart';
-import '../../presentation/shapes/farms_shape.dart';
-import '../../presentation/shapes/my_farmers_shape.dart';
-import '../../presentation/shapes/orders_shape.dart';
-import '../../presentation/shapes/performance_shape.dart';
-import '../../presentation/shapes/track_activity_shape.dart';
+import 'package:deshifarmer/presentation/shapes/agri_advisory_shape.dart';
+import 'package:deshifarmer/presentation/shapes/agri_input_shape.dart';
+import 'package:deshifarmer/presentation/shapes/crop_insurance_shape.dart';
+import 'package:deshifarmer/presentation/shapes/farms_shape.dart';
+import 'package:deshifarmer/presentation/shapes/my_farmers_shape.dart';
+import 'package:deshifarmer/presentation/shapes/orders_shape.dart';
+import 'package:deshifarmer/presentation/shapes/performance_shape.dart';
+import 'package:deshifarmer/presentation/shapes/track_activity_shape.dart';
 
 class HomePageParams {
   ///* home cat
@@ -38,7 +38,7 @@ class HomePageParams {
 
   static List<HomeIconModel> homePageShortCuts = [
     HomeIconModel(painter: AgriInputShape(), title: 'Add new Farmer'),
-    HomeIconModel(painter: TrackActivityShape(), title: 'Add new Farm'),
+    HomeIconModel(painter: TrackActivityShape(), title: 'Add new Group'),
     HomeIconModel(painter: CropInsuranceShape(), title: 'Commission'),
     HomeIconModel(painter: AgriAdvisoryShape(), title: 'Attendance'),
   ];
