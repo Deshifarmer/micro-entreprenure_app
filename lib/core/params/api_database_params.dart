@@ -48,10 +48,13 @@ class ApiDatabaseParams {
   ///! Create Group
   static const createGroupAPI = '${Strings.domain}/api/v1/me/create_group';
 
+  ///! Create Farm
+  static const farmAddAPI = '${Strings.domain}/api/v1/me/add_farm';
+
   ///! assign a farmer
   static String assignFarmerToGroup(String groupID) =>
       '${Strings.domain}/api/v1/me/farmer_group/$groupID/assign';
-      // 'https://core.deshifarmer.co/api/v1/me/farmer_group/FG-10a2-48c21/assign'
+  // 'https://core.deshifarmer.co/api/v1/me/farmer_group/FG-10a2-48c21/assign'
 
   ///! assign a farmer
   static String updateLeaderToGroup(String groupID) =>
