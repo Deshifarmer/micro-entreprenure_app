@@ -1,6 +1,7 @@
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/pages/profile/bloc/bloc.dart';
+import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:flutter/material.dart';
 
 /// {@template profile_body}
@@ -31,7 +32,7 @@ class ProfileBody extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(50),
                   child: Image.network(
-                    '${Strings.domain}/storage/${userProfile.userProfile.photo}',
+                    '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${userProfile.userProfile.photo}',
                     // height: 100,
                   ),
                 ),
@@ -83,14 +84,16 @@ class ProfileBody extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('এনআইডি নং '),
-                        Text(
-                          userProfile.userProfile.nid ?? '',
-                          textAlign: TextAlign.center,
-                        ),
+                        Text('এনআইডি নং '),
+
+                        ///! TODO: uncomment this
+                        // Text(
+                        //   userProfile.userProfile.nid ?? '',
+                        //   textAlign: TextAlign.center,
+                        // ),
                       ],
                     ),
                     Row(
@@ -117,7 +120,7 @@ class ProfileBody extends StatelessWidget {
                   ],
                 ),
               ),
-            ]
+            ],
           ],
         );
       },

@@ -22,7 +22,7 @@ class ErrorButtonGreen extends StatelessWidget {
               btnColor ?? Colors.red,
             ),
             shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10)))),
+                borderRadius: BorderRadius.circular(10),),),),
         onPressed: onpress,
         child: Text(
           title,

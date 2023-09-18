@@ -35,7 +35,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             event.context as BuildContext,
             HomePage.route(),
             (route) => false,
-          )
+          ),
         },
       ServerFailor(error: final _) => emit(LoginFailed()),
     };

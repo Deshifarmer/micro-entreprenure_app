@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:deshifarmer/core/error/exceptions.dart';
 import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
@@ -22,22 +21,24 @@ class AgriAdvisoryBloc extends Bloc<AgriAdvisoryEvent, AgriAdvisoryState> {
   ) {}
   FutureOr<void> _onAdvisoryPostEvent(AddAdvisoryEvent event, emit) async {
     emit(AgriLoading());
-    final resp = await deshiFarmerAPI.addAdvisory(
-      token: event.token,
-      subject: event.subject,
-      timeslot: event.timeslot,
-      groupID: event.groupID,
-      members: event.members,
-      notes: event.notes,
-      images: event.images,
-    );
-    // print('this is repost adiv -> ${resp}');
-    if (resp is ServerFailor) {
-      emit(AgriFailed());
-      emit(AgriAdvisoryInitial());
-    } else {
-      emit(AgriSuccessfully());
-      emit(AgriAdvisoryInitial());
-    }
+
+    ///! TODO: uncomment this
+    // final resp = await deshiFarmerAPI.addAdvisory(
+    //   token: event.token,
+    //   subject: event.subject,
+    //   timeslot: event.timeslot,
+    //   groupID: event.groupID,
+    //   members: event.members,
+    //   notes: event.notes,
+    //   images: event.images,
+    // );
+    // // print('this is repost adiv -> ${resp}');
+    // if (resp is ServerFailor) {
+    //   emit(AgriFailed());
+    //   emit(AgriAdvisoryInitial());
+    // } else {
+    //   emit(AgriSuccessfully());
+    //   emit(AgriAdvisoryInitial());
+    // }
   }
 }

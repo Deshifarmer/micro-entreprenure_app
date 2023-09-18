@@ -1,11 +1,9 @@
-import 'package:deshifarmer/presentation/pages/activity/activity.dart';
 import 'package:deshifarmer/presentation/pages/crop_insurance/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/crop_insurance/components/farmer_list_compo.dart';
+import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:flutter/material.dart';
-
-import '../../login/bloc/login_bloc.dart';
 
 class RequestCropInsurance extends StatelessWidget {
   const RequestCropInsurance({super.key});
@@ -19,10 +17,10 @@ class RequestCropInsurance extends StatelessWidget {
       backgroundColor: backgroundColor2,
       appBar: AppBar(
         backgroundColor: backgroundColor2,
-        title: Text('নতুন ইন্সুরেন্স রিকোয়েস্ট ফর্ম '),
+        title: const Text('নতুন ইন্সুরেন্স রিকোয়েস্ট ফর্ম '),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(13.0),
+        padding: const EdgeInsets.all(13),
         child: ListView(
           children: [
             // const Padding(
@@ -48,7 +46,7 @@ class RequestCropInsurance extends StatelessWidget {
             ),
 
             const Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8),
               child: FarmerListDropDownInsurance(),
             ),
             Padding(
@@ -187,7 +185,7 @@ class RequestCropInsurance extends StatelessWidget {
                     });
                   }
                 },
-                title: 'সাবমিট করুন '),
+                title: 'সাবমিট করুন ',),
           ],
         ),
       ),

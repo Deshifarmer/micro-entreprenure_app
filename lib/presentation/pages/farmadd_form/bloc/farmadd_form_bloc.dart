@@ -7,7 +7,6 @@ import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
 import 'package:deshifarmer/data/models/add_farm_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 part 'farmadd_form_event.dart';
 part 'farmadd_form_state.dart';
@@ -24,7 +23,7 @@ class FarmaddFormBloc extends Bloc<FarmaddFormEvent, FarmaddFormState> {
     emit(FarmAddLoading());
     final getCurrentPosition = await determinePosition();
     print(
-        'lat -> ${getCurrentPosition.latitude} ${getCurrentPosition.longitude}');
+        'lat -> ${getCurrentPosition.latitude} ${getCurrentPosition.longitude}',);
     final result = await deshiFarmerAPI.addFarm(
       event.farmModel,
       event.token,

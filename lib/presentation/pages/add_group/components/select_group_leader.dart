@@ -50,7 +50,7 @@ class SelectGroupLeader extends StatelessWidget {
                   // decoration: ShapeDecoration(),
                   // itemHeight: 300,
                   elevation: 16,
-                  value: state.allFarmerListResp.farmers.length != 0
+                  value: state.allFarmerListResp.farmers.isNotEmpty
                       ? state.allFarmerListResp.farmers.first
                       : null,
                   items: state.allFarmerListResp.farmers
@@ -62,9 +62,10 @@ class SelectGroupLeader extends StatelessWidget {
                         leading: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.network(
-                            checkDomain(Strings.domain)
+                            checkDomain(Strings.getServerOrLocal(
+                                    ServerOrLocal.server,),)
                                 ? dummyImage
-                                : '${Strings.domain}/storage/${value.image}',
+                                : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
                             height: 50,
                             width: 50,
                           ),
@@ -81,7 +82,7 @@ class SelectGroupLeader extends StatelessWidget {
                     }
                   },
                 ),
-              )
+              ),
             ],
           );
         }

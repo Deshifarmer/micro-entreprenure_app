@@ -39,7 +39,7 @@ class SelectCropOptional extends StatelessWidget {
               // selectedOptions:state.farmerFocusedCorpController.text ,
               backgroundColor: backgroundColor2,
               optionsBackgroundColor: backgroundColor2,
-              chipConfig: ChipConfig(
+              chipConfig: const ChipConfig(
                 wrapType: WrapType.wrap,
                 backgroundColor: primaryColor,
               ),

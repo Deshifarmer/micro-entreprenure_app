@@ -36,7 +36,7 @@ class OrderdetailCard extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
               Spacer(),
@@ -56,7 +56,7 @@ class OrderdetailCard extends StatelessWidget {
                       fontSize: 8,
                       fontWeight: FontWeight.w400,
                     ),
-                  )
+                  ),
                 ],
               ),
             ],
@@ -76,7 +76,7 @@ class OrderdetailCard extends StatelessWidget {
                     fontSize: 10,
                   ),
                 ),
-              )
+              ),
             ],
           ),
 

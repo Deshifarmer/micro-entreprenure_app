@@ -23,7 +23,7 @@ class FarmerProfilePage extends StatelessWidget {
             // print(farmerProfilePage.full_name);
             Navigator.pop(context);
           },
-          icon: Icon(Icons.navigate_before),
+          icon: const Icon(Icons.navigate_before),
         ),
         title: Text(farmerProfilePage.full_name ?? ''),
       ),

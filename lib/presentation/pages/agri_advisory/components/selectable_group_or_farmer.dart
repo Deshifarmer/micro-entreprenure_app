@@ -1,21 +1,17 @@
-import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/core/error/exceptions.dart';
-import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
 import 'package:deshifarmer/domain/entities/group_detail_entity/group_detail_entity.dart';
 import 'package:deshifarmer/domain/entities/group_field_entity/all_farmer_group_field.dart';
 import 'package:deshifarmer/domain/entities/group_field_entity/group_field_entity.dart';
 import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/cubit/groups/get_group_cubit.dart';
 import 'package:deshifarmer/presentation/pages/activity/activity.dart';
-import 'package:deshifarmer/presentation/pages/agri_advisory/components/farmer_list_selectable.dart';
+import 'package:deshifarmer/presentation/pages/agri_advisory/bloc/agri_advisory_bloc.dart';
 import 'package:deshifarmer/presentation/pages/agri_advisory/widgets/agri_advisory_body.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:flutter/material.dart';
-
-import '../bloc/agri_advisory_bloc.dart';
 
 class SelectableGroupOrFarmer extends StatefulWidget {
   const SelectableGroupOrFarmer({super.key});
@@ -26,7 +22,7 @@ class SelectableGroupOrFarmer extends StatefulWidget {
 }
 
 class _SelectableGroupOrFarmerState extends State<SelectableGroupOrFarmer> {
-  List<String> _selectedValues = ['Farmer Group', 'Single Farmer'];
+  final List<String> _selectedValues = ['Farmer Group', 'Single Farmer'];
   String selectValue = 'Farmer Group';
   bool isDropDownOpened = false;
   @override
@@ -52,13 +48,13 @@ class _SelectableGroupOrFarmerState extends State<SelectableGroupOrFarmer> {
                         selectValue = val;
                         setState(() {});
                       }
-                    }),
+                    },),
                 const Text(
                   'Farmer Group',
                   style: TextStyle(
                     fontSize: 12,
                   ),
-                )
+                ),
               ],
             ),
 
@@ -76,13 +72,13 @@ class _SelectableGroupOrFarmerState extends State<SelectableGroupOrFarmer> {
                         selectValue = val;
                         setState(() {});
                       }
-                    }),
+                    },),
                 const Text(
                   'Single Farmer',
                   style: TextStyle(
                     fontSize: 12,
                   ),
-                )
+                ),
               ],
             ),
           ],
@@ -140,17 +136,17 @@ class _SelectableGroupOrFarmerState extends State<SelectableGroupOrFarmer> {
                     }
                     final loginState = context.read<LoginBloc>().state;
                     if (loginState is LoginSuccess) {
-                      showModalBottomSheet(
+                      await showModalBottomSheet(
                         context: context,
                         builder: (context) => FutureBuilder<Object>(
                           future: groupDetailRepoImpl.getGroupDetails(
                               loginState.successLoginEntity.token,
-                              val!.farmer_group_id),
+                              val!.farmer_group_id,),
                           builder: (context, snapshot) {
                             if (snapshot.hasData &&
                                 ConnectionState.done ==
                                     snapshot.connectionState) {
-                              final data = snapshot.data
+                              final data = snapshot.data!
                                   as Result<GroupDetailEntity, Exception>;
                               final value2 = switch (data) {
                                 Success(data: final succ) => succ,
@@ -158,9 +154,10 @@ class _SelectableGroupOrFarmerState extends State<SelectableGroupOrFarmer> {
                               };
 
                               if (value2 is GroupDetailEntity) {
-                                return SelectFarmerList(
-                                  farmers: value2.farmer_list,
-                                );
+                                ///! TODO: uncomment this
+                                // return SelectFarmerList(
+                                //   farmers: value2.farmer_list,
+                                // );
                               } else {
                                 return const Center(
                                   child: Text('No Group Members Found'),
@@ -194,7 +191,8 @@ class _SelectableGroupOrFarmerState extends State<SelectableGroupOrFarmer> {
                 return const Center(child: Text('No Group Exists'));
               } else if (state is MyFarmerSuccess) {
                 // final currentGroup = state.farmers.elementAt
-
+                ///! TODO: uncomment this
+/*
                 return DropdownButtonFormField<FarmerEntity>(
                   dropdownColor: backgroundColor2,
                   borderRadius: const BorderRadius.all(Radius.circular(15)),
@@ -214,9 +212,6 @@ class _SelectableGroupOrFarmerState extends State<SelectableGroupOrFarmer> {
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
-
-                    // fillColor: Colors.greenAccent,
-                    // contentPadding: EdgeInsets.all(10),
                   ),
                   // decoration: ShapeDecoration(),
                   value: state.allFarmerListResp.first,
@@ -270,18 +265,6 @@ class _SelectableGroupOrFarmerState extends State<SelectableGroupOrFarmer> {
                           Text(value.full_name ?? ''),
                         ],
                       ),
-                      // child: ListTile(
-                      //   leading: ClipRRect(
-                      //     borderRadius: BorderRadius.circular(10),
-                      //     child: Image.network(
-                      //       checkDomain(Strings.getServerOrLocal(ServerOrLocal.server))
-                      //           ? dummyImage
-                      //           : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
-                      //     ),
-                      //   ),
-                      //   title: Text(value.full_name ?? ''),
-                      //   subtitle: Text(value.phone ?? ''),
-                      // ),
                     );
                   }).toList(),
                   onChanged: (FarmerEntity? val) async {
@@ -294,6 +277,8 @@ class _SelectableGroupOrFarmerState extends State<SelectableGroupOrFarmer> {
                     if (loginState is LoginSuccess) {}
                   },
                 );
+              
+              */
               }
               return const SizedBox.shrink();
             },

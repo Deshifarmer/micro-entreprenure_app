@@ -43,7 +43,7 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
 
   /// Date
   DateTime? _landprefDate = DateTime.now();
-  TextEditingController _landprefDateController = TextEditingController();
+  final TextEditingController _landprefDateController = TextEditingController();
 
   /// NOTE: sowing
 
@@ -60,15 +60,15 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
 
   /// Date
   DateTime? _irrigationDate = DateTime.now();
-  TextEditingController _irrigationDateController = TextEditingController();
+  final TextEditingController _irrigationDateController = TextEditingController();
 
   /// Date
   DateTime? _weedingDate = DateTime.now();
-  TextEditingController _weedingDateController = TextEditingController();
+  final TextEditingController _weedingDateController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     print(
-        'name -> ${widget.recordName} ${activityRecordValues[widget.recordName] == ActivityTypeEnums.landpref}');
+        'name -> ${widget.recordName} ${activityRecordValues[widget.recordName] == ActivityTypeEnums.landpref}',);
 
     // final recordSowingState = context.read<RecordSowingBloc>().state;
     return Scaffold(
@@ -90,7 +90,7 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
         },
         builder: (BuildContext context, RecordSowingState state) {
           return Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10),
             child: SingleChildScrollView(
               child: Column(
                 // mainAxisAlignment: MainAxisAlignment.start,
@@ -102,10 +102,10 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                        )),
+                        ),),
                   ),
                   const Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(8),
                     child: Text(
                       'একটি কার্যকলাপ রেকর্ড করার সময় আপনার অবস্থান স্বয়ংক্রিয়ভাবে ক্যাপচার করা হবে',
                       // 'Your location will be automatically captured while recording an activity',
@@ -123,7 +123,7 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                       ActivityTypeEnums.landpref) ...[
                     ///NOTE: land PREF
                     const Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8),
                       // child: Text('Unit'),
                       child: Text('Land Size'),
                     ),
@@ -165,7 +165,7 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                     ),
 
                     const Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8),
                       // child: Text('Unit'),
                       child: Text('Land preparation Date'),
                     ),
@@ -230,7 +230,7 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                     ),
 
                     const Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8),
                       // child: Text('Unit'),
                       child: Text('Chemicals'),
                     ),
@@ -272,7 +272,7 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                     ),
 
                     const Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8),
                       // child: Text('Unit'),
                       child: Text('Chemical Company'),
                     ),
@@ -313,7 +313,7 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                       ),
                     ),
                     const Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8),
                       // child: Text('Unit'),
                       child: Text('Chemical Quantity'),
                     ),
@@ -356,7 +356,7 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                   ] else if (activityRecordValues[widget.recordName] ==
                       ActivityTypeEnums.sowing) ...[
                     const Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8),
                       // child: Text('Unit'),
                       child: Text('Seed Company'),
                     ),
@@ -397,7 +397,7 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                       ),
                     ),
                     const Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8),
                       // child: Text('Unit'),
                       child: Text('Seed Quantity'),
                     ),
@@ -438,7 +438,7 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                       ),
                     ),
                     const Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8),
                       // child: Text('Unit'),
                       child: Text('Seed Price'),
                     ),
@@ -542,7 +542,7 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                     ),
 
                     const Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8),
                       // child: Text('Unit'),
                       child: Text('Sowing Date'),
                     ),
@@ -650,7 +650,7 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                   ] else if (activityRecordValues[widget.recordName] ==
                       ActivityTypeEnums.irrigation) ...[
                     const Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8),
                       // child: Text('Unit'),
                       child: Text('Irrigation Date'),
                     ),
@@ -716,7 +716,7 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                   ] else if (activityRecordValues[widget.recordName] ==
                       ActivityTypeEnums.weeding) ...[
                     const Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8),
                       // child: Text('Unit'),
                       child: Text('Weeding Date'),
                     ),
@@ -781,13 +781,13 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                     ),
                   ],
                   const Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(8),
                     child: Text('ক্রপ নির্বাচন করুন (ঐচ্ছিক)'),
                     // child: Text('Select crop (Optional)'),
                   ),
                   const SelectCropOptional(),
                   const Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(8),
                     child: Text('পরিমাণ'),
                     // child: Text('Quantity'),
                   ),
@@ -843,7 +843,7 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                     ),
                   ),
                   const Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(8),
                     // child: Text('Unit'),
                     child: Text('ইউনিট'),
                   ),
@@ -885,7 +885,7 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                     ),
                   ),
                   const Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(8),
                     child: Text('কার্যকলাপ বিবরণ'),
                     // child: Text('Activity Details'),
                   ),

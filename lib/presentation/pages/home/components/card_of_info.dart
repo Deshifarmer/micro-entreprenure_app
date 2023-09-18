@@ -15,7 +15,7 @@ class CardOfSmallInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8),
       child: Card(
         color: const Color(0xff4C6E5E),
         child: Row(
@@ -47,7 +47,7 @@ class CardOfSmallInfo extends StatelessWidget {
                       ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

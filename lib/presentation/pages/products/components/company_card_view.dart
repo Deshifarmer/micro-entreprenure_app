@@ -1,5 +1,6 @@
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/domain/entities/company_entity/company_response_entity.dart';
+import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:flutter/material.dart';
 
 class CompanyCardView extends StatelessWidget {
@@ -19,7 +20,7 @@ class CompanyCardView extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Image.network(
-              '${Strings.domain}/storage${currentCompany.photo}',
+              '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage${currentCompany.photo}',
             ),
           ),
         ),
@@ -29,7 +30,7 @@ class CompanyCardView extends StatelessWidget {
                 fontWeight: FontWeight.normal,
                 overflow: TextOverflow.fade,
               ),
-        )
+        ),
       ],
     );
   }

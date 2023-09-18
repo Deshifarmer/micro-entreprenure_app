@@ -1,11 +1,9 @@
 import 'package:deshifarmer/domain/entities/category_entity/category_entity.dart';
-import 'package:deshifarmer/domain/entities/products_entity/product_data_entity.dart';
 import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
 import 'package:deshifarmer/presentation/pages/demands/demands.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/bloc/products_bloc.dart';
-import 'package:deshifarmer/presentation/pages/products/components/product_card.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
@@ -50,16 +48,17 @@ class CompanyProducts extends StatelessWidget {
                       ///! PERF: 1st. check if theres any company/cat already select
                       if (productState is ProductComanySelect) {
                         if (loginState is LoginSuccess) {
-                          context.read<ProductsBBloc>().add(
-                                ProductSearchEvent(
-                                  loginState.successLoginEntity.token,
-                                  query: value.isEmpty ? '' : value,
-                                  cat: productState.category,
-                                  company: companyID,
-                                  // cat: productState.category,
-                                  // company: productState.companyID,
-                                ),
-                              );
+                          ///! TODO: uncomment this
+                          // context.read<ProductsBBloc>().add(
+                          //       ProductSearchEvent(
+                          //         loginState.successLoginEntity.token,
+                          //         query: value.isEmpty ? '' : value,
+                          //         cat: productState.category,
+                          //         company: companyID,
+                          //         // cat: productState.category,
+                          //         // company: productState.companyID,
+                          //       ),
+                          //     );
                         }
                       }
                     },
@@ -104,19 +103,20 @@ class CompanyProducts extends StatelessWidget {
                       //       ),
                       //     );
                       if (loginState is LoginSuccess) {
-                        context.read<ProductsBBloc>().add(
-                              ProductSearchEvent(
-                                loginState.successLoginEntity.token,
-                                cat: value.id.toString(),
-                                company: companyID,
-                                query: productState.query,
-                              ),
-                            );
+                        ///! TODO: uncomment this
+                        // context.read<ProductsBBloc>().add(
+                        //       ProductSearchEvent(
+                        //         loginState.successLoginEntity.token,
+                        //         cat: value.id.toString(),
+                        //         company: companyID,
+                        //         query: productState.query,
+                        //       ),
+                        //     );
                       }
 
-                      print('category -> ${productState.category}');
-                      print('query -> ${productState.query}');
-                      print('company -> ${productState.companyID}');
+                      // print('category -> ${productState.category}');
+                      // print('query -> ${productState.query}');
+                      // print('company -> ${productState.companyID}');
                     }
                   },
                   enableFeedback: true,
@@ -157,104 +157,88 @@ class CompanyProducts extends StatelessWidget {
             child: BlocConsumer<ProductsBBloc, ProductsSState>(
               listener: (context, ProductsSState state) {},
               builder: (context, state) {
-                if (state is ProductSSuccess) {
-                  // final companyState = context.read<ProductsBloc>().state;
-                  return BlocConsumer<ProductsBloc, ProductsState>(
-                    listener: (context, companyState) {},
-                    builder: (context, companyState) {
-                      final List<ProductData> allProducts;
-                      allProducts = state.productDatas;
-                      if (allProducts.isEmpty) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(
-                            vertical: getProportionateScreenHeight(20),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.error,
-                                size: 50,
-                              ),
-                              Center(child: Text('No Product Found')),
-                            ],
-                          ),
-                        );
-                      }
+                ///! TODO: uncomment this
+                // if (state is ProductSSuccess) {
+                //   // final companyState = context.read<ProductsBloc>().state;
+                //   return BlocConsumer<ProductsBloc, ProductsState>(
+                //     listener: (context, companyState) {},
+                //     builder: (context, companyState) {
+                //       final List<ProductData> allProducts;
+                //       allProducts = state.productDatas;
+                //       if (allProducts.isEmpty) {
+                //         return Padding(
+                //           padding: EdgeInsets.symmetric(
+                //             vertical: getProportionateScreenHeight(20),
+                //           ),
+                //           child: Column(
+                //             mainAxisAlignment: MainAxisAlignment.center,
+                //             children: [
+                //               Icon(
+                //                 Icons.error,
+                //                 size: 50,
+                //               ),
+                //               Center(child: Text('No Product Found')),
+                //             ],
+                //           ),
+                //         );
+                //       }
 
-                      return GridView.builder(
-                        // shrinkWrap: true,
-                        controller: _scrollController
-                          ..addListener(() {
-                            if (_scrollController.offset >
-                                _scrollController.position.maxScrollExtent *
-                                    0.8) {
-                              final pb = context.read<ProductsBBloc>().state;
-                              // print('goin 60% of the screen -> $pb');
-                              if (pb is ProductSSuccess) {
-                                // print('success productsssssssss');
-                                if (pb.productEntity.links?.next != null) {
-                                  //? fetch the nxt page
-                                  if (loginState is LoginSuccess) {
-                                    // print(
-                                    //   'nexty page ${pb.productEntity.links?.next} ${loginState.successLoginEntity.token}',
-                                    // );
-                                    context.read<ProductsBBloc>().add(
-                                          ProductFFetchPaginationEvent(
-                                            nextPage:
-                                                pb.productEntity.links!.next!,
-                                            token: loginState
-                                                .successLoginEntity.token,
-                                          ),
-                                        );
-                                  }
-                                } /* else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            errorSnackBar('Reached at the end of the List!'),
-                          );
-                        } */
-                              } else {
-                                print('not success product');
-                              }
-                              // print(
-                              //     'offset -> ${_scrollController.offset} || ${_scrollController.position.maxScrollExtent * 0.6}');
-                              // print('aaaaaaaaaaaaaaaaaaa');
-                              // print(
-                              //   _scrollController.offset >
-                              //       _scrollController.position.maxScrollExtent * 0.6,
-                              // );
-// ProductsBBloc
-                              //? check if the next page is not [null]
-                              // state.productEntity.links.next
-                              // final nxtPage =
-                              //     state.productEntity.links?.next?.split('=').last;
-
-                              // print('end of the page $nxtPage');
-                            }
-                          }),
-                        itemCount: allProducts.length,
-                        physics: const BouncingScrollPhysics(),
-                        primary: false,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisExtent: 320,
-                        ),
-                        itemBuilder: (context, index) {
-                          final product = allProducts.elementAt(index);
-                          return ProductCard(product: product);
-                        },
-                      );
-                    },
-                  );
-                }
+                //       return GridView.builder(
+                //         // shrinkWrap: true,
+                //         controller: _scrollController
+                //           ..addListener(() {
+                //             if (_scrollController.offset >
+                //                 _scrollController.position.maxScrollExtent *
+                //                     0.8) {
+                //               final pb = context.read<ProductsBBloc>().state;
+                //               // print('goin 60% of the screen -> $pb');
+                //               ///! TODO: uncomment this
+                //               // if (pb is ProductSSuccess) {
+                //               //   // print('success productsssssssss');
+                //               //   if (pb.productEntity.links?.next != null) {
+                //               //     //? fetch the nxt page
+                //               //     if (loginState is LoginSuccess) {
+                //               //       // print(
+                //               //       //   'nexty page ${pb.productEntity.links?.next} ${loginState.successLoginEntity.token}',
+                //               //       // );
+                //               //       context.read<ProductsBBloc>().add(
+                //               //             ProductFFetchPaginationEvent(
+                //               //               nextPage:
+                //               //                   pb.productEntity.links!.next!,
+                //               //               token: loginState
+                //               //                   .successLoginEntity.token,
+                //               //             ),
+                //               //           );
+                //               //     }
+                //               //   }
+                //               // } else {
+                //               //   print('not success product');
+                //               // }
+                //             }
+                //           }),
+                //         itemCount: allProducts.length,
+                //         physics: const BouncingScrollPhysics(),
+                //         primary: false,
+                //         gridDelegate:
+                //             const SliverGridDelegateWithFixedCrossAxisCount(
+                //           crossAxisCount: 2,
+                //           mainAxisExtent: 320,
+                //         ),
+                //         itemBuilder: (context, index) {
+                //           final product = allProducts.elementAt(index);
+                //           return ProductCard(product: product);
+                //         },
+                //       );
+                //     },
+                //   );
+                // }
                 // return
-
-                if (state is ProductFFailed) {
-                  return const Center(
-                    child: Text('Failed'),
-                  );
-                }
+                ///! TODO: uncomment this
+                // if (state is ProductFFailed) {
+                //   return const Center(
+                //     child: Text('Failed'),
+                //   );
+                // }
 
                 return Container(
                   alignment: Alignment.center,

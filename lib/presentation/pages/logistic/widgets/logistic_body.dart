@@ -1,9 +1,7 @@
-import 'package:deshifarmer/presentation/shapes/car_shape.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:flutter/material.dart';
-import 'package:deshifarmer/presentation/pages/logistic/bloc/bloc.dart';
 
 /// {@template logistic_body}
 /// Body of the LogisticPage.
@@ -17,10 +15,10 @@ class LogisticBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(14.0),
+      padding: const EdgeInsets.all(14),
       child: ListView(
         children: [
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -54,7 +52,7 @@ class LogisticBody extends StatelessWidget {
 //               fontWeight: FontWeight.w400,
 //             ),
 //           ),
-          Text(
+          const Text(
             '''আপনার তাজা পণ্য ওয়্যারহাউজ/মার্কেট/লোকাল এ পাঠানোর জন্যে দেশীফর্মারের লজিস্টিক ভেন্ডর এর সাহায্য নিতে পারবেন''',
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -164,8 +162,8 @@ class LogisticBody extends StatelessWidget {
           ),
 
           /// a list of todays pricing
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 10),
             child: Text(
               'আজকের গড় মূল্য',
               style: TextStyle(
@@ -177,26 +175,26 @@ class LogisticBody extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text(
+              const Text(
                 'Bogra',
                 style: TextStyle(
                   fontSize: 13,
                 ),
               ),
-              Text(
+              const Text(
                 'to',
                 style: TextStyle(
                   fontSize: 10,
                 ),
               ),
-              Text(
+              const Text(
                 'Dhaka',
                 style: TextStyle(
                   fontSize: 13,
                 ),
               ),
               RichText(
-                text: TextSpan(
+                text: const TextSpan(
                   text: '৳ 17500/',
                   style: TextStyle(
                     fontSize: 18,

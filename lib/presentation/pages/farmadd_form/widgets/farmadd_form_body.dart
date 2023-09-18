@@ -1,7 +1,5 @@
-import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/data/datasources/local/corps/corps_db.dart';
 import 'package:deshifarmer/data/models/add_farm_model.dart';
-import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
 import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/pages/farmadd_form/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/farmadd_form/components/farm_pic_upload_field.dart';
@@ -51,7 +49,7 @@ class FarmaddFormBody extends StatelessWidget {
       },
       builder: (context, farmAddState) {
         return Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(10),
           child: ListView(
             children: [
               Text(
@@ -75,94 +73,98 @@ class FarmaddFormBody extends StatelessWidget {
                       ),
                     );
                   } else if (state is MyFarmerSuccess) {
-                    if (farmAddState is FarmaddFormInitial) {
-                      farmAddState.farmerID.text =
-                          state.allFarmerListResp.first.farmer_id!;
-                    }
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 20,
-                      ),
-                      child: DropdownButtonFormField<FarmerEntity>(
-                        isDense: false,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(15)),
-                        isExpanded: true,
-                        decoration: const InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 5,
-                          ),
-                          label: Text('কৃষক নির্বাচন করুন'),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                            borderSide: BorderSide.none,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide: BorderSide.none,
-                            gapPadding: 10,
-                          ),
-                          filled: true,
-                        ),
-                        // decoration: ShapeDecoration(),
-                        // itemHeight: 300,
-                        elevation: 16,
-                        value: state.allFarmerListResp.isNotEmpty
-                            ? state.allFarmerListResp.first
-                            : null,
-                        items: state.allFarmerListResp
-                            .map<DropdownMenuItem<FarmerEntity>>((value) {
-                          return DropdownMenuItem<FarmerEntity>(
-                            alignment: Alignment.center,
-                            value: value,
-                            child: ListTile(
-                              leading: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.network(
-                                  checkDomain(Strings.getServerOrLocal(
-                                          ServerOrLocal.server))
-                                      ? dummyImage
-                                      : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
-                                  height: 50,
-                                  width: 50,
-                                  errorBuilder: (
-                                    context,
-                                    error,
-                                    stackTrace,
-                                  ) {
-                                    return Center(
-                                      child: Text(
-                                        'Image Error',
-                                        textAlign: TextAlign.center,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall!
-                                            .copyWith(
-                                              color: Colors.redAccent,
-                                              fontStyle: FontStyle.italic,
-                                            ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                              title: Text(value.full_name ?? ''),
-                              subtitle: Text(value.phone ?? ''),
-                            ),
-                          );
-                        }).toList(),
+                    ///! TODO: uncomment this
+                    // if (farmAddState is FarmaddFormInitial) {
+                    //   farmAddState.farmerID.text =
+                    //       state.allFarmerListResp.first.farmer_id!;
+                    // }
+                    ///! TODO: uncomment this
+                    // return Padding(
+                    //   padding: const EdgeInsets.symmetric(
+                    //     vertical: 20,
+                    //   ),
+                    //   child: DropdownButtonFormField<FarmerEntity>(
+                    //     isDense: false,
+                    //     borderRadius:
+                    //         const BorderRadius.all(Radius.circular(15)),
+                    //     isExpanded: true,
+                    //     decoration: const InputDecoration(
+                    //       contentPadding: EdgeInsets.symmetric(
+                    //         horizontal: 5,
+                    //       ),
+                    //       label: Text('কৃষক নির্বাচন করুন'),
+                    //       enabledBorder: OutlineInputBorder(
+                    //         borderRadius: BorderRadius.all(
+                    //           Radius.circular(10),
+                    //         ),
+                    //         borderSide: BorderSide.none,
+                    //       ),
+                    //       focusedBorder: OutlineInputBorder(
+                    //         borderRadius: BorderRadius.all(Radius.circular(10)),
+                    //         borderSide: BorderSide.none,
+                    //         gapPadding: 10,
+                    //       ),
+                    //       filled: true,
+                    //     ),
+                    //     // decoration: ShapeDecoration(),
+                    //     // itemHeight: 300,
+                    //     elevation: 16,
+                    //     value: state.allFarmerListResp.isNotEmpty
+                    //         ? state.allFarmerListResp.first
+                    //         : null,
+                    //     items: state.allFarmerListResp
+                    //         .map<DropdownMenuItem<FarmerEntity>>((value) {
+                    //       return DropdownMenuItem<FarmerEntity>(
+                    //         alignment: Alignment.center,
+                    //         value: value,
+                    //         child: ListTile(
+                    //           leading: ClipRRect(
+                    //             borderRadius: BorderRadius.circular(10),
+                    //             child: Image.network(
+                    //               checkDomain(Strings.getServerOrLocal(
+                    //                       ServerOrLocal.server))
+                    //                   ? dummyImage
+                    //                   : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
+                    //               height: 50,
+                    //               width: 50,
+                    //               errorBuilder: (
+                    //                 context,
+                    //                 error,
+                    //                 stackTrace,
+                    //               ) {
+                    //                 return Center(
+                    //                   child: Text(
+                    //                     'Image Error',
+                    //                     textAlign: TextAlign.center,
+                    //                     style: Theme.of(context)
+                    //                         .textTheme
+                    //                         .titleSmall!
+                    //                         .copyWith(
+                    //                           color: Colors.redAccent,
+                    //                           fontStyle: FontStyle.italic,
+                    //                         ),
+                    //                   ),
+                    //                 );
+                    //               },
+                    //             ),
+                    //           ),
 
-                        onChanged: (FarmerEntity? val) {
-                          if (farmAddState is FarmaddFormInitial) {
-                            if (val != null) {
-                              farmAddState.farmerID.text = val.farmer_id!;
-                            }
-                          }
-                        },
-                      ),
-                    );
+                    //           ///! TODO: uncomment this
+                    //           // title: Text(value.full_name ?? ''),
+                    //           // subtitle: Text(value.phone ?? ''),
+                    //         ),
+                    //       );
+                    //     }).toList(),
+
+                    //     onChanged: (FarmerEntity? val) {
+                    //       if (farmAddState is FarmaddFormInitial) {
+                    //         if (val != null) {
+                    //           farmAddState.farmerID.text = val.farmer_id!;
+                    //         }
+                    //       }
+                    //     },
+                    //   ),
+                    // );
                   }
                   return const SizedBox.shrink();
                 },
@@ -407,31 +409,31 @@ class FarmaddFormBody extends StatelessWidget {
                       print('farmer id -> ${farmAddState.farmerID.text}');
                       if (farmAddState.farmName.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                            errorSnackBar('Farm Name cannot be empty'));
+                            errorSnackBar('Farm Name cannot be empty'),);
                       } else if (farmAddState.farmLocation.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                            errorSnackBar('Farm Location Cannot be empty'));
+                            errorSnackBar('Farm Location Cannot be empty'),);
                       } else if (farmAddState.farmUnion.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                            errorSnackBar('Union Cannot be empty'));
+                            errorSnackBar('Union Cannot be empty'),);
                       } else if (farmAddState.farmMouzza.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                            errorSnackBar('Mouzza Cannot be Empty'));
+                            errorSnackBar('Mouzza Cannot be Empty'),);
                       } else if (farmAddState.farmLength.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                            errorSnackBar('Farm Length Cannot be empty'));
+                            errorSnackBar('Farm Length Cannot be empty'),);
                       } else if (farmAddState.farmStartingDate.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                            errorSnackBar('Starting date cannot be empty'));
+                            errorSnackBar('Starting date cannot be empty'),);
                       } else if (farmAddState.farmArea.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                            errorSnackBar('Farm Area cannot be empty'));
+                            errorSnackBar('Farm Area cannot be empty'),);
                       } else if (farmAddState.farmProducingCrop.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                             errorSnackBar(
-                                'Farm Producing Crop cannot be empty'));
+                                'Farm Producing Crop cannot be empty',),);
                       } else {
-                        AddFarmModel farmModel = AddFarmModel(
+                        final farmModel = AddFarmModel(
                           farmerID: farmAddState.farmerID.text,
                           farmName: farmAddState.farmName.text,
                           farmUnion: farmAddState.farmUnion.text,

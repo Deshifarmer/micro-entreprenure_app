@@ -68,14 +68,14 @@ class App extends StatelessWidget {
         BlocProvider<CartBloc>(
           create: (BuildContext context) => CartBloc(),
         ),
-        // DropdownCubit
-        BlocProvider<DropdownForPaymentCubit>(
-          create: (BuildContext context) => DropdownForPaymentCubit(),
-        ),
+        // // DropdownCubit
+        // BlocProvider<DropdownForPaymentCubit>(
+        //   create: (BuildContext context) => DropdownForPaymentCubit(),
+        // ),
 
-        BlocProvider<SelectFarmerForPaymentCubit>(
-          create: (BuildContext context) => SelectFarmerForPaymentCubit(),
-        ),
+        // BlocProvider<SelectFarmerForPaymentCubit>(
+        //   create: (BuildContext context) => SelectFarmerForPaymentCubit(),
+        // ),
         // MyFarmerBloc
         BlocProvider<MyFarmerBloc>(
           create: (BuildContext context) => MyFarmerBloc(),

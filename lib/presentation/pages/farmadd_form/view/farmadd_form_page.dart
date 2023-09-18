@@ -1,7 +1,6 @@
+import 'package:deshifarmer/presentation/pages/farmadd_form/widgets/farmadd_form_body.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:deshifarmer/presentation/pages/farmadd_form/bloc/bloc.dart';
-import 'package:deshifarmer/presentation/pages/farmadd_form/widgets/farmadd_form_body.dart';
 
 /// {@template farmadd_form_page}
 /// A description for FarmaddFormPage

@@ -1,15 +1,12 @@
-import 'package:deshifarmer/core/error/exceptions.dart';
 import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
 import 'package:deshifarmer/data/models/order_model.dart';
 import 'package:deshifarmer/presentation/blocs/cart/cart_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
-import 'package:deshifarmer/presentation/cubit/dropdown/dropdown_cubit.dart';
 import 'package:deshifarmer/presentation/pages/cartz/components/detail_row_compo.dart';
 import 'package:deshifarmer/presentation/pages/home/home.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
-import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -20,7 +17,9 @@ class OrderConformationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userProfile = context.read<UserProfileBloc>().state;
-    final selectedFarmer = context.read<SelectFarmerForPaymentCubit>().state;
+
+    ///! TODO: uncomment this
+    // final selectedFarmer = context.read<SelectFarmerForPaymentCubit>().state;
 
     // final itemToList = CartBlocstate.carts.entries.toList();
     final cartItems = context.read<CartBloc>().state;
@@ -45,7 +44,7 @@ class OrderConformationPage extends StatelessWidget {
               Card(
                 color: backgroundColor2,
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10),
                   child: Column(
                     children: [
                       Text(
@@ -126,7 +125,7 @@ class OrderConformationPage extends StatelessWidget {
                 ),
                 color: backgroundColor2,
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10),
                   child: Column(
                     children: [
                       Text(
@@ -135,24 +134,26 @@ class OrderConformationPage extends StatelessWidget {
                               color: primaryColor,
                             ),
                       ),
-                      if (selectedFarmer != null) ...[
-                        DetailRowConformCompo(
-                          field: 'নাম',
-                          value: selectedFarmer.full_name ?? '',
-                        ),
-                        DetailRowConformCompo(
-                          field: 'কৃষক আইডি',
-                          value: selectedFarmer.farmer_id ?? '',
-                        ),
-                        DetailRowConformCompo(
-                          field: 'ফোন',
-                          value: selectedFarmer.phone ?? '',
-                        ),
-                        DetailRowConformCompo(
-                          field: 'ঠিকানা',
-                          value: selectedFarmer.address ?? '',
-                        ),
-                      ],
+
+                      ///! TODO: uncomment this
+                      // if (selectedFarmer != null) ...[
+                      //   DetailRowConformCompo(
+                      //     field: 'নাম',
+                      //     value: selectedFarmer.full_name ?? '',
+                      //   ),
+                      //   DetailRowConformCompo(
+                      //     field: 'কৃষক আইডি',
+                      //     value: selectedFarmer.farmer_id ?? '',
+                      //   ),
+                      //   DetailRowConformCompo(
+                      //     field: 'ফোন',
+                      //     value: selectedFarmer.phone ?? '',
+                      //   ),
+                      //   DetailRowConformCompo(
+                      //     field: 'ঠিকানা',
+                      //     value: selectedFarmer.address ?? '',
+                      //   ),
+                      // ],
                     ],
                   ),
                 ),
@@ -163,7 +164,7 @@ class OrderConformationPage extends StatelessWidget {
                 color: backgroundColor2,
                 elevation: 0,
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10),
                   child: Column(
                     children: [
                       Text(
@@ -181,7 +182,7 @@ class OrderConformationPage extends StatelessWidget {
                             color: secondaryColor,
                           ),
                           headingRowColor:
-                              MaterialStatePropertyAll(priceBoxColor),
+                              const MaterialStatePropertyAll(priceBoxColor),
                           dividerThickness: 0.2,
                           columns: const <DataColumn>[
                             DataColumn(
@@ -190,21 +191,21 @@ class OrderConformationPage extends StatelessWidget {
                               style: TextStyle(
                                 color: Colors.white,
                               ),
-                            )),
+                            ),),
                             DataColumn(
                                 label: Text(
                               'Qt',
                               style: TextStyle(
                                 color: Colors.white,
                               ),
-                            )),
+                            ),),
                             DataColumn(
                                 label: Text(
                               'Price',
                               style: TextStyle(
                                 color: Colors.white,
                               ),
-                            )),
+                            ),),
                           ],
                           rows: [
                             for (final item in cartItems.carts.entries)
@@ -240,20 +241,20 @@ class OrderConformationPage extends StatelessWidget {
                               ],
                             ),
                             DataRow(
-                              color: MaterialStatePropertyAll(priceBoxColor),
+                              color: const MaterialStatePropertyAll(priceBoxColor),
                               cells: [
                                 const DataCell(Text(
                                   'Total',
                                   style: TextStyle(
                                     color: Colors.white,
                                   ),
-                                )),
+                                ),),
                                 const DataCell(Text('')),
                                 DataCell(
                                   Text(
                                     '''
 ${cartItems.getTotalPrices() + cartItems.getTotalPrices()}''',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.white,
                                     ),
                                   ),
@@ -397,7 +398,7 @@ ${cartItems.getTotalPrices() + cartItems.getTotalPrices()}''',
               // );
 
               /// showing bottom sheet
-              showModalBottomSheet(
+              await showModalBottomSheet(
                 backgroundColor: priceBoxColor,
                 context: context,
                 builder: (context) {
@@ -417,63 +418,66 @@ ${cartItems.getTotalPrices() + cartItems.getTotalPrices()}''',
                         ),
                       ),
                       widgetHeight(40),
-                      FutureBuilder(
-                        future: deshiFarmerAPI.placeAnOrder(
-                          loginState.successLoginEntity.token,
-                          selectedFarmer?.farmer_id ?? '',
-                          orders,
-                        ),
-                        builder: (context, snapshot) {
-                          print('snapshot -> $snapshot');
-                          if (snapshot.connectionState ==
-                                  ConnectionState.done &&
-                              snapshot.hasData) {
-                            final value = snapshot.data;
-                            if (value is Success) {
-                              context.read<CartBloc>().add(ResetCart());
-                              return FloatingActionButton(
-                                backgroundColor: Colors.transparent,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                onPressed: null,
-                                child: const Icon(
-                                  Icons.verified,
-                                  size: 60,
-                                  // color: Colors.black,
-                                ),
-                              );
-                            } else {
-                              return FloatingActionButton(
-                                backgroundColor: Colors.red,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                onPressed: null,
-                                child: const Icon(
-                                  Icons.crop_square_sharp,
-                                  size: 60,
-                                  // color: Colors.black,
-                                ),
-                              );
-                            }
-                          } else if (snapshot.hasError) {
-                            return FloatingActionButton(
-                              backgroundColor: Colors.red,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                              onPressed: null,
-                              child: const Icon(
-                                Icons.multiple_stop,
-                                size: 60,
-                                // color: Colors.black,
-                              ),
-                            );
-                          }
-                          return const PrimaryLoadingIndicator();
-                        },
-                      ),
+
+                      ///! TODO: uncomment this
+                      // FutureBuilder(
+                      //   future: deshiFarmerAPI.placeAnOrder(
+                      //     loginState.successLoginEntity.token,
+                      //     selectedFarmer?.farmer_id ?? '',
+                      //     orders,
+                      //   ),
+                      //   builder: (context, snapshot) {
+                      //     print('snapshot -> $snapshot');
+                      //     if (snapshot.connectionState ==
+                      //             ConnectionState.done &&
+                      //         snapshot.hasData) {
+                      //       final value = snapshot.data;
+                      //       if (value is Success) {
+                      //         ///! TODO: uncomment this
+                      //         // context.read<CartBloc>().add(ResetCart());
+                      //         return FloatingActionButton(
+                      //           backgroundColor: Colors.transparent,
+                      //           shape: RoundedRectangleBorder(
+                      //             borderRadius: BorderRadius.circular(50),
+                      //           ),
+                      //           onPressed: null,
+                      //           child: const Icon(
+                      //             Icons.verified,
+                      //             size: 60,
+                      //             // color: Colors.black,
+                      //           ),
+                      //         );
+                      //       } else {
+                      //         return FloatingActionButton(
+                      //           backgroundColor: Colors.red,
+                      //           shape: RoundedRectangleBorder(
+                      //             borderRadius: BorderRadius.circular(50),
+                      //           ),
+                      //           onPressed: null,
+                      //           child: const Icon(
+                      //             Icons.crop_square_sharp,
+                      //             size: 60,
+                      //             // color: Colors.black,
+                      //           ),
+                      //         );
+                      //       }
+                      //     } else if (snapshot.hasError) {
+                      //       return FloatingActionButton(
+                      //         backgroundColor: Colors.red,
+                      //         shape: RoundedRectangleBorder(
+                      //           borderRadius: BorderRadius.circular(50),
+                      //         ),
+                      //         onPressed: null,
+                      //         child: const Icon(
+                      //           Icons.multiple_stop,
+                      //           size: 60,
+                      //           // color: Colors.black,
+                      //         ),
+                      //       );
+                      //     }
+                      //     return const PrimaryLoadingIndicator();
+                      //   },
+                      // ),
                       widgetHeight(40),
                       Text(
                         'Order has been placed',
@@ -495,7 +499,7 @@ ${cartItems.getTotalPrices() + cartItems.getTotalPrices()}''',
                                 .read<HomeBloc>()
                                 .add(const ChangePageEvent(1));
                             Navigator.pushAndRemoveUntil(
-                                context, HomePage.route(), (route) => false);
+                                context, HomePage.route(), (route) => false,);
                           },
                           style: ButtonStyle(
                             backgroundColor:

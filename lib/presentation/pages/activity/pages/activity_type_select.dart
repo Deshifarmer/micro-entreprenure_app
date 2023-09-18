@@ -1,3 +1,4 @@
+import 'package:deshifarmer/presentation/animations/page_animations.dart';
 import 'package:deshifarmer/presentation/pages/activity/pages/record_sowing_activity.dart';
 import 'package:deshifarmer/presentation/utils/activity_types_paramas.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
@@ -44,7 +45,7 @@ class _ActivityTypeSelectionState extends State<ActivityTypeSelection> {
             alignment: WrapAlignment.center,
             spacing: 10,
             children: [
-              for (String s in activityRecordValues.keys)
+              for (final String s in activityRecordValues.keys)
                 FilterChip(
                   label: Text(s),
                   onSelected: (bool isSelected) {
@@ -67,11 +68,11 @@ class _ActivityTypeSelectionState extends State<ActivityTypeSelection> {
           ? SecondayButtonGreen(
               btnColor: priceBoxColor,
               onpress: () {
-                print('list of types -> ${_activityTypes}');
+                print('list of types -> $_activityTypes');
 // RecordSowingActivity
                 Navigator.push(
                   context,
-                  PageAnimationBottom2Up(
+                  PageAnimationWrapper.sharedAxisTransitionPageWrapper(
                     RecordSowingActivity(
                       // activityTypes: _activityTypes,
                       recordName: _activityTypes,

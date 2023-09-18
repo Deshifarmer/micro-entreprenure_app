@@ -61,7 +61,7 @@ class CartzBody extends StatelessWidget {
                                 Text(currentItem.value.$1.company ?? ''),
                                 Text(
                                   '${currentItem.value.$1.sell_price} টাকা',
-                                )
+                                ),
                               ],
                             ),
                           ],
@@ -90,7 +90,7 @@ class CartzBody extends StatelessWidget {
                               ),
                             ],
                           ),
-                        )
+                        ),
                       ],
                     ),
                   );

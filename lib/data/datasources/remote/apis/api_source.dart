@@ -402,7 +402,7 @@ class DeshiFarmerAPI {
             //   }
             // });
 
-            final e2 = element as Map<String, dynamic>;
+            final e2 = element;
             print('exception occured $e');
             e2.forEach(
               (key, value) {
@@ -457,8 +457,8 @@ class DeshiFarmerAPI {
             );
           } catch (e) {
             print(
-                'error comverting List<FarmerEntity> ->  ${element.runtimeType}, $e \n');
-            final e2 = element as Map<String, dynamic>;
+                'error comverting List<FarmerEntity> ->  ${element.runtimeType}, $e \n',);
+            final e2 = element;
             e2.forEach((key, value) {
               if (value.runtimeType != String) {
                 print('${value.runtimeType} $key $value');
@@ -517,7 +517,7 @@ class DeshiFarmerAPI {
               'error comverting data Unassing GroupFieldEntity ->  ${element.runtimeType}, $e \n',
             );
 // getFarmersGroup
-            final e2 = element as Map<String, dynamic>;
+            final e2 = element;
             e2.forEach((key, value) {
               if (value.runtimeType != String) {
                 print('${value.runtimeType} $key $value');
@@ -603,23 +603,23 @@ class DeshiFarmerAPI {
     // var checkIfGovtID = {};
     ///! POST BODY
 
-    var _d = farmerModel.focusedCrop
+    var d = farmerModel.focusedCrop
         ?.replaceAll('{', '')
         .replaceAll('}', '')
         .split(',');
     var focusedCorpFormat = {
-      'cropname': _d,
+      'cropname': d,
     };
-    print(_d);
+    print(d);
 
-    var _d2 = farmerModel.currentProducingCrop
+    var d2 = farmerModel.currentProducingCrop
         ?.replaceAll('{', '')
         .replaceAll('}', '')
         .split(',');
     var currentCorpFormat = {
-      'cropname': _d2,
+      'cropname': d2,
     };
-    print(_d2);
+    print(d2);
     Map<String, String> body = <String, String>{
       'farmer_type': '1',
       // 'onboard_by': farmerModel.onboardBy ?? '', //! NOT NEEDED
@@ -655,14 +655,14 @@ class DeshiFarmerAPI {
       // 'farm_id': farmerModel.farmId.toString(),
       'year_of_stay_in': farmerModel.yearOfStayIn,
     };
-    var bDetail = farmerModel.bankDetails as Map<String, String>;
+    var bDetail = farmerModel.bankDetails! as Map<String, String>;
     if (bDetail['bank_name']!.isNotEmpty &&
         bDetail['branch_name']!.isNotEmpty &&
         bDetail['account_number']!.isNotEmpty) {
       body['bank_details'] = json.encode(farmerModel.bankDetails); //JSON
       print('bank detail -> ${json.encode(farmerModel.bankDetails)}');
     }
-    var msfDetail = farmerModel.mfsAccount as Map<String, String>;
+    var msfDetail = farmerModel.mfsAccount! as Map<String, String>;
 
     if (msfDetail['mfs_type']!.isNotEmpty &&
         msfDetail['mfs_account']!.isNotEmpty) {
@@ -799,7 +799,7 @@ class DeshiFarmerAPI {
   ) async {
     ///! POST BODY
     var body = json.encode({
-      'list': [farmerID]
+      'list': [farmerID],
     });
 
     ///! POST HEADER
@@ -821,7 +821,7 @@ class DeshiFarmerAPI {
       var resp = await http.post(
         url,
         body: json.encode({
-          'list': [farmerID]
+          'list': [farmerID],
         }),
         headers: headers,
       );
@@ -909,12 +909,12 @@ class DeshiFarmerAPI {
     String long,
   ) async {
     ///! POST BODY
-    var _d = farmModel.farmProducingCrop
+    var d = farmModel.farmProducingCrop
         .replaceAll('{', '')
         .replaceAll('}', '')
         .split(',');
-    var focusedCorpFormat = json.encode(_d);
-    print(_d);
+    var focusedCorpFormat = json.encode(d);
+    print(d);
 
     Map<String, String> body = <String, String>{
       'farmer_id': farmModel.farmerID,
@@ -1063,4 +1063,8 @@ class DeshiFarmerAPI {
       );
     }
   }
+
+
+
+
 }

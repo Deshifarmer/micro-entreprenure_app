@@ -72,7 +72,7 @@ class FarmListDropDown extends StatelessWidget {
         } else if (farmFetchState is FarmerFetchFarmLoading) {
           return const CircularProgressIndicator.adaptive();
         }
-        return SizedBox.shrink();
+        return const SizedBox.shrink();
         // return const Text('Init State');
       },
     );

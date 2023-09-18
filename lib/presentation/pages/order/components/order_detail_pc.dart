@@ -45,7 +45,7 @@ class OrderDetailsProductCard extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
 
@@ -74,7 +74,7 @@ class OrderDetailsProductCard extends StatelessWidget {
                     fontSize: 10,
                   ),
                 ),
-              )
+              ),
             ],
           ),
 
@@ -97,13 +97,13 @@ class OrderDetailsProductCard extends StatelessWidget {
                   // DateTime.parse(placedOn),
                   DateFormat('yyyy-MM-dd')
                       .format(DateTime.parse(placedOn))
-                      .toString(),
+                      ,
                   // '26 June, 2023',
                   style: const TextStyle(
                     fontSize: 10,
                   ),
                 ),
-              )
+              ),
             ],
           ),
           // Row(

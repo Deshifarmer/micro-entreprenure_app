@@ -1,8 +1,5 @@
 import 'package:deshifarmer/core/params/batch_params.dart';
-import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
-import 'package:deshifarmer/presentation/pages/activity/bloc/activity_bloc.dart';
 import 'package:deshifarmer/presentation/pages/activity/components/folon_batch.dart';
-import 'package:deshifarmer/presentation/pages/activity/pages/activity_type_select.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
@@ -43,7 +40,7 @@ class _BatchListPageState extends State<BatchListPage> {
         children: [
           Container(
             alignment: Alignment.center,
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8),
             child: Text(
               'ফলন ব্যাচ ',
               style: Theme.of(context).textTheme.titleSmall,
@@ -87,7 +84,7 @@ class _BatchListPageState extends State<BatchListPage> {
           ),
           Container(
             alignment: Alignment.center,
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8),
             child: Text(
               'অথবা নতুন ব্যাচ তৈরী করুন ',
               style: Theme.of(context).textTheme.titleSmall,
@@ -112,7 +109,7 @@ class _BatchListPageState extends State<BatchListPage> {
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
                   borderSide: BorderSide(
                     color: Colors.black.withOpacity(0.2),
                   ),
@@ -130,7 +127,7 @@ class _BatchListPageState extends State<BatchListPage> {
                 return DropdownMenuItem<String>(
                   // alignment: Alignment.center,
                   value: value,
-                  child: Text(value.toString()),
+                  child: Text(value),
                 );
               }).toList(),
               onChanged: (String? val) {
@@ -338,6 +335,7 @@ class _BatchButtonSuccessState extends State<BatchButtonSuccess> {
 
   @override
   bool isLoadin = false;
+  @override
   Widget build(BuildContext context) {
     return isLoadin
         ? Container(
@@ -345,7 +343,7 @@ class _BatchButtonSuccessState extends State<BatchButtonSuccess> {
             margin: EdgeInsets.only(bottom: getProportionateScreenHeight(10)),
             height: getProportionateScreenHeight(30),
             alignment: Alignment.center,
-            child: PrimaryLoadingIndicator(),
+            child: const PrimaryLoadingIndicator(),
           )
         : SecondayButtonGreen(
             btnColor: priceBoxColor,
@@ -357,47 +355,49 @@ class _BatchButtonSuccessState extends State<BatchButtonSuccess> {
                 setState(() {
                   isLoadin = true;
                 });
-                final result = await DeshiFarmerAPI().batchCreationAPI(
-                  token: widget.token,
-                  season: widget.season,
-                  farmID: widget.farmID,
-                  whichCrop: '${widget.crop} (${widget.jatt})',
-                );
-                if (result != null) {
-                  setState(() {
-                    isLoadin = false;
-                  });
-                  final activityState = context.read<ActivityBloc>().state;
-                  if (activityState is ActivityInitial) {
-                    if (activityState.farmerID.text.isEmpty) {
-                      // errorSnackBar('Select a farmer');
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(errorSnackBar('Select a farmer'));
-                    } else if (activityState.farmID.text.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          errorSnackBar('Select Farm for this Farmer'));
-                    } else {
-                      // print('get the farmer id -> ${activityState.farmerID.text}');
-                      // print('get the farm id -> ${activityState.farmID.text}');
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute<ActivityTypeSelection>(
-                          builder: (context) => ActivityTypeSelection(
-                            // farmID: activityState.farmID.text,
-                            // farmerID: activityState.farmerID.text,
-                            batchID: result.batch_id,
-                          ),
-                        ),
-                      );
-                    }
-                  }
-                } else {
-                  setState(() {
-                    isLoadin = false;
-                  });
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      errorSnackBar('ব্যাচ সৃষ্টি ব্যর্থ হয়েছে'));
-                }
+
+                ///! TODO: uncomment this
+                // final result = await DeshiFarmerAPI().batchCreationAPI(
+                //   token: widget.token,
+                //   season: widget.season,
+                //   farmID: widget.farmID,
+                //   whichCrop: '${widget.crop} (${widget.jatt})',
+                // );
+                // if (result != null) {
+                //   setState(() {
+                //     isLoadin = false;
+                //   });
+                //   final activityState = context.read<ActivityBloc>().state;
+                //   if (activityState is ActivityInitial) {
+                //     if (activityState.farmerID.text.isEmpty) {
+                //       // errorSnackBar('Select a farmer');
+                //       ScaffoldMessenger.of(context)
+                //           .showSnackBar(errorSnackBar('Select a farmer'));
+                //     } else if (activityState.farmID.text.isEmpty) {
+                //       ScaffoldMessenger.of(context).showSnackBar(
+                //           errorSnackBar('Select Farm for this Farmer'));
+                //     } else {
+                //       // print('get the farmer id -> ${activityState.farmerID.text}');
+                //       // print('get the farm id -> ${activityState.farmID.text}');
+                //       Navigator.push(
+                //         context,
+                //         MaterialPageRoute<ActivityTypeSelection>(
+                //           builder: (context) => ActivityTypeSelection(
+                //             // farmID: activityState.farmID.text,
+                //             // farmerID: activityState.farmerID.text,
+                //             batchID: result.batch_id,
+                //           ),
+                //         ),
+                //       );
+                //     }
+                //   }
+                // } else {
+                //   setState(() {
+                //     isLoadin = false;
+                //   });
+                //   ScaffoldMessenger.of(context).showSnackBar(
+                //       errorSnackBar('ব্যাচ সৃষ্টি ব্যর্থ হয়েছে'));
+                // }
               }
             },
             title: 'পরবর্তী ',

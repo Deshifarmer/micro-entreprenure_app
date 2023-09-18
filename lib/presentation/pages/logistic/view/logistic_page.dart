@@ -1,7 +1,6 @@
+import 'package:deshifarmer/presentation/pages/logistic/widgets/logistic_body.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:deshifarmer/presentation/pages/logistic/bloc/bloc.dart';
-import 'package:deshifarmer/presentation/pages/logistic/widgets/logistic_body.dart';
 
 /// {@template logistic_page}
 /// A description for LogisticPage
