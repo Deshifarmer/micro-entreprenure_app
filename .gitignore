@@ -164,3 +164,10 @@ lib/domain/entities/login_entity/login_response_entity.g.dart
 lib/domain/entities/user_entity/user_profile_entity.g.dart
 lib/domain/entities/login_entity/login_response_entity.g.dart
 lib/domain/entities/user_entity/user_profile_entity.g.dart
+lib/domain/entities/activity_entity/activity_entity.g.dart
+lib/domain/entities/activity_entity/activity_famer_detail.g.dart
+lib/domain/entities/attendance/att_history.g.dart
+lib/domain/entities/attendance/todays_resp_entity.g.dart
+lib/domain/entities/batch/batch_entity.g.dart
+lib/domain/entities/farm_entity/farm_entity.g.dart
+lib/domain/entities/group_detail_entity/farmer_entity_group.g.dart
