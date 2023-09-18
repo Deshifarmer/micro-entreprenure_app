@@ -65,3 +65,9 @@ const double uiBorderRadius = 6;
 SizedBox height10 = SizedBox(
   height: getProportionateScreenHeight(10),
 );
+
+///? server or local
+enum ServerOrLocal {
+  server,
+  local,
+}
