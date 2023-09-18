@@ -8,7 +8,6 @@ import 'package:deshifarmer/presentation/blocs/my_unassign_farmers/my_unassign_f
 import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/cubit/add_group/add_farmer_to_group_cubit.dart';
-import 'package:deshifarmer/presentation/cubit/dropdown/dropdown_cubit.dart';
 import 'package:deshifarmer/presentation/cubit/groups/get_group_cubit.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:deshifarmer/presentation/pages/add_group/bloc/bloc.dart';
