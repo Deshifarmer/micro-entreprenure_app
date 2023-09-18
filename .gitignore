@@ -162,3 +162,5 @@ lib/domain/entities/group_field_entity/group_field_entity2.g.dart
 lib/domain/entities/login_entity/login_response_entity.g.dart
 lib/domain/entities/login_entity/login_response_entity.g.dart
 lib/domain/entities/user_entity/user_profile_entity.g.dart
+lib/domain/entities/login_entity/login_response_entity.g.dart
+lib/domain/entities/user_entity/user_profile_entity.g.dart
