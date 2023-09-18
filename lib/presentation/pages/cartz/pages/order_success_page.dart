@@ -12,7 +12,7 @@ class OrderSuccessPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Order S7ccessfully Done'),
+        title: const Text('Order Successfully Done'),
         leading: IconButton(
           onPressed: () async {
             Navigator.pop(context);
