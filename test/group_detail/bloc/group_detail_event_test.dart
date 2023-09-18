@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:flutter_test/flutter_test.dart';
 import 'package:deshifarmer/presentation/pages/add_group/pages/group_detail/bloc/bloc.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('GroupDetailEvent', () {  
@@ -17,7 +17,7 @@ void main() {
       test('can be instantiated', () {
         expect(
           const CustomGroupDetailEvent(),
-          isNotNull
+          isNotNull,
         );
       });
     });

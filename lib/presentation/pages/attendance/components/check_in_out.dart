@@ -110,7 +110,7 @@ class CheckInOut extends StatelessWidget {
                             );
                         if (attState is AttendanceOut) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                              successSnackBar('Check out Successfully'));
+                              successSnackBar('Check out Successfully'),);
                           Navigator.pop(context);
                           Navigator.pop(context);
                         }
@@ -124,7 +124,7 @@ class CheckInOut extends StatelessWidget {
                   },
                   title: 'চেকআউট করুন',
                 ),
-              ]
+              ],
             ],
           );
         }

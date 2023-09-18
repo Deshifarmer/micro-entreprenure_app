@@ -19,8 +19,6 @@
 
 */
 
-import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
-import 'package:deshifarmer/domain/entities/group_field_entity/group_leader_field.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'group_field_entity.g.dart';

@@ -1,5 +1,5 @@
 import 'package:deshifarmer/presentation/shapes/my_farmers_shape.dart';
-import 'package:deshifarmer/presentation/widgets/constraints.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:flutter/material.dart';
 
 class CardOfDashboard extends StatelessWidget {
@@ -51,7 +51,7 @@ class CardOfDashboard extends StatelessWidget {
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width / 1.4,
                           child: LinearProgressIndicator(
-                            backgroundColor: Color(0xffF0F0F0),
+                            backgroundColor: const Color(0xffF0F0F0),
                             minHeight: 10,
                             value: current / target,
                             color: primaryColor,

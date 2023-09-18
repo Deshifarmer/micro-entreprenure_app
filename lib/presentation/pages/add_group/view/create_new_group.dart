@@ -60,7 +60,7 @@ class CreateGroupForm extends StatelessWidget {
                     // Text('Guide:',
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                           color: secondaryColor,
-                        )),
+                        ),),
                 RichText(
                   text: TextSpan(
                     text: 'গ্রুপ এর নাম নির্বাচন করুন',
@@ -82,7 +82,7 @@ class CreateGroupForm extends StatelessWidget {
                   ),
                   maxLines: 2,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 /// Select a group leader
                 RichText(
@@ -105,22 +105,22 @@ class CreateGroupForm extends StatelessWidget {
                   ),
                   maxLines: 6,
                 ),
-                SizedBox(height: 80),
+                const SizedBox(height: 80),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8),
                   child: Row(
                     // mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       //icon
-                      Icon(Icons.sort),
-                      SizedBox(width: 15),
+                      const Icon(Icons.sort),
+                      const SizedBox(width: 15),
                       // title
                       Text('গ্রুপের নাম নির্বাচন করুন',
                           // Text('Choose a group name',
                           style:
                               Theme.of(context).textTheme.titleLarge!.copyWith(
                                     color: secondaryColor,
-                                  )),
+                                  ),),
                       // empty shit
                       // SizedBox.shrink(),
                     ],
@@ -165,9 +165,9 @@ class CreateGroupForm extends StatelessWidget {
                       if (loginState is LoginSuccess &&
                           state is AddGroupInitial) {
                         print(
-                            'token -> ${loginState.successLoginEntity.token}');
+                            'token -> ${loginState.successLoginEntity.token}',);
                         print(
-                            'Group NAME -> ${state.groupNameController.text}');
+                            'Group NAME -> ${state.groupNameController.text}',);
                         print('Leader ID -> ${state.leaderID}');
                         context.read<AddGroupBloc>().add(
                               CustomAddGroupEvent(

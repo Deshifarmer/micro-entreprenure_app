@@ -94,10 +94,10 @@ ss                       }, */
             title: 'Email Notification',
           ),
 
-          SettingsSwitchButton(
+          const SettingsSwitchButton(
             title: 'Weather alert',
           ),
-          SettingsSwitchButton(
+          const SettingsSwitchButton(
             title: 'Promotionals',
           ),
         ],
@@ -160,10 +160,11 @@ class _SwitchToStfState extends State<SwitchToStf> {
       inactiveTrackColor: backgroundColor,
       value: isActive,
       onChanged: (bool? v) {
-        if (v != null)
+        if (v != null) {
           setState(() {
             isActive = v;
           });
+        }
       },
     );
   }

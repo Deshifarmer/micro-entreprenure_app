@@ -26,7 +26,7 @@ class AttendancePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: backgroundColor2,
         surfaceTintColor: backgroundColor2,
-        title: Text(
+        title: const Text(
           'দৈনিক উপস্থিতি',
           style: TextStyle(
             // fontSize: 18,

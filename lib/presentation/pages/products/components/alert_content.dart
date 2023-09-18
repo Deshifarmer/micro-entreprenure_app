@@ -17,11 +17,10 @@ class AlertDialogContent extends StatelessWidget {
       child: Column(
         children: [
           /// product image
-          if (product.image != null)
-            Hero(
-              tag: product.product_id ?? '',
-              child: ProductImage(product: product),
-            ),
+          Hero(
+            tag: product.product_id ?? '',
+            child: ProductImage(product: product),
+          ),
 
           /// product price
           Padding(

@@ -1,11 +1,11 @@
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/domain/entities/user_entity/user_profile_entity.dart';
+import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:flutter/material.dart';
 
 class AppBarTopUserDetail extends StatelessWidget {
   const AppBarTopUserDetail({
-    super.key,
-    required this.usrProfile,
+    required this.usrProfile, super.key,
   });
 
   final UserProfileEntity usrProfile;
@@ -25,12 +25,12 @@ class AppBarTopUserDetail extends StatelessWidget {
                     30,
                   ), // Image radius
                   child: Image.network(
-                    '${Strings.domain}/storage${usrProfile.photo}',
+                    '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage${usrProfile.photo}',
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 30,
               ),
               Column(
@@ -60,7 +60,7 @@ class AppBarTopUserDetail extends StatelessWidget {
           Row(
             children: [
               const Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8),
                 child: Text(
                   'help?',
                   style: TextStyle(color: Color(0xff93EE93)),
@@ -69,7 +69,7 @@ class AppBarTopUserDetail extends StatelessWidget {
               IconButton.filled(
                 style: const ButtonStyle(
                     backgroundColor:
-                        MaterialStatePropertyAll(Color(0xff93EE93))),
+                        MaterialStatePropertyAll(Color(0xff93EE93)),),
                 color: Colors.green,
                 onPressed: () {},
                 icon: const Icon(Icons.notifications_none),

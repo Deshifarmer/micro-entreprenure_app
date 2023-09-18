@@ -49,7 +49,7 @@ class OrderSuccessPage extends StatelessWidget {
           const Spacer(),
           const Spacer(),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8),
             child: OutlinedButton(
               onPressed: () {},
               style: ButtonStyle(
@@ -93,7 +93,7 @@ class OrderSuccessPage extends StatelessWidget {
                   PageAnimationWrapper.fadeThroughTransitionPageWrapper(
                     const HomePage(),
                   ),
-                  (route) => false);
+                  (route) => false,);
             },
             child: const Text(
               'back to homepage',

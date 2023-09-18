@@ -35,7 +35,7 @@ class FarmerDetailCardForOrderDetail extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-              )
+              ),
             ],
           ),
           Row(
@@ -52,7 +52,7 @@ class FarmerDetailCardForOrderDetail extends StatelessWidget {
                     fontSize: 10,
                   ),
                 ),
-              )
+              ),
             ],
           ),
 

@@ -1,11 +1,11 @@
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
+import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:flutter/material.dart';
 
 class FarmerCard extends StatelessWidget {
   const FarmerCard({
-    super.key,
-    required this.currentFarmer,
+    required this.currentFarmer, super.key,
   });
 
   final FarmerEntity? currentFarmer;
@@ -21,7 +21,7 @@ class FarmerCard extends StatelessWidget {
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: Image.network(
-            '${Strings.domain}/storage/${currentFarmer?.image}',
+            '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${currentFarmer?.image}',
             height: 50,
             width: 50,
           ),

@@ -60,7 +60,7 @@ class _AdvisoryFileUploadFieldState extends State<AdvisoryFileUploadField> {
                   // /! check if the file already exists or not
                 }
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.file(

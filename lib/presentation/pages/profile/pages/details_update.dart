@@ -113,7 +113,7 @@ ss                       }, */
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                )
+                ),
               ],
             ),
           ),

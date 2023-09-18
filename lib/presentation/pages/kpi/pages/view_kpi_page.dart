@@ -206,7 +206,6 @@ class ViewMyKPIPage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: FAProgressBar(
-                          currentValue: 0,
                           size: 40,
                           maxValue: 150,
                           changeColorValue: 100,
@@ -242,7 +241,6 @@ class ViewMyKPIPage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: FAProgressBar(
-                          currentValue: 0,
                           size: 40,
                           maxValue: 150,
                           changeColorValue: 100,
@@ -277,7 +275,6 @@ class ViewMyKPIPage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: FAProgressBar(
-                          currentValue: 0,
                           size: 40,
                           maxValue: 150,
                           changeColorValue: 100,

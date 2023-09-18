@@ -1,5 +1,4 @@
 import 'package:deshifarmer/core/params/home_page_params.dart';
-import 'package:deshifarmer/domain/entities/user_entity/user_profile_entity.dart';
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/pages/farmer_listo/farmer_listo.dart';
 import 'package:deshifarmer/presentation/pages/home/components/appbar_top_user_detail.dart';
@@ -9,20 +8,9 @@ import 'package:deshifarmer/presentation/pages/home/components/farmer_weather_ca
 import 'package:deshifarmer/presentation/pages/home/components/home_balance_card.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/products.dart';
-import 'package:deshifarmer/presentation/shapes/agri_advisory_shape.dart';
-import 'package:deshifarmer/presentation/shapes/agri_input_shape.dart';
-import 'package:deshifarmer/presentation/shapes/carrot_shape.dart';
-import 'package:deshifarmer/presentation/shapes/crop_insurance_shape.dart';
-import 'package:deshifarmer/presentation/shapes/farms_shape.dart';
 import 'package:deshifarmer/presentation/shapes/my_farmers_shape.dart';
-import 'package:deshifarmer/presentation/shapes/my_order_card_shape.dart';
-import 'package:deshifarmer/presentation/shapes/orders_shape.dart';
-import 'package:deshifarmer/presentation/shapes/performance_shape.dart';
-import 'package:deshifarmer/presentation/shapes/track_activity_shape.dart';
-import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/home_page_icon_widget.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// {@template home_body}
@@ -228,9 +216,10 @@ class HomeBody extends StatelessWidget {
                             ],
                           ),
                         ),
-                        const MyOrderCard(),
-                        const MyOrderCard(),
-                        const MyOrderCard(),
+                        //TODO: uncomment this
+                        // const MyOrderCard(),
+                        // const MyOrderCard(),
+                        // const MyOrderCard(),
                       ],
                     );
                   },
@@ -263,13 +252,14 @@ class HomeBody extends StatelessWidget {
               SliverGrid(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                    var currentShortCut =
+                    final currentShortCut =
                         HomePageParams.homePageShortCuts.elementAt(index);
                     return Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8),
                       child: HomePageIconWidget(
-                          painter: currentShortCut.painter,
-                          title: currentShortCut.title),
+                        painter: currentShortCut.painter,
+                        title: currentShortCut.title,
+                      ),
                     );
                   },
                   childCount: 4,

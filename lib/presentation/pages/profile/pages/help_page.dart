@@ -146,7 +146,7 @@ ss                       }, */
               ),
             );
           },
-          title: 'Update Settings'),
+          title: 'Update Settings',),
     );
   }
 }

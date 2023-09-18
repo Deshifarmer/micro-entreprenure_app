@@ -13,7 +13,7 @@ class CommisionShape extends CustomPainter {
         size.width * 0.1250000,
         size.height * 0.1416667,
         size.width * 0.1250000,
-        size.height * 0.1625000);
+        size.height * 0.1625000,);
     path_0.lineTo(size.width * 0.1250000, size.height * 0.8375000);
     path_0.cubicTo(
         size.width * 0.1250000,
@@ -21,7 +21,7 @@ class CommisionShape extends CustomPainter {
         size.width * 0.1416667,
         size.height * 0.8750000,
         size.width * 0.1625000,
-        size.height * 0.8750000);
+        size.height * 0.8750000,);
     path_0.lineTo(size.width * 0.8375000, size.height * 0.8750000);
     path_0.cubicTo(
         size.width * 0.8541667,
@@ -29,7 +29,7 @@ class CommisionShape extends CustomPainter {
         size.width * 0.8750000,
         size.height * 0.8541667,
         size.width * 0.8750000,
-        size.height * 0.8375000);
+        size.height * 0.8375000,);
     path_0.lineTo(size.width * 0.8750000, size.height * 0.1625000);
     path_0.cubicTo(
         size.width * 0.8750000,
@@ -37,7 +37,7 @@ class CommisionShape extends CustomPainter {
         size.width * 0.8541667,
         size.height * 0.1250000,
         size.width * 0.8375000,
-        size.height * 0.1250000);
+        size.height * 0.1250000,);
     path_0.close();
     path_0.moveTo(size.width * 0.3750000, size.height * 0.2916667);
     path_0.lineTo(size.width * 0.2916667, size.height * 0.2916667);
@@ -82,9 +82,9 @@ class CommisionShape extends CustomPainter {
     path_0.lineTo(size.width * 0.2083333, size.height * 0.7916667);
     path_0.close();
 
-    Paint paint_0_fill = Paint()..style = PaintingStyle.fill;
-    paint_0_fill.color = Color(0xffF2994A).withOpacity(1.0);
-    canvas.drawPath(path_0, paint_0_fill);
+    final paint0Fill = Paint()..style = PaintingStyle.fill;
+    paint0Fill.color = const Color(0xffF2994A).withOpacity(1);
+    canvas.drawPath(path_0, paint0Fill);
   }
 
   @override

@@ -57,7 +57,7 @@ class LoginBody extends StatelessWidget {
             ),
             // Company Name
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8),
               child: Text(
                 LoginPageParams.companyName,
                 style: theme.textTheme.titleSmall,
@@ -66,7 +66,7 @@ class LoginBody extends StatelessWidget {
             ),
             // a Title
             Padding(
-              padding: const EdgeInsets.all(4.0),
+              padding: const EdgeInsets.all(4),
               child: Text(
                 LoginPageParams.title,
                 style: theme.textTheme.headlineLarge!.copyWith(

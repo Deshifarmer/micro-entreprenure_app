@@ -220,17 +220,19 @@ class MyOrderCard extends StatelessWidget {
                               ///! recevie api
 
                               if (loginState is LoginSuccess) {
-                                final received =
-                                    await deshiFarmerAPI.receiveOrder(
-                                  loginState.successLoginEntity.token,
-                                  orderID,
-                                );
+                                ///! TODO: uncomment this
+                                // final received =
+                                //     await deshiFarmerAPI.receiveOrder(
+                                //   loginState.successLoginEntity.token,
+                                //   orderID,
+                                // );
+                                const received = null;
                                 if (received == null) {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                      errorSnackBar('Order Received Error'));
+                                      errorSnackBar('Order Received Error'),);
                                 } else {
                                   context.read<OrderBloc>().add(InitOrders(
-                                      loginState.successLoginEntity.token));
+                                      loginState.successLoginEntity.token,),);
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     successSnackBar(
                                       'Successfully Received Order',

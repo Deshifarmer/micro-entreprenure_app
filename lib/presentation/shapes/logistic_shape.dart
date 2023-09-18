@@ -12,7 +12,7 @@ class LogisticShape extends CustomPainter {
         size.width * 0.7566667,
         size.height * 0.1666667,
         size.width * 0.7291667,
-        size.height * 0.1666667);
+        size.height * 0.1666667,);
     path_0.lineTo(size.width * 0.2708333, size.height * 0.1666667);
     path_0.cubicTo(
         size.width * 0.2433333,
@@ -20,7 +20,7 @@ class LogisticShape extends CustomPainter {
         size.width * 0.2204167,
         size.height * 0.1841667,
         size.width * 0.2116667,
-        size.height * 0.2087500);
+        size.height * 0.2087500,);
     path_0.lineTo(size.width * 0.1250000, size.height * 0.4583333);
     path_0.lineTo(size.width * 0.1250000, size.height * 0.7916667);
     path_0.cubicTo(
@@ -29,7 +29,7 @@ class LogisticShape extends CustomPainter {
         size.width * 0.1437500,
         size.height * 0.8333333,
         size.width * 0.1666667,
-        size.height * 0.8333333);
+        size.height * 0.8333333,);
     path_0.lineTo(size.width * 0.2083333, size.height * 0.8333333);
     path_0.cubicTo(
         size.width * 0.2312500,
@@ -37,7 +37,7 @@ class LogisticShape extends CustomPainter {
         size.width * 0.2500000,
         size.height * 0.8145815,
         size.width * 0.2500000,
-        size.height * 0.7916667);
+        size.height * 0.7916667,);
     path_0.lineTo(size.width * 0.2500000, size.height * 0.7500000);
     path_0.lineTo(size.width * 0.7500000, size.height * 0.7500000);
     path_0.lineTo(size.width * 0.7500000, size.height * 0.7916667);
@@ -47,7 +47,7 @@ class LogisticShape extends CustomPainter {
         size.width * 0.7687519,
         size.height * 0.8333333,
         size.width * 0.7916667,
-        size.height * 0.8333333);
+        size.height * 0.8333333,);
     path_0.lineTo(size.width * 0.8333333, size.height * 0.8333333);
     path_0.cubicTo(
         size.width * 0.8562481,
@@ -55,7 +55,7 @@ class LogisticShape extends CustomPainter {
         size.width * 0.8750000,
         size.height * 0.8145815,
         size.width * 0.8750000,
-        size.height * 0.7916667);
+        size.height * 0.7916667,);
     path_0.lineTo(size.width * 0.8750000, size.height * 0.4583333);
     path_0.lineTo(size.width * 0.7883333, size.height * 0.2087500);
     path_0.close();
@@ -80,28 +80,28 @@ class LogisticShape extends CustomPainter {
         size.width * 0.2500000,
         size.height * 0.5279815,
         size.width * 0.2500000,
-        size.height * 0.5625000);
+        size.height * 0.5625000,);
     path_0.cubicTo(
         size.width * 0.2500000,
         size.height * 0.5970185,
         size.width * 0.2779822,
         size.height * 0.6250000,
         size.width * 0.3125000,
-        size.height * 0.6250000);
+        size.height * 0.6250000,);
     path_0.cubicTo(
         size.width * 0.3470178,
         size.height * 0.6250000,
         size.width * 0.3750000,
         size.height * 0.5970185,
         size.width * 0.3750000,
-        size.height * 0.5625000);
+        size.height * 0.5625000,);
     path_0.cubicTo(
         size.width * 0.3750000,
         size.height * 0.5279815,
         size.width * 0.3470178,
         size.height * 0.5000000,
         size.width * 0.3125000,
-        size.height * 0.5000000);
+        size.height * 0.5000000,);
     path_0.close();
     path_0.moveTo(size.width * 0.6250000, size.height * 0.5625000);
     path_0.cubicTo(
@@ -110,33 +110,33 @@ class LogisticShape extends CustomPainter {
         size.width * 0.6529815,
         size.height * 0.5000000,
         size.width * 0.6875000,
-        size.height * 0.5000000);
+        size.height * 0.5000000,);
     path_0.cubicTo(
         size.width * 0.7220185,
         size.height * 0.5000000,
         size.width * 0.7500000,
         size.height * 0.5279815,
         size.width * 0.7500000,
-        size.height * 0.5625000);
+        size.height * 0.5625000,);
     path_0.cubicTo(
         size.width * 0.7500000,
         size.height * 0.5970185,
         size.width * 0.7220185,
         size.height * 0.6250000,
         size.width * 0.6875000,
-        size.height * 0.6250000);
+        size.height * 0.6250000,);
     path_0.cubicTo(
         size.width * 0.6529815,
         size.height * 0.6250000,
         size.width * 0.6250000,
         size.height * 0.5970185,
         size.width * 0.6250000,
-        size.height * 0.5625000);
+        size.height * 0.5625000,);
     path_0.close();
 
-    Paint paint_0_fill = Paint()..style = PaintingStyle.fill;
-    paint_0_fill.color = Color(0xff2F80ED).withOpacity(1.0);
-    canvas.drawPath(path_0, paint_0_fill);
+    final paint0Fill = Paint()..style = PaintingStyle.fill;
+    paint0Fill.color = const Color(0xff2F80ED).withOpacity(1);
+    canvas.drawPath(path_0, paint0Fill);
   }
 
   @override

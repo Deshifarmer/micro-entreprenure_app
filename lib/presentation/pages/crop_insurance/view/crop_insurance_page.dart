@@ -15,7 +15,7 @@ class CropInsurancePage extends StatelessWidget {
   /// The static route for CropInsurancePage
   static Route<dynamic> route() {
     return MaterialPageRoute<dynamic>(
-        builder: (_) => const CropInsurancePage());
+        builder: (_) => const CropInsurancePage(),);
   }
 
   @override
@@ -36,9 +36,9 @@ class CropInsurancePage extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (c) => const MyRequestCropInsurance()));
+                        builder: (c) => const MyRequestCropInsurance(),),);
               },
-              title: 'Continue')),
+              title: 'Continue',),),
     );
   }
 }

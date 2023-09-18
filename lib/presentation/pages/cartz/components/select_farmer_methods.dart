@@ -2,6 +2,7 @@ import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
 import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/pages/cartz/bloc/bloc.dart';
+import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:flutter/material.dart';
 
 class SelectFarmerMethods extends StatelessWidget {
@@ -16,7 +17,7 @@ class SelectFarmerMethods extends StatelessWidget {
       builder: (context, state) {
         if (state is MyFarmerSuccess) {
           print(
-            '${Strings.domain}/storage/${state.allFarmerListResp.farmers.first.image}',
+            '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${state.allFarmerListResp.farmers.first.image}',
           );
 
           return Padding(
@@ -58,7 +59,7 @@ class SelectFarmerMethods extends StatelessWidget {
                     leading: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.network(
-                        '${Strings.domain}/storage/${value.image}',
+                        '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
                       ),
                     ),
                     title: Text(value.full_name ?? ''),

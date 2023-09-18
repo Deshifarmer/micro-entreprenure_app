@@ -114,7 +114,7 @@ class AgriAdvisoryBody extends StatelessWidget {
           const Text('মিটিং নোটস'),
           widgetHeight(10),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8),
             child: agriAdvisory is AgriAdvisoryInitial
                 ? TextField(
                     maxLines: 4,

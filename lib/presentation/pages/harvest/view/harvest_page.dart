@@ -1,7 +1,6 @@
+import 'package:deshifarmer/presentation/pages/harvest/widgets/harvest_body.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:deshifarmer/presentation/pages/harvest/bloc/bloc.dart';
-import 'package:deshifarmer/presentation/pages/harvest/widgets/harvest_body.dart';
 
 /// {@template harvest_page}
 /// A description for HarvestPage

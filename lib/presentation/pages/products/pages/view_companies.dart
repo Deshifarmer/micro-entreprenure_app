@@ -2,10 +2,8 @@ import 'package:animations/animations.dart';
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
-import 'package:deshifarmer/presentation/pages/products/bloc/products_bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/pages/view_companies_products.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
@@ -37,11 +35,12 @@ class ViewAllComapnies extends StatelessWidget {
               );
 
           ///! Fetch Products
-          context.read<ProductsBBloc>().add(
-                ProductFFetchEvent(
-                  loginState.successLoginEntity.token,
-                ),
-              );
+          ///! TODO: uncomment this
+          // context.read<ProductsBBloc>().add(
+          //       ProductFFetchEvent(
+          //         loginState.successLoginEntity.token,
+          //       ),
+          //     );
         }
 
         return true;
@@ -58,7 +57,7 @@ class ViewAllComapnies extends StatelessWidget {
           ),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(10),
           child: ListView(
             children: [
               /* Padding(
@@ -161,7 +160,7 @@ class ViewAllComapnies extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(10),
                                     child: Image.network(
                                       checkDomain(Strings.getServerOrLocal(
-                                              ServerOrLocal.server))
+                                              ServerOrLocal.server,),)
                                           ? dummyImage
                                           : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage${currentCompany.photo}',
                                       errorBuilder: (
@@ -187,7 +186,7 @@ class ViewAllComapnies extends StatelessWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(top: 8.0),
+                                  padding: const EdgeInsets.only(top: 8),
                                   child: Text(
                                     currentCompany.full_name ?? '',
                                     style: textTheme.bodySmall,
@@ -205,24 +204,27 @@ class ViewAllComapnies extends StatelessWidget {
                           openElevation: 0,
                           closedElevation: 0,
                           openBuilder: (BuildContext context,
-                              void Function({Object? returnValue}) action) {
+                              void Function({Object? returnValue}) action,) {
                             final loginState = context.read<LoginBloc>().state;
                             if (loginState is LoginSuccess) {
-                              context.read<ProductsBBloc>().add(
-                                    ProductSearchEvent(
-                                      loginState.successLoginEntity.token,
-                                      company: currentCompany.df_id,
-                                      // query: productState.query,
-                                    ),
-                                  );
+                              ///! TODO: uncomment this
+                              // context.read<ProductsBBloc>().add(
+                              //       ProductSearchEvent(
+                              //         loginState.successLoginEntity.token,
+                              //         company: currentCompany.df_id,
+                              //         // query: productState.query,
+                              //       ),
+                              //     );
                             }
-                            context.read<ProductsBloc>().add(
-                                  SelectCompanysEvent(
-                                    currentCompany.df_id,
-                                    category: null,
-                                    query: null,
-                                  ),
-                                );
+
+                            ///! TODO: uncomment this
+                            // context.read<ProductsBloc>().add(
+                            //       SelectCompanysEvent(
+                            //         currentCompany.df_id,
+                            //         category: null,
+                            //         query: null,
+                            //       ),
+                            //     );
                             return CompanyProducts(
                               companyName: currentCompany.full_name ?? '',
                               companyID: currentCompany.df_id ?? '',

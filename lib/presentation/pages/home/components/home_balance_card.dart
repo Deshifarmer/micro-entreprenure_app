@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 
 class HomeBalanceCard extends StatelessWidget {
   const HomeBalanceCard({
-    super.key,
-    required this.usrProfile,
+    required this.usrProfile, super.key,
   });
 
   final UserProfileEntity usrProfile;

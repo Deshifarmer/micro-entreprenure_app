@@ -16,18 +16,19 @@ class RecordSowingBloc extends Bloc<RecordSowingEvent, RecordSowingState> {
       // final getCurrentPosition = await determinePosition();
       // print(
       //     'lat -> ${getCurrentPosition.latitude} ${getCurrentPosition.longitude}');
-      final result = await deshiFarmerAPI.recordActivity(
-          // getCurrentPosition.latitude.toString(),
-          event.ram
-          // getCurrentPosition.longitude.toString(),
-          );
-      if (result != null) {
-        emit(RecordSowingSuccess());
-        emit(RecordSowingInitial());
-      } else {
-        emit(RecordSowingFailed());
-        emit(RecordSowingInitial());
-      }
+      ///! TODO: uncomment this
+      // final result = await deshiFarmerAPI.recordActivity(
+      //     // getCurrentPosition.latitude.toString(),
+      //     event.ram
+      //     // getCurrentPosition.longitude.toString(),
+      //     );
+      // if (result != null) {
+      //   emit(RecordSowingSuccess());
+      //   emit(RecordSowingInitial());
+      // } else {
+      //   emit(RecordSowingFailed());
+      //   emit(RecordSowingInitial());
+      // }
     });
   }
   DeshiFarmerAPI deshiFarmerAPI = DeshiFarmerAPI();

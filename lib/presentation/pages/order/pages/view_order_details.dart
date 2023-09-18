@@ -104,22 +104,22 @@ class ViewOrderDetail extends StatelessWidget {
                   // print(result.first['delivery_address']);
                   int getTotal() {
                     var a = 0;
-                    result.forEach((element) {
+                    for (final element in result) {
                       a = a + int.parse(element['quantity'].toString());
-                    });
+                    }
                     return a;
                   }
                   // sell_price
 
                   double getTotalPrice() {
                     var a = 0.0;
-                    result.forEach((element) {
+                    for (final element in result) {
                       a = a +
                           int.parse(element['quantity'].toString()) *
                               double.parse(element['product_details']
                                       ['sell_price']
-                                  .toString());
-                    });
+                                  .toString(),);
+                    }
                     return a;
                   }
 
@@ -176,7 +176,7 @@ class ViewOrderDetail extends StatelessWidget {
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                )
+                                ),
                               ],
                             ),
                             for (final product in result)
@@ -187,9 +187,9 @@ class ViewOrderDetail extends StatelessWidget {
                                 children: [
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(
-                                        getProportionateScreenWidth(10)),
+                                        getProportionateScreenWidth(10),),
                                     child: Image.network(
-                                      '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${product['product_details']['image'].toString()}',
+                                      '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${product['product_details']['image']}',
                                       height: getProportionateScreenHeight(60),
                                       width: getProportionateScreenWidth(60),
                                       errorBuilder: (
@@ -261,8 +261,8 @@ class ViewOrderDetail extends StatelessWidget {
                               ),
                             Padding(
                               padding: EdgeInsets.symmetric(
-                                  vertical: getProportionateScreenHeight(8)),
-                              child: Divider(
+                                  vertical: getProportionateScreenHeight(8),),
+                              child: const Divider(
                                 // height: 2,
                                 color: Color(0xffa3a3a3),
                               ),
@@ -297,7 +297,7 @@ class ViewOrderDetail extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                )
+                                ),
                               ],
                             ),
                             const Row(
@@ -322,7 +322,7 @@ class ViewOrderDetail extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                )
+                                ),
                               ],
                             ),
                             const Row(
@@ -372,7 +372,7 @@ class ViewOrderDetail extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                )
+                                ),
                               ],
                             ),
                           ],
