@@ -1,9 +1,19 @@
+import 'package:deshifarmer/presentation/widgets/constraints.dart';
+
 class Strings {
   Strings._();
 
   static const String title = 'Deshifarmer';
-  // static const String domain = 'http://192.168.68.126:8000';
-  static const String domain = 'https://core.deshifarmer.co';
+  static const String localDomain = 'http://192.168.68.126:8000';
+  static const String serverDomain = 'https://core.deshifarmer.co';
+
+  static String getServerOrLocal(ServerOrLocal sol) {
+    if (sol == ServerOrLocal.local) {
+      return localDomain;
+    } else {
+      return serverDomain;
+    }
+  }
 }
 
 
