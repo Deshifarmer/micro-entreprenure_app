@@ -1,8 +1,24 @@
 import 'package:deshifarmer/data/models/location_model.dart';
 
 const List<UpozillaModel> upzillaDatabase = <UpozillaModel>[
-  UpozillaModel(id: '1', districtID: '34', name: 'Amtali', bnName: 'আমতলী'),
-  UpozillaModel(id: '2', districtID: '34', name: 'Bamna', bnName: 'বামনা'),
+  UpozillaModel(
+    id: '0',
+    districtID: '',
+    name: '------',
+    bnName: '------',
+  ),
+  UpozillaModel(
+    id: '1',
+    districtID: '34',
+    name: 'Amtali',
+    bnName: 'আমতলী',
+  ),
+  UpozillaModel(
+    id: '2',
+    districtID: '34',
+    name: 'Bamna',
+    bnName: 'বামনা',
+  ),
   UpozillaModel(
     id: '3',
     districtID: '34',
