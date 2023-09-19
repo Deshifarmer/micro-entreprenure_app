@@ -16,6 +16,7 @@ part 'login_state.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc() : super(const LoginInitial()) {
     on<CheckLoginEvent>(_onSuccessLoginEvent);
+    on<LoginSuccessEvent>(_onLoalLoginSuccessEvent);
   }
   LoginRepoImpl loginRepoImpl = LoginRepoImpl();
 
@@ -43,5 +44,19 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         },
       ServerFailor(error: final _) => emit(LoginFailed()),
     };
+  }
+
+  // on local login success event
+  FutureOr<void> _onLoalLoginSuccessEvent(
+    LoginSuccessEvent event,
+    Emitter<LoginState> emit,
+  ) async {
+    emit(LoginLoading());
+
+    emit(LoginSuccess(SuccessLoginEntity(
+      token: event.token,
+      df_id: '',
+      full_name: '',
+    )));
   }
 }
