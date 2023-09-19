@@ -6,6 +6,10 @@ class ApiDatabaseParams {
   static String loginApi =
       '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/login';
 
+  ///! logout api
+  static String logoutApi =
+      '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/logout';
+
   ///! my profile api
   static String profileApi =
       '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/my_profile';
