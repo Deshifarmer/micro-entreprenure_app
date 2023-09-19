@@ -1,10 +1,15 @@
+import 'package:animations/animations.dart';
+import 'package:deshifarmer/presentation/pages/add_farmer/view/add_farmer_page.dart';
 import 'package:deshifarmer/presentation/pages/commision/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/commision/view/commision_page.dart';
+import 'package:deshifarmer/presentation/pages/farmadd_form/view/farmadd_form_page.dart';
 import 'package:deshifarmer/presentation/pages/home/bloc/home_bloc.dart';
 import 'package:deshifarmer/presentation/pages/home/components/home_bottom_nav.dart';
 import 'package:deshifarmer/presentation/pages/home/widgets/home_body.dart';
 import 'package:deshifarmer/presentation/pages/order/view/order_page.dart';
+import 'package:deshifarmer/presentation/pages/profile/view/profile_page.dart';
 import 'package:deshifarmer/presentation/pages/profile/widgets/profile_body.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:flutter/material.dart';
 
 /// {@template home_page}
@@ -31,7 +36,36 @@ class HomePage extends StatelessWidget {
               ? const OrderPage()
               : state is CommisionPageState
                   ? const CommisionPage()
-                  : const ProfileBody(),
+                  : const ProfilePage(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: FloatingActionButton(
+      //   // make it circle
+      //   shape: const CircleBorder(),
+      //   // background color to tertiary color
+      //   backgroundColor: tertiaryColor,
+      //   onPressed: () {},
+      //   child: const Icon(Icons.add),
+      // ),
+      floatingActionButton: OpenContainer(
+        closedBuilder: (context, action) {
+          return FloatingActionButton(
+            // make it circle
+            shape: const CircleBorder(),
+            // background color to tertiary color
+            backgroundColor: tertiaryColor,
+            onPressed: action,
+            child: const Icon(Icons.add),
+          );
+        },
+        closedColor: Colors.transparent,
+        openColor: Colors.transparent,
+        middleColor: Colors.transparent,
+        openElevation: 0,
+        closedElevation: 0,
+        openBuilder: (context, action) {
+          return const AddFarmerPage();
+        },
+      ),
       bottomNavigationBar: const HomeBottomNav(),
     );
   }
