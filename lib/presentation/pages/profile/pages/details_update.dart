@@ -2,6 +2,7 @@ import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 
 class ProfileUpdatePage extends StatelessWidget {
@@ -27,35 +28,19 @@ class ProfileUpdatePage extends StatelessWidget {
           SizedBox(
             height: getProportionateScreenHeight(20),
           ),
-          CircleAvatar(
-            radius: 50,
-            backgroundColor: Colors.transparent,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                checkDomain(Strings.getServerOrLocal(ServerOrLocal.server))
-                    ? dummyImage
-                    : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/$farmerPhoto',
-                fit: BoxFit.cover,
-                /* errorBuilder: (
-                        context,
-                        error,
-                        stackTrace,
-                      ) {
-                        return Center(
-                          child: Text(
-                            'Image Error',
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall!
-                                .copyWith(
-                                  color: Colors.redAccent,
-                                  fontStyle: FontStyle.italic,
-                                ),
-                          ),
-                        );
-ss                       }, */
+          Hero(
+            tag: 'userProfilePIC',
+            child: CircleAvatar(
+              radius: 50,
+              backgroundColor: Colors.transparent,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.network(
+                  checkDomain(Strings.getServerOrLocal(ServerOrLocal.server))
+                      ? dummyImage
+                      : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/$farmerPhoto',
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
