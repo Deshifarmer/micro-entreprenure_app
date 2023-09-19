@@ -9,6 +9,7 @@ import 'package:deshifarmer/presentation/pages/order/components/order_detail_pc.
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -22,8 +23,6 @@ class ViewOrderDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginState = context.read<LoginBloc>().state;
-    print('order id -> $orderID');
-
     return Scaffold(
       backgroundColor: backgroundColor2,
       appBar: AppBar(
@@ -41,7 +40,7 @@ class ViewOrderDetail extends StatelessWidget {
             padding: const EdgeInsets.all(
               20,
             ),
-            height: 150,
+            height: getProportionateScreenHeight(150),
             decoration: const BoxDecoration(
               color: priceBoxColor,
             ),
@@ -90,14 +89,17 @@ class ViewOrderDetail extends StatelessWidget {
                   '${ApiDatabaseParams.orderApi}/$orderID',
                 ),
                 headers: {
+                  ///! TODO: Do not forget to remove the token
                   'Authorization':
-                      'Bearer ${loginState.successLoginEntity.token}',
+                      // 'Bearer ${loginState.successLoginEntity.token}',
+                      'Bearer 55|9062I8GhTHqaQWFrfOu5HzcRG3df73axEgL5rBUK',
                 },
               ),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData &&
                     snapshot.connectionState == ConnectionState.done) {
                   final data = snapshot.data;
+
                   final result =
                       jsonDecode(data.body.toString()) as List<dynamic>;
                   // print(DateFormat('yyyy-MM-dd').format());
@@ -116,9 +118,10 @@ class ViewOrderDetail extends StatelessWidget {
                     for (final element in result) {
                       a = a +
                           int.parse(element['quantity'].toString()) *
-                              double.parse(element['product_details']
-                                      ['sell_price']
-                                  .toString(),);
+                              double.parse(
+                                element['product_details']['sell_price']
+                                    .toString(),
+                              );
                     }
                     return a;
                   }
@@ -187,7 +190,8 @@ class ViewOrderDetail extends StatelessWidget {
                                 children: [
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(
-                                        getProportionateScreenWidth(10),),
+                                      getProportionateScreenWidth(10),
+                                    ),
                                     child: Image.network(
                                       '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${product['product_details']['image']}',
                                       height: getProportionateScreenHeight(60),
@@ -261,7 +265,8 @@ class ViewOrderDetail extends StatelessWidget {
                               ),
                             Padding(
                               padding: EdgeInsets.symmetric(
-                                  vertical: getProportionateScreenHeight(8),),
+                                vertical: getProportionateScreenHeight(8),
+                              ),
                               child: const Divider(
                                 // height: 2,
                                 color: Color(0xffa3a3a3),
@@ -399,7 +404,9 @@ class ViewOrderDetail extends StatelessWidget {
 
                   /// show error shit
                 }
-                return const Center(
+                return Container(
+                  padding: const EdgeInsets.all(8),
+                  alignment: Alignment.center,
                   child: PrimaryLoadingIndicator(),
                 );
               },
@@ -409,203 +416,3 @@ class ViewOrderDetail extends StatelessWidget {
     );
   }
 }
-
-// class RealOrderInfoOrderDetail extends StatelessWidget {
-//   const RealOrderInfoOrderDetail({
-//     super.key,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       margin: const EdgeInsets.all(10),
-//       padding: const EdgeInsets.all(12),
-//       decoration: BoxDecoration(
-//         color: Colors.white,
-//         borderRadius: BorderRadius.circular(15),
-//       ),
-//       child: Column(
-//         children: [
-//           // delevary info
-//           const Row(
-//             children: [
-//               Icon(
-//                 Icons.business,
-//               ),
-//               Padding(
-//                 padding: const EdgeInsets.all(8),
-//                 child: Text(
-//                   'Brack Seed',
-//                   style: TextStyle(
-//                     fontSize: 12,
-//                     fontWeight: FontWeight.w600,
-//                   ),
-//                 ),
-//               )
-//             ],
-//           ),
-
-//           Row(
-//             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             crossAxisAlignment: CrossAxisAlignment.start,
-
-//             children: [
-//               ClipRRect(
-//                 borderRadius: BorderRadius.circular(10),
-//                 child: Image.asset(
-//                   'assets/logo/nice.png',
-//                   height: 60,
-//                   width: 60,
-//                 ),
-//               ),
-//               Padding(
-//                 padding: EdgeInsets.all(8),
-//                 child: Column(
-//                   mainAxisAlignment: MainAxisAlignment.start,
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     Text(
-//                       'White Pottasium',
-//                       style: TextStyle(
-//                         fontSize: 10,
-//                         fontWeight: FontWeight.w600,
-//                       ),
-//                     ),
-//                     Text(
-//                       '৳ 500',
-//                       style: TextStyle(
-//                         fontSize: 10,
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//               Spacer(),
-//               Padding(
-//                 padding: EdgeInsets.all(8),
-//                 child: Text(
-//                   'QTY x 1',
-//                   style: TextStyle(
-//                     fontSize: 10,
-//                   ),
-//                 ),
-//               )
-//             ],
-//           ),
-//           Padding(
-//             padding: const EdgeInsets.symmetric(vertical: 8),
-//             child: Divider(
-//               // height: 2,
-//               color: Color(0xffa3a3a3),
-//             ),
-//           ),
-
-//           Text(
-//             'অর্ডারের তথ্য',
-//             style: TextStyle(
-//               fontWeight: FontWeight.w600,
-//             ),
-//           ),
-
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               Padding(
-//                 padding: EdgeInsets.all(8),
-//                 child: Text(
-//                   'Subtotal (3 items)',
-//                   style: TextStyle(
-//                     fontSize: 10,
-//                   ),
-//                 ),
-//               ),
-//               Padding(
-//                 padding: EdgeInsets.all(8),
-//                 child: Text(
-//                   '৳ 2350',
-//                   style: TextStyle(
-//                     fontSize: 10,
-//                     fontWeight: FontWeight.bold,
-//                   ),
-//                 ),
-//               )
-//             ],
-//           ),
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               Padding(
-//                 padding: EdgeInsets.all(8),
-//                 child: Text(
-//                   'Shipping Free',
-//                   style: TextStyle(
-//                     fontSize: 10,
-//                   ),
-//                 ),
-//               ),
-//               Padding(
-//                 padding: EdgeInsets.all(8),
-//                 child: Text(
-//                   '৳ 0',
-//                   style: TextStyle(
-//                     fontSize: 10,
-//                     fontWeight: FontWeight.bold,
-//                   ),
-//                 ),
-//               )
-//             ],
-//           ),
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               Padding(
-//                 padding: EdgeInsets.all(8),
-//                 child: Text(
-//                   'VAT',
-//                   style: TextStyle(
-//                     fontSize: 10,
-//                   ),
-//                 ),
-//               ),
-//               Padding(
-//                 padding: EdgeInsets.all(8),
-//                 child: Text(
-//                   '৳ 0',
-//                   style: TextStyle(
-//                     fontSize: 10,
-//                     fontWeight: FontWeight.bold,
-//                   ),
-//                 ),
-//               )
-//             ],
-//           ),
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               Padding(
-//                 padding: EdgeInsets.all(8),
-//                 child: Text(
-//                   'Grand Total',
-//                   style: TextStyle(
-//                     fontSize: 12,
-//                     fontWeight: FontWeight.bold,
-//                   ),
-//                 ),
-//               ),
-//               Padding(
-//                 padding: EdgeInsets.all(8),
-//                 child: Text(
-//                   '৳ 2350',
-//                   style: TextStyle(
-//                     fontSize: 12,
-//                     fontWeight: FontWeight.bold,
-//                   ),
-//                 ),
-//               )
-//             ],
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
