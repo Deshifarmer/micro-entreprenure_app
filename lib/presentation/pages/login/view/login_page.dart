@@ -1,5 +1,6 @@
 import 'package:deshifarmer/presentation/pages/login/components/bottom_info_login.dart';
 import 'package:deshifarmer/presentation/pages/login/widgets/login_body.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:flutter/material.dart';
 
 /// {@template login_page}
@@ -16,8 +17,8 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => const Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.white,
+        backgroundColor: tertiaryColor,
+        resizeToAvoidBottomInset: true,
         body: LoginView(),
         bottomNavigationBar: Padding(
           padding: EdgeInsets.all(8),
@@ -35,6 +36,6 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const LoginBody();
+    return LoginBody();
   }
 }
