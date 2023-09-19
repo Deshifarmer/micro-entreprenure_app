@@ -19,6 +19,8 @@ import 'package:deshifarmer/presentation/pages/login/view/login_page.dart';
 import 'package:deshifarmer/presentation/pages/order/order.dart';
 import 'package:deshifarmer/presentation/pages/products/bloc/products_bloc.dart';
 import 'package:deshifarmer/presentation/pages/profile/bloc/bloc.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {
@@ -26,6 +28,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return MultiBlocProvider(
       providers: [
         //? LoginBloc
@@ -133,6 +136,11 @@ class App extends StatelessWidget {
           colorScheme: ColorScheme.fromSwatch(
             accentColor: Colors.green,
             backgroundColor: Colors.white,
+          ),
+          scaffoldBackgroundColor: backgroundColor2,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: backgroundColor2,
+            surfaceTintColor: backgroundColor2,
           ),
         ),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
