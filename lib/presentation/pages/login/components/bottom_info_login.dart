@@ -1,3 +1,4 @@
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:flutter/material.dart';
 
 class BottomInfo extends StatelessWidget {
@@ -10,8 +11,18 @@ class BottomInfo extends StatelessWidget {
     return const Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text('v1.4'),
-        Text('Platform Policy'),
+        Text(
+          'v1.11',
+          style: TextStyle(
+            color: iconBackgroundColor,
+          ),
+        ),
+        Text(
+          'প্লাটফর্ম পলিসি',
+          style: TextStyle(
+            color: iconBackgroundColor,
+          ),
+        ),
       ],
     );
   }
