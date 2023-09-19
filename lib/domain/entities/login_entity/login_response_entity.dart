@@ -8,7 +8,7 @@ class SuccessLoginEntity {
   SuccessLoginEntity({
     required this.full_name,
     required this.token,
-    required this.role,
+    // required this.role,
     required this.df_id,
   });
 
@@ -19,5 +19,5 @@ class SuccessLoginEntity {
   final String token;
   final String df_id;
   // final String role;
-  final int role; //! on server this is int
+  // final String role; //! on server this is int
 }
