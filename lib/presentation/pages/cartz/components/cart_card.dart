@@ -3,6 +3,7 @@ import 'package:deshifarmer/domain/entities/products_entity/product_data_entity.
 import 'package:deshifarmer/presentation/blocs/cart/cart_bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 
 class CartCard extends StatelessWidget {
