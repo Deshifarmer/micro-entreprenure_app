@@ -1,5 +1,6 @@
 // ignore_for_file: omit_local_variable_types, prefer_final_locals
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:isolate';
 
@@ -83,7 +84,7 @@ class DeshiFarmerAPI {
     );
 
     /// do a post request
-    print('logout url -> $url $token');
+    // print('logout url -> $url $token');
     try {
       _headers.addAll(auth);
       final http.Response response = await http.post(
@@ -91,10 +92,10 @@ class DeshiFarmerAPI {
         headers: _headers,
       );
       if (response.statusCode == 200) {
-        print("${response.statusCode} | ${response.body}");
+        // print("${response.statusCode} | ${response.body}");
         return true;
       } else {
-        print("${response.statusCode} | ${response.body}");
+        // print("${response.statusCode} | ${response.body}");
         return false;
       }
     } catch (e) {
@@ -106,12 +107,15 @@ class DeshiFarmerAPI {
   Future<Result<AllOrdersEntity, Exception>> userOrder(
     String token,
   ) async {
+    String _LOCAL_TOKEN = '55|9062I8GhTHqaQWFrfOu5HzcRG3df73axEgL5rBUK';
     Map<String, String> auth = <String, String>{
-      'Authorization': 'Bearer $token',
+      'Authorization':
+          'Bearer ${_LOCAL_TOKEN.isNotEmpty ? _LOCAL_TOKEN : token}',
     };
     final Uri url = Uri.parse(
       ApiDatabaseParams.orderApi,
     );
+    print('url -> $url $token \n $_LOCAL_TOKEN');
     try {
       _headers.addAll(auth);
       final http.Response response = await http.get(
@@ -119,9 +123,10 @@ class DeshiFarmerAPI {
         headers: _headers,
       );
       if (response.statusCode == 200) {
-        print(response.statusCode);
-        final result = json.decode(response.body) as List<dynamic>;
-        print('result -> $result');
+        // print(response.statusCode);
+        final result = await Isolate.run(() => json.decode(response.body))
+            as List<dynamic>;
+        // print('result -> $result');
         List<OrderEntity> orderEntitys = [];
         for (int i = 0; i < result.length; i++) {
           final element = result[i];
@@ -129,7 +134,7 @@ class DeshiFarmerAPI {
             orderEntitys.add(
               OrderEntity.fromJson(element as Map<String, dynamic>),
             );
-            print('entity added successfully -> $i');
+            // print('entity added successfully -> $i');
           } catch (e) {
             final result2 = element as Map<String, dynamic>;
             result2.forEach((key, value) {
@@ -151,6 +156,36 @@ class DeshiFarmerAPI {
       return ServerFailor<AllOrdersEntity, Exception>(
         Exception('Server failor -> $e'),
       );
+    }
+  }
+
+  ///! Collect ORDERS
+  FutureOr<bool> collectOrder(String id, String token) async {
+    String _LOCAL_TOKEN = '55|9062I8GhTHqaQWFrfOu5HzcRG3df73axEgL5rBUK';
+    Map<String, String> auth = <String, String>{
+      'Authorization':
+          'Bearer ${_LOCAL_TOKEN.isNotEmpty ? _LOCAL_TOKEN : token}',
+    };
+    final Uri url = Uri.parse(
+      ApiDatabaseParams.collectOrderApi + id,
+    );
+
+    /// do a post request
+    try {
+      _headers.addAll(auth);
+      final http.Response response =
+          await http.put(url, headers: _headers, body: {
+        'status': 'collected by me',
+      });
+      if (response.statusCode == 200) {
+        print("${response.statusCode} | ${response.body}");
+        return true;
+      } else {
+        print("${response.statusCode} | ${response.body}");
+        return false;
+      }
+    } catch (e) {
+      return false;
     }
   }
 
