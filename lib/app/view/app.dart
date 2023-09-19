@@ -1,3 +1,4 @@
+import 'package:deshifarmer/data/datasources/local/shared_prefs/local_database_sf.dart';
 import 'package:deshifarmer/l10n/l10n.dart';
 import 'package:deshifarmer/presentation/blocs/cart/cart_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
@@ -145,7 +146,31 @@ class App extends StatelessWidget {
         ),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: const LoginPage(),
+        home: FutureBuilder<String?>(
+          future: SharedPrefDBServices().getLoginToken(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data != null) {
+                /// a login success event
+                context
+                    .read<LoginBloc>()
+                    .add(LoginSuccessEvent(token: snapshot.data!));
+
+                /// get user profile
+                context
+                    .read<UserProfileBloc>()
+                    .add(GetUserProfileEvent(token: snapshot.data!));
+
+                /// get my orders
+                context.read<OrderBloc>().add(InitOrders(snapshot.data!));
+                // UserProfileBloc()
+                //     .add(GetUserProfileEvent(token: snapshot.data!));
+                return const HomePage();
+              }
+            }
+            return const LoginPage();
+          },
+        ),
       ),
     );
   }
