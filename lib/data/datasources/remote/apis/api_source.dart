@@ -1,6 +1,7 @@
 // ignore_for_file: omit_local_variable_types, prefer_final_locals
 
 import 'dart:convert';
+import 'dart:isolate';
 
 import 'package:deshifarmer/core/app_core.dart';
 import 'package:deshifarmer/core/params/api_database_params.dart';
@@ -37,11 +38,12 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       '${ApiDatabaseParams.loginApi}?email=$mail&password=$pass',
     );
+    print('url -> $url $mail $pass');
     try {
       final http.Response response = await http.post(url);
       if (response.statusCode == 200) {
         print(response.statusCode);
-        final result = json.decode(response.body);
+        final result = await Isolate.run(() => json.decode(response.body));
         print(result);
         try {
           SuccessLoginEntity successResonse =
@@ -68,6 +70,35 @@ class DeshiFarmerAPI {
       return ServerFailor<SuccessLoginEntity, Exception>(
         Exception('Server failor'),
       );
+    }
+  }
+
+  ///! User LOGOUT
+  Future<bool> userLogout(String token) async {
+    Map<String, String> auth = <String, String>{
+      'Authorization': 'Bearer $token',
+    };
+    final Uri url = Uri.parse(
+      ApiDatabaseParams.logoutApi,
+    );
+
+    /// do a post request
+    print('logout url -> $url $token');
+    try {
+      _headers.addAll(auth);
+      final http.Response response = await http.post(
+        url,
+        headers: _headers,
+      );
+      if (response.statusCode == 200) {
+        print("${response.statusCode} | ${response.body}");
+        return true;
+      } else {
+        print("${response.statusCode} | ${response.body}");
+        return false;
+      }
+    } catch (e) {
+      return false;
     }
   }
 
@@ -140,9 +171,11 @@ class DeshiFarmerAPI {
         url,
         headers: _headers,
       );
+      print('url -> $url $token');
       if (response.statusCode == 200) {
         print('status 200');
-        final result = json.decode(response.body) as Map<String, dynamic>;
+        final result = await Isolate.run(() => json.decode(response.body))
+            as Map<String, dynamic>;
         try {
           UserProfileEntity successResonse = UserProfileEntity.fromJson(result);
           return Success<UserProfileEntity, Exception>(successResonse);
@@ -457,7 +490,8 @@ class DeshiFarmerAPI {
             );
           } catch (e) {
             print(
-                'error comverting List<FarmerEntity> ->  ${element.runtimeType}, $e \n',);
+              'error comverting List<FarmerEntity> ->  ${element.runtimeType}, $e \n',
+            );
             final e2 = element;
             e2.forEach((key, value) {
               if (value.runtimeType != String) {
@@ -1063,8 +1097,4 @@ class DeshiFarmerAPI {
       );
     }
   }
-
-
-
-
 }
