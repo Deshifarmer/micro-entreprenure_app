@@ -6,6 +6,7 @@ import 'package:deshifarmer/core/app_core.dart';
 import 'package:deshifarmer/core/error/exceptions.dart';
 import 'package:deshifarmer/data/repositories/login_repo_impl.dart';
 import 'package:deshifarmer/domain/entities/login_entity/login_response_entity.dart';
+import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/pages/home/home.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     final value = switch (result) {
       Success(data: final SuccessLoginEntity succ) => {
           emit(LoginSuccess(succ)),
+
+          /// hit the user profile api
+          UserProfileBloc().add(GetUserProfileEvent(token: succ.token)),
           await Navigator.pushAndRemoveUntil(
             event.context as BuildContext,
             HomePage.route(),
