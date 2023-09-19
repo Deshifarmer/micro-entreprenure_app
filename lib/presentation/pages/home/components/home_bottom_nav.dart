@@ -2,6 +2,7 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:deshifarmer/presentation/pages/home/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/order/order.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:flutter/material.dart';
 
 /// home page bottom navigation bar
@@ -21,20 +22,21 @@ class HomeBottomNav extends StatelessWidget {
               : state is CommisionPageState
                   ? 2
                   : 3,
-      gapLocation: GapLocation.none,
-      // notchSmoothness: NotchSmoothness.defaultEdge,
+      //  floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      gapLocation: GapLocation.center,
+      notchSmoothness: NotchSmoothness.defaultEdge,
       // leftCornerRadius: HomePageParams.bottomNavCornerRaidus,
       // rightCornerRadius: HomePageParams.bottomNavCornerRaidus,
-      leftCornerRadius: 10,
-      rightCornerRadius: 10,
+      // leftCornerRadius: 10,
+      // rightCornerRadius: 10,
       blurEffect: true,
       hideAnimationCurve: Curves.easeOut,
       elevation: 0,
       icons: const <IconData>[
-        Icons.home_rounded,
-        Icons.card_giftcard,
-        Icons.money,
-        Icons.person,
+        Icons.view_carousel_outlined,
+        Icons.cake_outlined,
+        Icons.reorder,
+        Icons.account_circle_outlined,
       ],
       onTap: (int x) {
         final loginState = context.read<LoginBloc>().state;
@@ -52,9 +54,9 @@ class HomeBottomNav extends StatelessWidget {
         // }
         context.read<HomeBloc>().add(ChangePageEvent(x));
       },
-      backgroundColor: Colors.green[800],
-      activeColor: Colors.greenAccent,
-      inactiveColor: Colors.green[500],
+      backgroundColor: tertiaryColor,
+      activeColor: Colors.white,
+      inactiveColor: Colors.grey,
     );
   }
 }
