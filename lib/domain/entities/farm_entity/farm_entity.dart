@@ -6,7 +6,7 @@ part 'farm_entity.g.dart';
 @JsonSerializable()
 class FarmEntity {
   FarmEntity({
-    required this.isActive,
+    // required this.isActive,
     required this.long,
     required this.lat,
     required this.farm_reg_no,
@@ -43,5 +43,5 @@ class FarmEntity {
   final List<dynamic> gallery;
   final String? farm_reg_no;
   final double? lat, long;
-  final String isActive;
+  // final String isActive;
 }
