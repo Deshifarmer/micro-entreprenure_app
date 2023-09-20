@@ -7,10 +7,10 @@ import 'package:deshifarmer/presentation/pages/order/pages/view_order_details.da
 import 'package:deshifarmer/presentation/shapes/carrot_shape.dart';
 import 'package:deshifarmer/presentation/shapes/my_farmers_shape.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
-import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:deshifarmer/presentation/widgets/snackbar_custom.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 
 /// {@template order_body}
@@ -46,7 +46,13 @@ class OrderBody extends StatelessWidget {
               children: [
                 /// ready to collect for me
                 if (readyToCollectForMe.isNotEmpty) ...[
-                  const Text('অর্ডার সংগ্রহ করুন '),
+                  Text(
+                    'অর্ডার সংগ্রহ করুন ',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(color: primaryColor),
+                  ),
                   ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -65,7 +71,7 @@ class OrderBody extends StatelessWidget {
                                 children: [
                                   /// order id, dot sign and farmer address in Row
                                   Padding(
-                                    padding: EdgeInsets.symmetric(
+                                    padding: const EdgeInsets.symmetric(
                                       horizontal: 10,
                                       vertical: 10,
                                     ),
@@ -87,7 +93,9 @@ class OrderBody extends StatelessWidget {
 
                                             /// a dot sign to show order status
                                             Padding(
-                                              padding: EdgeInsets.only(left: 5),
+                                              padding: const EdgeInsets.only(
+                                                left: 5,
+                                              ),
                                               child: Icon(
                                                 Icons.circle,
                                                 size: 10,
@@ -107,8 +115,9 @@ class OrderBody extends StatelessWidget {
                                                                 : singleOrder
                                                                             .status ==
                                                                         'ready to collect for me'
-                                                                    ? Color(
-                                                                        0xfff1e826)
+                                                                    ? const Color(
+                                                                        0xfff1e826,
+                                                                      )
                                                                     : Colors
                                                                         .green,
                                               ),
@@ -116,7 +125,8 @@ class OrderBody extends StatelessWidget {
                                           ],
                                         ),
                                         Text(
-                                            '${singleOrder.farmer_details?.farmer_address}'),
+                                          '${singleOrder.farmer_details?.farmer_address}',
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -138,9 +148,11 @@ class OrderBody extends StatelessWidget {
                                             size: const Size(15, 15),
                                           ),
                                         ),
-                                        Text(singleOrder
-                                                .farmer_details?.farmer_name ??
-                                            ''),
+                                        Text(
+                                          singleOrder.farmer_details
+                                                  ?.farmer_name ??
+                                              '',
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -161,15 +173,17 @@ class OrderBody extends StatelessWidget {
                                             size: 13,
                                           ),
                                         ),
-                                        Text(singleOrder
-                                                .farmer_details?.farmer_phone ??
-                                            ''),
+                                        Text(
+                                          singleOrder.farmer_details
+                                                  ?.farmer_phone ??
+                                              '',
+                                        ),
                                       ],
                                     ),
                                   ),
                                   Row(
                                     children: [
-                                      Spacer(),
+                                      const Spacer(),
 
                                       /// two buttons one accept and another reject
 
@@ -216,44 +230,58 @@ class OrderBody extends StatelessWidget {
                       );
                     },
                   ),
-                  Divider(
+                  const Divider(
                     color: Color(0xffa6a6a6),
                   ),
                 ],
+                if (otherStatus.isNotEmpty) ...[
+                  Text(
+                    'সাম্প্রতিক অর্ডার',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(color: primaryColor),
+                  ),
 
-                /// other status orders
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: otherStatus.length > 20 ? 20 : otherStatus.length,
-                  itemBuilder: (c, i) {
-                    final singleOrder = otherStatus.elementAt(i);
-                    return OpenContainer(
-                      closedBuilder: (context, action) {
-                        return UnfullfiledOrderListCard(
-                            singleOrder: singleOrder);
-                      },
-                      closedColor: Colors.transparent,
-                      closedElevation: 0,
-                      openColor: Colors.transparent,
-                      middleColor: Colors.transparent,
-                      openElevation: 0,
-                      openBuilder: (context, action) {
-                        return ViewOrderDetail(
-                          orderID: singleOrder.order_id ?? '',
-                        );
-                      },
-                    );
-                  },
-                ),
+                  /// other status orders
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount:
+                        otherStatus.length > 20 ? 20 : otherStatus.length,
+                    itemBuilder: (c, i) {
+                      final singleOrder = otherStatus.elementAt(i);
+                      return OpenContainer(
+                        closedBuilder: (context, action) {
+                          return UnfullfiledOrderListCard(
+                            singleOrder: singleOrder,
+                          );
+                        },
+                        closedColor: Colors.transparent,
+                        closedElevation: 0,
+                        openColor: Colors.transparent,
+                        middleColor: Colors.transparent,
+                        openElevation: 0,
+                        openBuilder: (context, action) {
+                          return ViewOrderDetail(
+                            orderID: singleOrder.order_id ?? '',
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ],
                 SizedBox(
                   height: getProportionateScreenHeight(20),
                 ),
-                Center(
+                const Center(
                   child: Text(
                     '''আমরা শেষ 20টি অর্ডার দেখাচ্ছি। আপনি যদি সমস্ত অর্ডার অ্যাক্সেস করতে চান আমাদের সাথে যোগাযোগ করুন''',
                     textAlign: TextAlign.center,
                   ),
+                ),
+                SizedBox(
+                  height: getProportionateScreenHeight(20),
                 ),
               ],
             ),
@@ -305,45 +333,58 @@ class _AcceptOrderButtonState extends State<AcceptOrderButton> {
         setState(() {
           isLoading = true;
         });
-        DeshiFarmerAPI dfAPI = DeshiFarmerAPI();
+        final dfAPI = DeshiFarmerAPI();
         final isSuccess =
             await dfAPI.collectOrder(widget.orderID, widget.token);
         if (isSuccess) {
           // show a snackbar with success message
           ScaffoldMessenger.of(context).showSnackBar(
-              // const SnackBar(
-              //   content: Text('অর্ডার গ্রহণ করা হয়েছে'),
-              // ),
-              successSnackBar('অর্ডার গ্রহণ করা হয়েছে'));
+            successSnackBar('অর্ডার গ্রহণ করা হয়েছে'),
+          );
+          final loginState = context.read<LoginBloc>().state;
+          final token = loginState is LoginSuccess
+              ? loginState.successLoginEntity.token
+              : '';
+          if (token.isNotEmpty) {
+            context.read<OrderBloc>().add(InitOrders(token));
+          }
           setState(() {
             isAccepted = true;
+            isLoading = false;
           });
         } else {
           // show a snackbar with failed message
-          ScaffoldMessenger.of(context).showSnackBar(
-              // const SnackBar(
-              //   content: Text('অর্ডার গ্রহণ করা হয়নি'),
-              // ),
-              errorSnackBar('অর্ডার গ্রহণ করা হয়নি'));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(errorSnackBar('অর্ডার গ্রহণ করা হয়নি'));
           setState(() {
             isAccepted = false;
+            isLoading = false;
           });
         }
       },
-      child: isLoading
-          ? PrimaryLoadingIndicator()
-          : Text(
-              'অর্ডার গ্রহণ করুন',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
       style: ElevatedButton.styleFrom(
         backgroundColor: primaryColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
       ),
+      child: isLoading
+          ? Text(
+              'লোড হচ্ছে...',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            )
+              .animate(
+                onPlay: (controller) => controller.repeat(),
+              )
+              .shimmer()
+          : const Text(
+              'অর্ডার গ্রহণ করুন',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
     );
   }
 }
@@ -385,7 +426,10 @@ class UnfullfiledOrderListCard extends StatelessWidget {
 
                     /// order id, name, phone
                     Padding(
-                      padding: const EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(20),
+                        vertical: getProportionateScreenHeight(10),
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -404,7 +448,7 @@ class UnfullfiledOrderListCard extends StatelessWidget {
 
                               /// a dot sign to show order status
                               Padding(
-                                padding: EdgeInsets.only(left: 5),
+                                padding: const EdgeInsets.only(left: 5),
                                 child: Icon(
                                   Icons.circle,
                                   size: 10,
@@ -420,7 +464,7 @@ class UnfullfiledOrderListCard extends StatelessWidget {
                                                   ? Colors.orange
                                                   : singleOrder.status ==
                                                           'ready to collect for me'
-                                                      ? Color(0xfff1e826)
+                                                      ? const Color(0xfff1e826)
                                                       : Colors.green,
                                 ),
                               ),
@@ -443,8 +487,8 @@ class UnfullfiledOrderListCard extends StatelessWidget {
                                     .textTheme
                                     .bodySmall!
                                     .copyWith(
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                        // fontWeight: FontWeight.w500,
+                                        ),
                               ),
                             ],
                           ),
@@ -463,8 +507,8 @@ class UnfullfiledOrderListCard extends StatelessWidget {
                                     .textTheme
                                     .bodySmall!
                                     .copyWith(
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                        // fontWeight: FontWeight.w500,
+                                        ),
                               ),
                             ],
                           ),
@@ -478,7 +522,7 @@ class UnfullfiledOrderListCard extends StatelessWidget {
                   left: 5,
                   child: CustomPaint(
                     painter: CarrotShape(),
-                    size: Size(30, 30),
+                    size: const Size(30, 30),
                   ),
                 ),
               ],
