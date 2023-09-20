@@ -279,6 +279,9 @@ class ProfileBody extends StatelessWidget {
 
                 /// log out
                 ListTile(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   onTap: () async {
                     final loginState = context.read<LoginBloc>().state;
 
@@ -301,11 +304,21 @@ class ProfileBody extends StatelessWidget {
                       }
                     }
                   },
-                  title: const Text('লগ আউট'),
-                  trailing: const Icon(Icons.settings_power),
+                  title: const Text(
+                    'লগ আউট',
+                    style: TextStyle(
+                        // color: Colors.white,
+                        ),
+                  ),
+                  tileColor: Colors.redAccent,
+                  trailing: const Icon(
+                    Icons.settings_power,
+                    // color: Colors.white,
+                  ),
                 ),
               ],
-
+              height10,
+              height10, height10,
               // Text('আমরা আপনাকে কীভাবে সাহায্য করতে পারি  ?'),
             ],
           ),
