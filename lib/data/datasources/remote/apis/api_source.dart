@@ -15,6 +15,7 @@ import 'package:deshifarmer/domain/entities/company_entity/all_company_entity.da
 import 'package:deshifarmer/domain/entities/company_entity/company_response_entity.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/all_farmer_entity.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
+import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity_again.dart';
 import 'package:deshifarmer/domain/entities/group_detail_entity/group_detail_entity.dart';
 import 'package:deshifarmer/domain/entities/group_field_entity/all_farmer_group_field.dart';
 import 'package:deshifarmer/domain/entities/group_field_entity/group_field_entity.dart';
@@ -39,20 +40,16 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       '${ApiDatabaseParams.loginApi}?email=$mail&password=$pass',
     );
-    print('url -> $url $mail $pass');
     try {
       final http.Response response = await http.post(url);
       if (response.statusCode == 200) {
-        print(response.statusCode);
         final result = await Isolate.run(() => json.decode(response.body));
-        print(result);
         try {
           SuccessLoginEntity successResonse =
               SuccessLoginEntity.fromJson(result as Map<String, dynamic>);
 
           return Success<SuccessLoginEntity, Exception>(successResonse);
         } catch (e) {
-          print('Converting error -> $e');
           return ServerFailor<SuccessLoginEntity, Exception>(
             Exception('Server failor'),
           );
@@ -61,7 +58,6 @@ class DeshiFarmerAPI {
         //   Exception('Server failor'),
         // );
       } else {
-        print('${response.statusCode} ${response.body}');
         // print(response.)
         return ServerFailor<SuccessLoginEntity, Exception>(
           Exception('Server failor'),
@@ -115,7 +111,6 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.orderApi,
     );
-    print('url -> $url $token \n $_LOCAL_TOKEN');
     try {
       _headers.addAll(auth);
       final http.Response response = await http.get(
@@ -137,17 +132,13 @@ class DeshiFarmerAPI {
             // print('entity added successfully -> $i');
           } catch (e) {
             final result2 = element as Map<String, dynamic>;
-            result2.forEach((key, value) {
-              print('$key $value ${value.runtimeType}');
-            });
+            result2.forEach((key, value) {});
           }
         }
         AllOrdersEntity successResonse = AllOrdersEntity(orderEntitys);
 
         return Success<AllOrdersEntity, Exception>(successResonse);
       } else {
-        print(response.statusCode);
-
         return ServerFailor<AllOrdersEntity, Exception>(
           Exception('Server failor'),
         );
@@ -171,8 +162,6 @@ class DeshiFarmerAPI {
     );
 
     /// do a post request
-    print(
-        'url -> $url token -> ${_LOCAL_TOKEN.isNotEmpty ? _LOCAL_TOKEN : token}');
     try {
       _headers.addAll(auth);
       final http.Response response = await http.put(
@@ -183,10 +172,8 @@ class DeshiFarmerAPI {
         },
       );
       if (response.statusCode == 200) {
-        print("${response.statusCode} | ${response.body}");
         return true;
       } else {
-        print("${response.statusCode} | ${response.body}");
         return false;
       }
     } catch (e) {
@@ -205,39 +192,31 @@ class DeshiFarmerAPI {
       ApiDatabaseParams.profileApi,
     );
     try {
-      print('trying..................');
       _headers.addAll(auth);
       final http.Response response = await http.get(
         url,
         headers: _headers,
       );
-      print('url -> $url $token');
       if (response.statusCode == 200) {
-        print('status 200');
         final result = await Isolate.run(() => json.decode(response.body))
             as Map<String, dynamic>;
         try {
           UserProfileEntity successResonse = UserProfileEntity.fromJson(result);
           return Success<UserProfileEntity, Exception>(successResonse);
         } catch (e) {
-          print('exception occured $e');
           result.forEach(
-            (key, value) {
-              print('$key ${value.runtimeType} $value');
-            },
+            (key, value) {},
           );
           return ServerFailor<UserProfileEntity, Exception>(
             Exception('Server failor'),
           );
         }
       } else {
-        print('status CODE -> ${response.statusCode}');
         return ServerFailor<UserProfileEntity, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
-      print('an exception occured -> $e');
       return ServerFailor<UserProfileEntity, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -272,11 +251,8 @@ class DeshiFarmerAPI {
               CompanyEntity.fromJson(element as Map<String, dynamic>),
             );
           } catch (e) {
-            print('error comverting data ->  ${element.runtimeType}, $e');
             final e2 = element as Map<String, dynamic>;
-            e2.forEach((key, value) {
-              print('${value.runtimeType} $key $value');
-            });
+            e2.forEach((key, value) {});
           }
         }
         AllCompanyListResp successResonse = AllCompanyListResp(companyE);
@@ -320,11 +296,8 @@ class DeshiFarmerAPI {
               CategoryEntity.fromJson(element as Map<String, dynamic>),
             );
           } catch (e) {
-            print('error comverting data ->  ${element.runtimeType}, $e');
             final e2 = element as Map<String, dynamic>;
-            e2.forEach((key, value) {
-              print('${value.runtimeType} $key $value');
-            });
+            e2.forEach((key, value) {});
           }
         }
         AllCategoryListResp successResonse = AllCategoryListResp(companyE);
@@ -363,22 +336,17 @@ class DeshiFarmerAPI {
         headers: _headers,
       );
       if (response.statusCode == 200) {
-        print(response.statusCode);
         final result = json.decode(response.body) as Map<String, dynamic>;
         try {
           ProductEntity successResonse = ProductEntity.fromJson(result);
           return Success<ProductEntity, Exception>(successResonse);
         } catch (e) {
-          print('error -> $e');
-          result.forEach((key, value) {
-            print('${value.runtimeType} $key ${value["name"]}');
-          });
+          result.forEach((key, value) {});
         }
         return ServerFailor<ProductEntity, Exception>(
           Exception('Server failor'),
         );
       } else {
-        print('not a status code : ${response.statusCode}');
         return ServerFailor<ProductEntity, Exception>(
           Exception('Server failor'),
         );
@@ -408,24 +376,17 @@ class DeshiFarmerAPI {
         headers: _headers,
       );
       if (response.statusCode == 200) {
-        print(response.statusCode);
         final result = json.decode(response.body) as Map<String, dynamic>;
         try {
           ProductEntity successResonse = ProductEntity.fromJson(result);
-          print('${ApiDatabaseParams.productListPaginationAPI}$page');
-          print('returing the success paginated result $page');
           return Success<ProductEntity, Exception>(successResonse);
         } catch (e) {
-          print('error -> $e');
-          result.forEach((key, value) {
-            print('${value.runtimeType} $key ${value["name"]}');
-          });
+          result.forEach((key, value) {});
         }
         return ServerFailor<ProductEntity, Exception>(
           Exception('Server failor'),
         );
       } else {
-        print('status code : ${response.statusCode}');
         return ServerFailor<ProductEntity, Exception>(
           Exception('Server failor'),
         );
@@ -437,17 +398,18 @@ class DeshiFarmerAPI {
     }
   }
 
-  ///! DO NOT MODIFY THE ABOVE CONTENT (DANGER)
-  ///*-------------------------------------------------------------*///
-  ///
-  ///* Get the Farmer LIST
-  Future<Result<AllFarmerListResp, Exception>> getFarmers(String token) async {
+  ///* Get single Farmer LIST
+  Future<FarmerEntityAgain?> getSingleFarmer(
+      String token, String farmerID) async {
+    String _LOCAL_TOKEN = '55|9062I8GhTHqaQWFrfOu5HzcRG3df73axEgL5rBUK';
     Map<String, String> auth = <String, String>{
-      'Authorization': 'Bearer $token',
+      'Authorization':
+          'Bearer ${_LOCAL_TOKEN.isNotEmpty ? _LOCAL_TOKEN : token}',
     };
     final Uri url = Uri.parse(
-      ApiDatabaseParams.myFarmerApi,
+      '${ApiDatabaseParams.myFarmerApi}/$farmerID',
     );
+    print('url -> $url ${_LOCAL_TOKEN.isNotEmpty ? _LOCAL_TOKEN : token}');
     try {
       _headers.addAll(auth);
       final http.Response response = await http.get(
@@ -455,9 +417,54 @@ class DeshiFarmerAPI {
         headers: _headers,
       );
       if (response.statusCode == 200) {
-        final result = json.decode(response.body) as List<dynamic>;
+        print('farm resp -> ${response.statusCode}');
+        final result = await Isolate.run(() => json.decode(response.body))
+            as Map<String, dynamic>;
         print(
-          'successfuly got the result -> ${result.runtimeType} ${result.length}',
+          'successfuly got the fffffF -> ${result.runtimeType} ${result.length}',
+        );
+        try {
+          final farmEntity = FarmerEntityAgain.fromJson(result);
+          return farmEntity;
+        } catch (e) {
+          print('error comverting data ->  ${result.runtimeType}, $e \n');
+        }
+        // print('converting to farmEntity -> ${farmEntity.runtimeType}');
+        return null;
+      } else {
+        print('error -> ${response.statusCode} ${response.body}');
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  ///! DO NOT MODIFY THE ABOVE CONTENT (DANGER)
+  ///*-------------------------------------------------------------*///
+  ///
+  ///* Get the Farmer LIST
+  Future<Result<AllFarmerListResp, Exception>> getFarmers(String token) async {
+    String _LOCAL_TOKEN = '55|9062I8GhTHqaQWFrfOu5HzcRG3df73axEgL5rBUK';
+    Map<String, String> auth = <String, String>{
+      'Authorization':
+          'Bearer ${_LOCAL_TOKEN.isNotEmpty ? _LOCAL_TOKEN : token}',
+    };
+    final Uri url = Uri.parse(
+      ApiDatabaseParams.myFarmerApi,
+    );
+    print('url -> $url ${_LOCAL_TOKEN.isNotEmpty ? _LOCAL_TOKEN : token}');
+    try {
+      _headers.addAll(auth);
+      final http.Response response = await http.get(
+        url,
+        headers: _headers,
+      );
+      if (response.statusCode == 200) {
+        final result = await Isolate.run(() => json.decode(response.body))
+            as List<dynamic>;
+        print(
+          'successfuly got the farmers -> ${result.runtimeType} ${result.length}',
         );
         List<FarmerEntity> companyE = [];
         for (int i = 0; i < result.length; i++) {
@@ -475,13 +482,13 @@ class DeshiFarmerAPI {
             //   }
             // });
 
-            final e2 = element;
-            print('exception occured $e');
-            e2.forEach(
-              (key, value) {
-                print('$key | ${value.runtimeType} | $value');
-              },
-            );
+            // final e2 = element;
+            // print('exception occured $e');
+            // e2.forEach(
+            //   (key, value) {
+            //     print('$key | ${value.runtimeType} | $value');
+            //   },
+            // );
           }
         }
         AllFarmerListResp successResonse = AllFarmerListResp(companyE);
@@ -517,9 +524,9 @@ class DeshiFarmerAPI {
       );
       if (response.statusCode == 200) {
         final result = json.decode(response.body) as List<dynamic>;
-        print(
-          'successfuly got the Unassing LISTO -> ${result.runtimeType} ${result.length}',
-        );
+        // print(
+        //   'successfuly got the Unassing LISTO -> ${result.runtimeType} ${result.length}',
+        // );
         List<FarmerEntity> companyE = [];
         for (int i = 0; i < result.length; i++) {
           final element = result[i] as Map<String, dynamic>;
@@ -529,15 +536,15 @@ class DeshiFarmerAPI {
               FarmerEntity.fromJson(element),
             );
           } catch (e) {
-            print(
-              'error comverting List<FarmerEntity> ->  ${element.runtimeType}, $e \n',
-            );
-            final e2 = element;
-            e2.forEach((key, value) {
-              if (value.runtimeType != String) {
-                print('${value.runtimeType} $key $value');
-              }
-            });
+            // print(
+            //   'error comverting List<FarmerEntity> ->  ${element.runtimeType}, $e \n',
+            // );
+            // final e2 = element;
+            // e2.forEach((key, value) {
+            //   if (value.runtimeType != String) {
+            //     print('${value.runtimeType} $key $value');
+            //   }
+            // });
           }
         }
         AllFarmerListResp successResonse = AllFarmerListResp(companyE);
@@ -575,9 +582,9 @@ class DeshiFarmerAPI {
       );
       if (response.statusCode == 200) {
         final result = json.decode(response.body) as List<dynamic>;
-        print(
-          'successfuly Unassign GROUPs -> ${result.runtimeType} ${result.length}',
-        );
+        // print(
+        //   'successfuly Unassign GROUPs -> ${result.runtimeType} ${result.length}',
+        // );
         List<GroupFieldEntity> companyE = [];
         for (int i = 0; i < result.length; i++) {
           final element = result[i] as Map<String, dynamic>;
@@ -587,16 +594,16 @@ class DeshiFarmerAPI {
               GroupFieldEntity.fromJson(element),
             );
           } catch (e) {
-            print(
-              'error comverting data Unassing GroupFieldEntity ->  ${element.runtimeType}, $e \n',
-            );
-// getFarmersGroup
-            final e2 = element;
-            e2.forEach((key, value) {
-              if (value.runtimeType != String) {
-                print('${value.runtimeType} $key $value');
-              }
-            });
+//             print(
+//               'error comverting data Unassing GroupFieldEntity ->  ${element.runtimeType}, $e \n',
+//             );
+// // getFarmersGroup
+            // final e2 = element;
+            // e2.forEach((key, value) {
+            //   if (value.runtimeType != String) {
+            //     print('${value.runtimeType} $key $value');
+            //   }
+            // });
           }
         }
         AllFarmerGroupFieldResp successResonse =
@@ -615,6 +622,67 @@ class DeshiFarmerAPI {
     }
   }
 
+  // ///! fetch farm data
+  // Future<Result<AllFarmListResp, Exception>> fetchFarmData(
+  //   String token,
+  //   String farmerID,
+  // ) async {
+  //   String _LOCAL_TOKEN = '55|9062I8GhTHqaQWFrfOu5HzcRG3df73axEgL5rBUK';
+  //   Map<String, String> auth = <String, String>{
+  //     'Authorization':
+  //         'Bearer ${_LOCAL_TOKEN.isNotEmpty ? _LOCAL_TOKEN : token}',
+  //   };
+  //   final Uri url = Uri.parse(
+  //     '${ApiDatabaseParams.myFarmerApi}/$farmerID',
+  //   );
+  //   print('farm url -> $url ${_LOCAL_TOKEN.isNotEmpty ? _LOCAL_TOKEN : token}');
+  //   try {
+  //     _headers.addAll(auth);
+  //     final http.Response response = await http.get(
+  //       url,
+  //       headers: _headers,
+  //     );
+  //     if (response.statusCode == 200) {
+  //       final result = await Isolate.run(() => json.decode(response.body))
+  //           as List<dynamic>;
+  //       print(
+  //         'successfuly got the farm LISTO -> ${result.runtimeType} ${result.length}',
+  //       );
+  //       List<FarmEntity> companyE = [];
+  //       for (int i = 0; i < result.length; i++) {
+  //         final element = result[i] as Map<String, dynamic>;
+  //         // print('element runtime -> ${element.runtimeType}');
+  //         try {
+  //           companyE.add(
+  //             FarmEntity.fromJson(element),
+  //           );
+  //         } catch (e) {
+  //           print(
+  //             'error comverting List<FarmerEntity> ->  ${element.runtimeType}, $e \n',
+  //           );
+  //           final e2 = element;
+  //           e2.forEach((key, value) {
+  //             if (value.runtimeType != String) {
+  //               print('${value.runtimeType} $key $value');
+  //             }
+  //           });
+  //         }
+  //       }
+  //       AllFarmListResp successResonse = AllFarmListResp(companyE);
+
+  //       return Success<AllFarmListResp, Exception>(successResonse);
+  //     } else {
+  //       return ServerFailor<AllFarmListResp, Exception>(
+  //         Exception('Server failor'),
+  //       );
+  //     }
+  //   } catch (e) {
+  //     return ServerFailor<AllFarmListResp, Exception>(
+  //       Exception('Server failor -> $e'),
+  //     );
+  //   }
+  // }
+
   ///! Get groupo Details from api
   Future<Result<GroupDetailEntity, Exception>> getGroupDetails(
     String token,
@@ -632,12 +700,9 @@ class DeshiFarmerAPI {
         url,
         headers: _headers,
       );
-      print('toekn $token \n groupid -> $groupID');
+      // print('toekn $token \n groupid -> $groupID');
       if (response.statusCode == 200) {
         final result = json.decode(response.body) as Map<String, dynamic>;
-        print(
-          'successfuly got GROUP detail -> ${result.runtimeType} ${result.length}',
-        );
 
         try {
           GroupDetailEntity successResonse = GroupDetailEntity.fromJson(result);
@@ -645,11 +710,7 @@ class DeshiFarmerAPI {
 
           return Success<GroupDetailEntity, Exception>(successResonse);
         } catch (e) {
-          print('got error converting to model $e');
-
-          result.forEach((key, value) {
-            print('$key ${key.runtimeType} $value');
-          });
+          result.forEach((key, value) {});
 
           return ServerFailor<GroupDetailEntity, Exception>(
             Exception('Converting Data Erro -> $e'),
@@ -684,7 +745,6 @@ class DeshiFarmerAPI {
     var focusedCorpFormat = {
       'cropname': d,
     };
-    print(d);
 
     var d2 = farmerModel.currentProducingCrop
         ?.replaceAll('{', '')
@@ -693,7 +753,6 @@ class DeshiFarmerAPI {
     var currentCorpFormat = {
       'cropname': d2,
     };
-    print(d2);
     Map<String, String> body = <String, String>{
       'farmer_type': '1',
       // 'onboard_by': farmerModel.onboardBy ?? '', //! NOT NEEDED
@@ -734,7 +793,6 @@ class DeshiFarmerAPI {
         bDetail['branch_name']!.isNotEmpty &&
         bDetail['account_number']!.isNotEmpty) {
       body['bank_details'] = json.encode(farmerModel.bankDetails); //JSON
-      print('bank detail -> ${json.encode(farmerModel.bankDetails)}');
     }
     var msfDetail = farmerModel.mfsAccount! as Map<String, String>;
 
@@ -742,7 +800,6 @@ class DeshiFarmerAPI {
         msfDetail['mfs_account']!.isNotEmpty) {
       // 'mfs_account': json.encode(farmerModel.mfsAccount), // JSON
       body['mfs_account'] = json.encode(farmerModel.mfsAccount); //JSON
-      print('msf account -> ${json.encode(farmerModel.mfsAccount)}');
     }
 
     // print(
@@ -758,7 +815,6 @@ class DeshiFarmerAPI {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    print('token from API -> $token');
 
     ///! url to URI
     final Uri url = Uri.parse(
@@ -780,26 +836,15 @@ class DeshiFarmerAPI {
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 201) {
-        print(
-          'server success resp -> 201 -> ${response.reasonPhrase} ${await response.stream.bytesToString()}',
-        );
-
         return Success<bool, Exception>(true);
       } else {
         var respMsg = await response.stream.bytesToString();
-        print(
-          'server resp -> ${response.statusCode}\n$respMsg',
-        );
 
-        print(
-          'message -> ${jsonDecode(respMsg)["message"]}',
-        );
         return ServerFailor<bool, Exception>(
           Exception(jsonDecode(respMsg)['message']),
         );
       }
     } catch (e) {
-      print('Unknown Errors -> $e');
       return ServerFailor<bool, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -826,7 +871,6 @@ class DeshiFarmerAPI {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    print('token from API -> $token');
 
     ///! url to URI
     final Uri url = Uri.parse(
@@ -843,21 +887,13 @@ class DeshiFarmerAPI {
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 201) {
-        print(
-          'server success resp -> 201 -> ${response.reasonPhrase} ${await response.stream.bytesToString()}',
-        );
-
         return Success<bool, Exception>(true);
       } else {
-        print(
-          'server resp -> ${response.statusCode}\n${response.reasonPhrase} ${await response.stream.bytesToString()}',
-        );
         return ServerFailor<bool, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
-      print('Unknown Errors -> $e');
       return ServerFailor<bool, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -891,7 +927,6 @@ class DeshiFarmerAPI {
     ///! Trying request to SErVER
     try {
       _headers.addAll(headers);
-      print('headers addde');
       var resp = await http.post(
         url,
         body: json.encode({
@@ -900,21 +935,14 @@ class DeshiFarmerAPI {
         headers: headers,
       );
 
-      print('farmer id -> $farmerID\n groupID -> $groupID\n token -> $token');
-
       if (resp.statusCode == 200) {
-        print('successfully done -> ${resp.statusCode} ${resp.body}');
         return Success<bool, Exception>(true);
       } else {
-        print(
-          'server resp -> ${resp.statusCode}\n${resp.body} ',
-        );
         return ServerFailor<bool, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
-      print('Unknown Errors -> $e');
       return ServerFailor<bool, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -946,28 +974,20 @@ class DeshiFarmerAPI {
     ///! Trying request to SErVER
     try {
       _headers.addAll(headers);
-      print('headers addde');
       var resp = await http.put(
         url,
         body: json.encode({'group_leader': leaderID}),
         headers: headers,
       );
 
-      print('farmer id -> $leaderID\n groupID -> $groupID\n token -> $token');
-
       if (resp.statusCode == 200) {
-        print('successfully done -> ${resp.statusCode} ${resp.body}');
         return Success<bool, Exception>(true);
       } else {
-        print(
-          'server resp -> ${resp.statusCode}\n${resp.body} ',
-        );
         return ServerFailor<bool, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
-      print('Unknown Errors -> $e');
       return ServerFailor<bool, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -988,7 +1008,6 @@ class DeshiFarmerAPI {
         .replaceAll('}', '')
         .split(',');
     var focusedCorpFormat = json.encode(d);
-    print(d);
 
     Map<String, String> body = <String, String>{
       'farmer_id': farmModel.farmerID,
@@ -1007,7 +1026,6 @@ class DeshiFarmerAPI {
       'starting_date': farmModel.farmStartingDate,
       'current_crop': focusedCorpFormat,
     };
-    print('farm add body -> $body');
 
     ///! POST HEADER
     Map<String, String> headers = <String, String>{
@@ -1028,7 +1046,6 @@ class DeshiFarmerAPI {
       int checkLoop = 0;
       for (final img in farmModel.images.toSet().toList()) {
         checkLoop++;
-        print('$checkLoop -> ${img.path}');
         request.files.add(
           await http.MultipartFile.fromPath(
             'gallery[]',
@@ -1040,26 +1057,15 @@ class DeshiFarmerAPI {
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 201) {
-        print(
-          'server success resp -> 201 -> ${response.reasonPhrase} ${await response.stream.bytesToString()}',
-        );
-
         return Success<bool, Exception>(true);
       } else {
         var respMsg = await response.stream.bytesToString();
-        print(
-          'server resp -> ${response.statusCode}\n$respMsg',
-        );
 
-        print(
-          'message -> ${jsonDecode(respMsg)["message"]}',
-        );
         return ServerFailor<bool, Exception>(
           Exception(jsonDecode(respMsg)['message']),
         );
       }
     } catch (e) {
-      print('Unknown Errors -> $e');
       return ServerFailor<bool, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -1092,8 +1098,6 @@ class DeshiFarmerAPI {
       //     }
       // ],
     });
-    print('this is order body -> $body');
-    print('this is order body -> $orderModelsToMaps(orders)');
 
     ///! POST HEADER
     Map<String, String> headers = <String, String>{
@@ -1110,7 +1114,6 @@ class DeshiFarmerAPI {
     ///! Trying request to SErVER
     try {
       _headers.addAll(headers);
-      print('headers addde');
       var resp = await http.post(
         url,
         body: body,
@@ -1120,18 +1123,13 @@ class DeshiFarmerAPI {
       // print('farmer id -> $farmerID\n groupID -> $groupID\n token -> $token');
 
       if (resp.statusCode == 201) {
-        print('successfully done -> ${resp.statusCode} ${resp.body}');
         return Success<bool, Exception>(true);
       } else {
-        print(
-          'server resp -> ${resp.statusCode}\n${resp.body} ',
-        );
         return ServerFailor<bool, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
-      print('Unknown Errors -> $e');
       return ServerFailor<bool, Exception>(
         Exception('Server failor -> $e'),
       );
