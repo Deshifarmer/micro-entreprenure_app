@@ -173,3 +173,5 @@ lib/domain/entities/farm_entity/farm_entity.g.dart
 lib/domain/entities/group_detail_entity/farmer_entity_group.g.dart
 lib/domain/entities/user_entity/user_profile_entity.g.dart
 lib/domain/entities/login_entity/login_response_entity.g.dart
+lib/domain/entities/farmer_entity/farmer_entity_again.g.dart
+lib/domain/entities/farmer_entity/farmer_order_entity.g.dart
