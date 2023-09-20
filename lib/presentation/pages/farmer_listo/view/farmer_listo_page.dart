@@ -1,13 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:deshifarmer/presentation/pages/farmer_listo/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/farmer_listo/widgets/farmer_listo_body.dart';
+import 'package:flutter/material.dart';
 
 /// {@template farmer_listo_page}
 /// A description for FarmerListoPage
 /// {@endtemplate}
 class FarmerListoPage extends StatelessWidget {
   /// {@macro farmer_listo_page}
-  const FarmerListoPage({super.key});
+  const FarmerListoPage({super.key, this.isBack});
+  final bool? isBack;
 
   /// The static route for FarmerListoPage
   static Route<dynamic> route() {
@@ -18,11 +19,15 @@ class FarmerListoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => FarmerListoBloc(),
-      child: Scaffold(
-        appBar: AppBar(
-            // title: Text('Farmer Lists'),
-            ),
-        body: const FarmerListoView(),
+      child: SafeArea(
+        child: Scaffold(
+          appBar: isBack != null
+              ? AppBar(
+                  // title: Text('আমার কৃষক তালিকা'),
+                  )
+              : null,
+          body: const FarmerListoView(),
+        ),
       ),
     );
   }
