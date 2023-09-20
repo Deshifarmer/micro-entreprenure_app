@@ -4,7 +4,7 @@ class Strings {
   Strings._();
 
   static const String title = 'Deshifarmer';
-  static const String localDomain = 'http://192.168.68.140:8000';
+  static const String localDomain = 'http://192.168.68.140:8080';
   static const String serverDomain = 'https://core.deshifarmer.co';
 
   static String getServerOrLocal(ServerOrLocal sol) {
