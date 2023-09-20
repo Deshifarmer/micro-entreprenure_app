@@ -120,76 +120,97 @@ class ProfileBody extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Card(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 20,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'মোবাইল নম্বর',
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                            Text(
-                              '01992381823',
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
-                            height10,
-                            Text(
-                              'ঠিকানা',
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                            Text(
-                              'Sherpur, Kaliyarhat, Bogra',
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              softWrap: false,
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
-                          ],
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width / 2.5,
+                      height: getProportionateScreenHeight(180),
+                      child: Card(
+                        color: priceBoxColor,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 15,
+                            vertical: 20,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'মোবাইল নম্বর',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(color: Colors.white),
+                              ),
+                              Text(
+                                userProfile.userProfile.phone ?? '',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall!
+                                    .copyWith(color: Colors.white),
+                              ),
+                              height10,
+                              Text(
+                                'ঠিকানা',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(color: Colors.white),
+                              ),
+                              Text(
+                                userProfile.userProfile.present_address ?? '',
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: false,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall!
+                                    .copyWith(color: Colors.white),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                    Card(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 20,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'মোবাইল নম্বর',
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                            Text(
-                              '01992381823',
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
-                            height10,
-                            Text(
-                              'ঠিকানা',
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                            Text(
-                              'Sherpur, Kaliyarhat, ssssssssssssssssssssBogra',
-                              softWrap: false,
-                              style: Theme.of(context).textTheme.bodySmall,
-                              maxLines: 2,
-                              // textHeightBehavior: TextHeightBehavior(
-                              //   applyHeightToFirstAscent: false,
-                              //   applyHeightToLastDescent: false,
-                              //   leadingDistribution:
-                              //       TextLeadingDistribution.even,
-                              // ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            height10,
-                          ],
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width / 2.5,
+                      height: getProportionateScreenHeight(180),
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 15,
+                            vertical: 20,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'কমিশন',
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                              Text(
+                                '৳ 5640',
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                              height10,
+                              Text(
+                                'মাসিক উপস্থিতি',
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                              Text(
+                                '90%',
+                                style: Theme.of(context).textTheme.titleSmall,
+                                softWrap: false,
+                                maxLines: 3,
+                                // textHeightBehavior: TextHeightBehavior(
+                                //   applyHeightToFirstAscent: false,
+                                //   applyHeightToLastDescent: false,
+                                //   leadingDistribution:
+                                //       TextLeadingDistribution.even,
+                                // ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              height10,
+                            ],
+                          ),
                         ),
                       ),
                     ),
