@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:deshifarmer/domain/entities/farmer_entity/farmer_order_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'farmer_entity.g.dart';
 
@@ -42,10 +43,10 @@ class FarmerEntity {
     required this.cultivation_practice,
     required this.farmer_role,
     required this.farm_id,
-    required this.is_active,
-    required this.onboard_date,
+    // required this.is_active,
+    // required this.onboard_date,
     required this.order_list,
-    this.farm_list,
+    // this.farm_list,
   });
 
   factory FarmerEntity.fromJson(Map<String, dynamic> json) =>
@@ -79,7 +80,7 @@ class FarmerEntity {
   final int? family_member; //! for LOCAL
   final int? number_of_children; //! for LOCAL
   // final String? number_of_children;
-  final String? yearly_income;
+  final int? yearly_income;
   final String? year_of_stay_in;
   final String? group_id;
   final String? bank_details;
@@ -90,10 +91,9 @@ class FarmerEntity {
   final String? cultivation_practice;
   final String? farmer_role;
   final String? farm_id;
-  final int? is_active; //! LOCAL
-  // final String? is_active;
-  final String? onboard_date;
-  final List<dynamic> order_list;
+  // // final String? is_active;
+  // final String? onboard_date;
+  final List<FarmerOrderEntity> order_list;
   // farm_list
-  final List<dynamic>? farm_list;
+  // final List<FarmEntity>? farm_list;
 }
