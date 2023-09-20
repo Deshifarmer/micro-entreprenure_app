@@ -20,8 +20,11 @@ class ApiDatabaseParams {
 
   ///! my farmer api
   static String myFarmerApi =
-      '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/my_farmer';
+      '${Strings.getServerOrLocal(ServerOrLocal.local)}/api/v1/me/my_farmer';
 
+  ///! my farm api
+  // static String myFarmerApi =
+  //     '${Strings.getServerOrLocal(ServerOrLocal.local)}/api/v1/me/';
   ///! inputer order api
   static String inputerOrderApi =
       '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/input_order';
