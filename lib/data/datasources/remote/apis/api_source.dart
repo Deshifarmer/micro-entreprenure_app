@@ -171,12 +171,17 @@ class DeshiFarmerAPI {
     );
 
     /// do a post request
+    print(
+        'url -> $url token -> ${_LOCAL_TOKEN.isNotEmpty ? _LOCAL_TOKEN : token}');
     try {
       _headers.addAll(auth);
-      final http.Response response =
-          await http.put(url, headers: _headers, body: {
-        'status': 'collected by me',
-      });
+      final http.Response response = await http.put(
+        url,
+        headers: _headers,
+        body: {
+          'status': 'collected by me',
+        },
+      );
       if (response.statusCode == 200) {
         print("${response.statusCode} | ${response.body}");
         return true;
