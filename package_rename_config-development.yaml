@@ -1,0 +1,11 @@
+package_rename_config:
+  android:
+    app_name: MAP App # (String) The display name of the android app
+    package_name: co.deshifarmer.me # (String) The package name of the android app
+    override_old_package: # (Optional) (String) Use this to delete the old folder structure of MainActivity or to use the existing code with the new package name
+    lang: kotlin # (Optional) (String) The android development language {kotlin(default) or java}
+
+  # ios:
+  #   app_name: "MAP App"  # (String) The display name of the ios app
+  #   bundle_name: "co.deshifarmer.me" # (String) The bundle name of the ios app
+  #   package_name: # (String) The product bundle identifier of the ios app

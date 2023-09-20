@@ -27,9 +27,17 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
+//    def keystoreProperties = new Properties()
+//    def keystorePropertiesFile = rootProject.file('key.properties')
+//    if (keystorePropertiesFile.exists()) {
+//        keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+//    }
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+
+
 
 android {
     namespace "co.deshifarmer.me"
@@ -84,7 +92,8 @@ android {
         production {
             dimension "default"
             applicationIdSuffix ""
-            manifestPlaceholders = [appName: "Deshifarmer"]
+            manifestPlaceholders = [appName: "MAP App"]
+            // manifestPlaceholders = [appName: "Deshifarmer"]
         }
         staging {
             dimension "default"
@@ -100,12 +109,14 @@ android {
 
     buildTypes {
         release {
+            // signingConfig signingConfigs.debug
             signingConfig signingConfigs.release
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt')
         }
         debug {
             signingConfig signingConfigs.debug
+            // signingConfig signingConfigs.debug
         }
     }
 }
