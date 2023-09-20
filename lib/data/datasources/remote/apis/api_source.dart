@@ -1,6 +1,8 @@
 // ignore_for_file: omit_local_variable_types, prefer_final_locals
 
+import 'dart:async';
 import 'dart:convert';
+import 'dart:isolate';
 
 import 'package:deshifarmer/core/app_core.dart';
 import 'package:deshifarmer/core/params/api_database_params.dart';
@@ -37,11 +39,12 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       '${ApiDatabaseParams.loginApi}?email=$mail&password=$pass',
     );
+    print('url -> $url $mail $pass');
     try {
       final http.Response response = await http.post(url);
       if (response.statusCode == 200) {
         print(response.statusCode);
-        final result = json.decode(response.body);
+        final result = await Isolate.run(() => json.decode(response.body));
         print(result);
         try {
           SuccessLoginEntity successResonse =
@@ -71,16 +74,48 @@ class DeshiFarmerAPI {
     }
   }
 
-  ///! User ORDERS
-  Future<Result<AllOrdersEntity, Exception>> userOrder(
-    String token,
-  ) async {
+  ///! User LOGOUT
+  Future<bool> userLogout(String token) async {
     Map<String, String> auth = <String, String>{
       'Authorization': 'Bearer $token',
     };
     final Uri url = Uri.parse(
+      ApiDatabaseParams.logoutApi,
+    );
+
+    /// do a post request
+    // print('logout url -> $url $token');
+    try {
+      _headers.addAll(auth);
+      final http.Response response = await http.post(
+        url,
+        headers: _headers,
+      );
+      if (response.statusCode == 200) {
+        // print("${response.statusCode} | ${response.body}");
+        return true;
+      } else {
+        // print("${response.statusCode} | ${response.body}");
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
+  ///! User ORDERS
+  Future<Result<AllOrdersEntity, Exception>> userOrder(
+    String token,
+  ) async {
+    String _LOCAL_TOKEN = '55|9062I8GhTHqaQWFrfOu5HzcRG3df73axEgL5rBUK';
+    Map<String, String> auth = <String, String>{
+      'Authorization':
+          'Bearer ${_LOCAL_TOKEN.isNotEmpty ? _LOCAL_TOKEN : token}',
+    };
+    final Uri url = Uri.parse(
       ApiDatabaseParams.orderApi,
     );
+    print('url -> $url $token \n $_LOCAL_TOKEN');
     try {
       _headers.addAll(auth);
       final http.Response response = await http.get(
@@ -88,9 +123,10 @@ class DeshiFarmerAPI {
         headers: _headers,
       );
       if (response.statusCode == 200) {
-        print(response.statusCode);
-        final result = json.decode(response.body) as List<dynamic>;
-        print('result -> $result');
+        // print(response.statusCode);
+        final result = await Isolate.run(() => json.decode(response.body))
+            as List<dynamic>;
+        // print('result -> $result');
         List<OrderEntity> orderEntitys = [];
         for (int i = 0; i < result.length; i++) {
           final element = result[i];
@@ -98,7 +134,7 @@ class DeshiFarmerAPI {
             orderEntitys.add(
               OrderEntity.fromJson(element as Map<String, dynamic>),
             );
-            print('entity added successfully -> $i');
+            // print('entity added successfully -> $i');
           } catch (e) {
             final result2 = element as Map<String, dynamic>;
             result2.forEach((key, value) {
@@ -123,6 +159,36 @@ class DeshiFarmerAPI {
     }
   }
 
+  ///! Collect ORDERS
+  FutureOr<bool> collectOrder(String id, String token) async {
+    String _LOCAL_TOKEN = '55|9062I8GhTHqaQWFrfOu5HzcRG3df73axEgL5rBUK';
+    Map<String, String> auth = <String, String>{
+      'Authorization':
+          'Bearer ${_LOCAL_TOKEN.isNotEmpty ? _LOCAL_TOKEN : token}',
+    };
+    final Uri url = Uri.parse(
+      ApiDatabaseParams.collectOrderApi + id,
+    );
+
+    /// do a post request
+    try {
+      _headers.addAll(auth);
+      final http.Response response =
+          await http.put(url, headers: _headers, body: {
+        'status': 'collected by me',
+      });
+      if (response.statusCode == 200) {
+        print("${response.statusCode} | ${response.body}");
+        return true;
+      } else {
+        print("${response.statusCode} | ${response.body}");
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
   ///! User Profile
   Future<Result<UserProfileEntity, Exception>> userProfile(
     String token,
@@ -140,9 +206,11 @@ class DeshiFarmerAPI {
         url,
         headers: _headers,
       );
+      print('url -> $url $token');
       if (response.statusCode == 200) {
         print('status 200');
-        final result = json.decode(response.body) as Map<String, dynamic>;
+        final result = await Isolate.run(() => json.decode(response.body))
+            as Map<String, dynamic>;
         try {
           UserProfileEntity successResonse = UserProfileEntity.fromJson(result);
           return Success<UserProfileEntity, Exception>(successResonse);
@@ -402,7 +470,7 @@ class DeshiFarmerAPI {
             //   }
             // });
 
-            final e2 = element as Map<String, dynamic>;
+            final e2 = element;
             print('exception occured $e');
             e2.forEach(
               (key, value) {
@@ -457,8 +525,9 @@ class DeshiFarmerAPI {
             );
           } catch (e) {
             print(
-                'error comverting List<FarmerEntity> ->  ${element.runtimeType}, $e \n');
-            final e2 = element as Map<String, dynamic>;
+              'error comverting List<FarmerEntity> ->  ${element.runtimeType}, $e \n',
+            );
+            final e2 = element;
             e2.forEach((key, value) {
               if (value.runtimeType != String) {
                 print('${value.runtimeType} $key $value');
@@ -517,7 +586,7 @@ class DeshiFarmerAPI {
               'error comverting data Unassing GroupFieldEntity ->  ${element.runtimeType}, $e \n',
             );
 // getFarmersGroup
-            final e2 = element as Map<String, dynamic>;
+            final e2 = element;
             e2.forEach((key, value) {
               if (value.runtimeType != String) {
                 print('${value.runtimeType} $key $value');
@@ -603,23 +672,23 @@ class DeshiFarmerAPI {
     // var checkIfGovtID = {};
     ///! POST BODY
 
-    var _d = farmerModel.focusedCrop
+    var d = farmerModel.focusedCrop
         ?.replaceAll('{', '')
         .replaceAll('}', '')
         .split(',');
     var focusedCorpFormat = {
-      'cropname': _d,
+      'cropname': d,
     };
-    print(_d);
+    print(d);
 
-    var _d2 = farmerModel.currentProducingCrop
+    var d2 = farmerModel.currentProducingCrop
         ?.replaceAll('{', '')
         .replaceAll('}', '')
         .split(',');
     var currentCorpFormat = {
-      'cropname': _d2,
+      'cropname': d2,
     };
-    print(_d2);
+    print(d2);
     Map<String, String> body = <String, String>{
       'farmer_type': '1',
       // 'onboard_by': farmerModel.onboardBy ?? '', //! NOT NEEDED
@@ -655,14 +724,14 @@ class DeshiFarmerAPI {
       // 'farm_id': farmerModel.farmId.toString(),
       'year_of_stay_in': farmerModel.yearOfStayIn,
     };
-    var bDetail = farmerModel.bankDetails as Map<String, String>;
+    var bDetail = farmerModel.bankDetails! as Map<String, String>;
     if (bDetail['bank_name']!.isNotEmpty &&
         bDetail['branch_name']!.isNotEmpty &&
         bDetail['account_number']!.isNotEmpty) {
       body['bank_details'] = json.encode(farmerModel.bankDetails); //JSON
       print('bank detail -> ${json.encode(farmerModel.bankDetails)}');
     }
-    var msfDetail = farmerModel.mfsAccount as Map<String, String>;
+    var msfDetail = farmerModel.mfsAccount! as Map<String, String>;
 
     if (msfDetail['mfs_type']!.isNotEmpty &&
         msfDetail['mfs_account']!.isNotEmpty) {
@@ -799,7 +868,7 @@ class DeshiFarmerAPI {
   ) async {
     ///! POST BODY
     var body = json.encode({
-      'list': [farmerID]
+      'list': [farmerID],
     });
 
     ///! POST HEADER
@@ -821,7 +890,7 @@ class DeshiFarmerAPI {
       var resp = await http.post(
         url,
         body: json.encode({
-          'list': [farmerID]
+          'list': [farmerID],
         }),
         headers: headers,
       );
@@ -909,12 +978,12 @@ class DeshiFarmerAPI {
     String long,
   ) async {
     ///! POST BODY
-    var _d = farmModel.farmProducingCrop
+    var d = farmModel.farmProducingCrop
         .replaceAll('{', '')
         .replaceAll('}', '')
         .split(',');
-    var focusedCorpFormat = json.encode(_d);
-    print(_d);
+    var focusedCorpFormat = json.encode(d);
+    print(d);
 
     Map<String, String> body = <String, String>{
       'farmer_id': farmModel.farmerID,

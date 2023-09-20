@@ -1,10 +1,6 @@
-import 'package:deshifarmer/core/app_strings.dart';
-import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
-import 'package:deshifarmer/presentation/blocs/farmer_fetch_farm/farmer_fetch_farm_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/pages/activity/activity.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
-import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:flutter/material.dart';
 
@@ -29,10 +25,13 @@ class FarmerListDropDown extends StatelessWidget {
             ),
           );
         } else if (state is MyFarmerSuccess) {
-          if (activityState is ActivityInitial) {
-            activityState.farmerID.text =
-                state.allFarmerListResp.first.farmer_id!;
-          }
+          ///! TODO: uncomment this
+          // if (activityState is ActivityInitial) {
+          //   activityState.farmerID.text =
+          //       state.allFarmerListResp.first.farmer_id!;
+          // }
+          ///! TODO: uncomment this
+          /*
           return Padding(
             padding: const EdgeInsets.symmetric(
               vertical: 10,
@@ -116,6 +115,7 @@ class FarmerListDropDown extends StatelessWidget {
               },
             ),
           );
+          */
         }
         return const SizedBox.shrink();
       },

@@ -14,11 +14,11 @@ class HarvestBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.all(15),
       child: ListView(
-        children: [
+        children: const [
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(10),
             child: Text(
               'উৎপাদনের তালিকা ',
               style: TextStyle(
@@ -30,7 +30,7 @@ class HarvestBody extends StatelessWidget {
           ),
 
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8),
             child: Center(child: Text('কিছুই পাওয়া যায়নি')),
           ),
 

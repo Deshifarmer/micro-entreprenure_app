@@ -15,7 +15,7 @@ class MyRequestCropInsurance extends StatelessWidget {
         backgroundColor: backgroundColor2,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(10),
         child: ListView(
           children: [
             const Text(
@@ -88,7 +88,7 @@ class MyRequestCropInsurance extends StatelessWidget {
             SizedBox(
               height: MediaQuery.sizeOf(context).height / 3.0,
             ),
-            Center(child: Text('কোন ইন্সুরেন্স পাওয়া যায়নি'))
+            const Center(child: Text('কোন ইন্সুরেন্স পাওয়া যায়নি')),
           ],
         ),
       ),

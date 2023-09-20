@@ -42,7 +42,7 @@ class GetFarmerListo extends StatelessWidget {
                           ),
                         );
                   }
-                  Navigator.push(
+                  await Navigator.push(
                     context,
                     PageAnimationWrapper.sharedAxisTransitionPageWrapper(
                       const GroupDetailPage(),

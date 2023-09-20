@@ -14,6 +14,7 @@ import 'package:deshifarmer/presentation/pages/add_group/view/add_group_page.dar
 import 'package:deshifarmer/presentation/pages/farmer_listo/view/farmer_listo_page.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/view/products_page.dart';
+import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:flutter/material.dart';
 
 class HomeBodyListView extends StatelessWidget {
@@ -42,7 +43,7 @@ class HomeBodyListView extends StatelessWidget {
                   100,
                 ), // Image radius
                 child: Image.network(
-                  '${Strings.domain}/storage${usrProfile.photo}',
+                  '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage${usrProfile.photo}',
                   fit: BoxFit.cover,
                 ),
               ),
@@ -102,25 +103,25 @@ class HomeBodyListView extends StatelessWidget {
                 print(logINState.successLoginEntity.token);
 
                 if (i == 4) {
-                  context.read<GetGroupCubit>().addAllGroupFields(
+                  await context.read<GetGroupCubit>().addAllGroupFields(
                         logINState.successLoginEntity.token,
                       );
                   // ignore: use_build_context_synchronously
-                  Navigator.push(context, AddFarmerPage.route());
+                  await Navigator.push(context, AddFarmerPage.route());
                 } else if (i == 3) {
                   context.read<MyFarmerBloc>().add(
                         MyFarmerFetchEvent(
                           logINState.successLoginEntity.token,
                         ),
                       );
-                  Navigator.push(
+                  await Navigator.push(
                     context,
                     PageAnimationWrapper.sharedAxisTransitionPageWrapper(
                       const FarmerListoPage(),
                     ),
                   );
                 } else if (i == 5) {
-                  context.read<GetGroupCubit>().addAllGroupFields(
+                  await context.read<GetGroupCubit>().addAllGroupFields(
                         logINState.successLoginEntity.token,
                       );
 // MyUnassignFamersBloc
@@ -130,7 +131,7 @@ class HomeBodyListView extends StatelessWidget {
                           logINState.successLoginEntity.token,
                         ),
                       );
-                  Navigator.push(context, AddGroupPage.route());
+                  await Navigator.push(context, AddGroupPage.route());
                 } else if (i == 0) {
                   ///! company BLOCK
                   context.read<CompanyBloc>().add(
@@ -153,7 +154,7 @@ class HomeBodyListView extends StatelessWidget {
                         ),
                       );
                   // ProductsPage.route();
-                  Navigator.push(context, ProductsPage.route());
+                  await Navigator.push(context, ProductsPage.route());
                 }
               }
             },

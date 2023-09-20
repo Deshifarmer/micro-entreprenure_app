@@ -3,6 +3,7 @@ import 'package:deshifarmer/domain/entities/products_entity/product_data_entity.
 import 'package:deshifarmer/presentation/blocs/cart/cart_bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 
 class CartCard extends StatelessWidget {
@@ -17,7 +18,7 @@ class CartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8),
       child: Stack(
         children: [
           Row(
@@ -36,7 +37,7 @@ class CartCard extends StatelessWidget {
                       ),
                       child: Image.network(
                         checkDomain(
-                                Strings.getServerOrLocal(ServerOrLocal.server))
+                                Strings.getServerOrLocal(ServerOrLocal.server),)
                             ? dummyImage
                             : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage${product.image}',
                         errorBuilder: (context, error, stackTrace) {
@@ -105,8 +106,8 @@ class CartCard extends StatelessWidget {
                       ),
                       children: [
                         TextSpan(
-                            text: ' x${items}',
-                            style: Theme.of(context).textTheme.bodyLarge),
+                            text: ' x$items',
+                            style: Theme.of(context).textTheme.bodyLarge,),
                       ],
                     ),
                   ),
@@ -148,7 +149,7 @@ class CartCard extends StatelessWidget {
                 color: Colors.red,
               ),
             ),
-          )
+          ),
         ],
       ),
     );

@@ -2,6 +2,7 @@ import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 
 class ProfileSettingsPage extends StatelessWidget {
@@ -94,10 +95,10 @@ ss                       }, */
             title: 'Email Notification',
           ),
 
-          SettingsSwitchButton(
+          const SettingsSwitchButton(
             title: 'Weather alert',
           ),
-          SettingsSwitchButton(
+          const SettingsSwitchButton(
             title: 'Promotionals',
           ),
         ],
@@ -160,10 +161,11 @@ class _SwitchToStfState extends State<SwitchToStf> {
       inactiveTrackColor: backgroundColor,
       value: isActive,
       onChanged: (bool? v) {
-        if (v != null)
+        if (v != null) {
           setState(() {
             isActive = v;
           });
+        }
       },
     );
   }

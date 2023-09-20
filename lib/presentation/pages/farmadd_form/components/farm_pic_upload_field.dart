@@ -51,9 +51,9 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
           ? GridView.builder(
               shrinkWrap: true,
               // crossAxisCount: 2,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                var farmAddState = context.read<FarmaddFormBloc>().state;
+                final farmAddState = context.read<FarmaddFormBloc>().state;
                 print('current image index -> $index');
                 final currentImage = images.elementAt(index);
                 if (farmAddState is FarmaddFormInitial) {
@@ -62,7 +62,7 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
                   ///! check if the file already exists or not
                 }
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.file(

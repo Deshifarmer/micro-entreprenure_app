@@ -1,6 +1,5 @@
 import 'package:deshifarmer/core/app_core.dart';
 import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
-import 'package:deshifarmer/data/repositories/group_detail_repo_imp.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
 import 'package:deshifarmer/presentation/cubit/add_group/add_farmer_to_group_cubit.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
@@ -144,9 +143,10 @@ class GroupDetailBody extends StatelessWidget {
                           leading: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: Image.network(
-                              checkDomain(Strings.domain)
+                              checkDomain(Strings.getServerOrLocal(
+                                      ServerOrLocal.server,),)
                                   ? dummyImage
-                                  : '${Strings.domain}/storage/${value?.image}',
+                                  : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value?.image}',
                               height: 50,
                               width: 50,
                             ),

@@ -40,11 +40,12 @@ class ProductsBody2 extends StatelessWidget {
             leading: IconButton(
               onPressed: () {
                 // context.read<ProductsBloc>().add(const UnSelectCompanyEvent());
-                context.read<ProductsBloc>().add(SelectCompanysEvent(
-                      '',
-                      query: '',
-                      category: '',
-                    ));
+                ///! TODO: uncomment this
+                // context.read<ProductsBloc>().add(SelectCompanysEvent(
+                //       '',
+                //       query: '',
+                //       category: '',
+                //     ));
                 final loginState = context.read<LoginBloc>().state;
                 if (loginState is LoginSuccess) {
                   context.read<UserProfileBloc>().add(
@@ -54,11 +55,12 @@ class ProductsBody2 extends StatelessWidget {
                       );
 
                   /// fore clearning the prev state
-                  context.read<ProductsBBloc>().add(
-                        ProductSearchEvent(
-                          loginState.successLoginEntity.token,
-                        ),
-                      );
+                  ///! TODO: uncomment this
+                  // context.read<ProductsBBloc>().add(
+                  //       ProductSearchEvent(
+                  //         loginState.successLoginEntity.token,
+                  //       ),
+                  //     );
                 }
 
                 Navigator.pop(context);
@@ -87,51 +89,52 @@ class ProductsBody2 extends StatelessWidget {
                         ///! PERF: Searching Text Field
                         child: TextField(
                           onChanged: (value) {
+                            ///! TODO: uncomment this
                             ///! PERF: 1st. check if theres any company/cat already select
 
-                            if (productState is ProductComanySelect) {
-                              ///! TODO: Implement the Search functionality with holding the prev args
-                              context.read<ProductsBloc>().add(
-                                    SelectCompanysEvent(
-                                      productState.companyID,
-                                      category: productState.category,
-                                      query: value.isEmpty ? '' : value,
-                                    ),
-                                  );
+                            // if (productState is ProductComanySelect) {
+                            //   ///! TODO: Implement the Search functionality with holding the prev args
+                            //   context.read<ProductsBloc>().add(
+                            //         SelectCompanysEvent(
+                            //           productState.companyID,
+                            //           category: productState.category,
+                            //           query: value.isEmpty ? '' : value,
+                            //         ),
+                            //       );
 
-                              if (loginState is LoginSuccess) {
-                                context.read<ProductsBBloc>().add(
-                                      ProductSearchEvent(
-                                        loginState.successLoginEntity.token,
-                                        query: value.isEmpty ? '' : value,
-                                        cat: productState.category,
-                                        company: productState.companyID,
-                                        // cat: productState.category,
-                                        // company: productState.companyID,
-                                      ),
-                                    );
-                              }
-                            } else {
-                              ///! TODO: Implement the Search functionality with holding the prev args
-                              context.read<ProductsBloc>().add(
-                                    SelectCompanysEvent(
-                                      '',
-                                      category: '',
-                                      query: value.isEmpty ? '' : value,
-                                    ),
-                                  );
+                            //   if (loginState is LoginSuccess) {
+                            //     context.read<ProductsBBloc>().add(
+                            //           ProductSearchEvent(
+                            //             loginState.successLoginEntity.token,
+                            //             query: value.isEmpty ? '' : value,
+                            //             cat: productState.category,
+                            //             company: productState.companyID,
+                            //             // cat: productState.category,
+                            //             // company: productState.companyID,
+                            //           ),
+                            //         );
+                            //   }
+                            // } else {
+                            //   ///! TODO: Implement the Search functionality with holding the prev args
+                            //   context.read<ProductsBloc>().add(
+                            //         SelectCompanysEvent(
+                            //           '',
+                            //           category: '',
+                            //           query: value.isEmpty ? '' : value,
+                            //         ),
+                            //       );
 
-                              if (loginState is LoginSuccess) {
-                                context.read<ProductsBBloc>().add(
-                                      ProductSearchEvent(
-                                        loginState.successLoginEntity.token,
-                                        query: value.isEmpty ? '' : value,
-                                        // cat: productState.category,
-                                        // company: productState.companyID,
-                                      ),
-                                    );
-                              }
-                            }
+                            //   if (loginState is LoginSuccess) {
+                            //     context.read<ProductsBBloc>().add(
+                            //           ProductSearchEvent(
+                            //             loginState.successLoginEntity.token,
+                            //             query: value.isEmpty ? '' : value,
+                            //             // cat: productState.category,
+                            //             // company: productState.companyID,
+                            //           ),
+                            //         );
+                            //   }
+                            // }
                           },
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.all(8),
@@ -176,54 +179,57 @@ class ProductsBody2 extends StatelessWidget {
                             //     );
                             ///! PERF: check if any company is selected
                             print(
-                                'is any company selected: -> ${productState.companyID}');
+                                'is any company selected: -> ${productState.companyID}',);
                             if (productState.companyID != null) {
                               if (loginState is LoginSuccess) {
-                                context.read<ProductsBBloc>().add(
-                                      ProductSearchEvent(
-                                        loginState.successLoginEntity.token,
-                                        cat: value.id.toString(),
-                                        company: productState.companyID,
-                                        query: productState.query,
-                                      ),
-                                    );
+                                ///! TODO: uncomment this
+                                // context.read<ProductsBBloc>().add(
+                                //       ProductSearchEvent(
+                                //         loginState.successLoginEntity.token,
+                                //         cat: value.id.toString(),
+                                //         company: productState.companyID,
+                                //         query: productState.query,
+                                //       ),
+                                //     );
                               }
                             } else {
                               /// COMPOANY IS NOT SELECTED
-                              if (loginState is LoginSuccess) {
-                                context.read<ProductsBBloc>().add(
-                                      ProductSearchEvent(
-                                        loginState.successLoginEntity.token,
-                                        cat: value.id.toString(),
-                                        // company: null,
-                                        query: productState.query,
-                                      ),
-                                    );
-                              }
+                              ///! TODO: uncomment this
+                              // if (loginState is LoginSuccess) {
+                              //   context.read<ProductsBBloc>().add(
+                              //         ProductSearchEvent(
+                              //           loginState.successLoginEntity.token,
+                              //           cat: value.id.toString(),
+                              //           // company: null,
+                              //           query: productState.query,
+                              //         ),
+                              //       );
+                              // }
                             }
 
-                            print('category -> ${productState.category}');
-                            print('query -> ${productState.query}');
-                            print('company -> ${productState.companyID}');
+                            // print('category -> ${productState.category}');
+                            // print('query -> ${productState.query}');
+                            // print('company -> ${productState.companyID}');
                           } else {
-                            context.read<ProductsBloc>().add(
-                                  SelectCompanysEvent(
-                                    null,
-                                    category: value.id.toString(),
-                                    query: null,
-                                  ),
-                                );
+                            ///! TODO: uncomment this
+                            // context.read<ProductsBloc>().add(
+                            //       SelectCompanysEvent(
+                            //         null,
+                            //         category: value.id.toString(),
+                            //         query: null,
+                            //       ),
+                            //     );
 
-                            if (loginState is LoginSuccess) {
-                              context.read<ProductsBBloc>().add(
-                                    ProductSearchEvent(
-                                      loginState.successLoginEntity.token,
-                                      cat: value.id.toString(),
-                                      // query: null,
-                                      // company: null,
-                                    ),
-                                  );
-                            }
+                            // if (loginState is LoginSuccess) {
+                            //   context.read<ProductsBBloc>().add(
+                            //         ProductSearchEvent(
+                            //           loginState.successLoginEntity.token,
+                            //           cat: value.id.toString(),
+                            //           // query: null,
+                            //           // company: null,
+                            //         ),
+                            //       );
+                            // }
                           }
                         },
                         enableFeedback: true,
@@ -428,44 +434,46 @@ class ProductsBody2 extends StatelessWidget {
                   _scrollController.position.maxScrollExtent * 0.8) {
                 final pb = context.read<ProductsBBloc>().state;
                 // print('goin 60% of the screen -> $pb');
-                if (pb is ProductSSuccess) {
-                  // print('success productsssssssss');
-                  if (pb.productEntity.links?.next != null) {
-                    //? fetch the nxt page
-                    if (loginState is LoginSuccess) {
-                      // print(
-                      //   'nexty page ${pb.productEntity.links?.next} ${loginState.successLoginEntity.token}',
-                      // );
-                      context.read<ProductsBBloc>().add(
-                            ProductFFetchPaginationEvent(
-                              nextPage: pb.productEntity.links!.next!,
-                              token: loginState.successLoginEntity.token,
-                            ),
-                          );
-                    }
-                  } /* else {
+                ///! TODO: uncomment this
+                // if (pb is ProductSSuccess) {
+                //   // print('success productsssssssss');
+                //   if (pb.productEntity.links?.next != null) {
+                //     //? fetch the nxt page
+                //     if (loginState is LoginSuccess) {
+                //       // print(
+                //       //   'nexty page ${pb.productEntity.links?.next} ${loginState.successLoginEntity.token}',
+                //       // );
+                //       context.read<ProductsBBloc>().add(
+                //             ProductFFetchPaginationEvent(
+                //               nextPage: pb.productEntity.links!.next!,
+                //               token: loginState.successLoginEntity.token,
+                //             ),
+                //           );
+                //     }
+                //   }
+                /* else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       errorSnackBar('Reached at the end of the List!'),
                     );
                   } */
-                } else {
-                  print('not success product');
-                }
-                // print(
-                //     'offset -> ${_scrollController.offset} || ${_scrollController.position.maxScrollExtent * 0.6}');
-                // print('aaaaaaaaaaaaaaaaaaa');
-                // print(
-                //   _scrollController.offset >
-                //       _scrollController.position.maxScrollExtent * 0.6,
-                // );
-// ProductsBBloc
-                //? check if the next page is not [null]
-                // state.productEntity.links.next
-                // final nxtPage =
-                //     state.productEntity.links?.next?.split('=').last;
-
-                // print('end of the page $nxtPage');
+              } else {
+                print('not success product');
               }
+              // print(
+              //     'offset -> ${_scrollController.offset} || ${_scrollController.position.maxScrollExtent * 0.6}');
+              // print('aaaaaaaaaaaaaaaaaaa');
+              // print(
+              //   _scrollController.offset >
+              //       _scrollController.position.maxScrollExtent * 0.6,
+              // );
+// ProductsBBloc
+              //? check if the next page is not [null]
+              // state.productEntity.links.next
+              // final nxtPage =
+              //     state.productEntity.links?.next?.split('=').last;
+
+              // print('end of the page $nxtPage');
+              // }
             }),
           children: [
             /// TextField
@@ -733,7 +741,7 @@ class ProductsBody2 extends StatelessWidget {
                 children: [
                   /// Row -> Text, Text
                   Padding(
-                    padding: const EdgeInsets.all(10
+                    padding: const EdgeInsets.all(10,
                         // top: 10,
                         // left: 10,
                         // left: 15,

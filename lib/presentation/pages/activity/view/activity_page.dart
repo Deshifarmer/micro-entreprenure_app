@@ -1,7 +1,6 @@
 import 'package:deshifarmer/presentation/animations/page_animations.dart';
 import 'package:deshifarmer/presentation/pages/activity/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/activity/pages/activity_select_farm.dart';
-import 'package:deshifarmer/presentation/pages/activity/widgets/activity_body.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +25,7 @@ class ActivityPage extends StatelessWidget {
         backgroundColor: backgroundColor2,
         appBar: AppBar(
           backgroundColor: backgroundColor2,
-          title: Text('সাম্প্রতিক কার্যকলাপ '),
+          title: const Text('সাম্প্রতিক কার্যকলাপ '),
           // toolbarHeight: 30,
           surfaceTintColor: backgroundColor2,
         ),
@@ -40,7 +39,7 @@ class ActivityPage extends StatelessWidget {
             onpress: () {
               Navigator.push(
                 context,
-                PageAnimationBottom2Up(
+                PageAnimationWrapper.fadeThroughTransitionPageWrapper(
                   const ActivityAddFarm(),
                 ),
               );
@@ -64,6 +63,8 @@ class ActivityView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ActivityBody();
+    ///! TODO: uncomment this
+    // return const ActivityBody();
+    return Container();
   }
 }

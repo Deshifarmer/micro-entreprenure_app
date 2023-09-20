@@ -8,6 +8,7 @@ class FarmerDetailEntity {
   FarmerDetailEntity({
     required this.farmer_name,
     required this.farmer_phone,
+    required this.farmer_address,
   });
 
   /// factory.
@@ -16,4 +17,5 @@ class FarmerDetailEntity {
   // ignore: avoid_multiple_declarations_per_line
   final String? farmer_name;
   final String? farmer_phone;
+  final String? farmer_address;
 }

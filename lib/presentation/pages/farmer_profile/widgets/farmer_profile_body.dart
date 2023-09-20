@@ -1,4 +1,3 @@
-import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
 import 'package:deshifarmer/domain/entities/orders_entity/order_response_entity.dart';
@@ -14,7 +13,7 @@ import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/error_button.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
-import 'package:deshifarmer/presentation/widgets/snackbar_custom.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 
 class FarmerProfileBody extends StatelessWidget {
@@ -157,7 +156,7 @@ class FarmerProfileBody extends StatelessWidget {
                                 size: 10,
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(4.0),
+                                padding: const EdgeInsets.all(4),
                                 child: Text(
                                   '${currentFarm.farm_name}, ${currentFarm.farm_area}',
                                   style: const TextStyle(
@@ -177,7 +176,7 @@ class FarmerProfileBody extends StatelessWidget {
                                 size: 10,
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(4.0),
+                                padding: const EdgeInsets.all(4),
                                 child: Text(
                                   currentFarm.address,
                                   style: const TextStyle(
@@ -189,7 +188,7 @@ class FarmerProfileBody extends StatelessWidget {
                           ),
                           if (index != farms.allFarmListo.allCompany.length - 1)
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(8),
                               child: Divider(
                                 height: 2,
                                 color: Colors.black.withOpacity(0.54),
@@ -415,15 +414,17 @@ class OrderCardStackView extends StatelessWidget {
                                     fontWeight: FontWeight.bold,
                                   ),
                         ),
-                        Text(
-                          currentOrder.farmer_details?.farmer_address ?? '',
-                          style:
-                              Theme.of(context).textTheme.labelSmall!.copyWith(
-                                    color: primaryColor,
-                                    fontWeight: FontWeight.normal,
-                                    // letterSpacing: 0.1,
-                                  ),
-                        ),
+
+                        ///! TODO: uncomment this
+                        // Text(
+                        //   currentOrder.farmer_details?.farmer_address ?? '',
+                        //   style:
+                        //       Theme.of(context).textTheme.labelSmall!.copyWith(
+                        //             color: primaryColor,
+                        //             fontWeight: FontWeight.normal,
+                        //             // letterSpacing: 0.1,
+                        //           ),
+                        // ),
                       ],
                     ),
                   ],
@@ -443,32 +444,33 @@ class OrderCardStackView extends StatelessWidget {
                           ///! recevie api
 
                           if (loginState is LoginSuccess) {
-                            final received = await deshiFarmerAPI.receiveOrder(
-                              loginState.successLoginEntity.token,
-                              currentOrder.order_id ?? '',
-                            );
-                            if (received == null) {
-                              ScaffoldMessenger.of(
-                                context,
-                              ).showSnackBar(
-                                errorSnackBar(
-                                  'Order Received Error',
-                                ),
-                              );
-                            } else {
-                              context.read<OrderBloc>().add(
-                                    InitOrders(
-                                      loginState.successLoginEntity.token,
-                                    ),
-                                  );
-                              ScaffoldMessenger.of(
-                                context,
-                              ).showSnackBar(
-                                successSnackBar(
-                                  'Successfully Received Order',
-                                ),
-                              );
-                            }
+                            ///! TODO: uncomment this
+                            // final received = await deshiFarmerAPI.receiveOrder(
+                            //   loginState.successLoginEntity.token,
+                            //   currentOrder.order_id ?? '',
+                            // );
+                            // if (received == null) {
+                            //   ScaffoldMessenger.of(
+                            //     context,
+                            //   ).showSnackBar(
+                            //     errorSnackBar(
+                            //       'Order Received Error',
+                            //     ),
+                            //   );
+                            // } else {
+                            //   context.read<OrderBloc>().add(
+                            //         InitOrders(
+                            //           loginState.successLoginEntity.token,
+                            //         ),
+                            //       );
+                            //   ScaffoldMessenger.of(
+                            //     context,
+                            //   ).showSnackBar(
+                            //     successSnackBar(
+                            //       'Successfully Received Order',
+                            //     ),
+                            //   );
+                            // }
                           }
                         },
                         title: 'Receive',
@@ -521,8 +523,7 @@ class OrderCardStackView extends StatelessWidget {
 
 class FarmerDetailInDetail extends StatelessWidget {
   const FarmerDetailInDetail({
-    super.key,
-    required this.farmerProfilePage,
+    required this.farmerProfilePage, super.key,
   });
 
   final FarmerEntity farmerProfilePage;

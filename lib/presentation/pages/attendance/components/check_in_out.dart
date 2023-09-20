@@ -7,6 +7,7 @@ import 'package:deshifarmer/presentation/utils/pick_image_method.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:deshifarmer/presentation/widgets/snackbar_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -110,7 +111,7 @@ class CheckInOut extends StatelessWidget {
                             );
                         if (attState is AttendanceOut) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                              successSnackBar('Check out Successfully'));
+                              successSnackBar('Check out Successfully'),);
                           Navigator.pop(context);
                           Navigator.pop(context);
                         }
@@ -124,7 +125,7 @@ class CheckInOut extends StatelessWidget {
                   },
                   title: 'চেকআউট করুন',
                 ),
-              ]
+              ],
             ],
           );
         }

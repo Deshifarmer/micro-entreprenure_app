@@ -10,7 +10,7 @@ SuccessLoginEntity _$SuccessLoginEntityFromJson(Map<String, dynamic> json) =>
     SuccessLoginEntity(
       full_name: json['full_name'] as String,
       token: json['token'] as String,
-      role: json['role'] as String,
+      role: json['role'] as int,
       df_id: json['df_id'] as String,
     );
 

@@ -1,11 +1,10 @@
 import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/view/add_farmer_page.dart';
+import 'package:deshifarmer/presentation/pages/farmer_listo/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/farmer_listo/components/farmer_listo_comp.dart';
-import 'package:deshifarmer/presentation/widgets/farmer_card.dart';
 import 'package:deshifarmer/presentation/widgets/primary_btn.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:deshifarmer/presentation/pages/farmer_listo/bloc/bloc.dart';
 
 /// {@template farmer_listo_body}
 /// Body of the FarmerListoPage.
@@ -22,7 +21,7 @@ class FarmerListoBody extends StatelessWidget {
     return ListView(
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8),
           child: Text(
             'কৃষক সমূহ',
             style: Theme.of(context).textTheme.labelLarge,
@@ -56,7 +55,7 @@ class FarmerListoBody extends StatelessWidget {
               builder: (context) {
                 return const AddFarmerPage();
               },
-            ));
+            ),);
           },
           title: 'নতুন কৃষক যোগ করুন',
         ),

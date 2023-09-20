@@ -3,13 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FarmerWeatherCard extends StatelessWidget {
-  const FarmerWeatherCard({super.key, required this.usrProfile});
+  const FarmerWeatherCard({required this.usrProfile, super.key});
   final UserProfileEntity usrProfile;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(5.0),
+      padding: const EdgeInsets.all(5),
       child: Card(
         elevation: 5,
         // color: Colors.white,
@@ -17,15 +17,15 @@ class FarmerWeatherCard extends StatelessWidget {
         surfaceTintColor: Colors.white,
         // margin: const EdgeInsets.all(8),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: const Icon(
+                  const Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Icon(
                       CupertinoIcons.location,
                       size: 35,
                       color: Colors.blue,
@@ -51,10 +51,10 @@ class FarmerWeatherCard extends StatelessWidget {
                   Text(
                     '35°',
                     style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                          color: Color(0xff0BA00B),
+                          color: const Color(0xff0BA00B),
                         ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Text(

@@ -1,14 +1,11 @@
 import 'dart:io';
-import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
-import 'package:deshifarmer/domain/entities/attendance/att_history.dart';
 import 'package:deshifarmer/presentation/pages/attendance/components/check_in_out.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/pages/order/order.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
-import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:image_picker/image_picker.dart';
 
 /// {@template attendance_body}
@@ -203,440 +200,87 @@ class AttendanceBody extends StatelessWidget {
               ),
             ),
           ),
-          if (loginState is LoginSuccess)
-            FutureBuilder(
-              future: DeshiFarmerAPI().attendanceHistory(
-                loginState.successLoginEntity.token,
-              ),
-              builder: (context, snapshot) {
-                if (snapshot.hasData &&
-                    ConnectionState.done == snapshot.connectionState) {
-                  print('successully got the data -> ${snapshot.data}');
-                  // print('datatype atthis -> ${snapshot.data.$2}')
-                  final data =
-                      snapshot.data!.$1 as List<AttendaceHistoryEntity>;
-                  print('data -> ${data.length}');
+          // if (loginState is LoginSuccess)
+          ///! TODO: uncomment this
+          // FutureBuilder(
+          //   future: DeshiFarmerAPI().attendanceHistory(
+          //     loginState.successLoginEntity.token,
+          //   ),
+          //   builder: (context, snapshot) {
+          //     if (snapshot.hasData &&
+          //         ConnectionState.done == snapshot.connectionState) {
+          //       print('successully got the data -> ${snapshot.data}');
+          //       // print('datatype atthis -> ${snapshot.data.$2}')
 
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: data.length,
-                    itemBuilder: (context, index) {
-                      final currentHistry = data.elementAt(index);
+          //       final data =
+          //           snapshot.data!.$1 as List<AttendaceHistoryEntity>;
+          //       print('data -> ${data.length}');
 
-                      final int _h = int.parse(currentHistry.work_hour);
-                      // return Text('hola');
-                      print('history -> $currentHistry');
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              currentHistry.date,
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
+          //       return ListView.builder(
+          //         shrinkWrap: true,
+          //         itemCount: data.length,
+          //         itemBuilder: (context, index) {
+          //           final currentHistry = data.elementAt(index);
 
-                            /// h n p
-                            Row(
-                              children: [
-                                Text(
-                                  '${_h}hrs',
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                Container(
-                                  margin: const EdgeInsets.only(left: 10),
-                                  height: 10,
-                                  width: 200,
-                                  child: FAProgressBar(
-                                    changeProgressColor: Colors.pink,
-                                    backgroundColor: const Color(0xffd9d9d9),
-                                    progressColor: primaryColor,
-                                    verticalDirection: VerticalDirection.up,
-                                    currentValue: _h.toDouble(),
-                                    maxValue: 9,
-                                    // size: 81,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  );
-                  // return Text('sdfl');
+          //           final int _h = int.parse(currentHistry.work_hour);
+          //           // return Text('hola');
+          //           print('history -> $currentHistry');
+          //           return Padding(
+          //             padding: const EdgeInsets.all(8.0),
+          //             child: Row(
+          //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //               children: [
+          //                 Text(
+          //                   currentHistry.date,
+          //                   style: const TextStyle(
+          //                     fontSize: 12,
+          //                     fontWeight: FontWeight.w400,
+          //                   ),
+          //                 ),
 
-                  /* return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      '32 Aug',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
+          //                 /// h n p
+          //                 Row(
+          //                   children: [
+          //                     Text(
+          //                       '${_h}hrs',
+          //                       style: const TextStyle(
+          //                         fontSize: 12,
+          //                         fontWeight: FontWeight.w400,
+          //                       ),
+          //                     ),
+          //                     Container(
+          //                       margin: const EdgeInsets.only(left: 10),
+          //                       height: 10,
+          //                       width: 200,
+          //                       child: FAProgressBar(
+          //                         changeProgressColor: Colors.pink,
+          //                         backgroundColor: const Color(0xffd9d9d9),
+          //                         progressColor: primaryColor,
+          //                         verticalDirection: VerticalDirection.up,
+          //                         currentValue: _h.toDouble(),
+          //                         maxValue: 9,
+          //                         // size: 81,
+          //                       ),
+          //                     ),
+          //                   ],
+          //                 ),
+          //               ],
+          //             ),
+          //           );
+          //         },
+          //       );
+          //       // return Text('sdfl');
 
-                    /// h n p
-                    Row(
-                      children: [
-                        const Text(
-                          '8hrs',
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 10),
-                          height: 10,
-                          width: 200,
-                          child: FAProgressBar(
-                            changeProgressColor: Colors.pink,
-                            backgroundColor: const Color(0xffd9d9d9),
-                            progressColor: primaryColor,
-                            verticalDirection: VerticalDirection.up,
-                            currentValue: 10,
-
-                            maxValue: 24,
-                            // size: 81,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ); */
-                } else if (snapshot.connectionState ==
-                    ConnectionState.waiting) {
-                  return const Center(
-                    child: PrimaryLoadingIndicator(),
-                  );
-                } else {
-                  return const SizedBox.shrink();
-                }
-              },
-            ),
-          /* Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  '27 Aug',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-
-                /// h n p
-                Row(
-                  children: [
-                    const Text(
-                      '8hrs',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 10),
-                      height: 10,
-                      width: 200,
-                      child: FAProgressBar(
-                        changeProgressColor: Colors.pink,
-                        backgroundColor: const Color(0xffd9d9d9),
-                        progressColor: primaryColor,
-                        verticalDirection: VerticalDirection.up,
-                        currentValue: 10,
-
-                        maxValue: 24,
-                        // size: 81,
-                      ),
-                      // child: LinearProgressIndicator(
-                      //   minHeight: 15,
-                      //   value: 0.8,
-                      //   // backgroundColor: Colors.grey,
-                      // ),
-                    ),
-                    // Expanded(
-                    //   child: FAProgressBar(
-                    //     direction: Axis.horizontal,
-                    //     currentValue: 8,
-                    //     maxValue: 24,
-                    //     size: 22,
-                    //     verticalDirection: VerticalDirection.down,
-                    //   ),
-                    // ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  '28 Aug',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-
-                /// h n p
-                Row(
-                  children: [
-                    const Text(
-                      '8hrs',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 10),
-                      height: 10,
-                      width: 200,
-                      child: FAProgressBar(
-                        changeProgressColor: Colors.pink,
-                        backgroundColor: const Color(0xffd9d9d9),
-                        progressColor: primaryColor,
-                        verticalDirection: VerticalDirection.up,
-                        currentValue: 10,
-
-                        maxValue: 24,
-                        // size: 81,
-                      ),
-                      // child: LinearProgressIndicator(
-                      //   minHeight: 15,
-                      //   value: 0.8,
-                      //   // backgroundColor: Colors.grey,
-                      // ),
-                    ),
-                    // Expanded(
-                    //   child: FAProgressBar(
-                    //     direction: Axis.horizontal,
-                    //     currentValue: 8,
-                    //     maxValue: 24,
-                    //     size: 22,
-                    //     verticalDirection: VerticalDirection.down,
-                    //   ),
-                    // ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  '29 Aug',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-
-                /// h n p
-                Row(
-                  children: [
-                    const Text(
-                      '8hrs',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 10),
-                      height: 10,
-                      width: 200,
-                      child: FAProgressBar(
-                        changeProgressColor: Colors.pink,
-                        backgroundColor: const Color(0xffd9d9d9),
-                        progressColor: primaryColor,
-                        verticalDirection: VerticalDirection.up,
-                        currentValue: 10,
-
-                        maxValue: 24,
-                        // size: 81,
-                      ),
-                      // child: LinearProgressIndicator(
-                      //   minHeight: 15,
-                      //   value: 0.8,
-                      //   // backgroundColor: Colors.grey,
-                      // ),
-                    ),
-                    // Expanded(
-                    //   child: FAProgressBar(
-                    //     direction: Axis.horizontal,
-                    //     currentValue: 8,
-                    //     maxValue: 24,
-                    //     size: 22,
-                    //     verticalDirection: VerticalDirection.down,
-                    //   ),
-                    // ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  '30 Aug',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-
-                /// h n p
-                Row(
-                  children: [
-                    const Text(
-                      '8hrs',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 10),
-                      height: 10,
-                      width: 200,
-                      child: FAProgressBar(
-                        changeProgressColor: Colors.pink,
-                        backgroundColor: const Color(0xffd9d9d9),
-                        progressColor: primaryColor,
-                        verticalDirection: VerticalDirection.up,
-                        currentValue: 10,
-
-                        maxValue: 24,
-                        // size: 81,
-                      ),
-                      // child: LinearProgressIndicator(
-                      //   minHeight: 15,
-                      //   value: 0.8,
-                      //   // backgroundColor: Colors.grey,
-                      // ),
-                    ),
-                    // Expanded(
-                    //   child: FAProgressBar(
-                    //     direction: Axis.horizontal,
-                    //     currentValue: 8,
-                    //     maxValue: 24,
-                    //     size: 22,
-                    //     verticalDirection: VerticalDirection.down,
-                    //   ),
-                    // ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  '31 Aug',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-
-                /// h n p
-                Row(
-                  children: [
-                    const Text(
-                      '8hrs',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 10),
-                      height: 10,
-                      width: 200,
-                      child: FAProgressBar(
-                        changeProgressColor: Colors.pink,
-                        backgroundColor: const Color(0xffd9d9d9),
-                        progressColor: primaryColor,
-                        verticalDirection: VerticalDirection.up,
-                        currentValue: 10,
-                        maxValue: 24,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  '30 Aug',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-
-                /// h n p
-                Row(
-                  children: [
-                    const Text(
-                      'holyday',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 10),
-                      height: 10,
-                      width: 200,
-                      child: FAProgressBar(
-                        // changeProgressColor: Colors.pink,
-                        backgroundColor: const Color(0xffd9d9d9),
-                        progressColor: holydayProgressColor,
-                        verticalDirection: VerticalDirection.up,
-                        currentValue: 24,
-
-                        maxValue: 24,
-                        // size: 81,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ), */
+          //     } else if (snapshot.connectionState ==
+          //         ConnectionState.waiting) {
+          //       return const Center(
+          //         child: PrimaryLoadingIndicator(),
+          //       );
+          //     } else {
+          //       return const SizedBox.shrink();
+          //     }
+          //   },
+          // ),
 
           /// list of transaction
         ],

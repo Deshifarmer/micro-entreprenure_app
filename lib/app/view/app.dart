@@ -1,3 +1,4 @@
+import 'package:deshifarmer/data/datasources/local/shared_prefs/local_database_sf.dart';
 import 'package:deshifarmer/l10n/l10n.dart';
 import 'package:deshifarmer/presentation/blocs/cart/cart_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
@@ -19,6 +20,8 @@ import 'package:deshifarmer/presentation/pages/login/view/login_page.dart';
 import 'package:deshifarmer/presentation/pages/order/order.dart';
 import 'package:deshifarmer/presentation/pages/products/bloc/products_bloc.dart';
 import 'package:deshifarmer/presentation/pages/profile/bloc/bloc.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {
@@ -26,6 +29,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return MultiBlocProvider(
       providers: [
         //? LoginBloc
@@ -68,14 +72,14 @@ class App extends StatelessWidget {
         BlocProvider<CartBloc>(
           create: (BuildContext context) => CartBloc(),
         ),
-        // DropdownCubit
-        BlocProvider<DropdownForPaymentCubit>(
-          create: (BuildContext context) => DropdownForPaymentCubit(),
-        ),
+        // // DropdownCubit
+        // BlocProvider<DropdownForPaymentCubit>(
+        //   create: (BuildContext context) => DropdownForPaymentCubit(),
+        // ),
 
-        BlocProvider<SelectFarmerForPaymentCubit>(
-          create: (BuildContext context) => SelectFarmerForPaymentCubit(),
-        ),
+        // BlocProvider<SelectFarmerForPaymentCubit>(
+        //   create: (BuildContext context) => SelectFarmerForPaymentCubit(),
+        // ),
         // MyFarmerBloc
         BlocProvider<MyFarmerBloc>(
           create: (BuildContext context) => MyFarmerBloc(),
@@ -134,10 +138,39 @@ class App extends StatelessWidget {
             accentColor: Colors.green,
             backgroundColor: Colors.white,
           ),
+          scaffoldBackgroundColor: backgroundColor2,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: backgroundColor2,
+            surfaceTintColor: backgroundColor2,
+          ),
         ),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: const LoginPage(),
+        home: FutureBuilder<String?>(
+          future: SharedPrefDBServices().getLoginToken(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data != null) {
+                /// a login success event
+                context
+                    .read<LoginBloc>()
+                    .add(LoginSuccessEvent(token: snapshot.data!));
+
+                /// get user profile
+                context
+                    .read<UserProfileBloc>()
+                    .add(GetUserProfileEvent(token: snapshot.data!));
+
+                /// get my orders
+                context.read<OrderBloc>().add(InitOrders(snapshot.data!));
+                // UserProfileBloc()
+                //     .add(GetUserProfileEvent(token: snapshot.data!));
+                return const HomePage();
+              }
+            }
+            return const LoginPage();
+          },
+        ),
       ),
     );
   }

@@ -63,7 +63,7 @@ class AgriAdvisoryPage extends StatelessWidget {
                         timeslot: agriAdvisory.timeslots.text,
                         images: agriAdvisory.images,
                         members: agriAdvisory.members.toSet().toList(),
-                      ));
+                      ),);
                 }
               }
             },

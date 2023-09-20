@@ -1,5 +1,6 @@
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 
 /// {@template demands_body}
@@ -14,10 +15,10 @@ class DemandsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.all(15),
       child: ListView(
         children: [
-          Text(
+          const Text(
             'বাজার চাহিদা',
             style: TextStyle(
               fontSize: 18,
@@ -25,12 +26,13 @@ class DemandsBody extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.symmetric(
               vertical: 10,
             ),
             child: Text(
-              '''We need vegetable and other agriculture produces to meet the market demand. We are collecting these fresh produces directly from the farmers.
+              '''
+We need vegetable and other agriculture produces to meet the market demand. We are collecting these fresh produces directly from the farmers.
           ''',
               style: TextStyle(
                 fontSize: 12,
@@ -38,7 +40,7 @@ class DemandsBody extends StatelessWidget {
               ),
             ),
           ),
-          Text(
+          const Text(
             '''
 You can see the general market demand for deshi-farmer here and do your shipment to meet the market demands.
 ''',
@@ -50,7 +52,7 @@ You can see the general market demand for deshi-farmer here and do your shipment
           SizedBox(
             height: getProportionateScreenHeight(40),
           ),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('from deshifarmer for purchase'),

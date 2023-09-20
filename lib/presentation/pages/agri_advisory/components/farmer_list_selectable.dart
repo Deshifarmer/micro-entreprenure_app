@@ -18,7 +18,7 @@ class SelectFarmerList extends StatefulWidget {
 }
 
 class _SelectFarmerListState extends State<SelectFarmerList> {
-  List<FarmerEntityGroup> _activeFarmers = [];
+  final List<FarmerEntityGroup> _activeFarmers = [];
   bool isSelectAll = false;
   bool selectManual = true;
   bool unselectAll = false;

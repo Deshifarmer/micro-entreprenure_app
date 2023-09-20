@@ -1,7 +1,6 @@
+import 'package:deshifarmer/presentation/pages/demands/widgets/demands_body.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:deshifarmer/presentation/pages/demands/bloc/bloc.dart';
-import 'package:deshifarmer/presentation/pages/demands/widgets/demands_body.dart';
 
 /// {@template demands_page}
 /// A description for DemandsPage
@@ -22,7 +21,7 @@ class DemandsPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: backgroundColor2,
       ),
-      body: DemandsView(),
+      body: const DemandsView(),
     );
   }
 }
