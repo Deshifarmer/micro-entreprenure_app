@@ -1,4 +1,5 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/pages/home/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/order/order.dart';
@@ -80,11 +81,18 @@ class HomeBottomNav extends StatelessWidget {
       },
       onTap: (int x) {
         final loginState = context.read<LoginBloc>().state;
-        if (x == 1) {
+        if (x == 2) {
           if (loginState is LoginSuccess) {
             context
                 .read<OrderBloc>()
                 .add(InitOrders(loginState.successLoginEntity.token));
+          }
+        }
+        if (x == 1) {
+          if (loginState is LoginSuccess) {
+            context
+                .read<MyFarmerBloc>()
+                .add(MyFarmerFetchEvent(loginState.successLoginEntity.token));
           }
         }
         // if (x == 2) {
