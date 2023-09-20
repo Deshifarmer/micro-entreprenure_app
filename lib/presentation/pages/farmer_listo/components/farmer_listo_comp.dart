@@ -1,7 +1,10 @@
 import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
+import 'package:deshifarmer/presentation/pages/farmer_listo/components/farmerlistview_withsearch.dart';
+import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/profile/bloc/bloc.dart';
-import 'package:deshifarmer/presentation/widgets/farmer_card.dart';
+import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class MyFarmerListo extends StatelessWidget {
   const MyFarmerListo({super.key});
@@ -12,24 +15,29 @@ class MyFarmerListo extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         if (state is MyFarmerInitial) {
-          return const Center(
-            child: CircularProgressIndicator(),
+          return Container(
+            padding: const EdgeInsets.all(10),
+            alignment: Alignment.center,
+            child: const PrimaryLoadingIndicator(),
           );
         } else if (state is MyFarmerFailed) {
-          return const Center(
-            child: Text('Famer Fetched Failed'),
+          return Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: [
+                LottieBuilder.asset('assets/animations/failed.json'),
+                // const Text('কোন অর্ডার নেই'),
+                /// failed to fetch order message in Bangla
+                Text(
+                  'কোনও কৃষক পাওয়া যায় নি',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ],
+            ),
           );
         } else if (state is MyFarmerSuccess) {
-          return ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: state.allFarmerListResp.farmers.length,
-            itemBuilder: (context, index) {
-              final currentFarmer =
-                  state.allFarmerListResp.farmers.elementAt(index);
-              return FarmerCard(currentFarmer: currentFarmer);
-              // return state.allFarmerListResp.farmers
-            },
+          return FarmerListViewWithSearch(
+            allFarmerListResp: state.allFarmerListResp,
           );
         }
         return const SizedBox.shrink();
