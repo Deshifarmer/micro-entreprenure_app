@@ -32,7 +32,7 @@ class ApiDatabaseParams {
 
   ///! collect order api
   static String collectOrderApi =
-      '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/collect_order/';
+      '${Strings.getServerOrLocal(ServerOrLocal.local)}/api/v1/me/collect_order/';
 
   ///! Company List api
   static String companyListAPI =
