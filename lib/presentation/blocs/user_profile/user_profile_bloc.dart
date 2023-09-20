@@ -21,13 +21,17 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
     Emitter<UserProfileState> emit,
   ) async {
     final userProfile = await userProfileRepoImpl.userProfile(event.token);
+
     final value = switch (userProfile) {
       Success(data: final succ) => succ,
       ServerFailor(error: final err) => err,
     };
+
     if (value is UserProfileEntity) {
+      print('user profile entity: $value');
       emit(UserProfileFetchSuccess(value));
     } else {
+      print('user profile error: $value');
       emit(UserProfileFetchFailed());
     }
   }

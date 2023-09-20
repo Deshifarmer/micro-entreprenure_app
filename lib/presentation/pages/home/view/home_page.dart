@@ -3,6 +3,7 @@ import 'package:deshifarmer/presentation/pages/add_farmer/view/add_farmer_page.d
 import 'package:deshifarmer/presentation/pages/commision/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/commision/view/commision_page.dart';
 import 'package:deshifarmer/presentation/pages/farmadd_form/view/farmadd_form_page.dart';
+import 'package:deshifarmer/presentation/pages/farmer_listo/farmer_listo.dart';
 import 'package:deshifarmer/presentation/pages/home/bloc/home_bloc.dart';
 import 'package:deshifarmer/presentation/pages/home/components/home_bottom_nav.dart';
 import 'package:deshifarmer/presentation/pages/home/widgets/home_body.dart';
@@ -33,9 +34,9 @@ class HomePage extends StatelessWidget {
       body: state is HomeInitial
           ? const HomeView()
           : state is MyOrderPageState
-              ? const OrderPage()
+              ? const FarmerListoPage()
               : state is CommisionPageState
-                  ? const CommisionPage()
+                  ? const OrderPage()
                   : const ProfilePage(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       // floatingActionButton: FloatingActionButton(
