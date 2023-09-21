@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:deshifarmer/data/models/home_page_icon_model.dart';
 
 import 'package:deshifarmer/presentation/shapes/agri_advisory_shape.dart';
@@ -30,7 +32,12 @@ class HomePageParams {
     HomeIconModel(painter: TrackActivityShape(), title: 'Track Activity'),
     HomeIconModel(painter: CropInsuranceShape(), title: 'Crop Insurance'),
     HomeIconModel(painter: AgriAdvisoryShape(), title: 'Agri Input'),
-    HomeIconModel(painter: MyFarmersShape(), title: 'My Farmers'),
+    HomeIconModel(
+      painter: const MyFarmersShape(
+        colorF: Color(0xff7D4600),
+      ),
+      title: 'My Farmers',
+    ),
     HomeIconModel(painter: FarmsShape(), title: 'Farms'),
     HomeIconModel(painter: PerformaceShape(), title: 'Performance'),
     HomeIconModel(painter: OrdersShape(), title: 'Orders'),
