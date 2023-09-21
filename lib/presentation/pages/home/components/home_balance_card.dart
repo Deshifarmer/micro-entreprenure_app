@@ -1,4 +1,5 @@
 import 'package:deshifarmer/domain/entities/user_entity/user_profile_entity.dart';
+import 'package:deshifarmer/presentation/pages/commision/commision.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
@@ -55,28 +56,34 @@ class HomeBalanceCard extends StatelessWidget {
           // a big logo
           // column -> balance, money
           // transaction
-          Container(
-            width: getProportionateScreenWidth(120),
-            // alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: backgroundColor2,
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  'সকল লেনদেন',
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelSmall!
-                      .copyWith(color: const Color(0xff8C580B), fontSize: 10),
-                  textAlign: TextAlign.center,
-                ),
-                const Icon(
-                  Icons.arrow_right_alt_outlined,
-                ),
-              ],
+          InkWell(
+            onTap: () {
+              /// goto comissionpage
+              Navigator.push(context, CommisionPage.route());
+            },
+            child: Container(
+              width: getProportionateScreenWidth(120),
+              // alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: backgroundColor2,
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    'সকল লেনদেন',
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelSmall!
+                        .copyWith(color: const Color(0xff8C580B), fontSize: 10),
+                    textAlign: TextAlign.center,
+                  ),
+                  const Icon(
+                    Icons.arrow_right_alt_outlined,
+                  ),
+                ],
+              ),
             ),
           ),
         ],
