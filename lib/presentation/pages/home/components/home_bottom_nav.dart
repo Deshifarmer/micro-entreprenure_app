@@ -90,7 +90,7 @@ class HomeBottomNav extends StatelessWidget {
       },
       onTap: (int x) {
         final loginState = context.read<LoginBloc>().state;
-        if (x == 2) {
+        if (x == 2 || x == 0) {
           if (loginState is LoginSuccess) {
             context
                 .read<OrderBloc>()
@@ -104,6 +104,7 @@ class HomeBottomNav extends StatelessWidget {
                 .add(MyFarmerFetchEvent(loginState.successLoginEntity.token));
           }
         }
+
         // if (x == 2) {
         //   context
         //       .read<HistoryBloc>()
