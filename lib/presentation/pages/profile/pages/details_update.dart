@@ -69,9 +69,9 @@ class ProfileUpdatePage extends StatelessWidget {
 
           Container(
             padding: const EdgeInsets.all(8),
-            margin: const EdgeInsets.symmetric(
-              horizontal: 10,
-              vertical: 20,
+            margin: EdgeInsets.symmetric(
+              horizontal: getProportionateScreenWidth(10),
+              vertical: getProportionateScreenHeight(20),
             ),
             decoration: BoxDecoration(
               color: tertiaryColor2,
@@ -103,7 +103,7 @@ class ProfileUpdatePage extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: getProportionateScreenHeight(40),
+            height: getProportionateScreenHeight(20),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
@@ -111,7 +111,7 @@ class ProfileUpdatePage extends StatelessWidget {
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(
                 // fillColor: backgroundColor2,
-                hintText: 'Name',
+                hintText: 'নাম',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
@@ -133,7 +133,7 @@ class ProfileUpdatePage extends StatelessWidget {
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(
                 // fillColor: backgroundColor2,
-                hintText: 'Address',
+                hintText: 'ঠিকানা',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
@@ -155,7 +155,7 @@ class ProfileUpdatePage extends StatelessWidget {
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(
                 // fillColor: backgroundColor2,
-                hintText: 'Select group Leader',
+                hintText: 'জাতীয় পরিচয়পত্র নম্বর',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),

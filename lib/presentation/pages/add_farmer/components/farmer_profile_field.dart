@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -94,14 +95,14 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
       child: InkWell(
         onTap: myAlert,
         child: SizedBox(
-          height: 250,
-          width: 200,
+          height: getProportionateScreenHeight(250),
+          width: getProportionateScreenWidth(200),
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 10),
             alignment: Alignment.center,
             // padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Colors.green,
+              // color: Colors.green,
               borderRadius: BorderRadius.circular(20),
             ),
             child: state is AddFarmerInitial

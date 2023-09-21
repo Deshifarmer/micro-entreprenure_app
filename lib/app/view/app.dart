@@ -4,6 +4,7 @@ import 'package:deshifarmer/presentation/blocs/cart/cart_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/farmer_api/add_farmer_api_bloc.dart';
+import 'package:deshifarmer/presentation/blocs/farmer_fetch_farm/farmer_fetch_farm_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
@@ -126,6 +127,10 @@ class App extends StatelessWidget {
 
         BlocProvider<FarmaddFormBloc>(
           create: (BuildContext context) => FarmaddFormBloc(),
+        ),
+        // FarmerFetchFarmBloc
+        BlocProvider<FarmerFetchFarmBloc>(
+          create: (BuildContext context) => FarmerFetchFarmBloc(),
         ),
       ],
       // create: (context) => SubjectBloc(),

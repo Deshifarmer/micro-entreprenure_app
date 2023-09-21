@@ -1,3 +1,6 @@
+import 'package:deshifarmer/presentation/pages/activity/activity.dart';
+import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
+import 'package:deshifarmer/presentation/pages/order/bloc/order_bloc.dart';
 import 'package:deshifarmer/presentation/pages/order/widgets/order_body.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +40,19 @@ class OrderPage extends StatelessWidget {
               )
             : null,
       ),
-      body: const OrderView(),
+      body: RefreshIndicator(
+          backgroundColor: priceBoxColor,
+          color: Colors.white,
+          onRefresh: () async {
+            final loginState = context.read<LoginBloc>().state;
+            final token = loginState is LoginSuccess
+                ? loginState.successLoginEntity.token
+                : '';
+            if (token.isNotEmpty) {
+              context.read<OrderBloc>().add(InitOrders(token));
+            }
+          },
+          child: const OrderView()),
     );
   }
 }

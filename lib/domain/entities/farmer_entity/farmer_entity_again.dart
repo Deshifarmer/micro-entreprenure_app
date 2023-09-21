@@ -1,12 +1,13 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:deshifarmer/domain/entities/farm_entity/farm_entity.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_order_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
-part 'farmer_entity.g.dart';
+part 'farmer_entity_again.g.dart';
 
 @JsonSerializable()
-class FarmerEntity {
-  const FarmerEntity({
+class FarmerEntityAgain {
+  const FarmerEntityAgain({
     required this.farmer_id,
     required this.image,
     required this.farmer_type,
@@ -46,11 +47,11 @@ class FarmerEntity {
     // required this.is_active,
     // required this.onboard_date,
     required this.order_list,
-    // this.farm_list,
+    required this.farm_list,
   });
 
-  factory FarmerEntity.fromJson(Map<String, dynamic> json) =>
-      _$FarmerEntityFromJson(json);
+  factory FarmerEntityAgain.fromJson(Map<String, dynamic> json) =>
+      _$FarmerEntityAgainFromJson(json);
   final String? farmer_id;
   final String? image;
   final String? farmer_type;
@@ -93,7 +94,9 @@ class FarmerEntity {
   final String? farm_id;
   // // final String? is_active;
   // final String? onboard_date;
-  final List<FarmerOrderEntity> order_list;
+  // final List<FarmerOrderEntity> order_list;
+  final List<dynamic> order_list;
   // farm_list
-  // final List<FarmEntity>? farm_list;
+  // final List<FarmEntity> farm_list;
+  final List<dynamic> farm_list;
 }
