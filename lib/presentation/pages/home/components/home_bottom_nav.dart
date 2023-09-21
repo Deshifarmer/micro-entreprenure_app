@@ -3,6 +3,7 @@ import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/pages/home/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/order/order.dart';
+import 'package:deshifarmer/presentation/shapes/my_farmers_shape.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
@@ -52,11 +53,19 @@ class HomeBottomNav extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icons[index],
-              // size: 24,
-              color: isActive ? Colors.white : Colors.grey,
-            ),
+            if (index == 1)
+              CustomPaint(
+                painter: MyFarmersShape(
+                  colorF: isActive ? Colors.white : Colors.grey,
+                ),
+                size: const Size(20, 20),
+              )
+            else
+              Icon(
+                icons[index],
+                // size: 24,
+                color: isActive ? Colors.white : Colors.grey,
+              ),
             const SizedBox(height: 4),
             Text(
               index == 0
