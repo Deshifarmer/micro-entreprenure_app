@@ -1,9 +1,12 @@
 import 'package:deshifarmer/domain/entities/user_entity/user_profile_entity.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 
 class HomeBalanceCard extends StatelessWidget {
   const HomeBalanceCard({
-    required this.usrProfile, super.key,
+    required this.usrProfile,
+    super.key,
   });
 
   final UserProfileEntity usrProfile;
@@ -11,48 +14,40 @@ class HomeBalanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20,
+      padding: EdgeInsets.symmetric(
+        horizontal: getProportionateScreenWidth(30),
       ),
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      height: 65,
+      margin: EdgeInsets.symmetric(
+        horizontal: getProportionateScreenWidth(20),
+      ),
+      height: getProportionateScreenHeight(65),
       decoration: BoxDecoration(
-        color: const Color(0xffFF9300),
+        color: priceBoxColor,
         borderRadius: BorderRadius.circular(15),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                r'$',
-                style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                'ব্যালেন্স',
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: Colors.white,
+                      // fontWeight: FontWeight.bold,
+                    ),
+              ),
+              // SizedBox(
+              //   width: getProportionateScreenWidth(15),
+              // ),
+              Text(
+                '৳ ${usrProfile.account_details.first.net_balance}',
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'balance',
-                    style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  Text(
-                    usrProfile.account_details.first.net_balance ?? '',
-                    style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                ],
               ),
             ],
           ),
@@ -61,23 +56,26 @@ class HomeBalanceCard extends StatelessWidget {
           // column -> balance, money
           // transaction
           Container(
-            width: 150,
+            width: getProportionateScreenWidth(120),
             // alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: const Color(0xffFFE9CD),
+              color: backgroundColor2,
               borderRadius: BorderRadius.circular(30),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  'Transaction',
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: const Color(0xff8C580B),
-                      ),
+                  'সকল লেনদেন',
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelSmall!
+                      .copyWith(color: const Color(0xff8C580B), fontSize: 10),
                   textAlign: TextAlign.center,
                 ),
-                const Icon(Icons.arrow_right_alt_outlined),
+                const Icon(
+                  Icons.arrow_right_alt_outlined,
+                ),
               ],
             ),
           ),
