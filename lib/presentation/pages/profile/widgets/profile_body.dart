@@ -5,10 +5,8 @@ import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.da
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/view/login_page.dart';
 import 'package:deshifarmer/presentation/pages/profile/bloc/bloc.dart';
-import 'package:deshifarmer/presentation/pages/profile/components/simgple_card_texts_profile.dart';
 import 'package:deshifarmer/presentation/pages/profile/pages/details_update.dart';
 import 'package:deshifarmer/presentation/pages/profile/pages/settings_update.dart';
-import 'package:deshifarmer/presentation/shapes/deshifarmer_logo.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
