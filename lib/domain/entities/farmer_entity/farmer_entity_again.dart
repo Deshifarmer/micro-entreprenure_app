@@ -1,6 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:deshifarmer/domain/entities/farm_entity/farm_entity.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_order_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'farmer_entity_again.g.dart';
@@ -94,8 +93,8 @@ class FarmerEntityAgain {
   final String? farm_id;
   // // final String? is_active;
   // final String? onboard_date;
-  // final List<FarmerOrderEntity> order_list;
-  final List<dynamic> order_list;
+  final List<FarmerOrderEntity> order_list;
+  // final List<dynamic> order_list;
   // farm_list
   // final List<FarmEntity> farm_list;
   final List<dynamic> farm_list;
