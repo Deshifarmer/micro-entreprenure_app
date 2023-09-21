@@ -325,13 +325,15 @@ class FarmerDetailInDetail extends StatelessWidget {
         children: [
           Row(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(
+              const Padding(
+                padding: EdgeInsets.only(
                   right: 10,
                 ),
                 child: CustomPaint(
-                  painter: MyFarmersShape(),
-                  size: const Size(25, 25),
+                  painter: MyFarmersShape(
+                    colorF: Color(0xff7D4600),
+                  ),
+                  size: Size(25, 25),
                 ),
               ),
               Text(
