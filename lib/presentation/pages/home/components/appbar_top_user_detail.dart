@@ -1,83 +1,104 @@
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/domain/entities/user_entity/user_profile_entity.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AppBarTopUserDetail extends StatelessWidget {
   const AppBarTopUserDetail({
-    required this.usrProfile, super.key,
+    required this.usrProfile,
+    super.key,
   });
 
   final UserProfileEntity usrProfile;
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20), // Image border
-                child: SizedBox.fromSize(
-                  size: const Size.fromRadius(
-                    30,
-                  ), // Image radius
-                  child: Image.network(
-                    '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage${usrProfile.photo}',
-                    fit: BoxFit.cover,
-                  ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        /// user profile image and name
+        Row(
+          children: [
+            /// user profile image
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20), // Image border
+              child: SizedBox.fromSize(
+                size: const Size.fromRadius(
+                  25,
+                ), // Image radius
+                child: Image.network(
+                  '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage${usrProfile.photo}',
+                  fit: BoxFit.cover,
                 ),
               ),
-              const SizedBox(
-                width: 30,
+            ),
+            // SizedBox(
+            //   width: getProportionateScreenWidth(20),
+            // ),
+            /// user name and id
+            Padding(
+              padding: EdgeInsets.only(
+                left: getProportionateScreenWidth(20),
               ),
-              Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     usrProfile.full_name ?? '',
-                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 0.9,
-                        ),
-                  ),
-                  Text(
-                    usrProfile.df_id ?? '',
                     style: Theme.of(context).textTheme.titleSmall!.copyWith(
                           color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                          // fontWeight: FontWeight.bold,
                           letterSpacing: 0.9,
+                        ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    '#${usrProfile.df_id}',
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          color: Colors.white,
+                          // fontWeight: FontWeight.bold,
+                          // letterSpacing: 0.9,
                         ),
                   ),
                 ],
               ),
-            ],
-          ),
-          Row(
-            children: [
-              const Padding(
+            ),
+          ],
+        ),
+
+        /// help and notification
+        Row(
+          children: [
+            InkWell(
+              onTap: () async {
+                /// open help url (co.deshi.farmer.help)
+                final url = Uri.parse('https://me.deshifarmer.co/help');
+                await launchUrl(url);
+              },
+              child: Padding(
                 padding: EdgeInsets.all(8),
                 child: Text(
-                  'help?',
-                  style: TextStyle(color: Color(0xff93EE93)),
+                  'হেল্প?',
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: Color(0xff93EE93),
+                      ),
                 ),
               ),
-              IconButton.filled(
-                style: const ButtonStyle(
-                    backgroundColor:
-                        MaterialStatePropertyAll(Color(0xff93EE93)),),
-                color: Colors.green,
-                onPressed: () {},
-                icon: const Icon(Icons.notifications_none),
+            ),
+            IconButton.filled(
+              style: const ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(Color(0xff93EE93)),
               ),
-            ],
-          ),
-        ],
-      ),
+              color: Colors.green,
+              onPressed: () {},
+              icon: const Icon(Icons.notifications_none),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
