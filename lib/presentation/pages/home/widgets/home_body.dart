@@ -9,8 +9,10 @@ import 'package:deshifarmer/presentation/pages/home/components/home_balance_card
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/products.dart';
 import 'package:deshifarmer/presentation/shapes/my_farmers_shape.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/home_page_icon_widget.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 
 /// {@template home_body}
@@ -33,10 +35,14 @@ class HomeBody extends StatelessWidget {
             slivers: [
               ///! App Bar
               SliverAppBar(
-                backgroundColor: const Color(0xff4C6E5E),
-                expandedHeight: 250,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
+                backgroundColor: tertiaryColor,
+                expandedHeight: getProportionateScreenHeight(250),
+                shape: const RoundedRectangleBorder(
+                  /// only for bottom
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15),
+                  ),
                 ),
                 // flexibleSpace: Text('HOLA'),
                 floating: true,
@@ -44,8 +50,8 @@ class HomeBody extends StatelessWidget {
                 flexibleSpace: AppBarTopUserDetail(usrProfile: usrProfile),
                 bottom: PreferredSize(
                   preferredSize: Size(
-                    MediaQuery.of(context).size.width / 1.2,
-                    65,
+                    MediaQuery.of(context).size.width / 1,
+                    getProportionateScreenHeight(65),
                   ),
                   child: HomeBalanceCard(usrProfile: usrProfile),
                 ),
@@ -58,13 +64,13 @@ class HomeBody extends StatelessWidget {
                     return index == 0
                         ? CardOfSmallInfo(
                             ammount: usrProfile.total_farmer.toString(),
-                            icon: Icons.man,
-                            title: 'Farmers',
+                            isIcon: false,
+                            title: 'মোট কৃষক',
                           )
                         : CardOfSmallInfo(
                             ammount: usrProfile.total_sale.toString(),
-                            icon: Icons.list,
-                            title: 'Orders',
+                            isIcon: true,
+                            title: 'মোট অর্ডার',
                           );
                   },
                   childCount: 2,
@@ -155,19 +161,23 @@ class HomeBody extends StatelessWidget {
                                 ),
                           ),
                         ),
-                        CardOfDashboard(
+                        const CardOfDashboard(
                           current: 189,
                           target: 1000,
                           title: 'On Board Farmers',
-                          painder: MyFarmersShape(),
+                          painder: MyFarmersShape(
+                            colorF: Color(0xff7D4600),
+                          ),
                           isSymbol: false,
                         ),
-                        CardOfDashboard(
+                        const CardOfDashboard(
                           current: 6150,
                           target: 10000,
                           title: 'Monthly Sale',
                           isSymbol: true,
-                          painder: MyFarmersShape(),
+                          painder: MyFarmersShape(
+                            colorF: Color(0xff7D4600),
+                          ),
                         ),
                       ],
                     );
