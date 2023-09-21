@@ -141,12 +141,14 @@ class OrderBody extends StatelessWidget {
                                     child: Row(
                                       children: [
                                         /// custom farmer shape
-                                        Padding(
+                                        const Padding(
                                           padding:
-                                              const EdgeInsets.only(right: 8),
+                                              EdgeInsets.only(right: 8),
                                           child: CustomPaint(
-                                            painter: MyFarmersShape(),
-                                            size: const Size(15, 15),
+                                            painter: MyFarmersShape(
+                                              colorF: Color(0xff7D4600),
+                                            ),
+                                            size: Size(15, 15),
                                           ),
                                         ),
                                         Text(
@@ -370,7 +372,7 @@ class _AcceptOrderButtonState extends State<AcceptOrderButton> {
         ),
       ),
       child: isLoading
-          ? Text(
+          ? const Text(
               'লোড হচ্ছে...',
               style: TextStyle(
                 color: Colors.white,
@@ -479,11 +481,13 @@ class UnfullfiledOrderListCard extends StatelessWidget {
                               /// farmer name and phone
                               Row(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
+                                  const Padding(
+                                    padding: EdgeInsets.only(right: 8),
                                     child: CustomPaint(
-                                      painter: MyFarmersShape(),
-                                      size: const Size(15, 15),
+                                      painter: MyFarmersShape(
+                                        colorF: Color(0xff7D4600),
+                                      ),
+                                      size: Size(15, 15),
                                     ),
                                   ),
                                   Text(

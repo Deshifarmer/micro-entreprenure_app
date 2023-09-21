@@ -33,9 +33,11 @@ class CardOfDashboard extends StatelessWidget {
               child: Row(
                 children: [
                   // icon
-                  CustomPaint(
-                    painter: MyFarmersShape(),
-                    size: const Size(25, 25),
+                  const CustomPaint(
+                    painter: MyFarmersShape(
+                      colorF: Color(0xff7D4600),
+                    ),
+                    size: Size(25, 25),
                   ),
                   const SizedBox(
                     width: 10,

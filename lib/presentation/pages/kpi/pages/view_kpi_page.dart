@@ -167,18 +167,22 @@ class ViewMyKPIPage extends StatelessWidget {
               height: getProportionateScreenHeight(25),
             ),
 
-            CardOfDashboard(
+            const CardOfDashboard(
               current: 0,
               target: 1000,
               title: 'নতুন কৃষকের সংখ্যা',
-              painder: MyFarmersShape(),
+              painder: MyFarmersShape(
+                colorF: Color(0xff7D4600),
+              ),
               isSymbol: false,
             ),
-            CardOfDashboard(
+            const CardOfDashboard(
               current: 0,
               target: 1000,
               title: 'মাসিক বিক্রয় টার্গেট',
-              painder: MyFarmersShape(),
+              painder: MyFarmersShape(
+                colorF: Color(0xff7D4600),
+              ),
               isSymbol: false,
             ),
             Padding(
