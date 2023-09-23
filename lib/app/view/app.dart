@@ -13,6 +13,7 @@ import 'package:deshifarmer/presentation/cubit/add_group/add_farmer_to_group_cub
 import 'package:deshifarmer/presentation/cubit/groups/get_group_cubit.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:deshifarmer/presentation/pages/add_group/bloc/bloc.dart';
+import 'package:deshifarmer/presentation/pages/attendance/bloc/attendance_bloc.dart';
 import 'package:deshifarmer/presentation/pages/farmadd_form/bloc/farmadd_form_bloc.dart';
 import 'package:deshifarmer/presentation/pages/group_detail/bloc/group_detail_bloc.dart';
 import 'package:deshifarmer/presentation/pages/home/home.dart';
@@ -132,6 +133,10 @@ class App extends StatelessWidget {
         BlocProvider<FarmerFetchFarmBloc>(
           create: (BuildContext context) => FarmerFetchFarmBloc(),
         ),
+        // AttendanceBloc
+        BlocProvider<AttendanceBloc>(
+          create: (BuildContext context) => AttendanceBloc(),
+        ),
       ],
       // create: (context) => SubjectBloc(),
       child: MaterialApp(
@@ -155,6 +160,7 @@ class App extends StatelessWidget {
           future: SharedPrefDBServices().getLoginToken(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+              print('usr alrady loggen in -> ${snapshot.data}');
               if (snapshot.data != null) {
                 /// a login success event
                 context
