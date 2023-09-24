@@ -24,9 +24,11 @@ class _FarmarDOBState extends State<FarmarDOB> {
         onTap: () async {
           _dob = await showDatePicker(
             context: context,
-            initialDate: DateTime.now(),
+            initialDate:
+                DateTime.now().subtract(const Duration(days: 365 * 17)),
             firstDate: DateTime(1880),
-            lastDate: DateTime.now(),
+            // lastDate: DateTime.now(),
+            lastDate: DateTime.now().subtract(const Duration(days: 365 * 17)),
           );
           if (_dob != null) {
             if (state is AddFarmerInitial) {
@@ -38,7 +40,10 @@ class _FarmarDOBState extends State<FarmarDOB> {
         decoration: const InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderSide: BorderSide.none,
           ),
+          
+          contentPadding: EdgeInsets.all(10),
           labelText: 'কৃষকের জন্ম তারিখ',
           hintText: '',
           filled: true,

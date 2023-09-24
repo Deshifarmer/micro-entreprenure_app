@@ -22,6 +22,11 @@ class FamilyMemberFormField extends StatelessWidget {
               width: 2,
             ),
           ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderSide: BorderSide.none,
+          ),
+          contentPadding: EdgeInsets.all(10),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(width: 2),
