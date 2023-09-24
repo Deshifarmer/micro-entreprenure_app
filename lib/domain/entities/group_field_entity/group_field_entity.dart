@@ -19,6 +19,7 @@
 
 */
 
+import 'package:deshifarmer/domain/entities/group_field_entity/group_leader_field.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'group_field_entity.g.dart';
@@ -36,6 +37,8 @@ class GroupFieldEntity {
     required this.group_manager_id,
     required this.isActive,
     // required this.is_active,
+    required this.member_pic,
+    required this.group_leader,
     required this.updated_at,
   });
 
@@ -44,14 +47,15 @@ class GroupFieldEntity {
   final String farmer_group_id;
   final String farmer_group_name;
   final String? cluster_id;
-  final int isActive; //! for LOCAL
-  // final String isActive;
+  // final int isActive; //! for LOCAL
+  final String isActive;
   final String group_manager_id;
-  // final GroupLeaderFormField? group_leader;
+  final GroupLeaderFormField? group_leader;
   // final FarmerEntity? group_leader;
   final String created_at;
   final String updated_at;
   final String? color;
   final int total_farmers;
+  final List<dynamic> member_pic;
   // final String total_farmers; //! for LOCAL
 }
