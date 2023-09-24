@@ -96,12 +96,20 @@ class OrderBody extends StatelessWidget {
                 SizedBox(
                   height: getProportionateScreenHeight(20),
                 ),
-                const Center(
-                  child: Text(
-                    '''আমরা শেষ 20টি অর্ডার দেখাচ্ছি। আপনি যদি সমস্ত অর্ডার অ্যাক্সেস করতে চান আমাদের সাথে যোগাযোগ করুন''',
-                    textAlign: TextAlign.center,
+                if (otherStatus.isNotEmpty)
+                  const Center(
+                    child: Text(
+                      '''আমরা শেষ 20টি অর্ডার দেখাচ্ছি। আপনি যদি সমস্ত অর্ডার অ্যাক্সেস করতে চান আমাদের সাথে যোগাযোগ করুন''',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
+                if (otherStatus.isEmpty)
+                  const Center(
+                    child: Text(
+                      '''অর্ডার তালিকা পাওয়া যায়নি''',
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                 SizedBox(
                   height: getProportionateScreenHeight(20),
                 ),
