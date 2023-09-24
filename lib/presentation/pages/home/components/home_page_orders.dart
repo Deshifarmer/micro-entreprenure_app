@@ -18,29 +18,29 @@ class HomePageOrders extends StatelessWidget {
         (_, int index) {
           final orderStatus = context.read<OrderBloc>().state;
           final recentOrders = orderStatus is OrderSuccess
-              ? orderStatus.orderEntitys.orders.sublist(0, 3)
-              : [];
+              ? orderStatus.orderEntitys.orders.length > 3
+                  ? orderStatus.orderEntitys.orders.sublist(0, 3)
+                  : orderStatus.orderEntitys.orders
+              : <OrderEntity>[];
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 20,
-                  left: 30,
-                  right: 30,
+              if (recentOrders.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 20,
+                    left: 30,
+                    right: 30,
+                  ),
+                  child: Text(
+                    'সাম্প্রতিক অর্ডার',
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          color: const Color(0xff4C6E5E),
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
                 ),
-                child: Text(
-                  'সাম্প্রতিক অর্ডার',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleMedium!
-                      .copyWith(
-                        color: const Color(0xff4C6E5E),
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-              ),
               if (recentOrders.isNotEmpty)
                 for (final order in recentOrders)
                   OpenContainer(

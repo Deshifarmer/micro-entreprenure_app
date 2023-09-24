@@ -20,22 +20,19 @@ class ApiDatabaseParams {
 
   ///! my farmer api
   static String myFarmerApi =
-      '${Strings.getServerOrLocal(ServerOrLocal.local)}/api/v1/me/my_farmer';
+      '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/my_farmer';
 
-  ///! my farm api
-  // static String myFarmerApi =
-  //     '${Strings.getServerOrLocal(ServerOrLocal.local)}/api/v1/me/';
   ///! inputer order api
   static String inputerOrderApi =
       '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/input_order';
 
   ///! input order api
   static String orderApi =
-      '${Strings.getServerOrLocal(ServerOrLocal.local)}/api/v1/me/order';
+      '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/order';
 
   ///! collect order api
   static String collectOrderApi =
-      '${Strings.getServerOrLocal(ServerOrLocal.local)}/api/v1/me/collect_order/';
+      '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/collect_order/';
 
   ///! Company List api
   static String companyListAPI =
@@ -81,4 +78,16 @@ class ApiDatabaseParams {
   ///! assign a farmer
   static String updateLeaderToGroup(String groupID) =>
       '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/farmer_group/$groupID';
+
+  ///! attendance api (check in/out api)
+  static String checkinAPI =
+      '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/attendance';
+
+  ///! attendance api (todays attendanc3)
+  static String todaysAttendanceAPI =
+      '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/todays_attendance';
+
+  ///! attendance api (todays attendanc3)
+  static String attendanceHistory =
+      '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/attendance_history';
 }

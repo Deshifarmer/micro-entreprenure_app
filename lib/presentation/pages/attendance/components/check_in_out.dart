@@ -3,8 +3,7 @@ import 'package:deshifarmer/presentation/pages/attendance/bloc/attendance_bloc.d
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/shapes/play_arror_shape.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
-import 'package:deshifarmer/presentation/utils/pick_image_method.dart';
-import 'package:deshifarmer/presentation/widgets/constraints.dart';
+import 'package:deshifarmer/presentation/widgets/a_dialog_forimage.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
@@ -29,6 +28,38 @@ class CheckInOut extends StatelessWidget {
           // print('check out data -> ${state.todays.check_out}');
           // print('check in data -> ${state.todays.check_in}');
           // print('employee_id -> ${state.todays.employee_id}');
+          if (state.todays.check_out != null) {
+            /// already checked out at (time) today
+            return Column(
+              children: [
+                Row(
+                  children: [
+                    const Icon(Icons.stop, size: 32, color: Colors.green),
+                    SizedBox(
+                      width: getProportionateScreenWidth(20),
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        text: 'You already checked out at ',
+                        style: const TextStyle(
+                          color: secondaryColor,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: '${state.todays.check_out}',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: secondaryColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          }
           return Column(
             children: [
               Row(
@@ -90,35 +121,44 @@ class CheckInOut extends StatelessWidget {
                 SecondayButtonGreen(
                   btnColor: priceBoxColor,
                   onpress: () async {
-                    print('c out');
-                    final attState = context.read<AttendanceBloc>().state;
-                    final loginState = context.read<LoginBloc>().state;
-                    if (loginState is LoginSuccess) {
-                      final imageFile = await getImageFromCamera();
-                      if (imageFile == null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          errorSnackBar(
-                            'Image not selected',
-                          ),
-                        );
-                      } else {
-                        context.read<AttendanceBloc>().add(
-                              CheckOutEvent(
-                                token: loginState.successLoginEntity.token,
-                                imageFile: imageFile.path,
-                                id: state.todays.id.toString(),
-                              ),
-                            );
-                        if (attState is AttendanceOut) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              successSnackBar('Check out Successfully'),);
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                        }
-                        // Navigator.push(
-                        //     context, AttendancePage.route());
-                      }
-                    }
+                    await showDialog(
+                      context: context,
+                      builder: (BuildContext context) => ImportDialog(
+                        attStatus: AttendanceStatus.checkOut,
+                        id: state.todays.id.toString(),
+                      ),
+                    );
+                    // print('c out');
+                    // final attState = context.read<AttendanceBloc>().state;
+                    // final loginState = context.read<LoginBloc>().state;
+                    // if (loginState is LoginSuccess) {
+                    // final imageFile = await getImageFromCamera();
+                    // if (imageFile == null) {
+                    //   ScaffoldMessenger.of(context).showSnackBar(
+                    //     errorSnackBar(
+                    //       'Image not selected',
+                    //     ),
+                    //   );
+                    // } else {
+                    // context.read<AttendanceBloc>().add(
+                    //       CheckOutEvent(
+                    //         token: loginState.successLoginEntity.token,
+                    //         imageFile: imageFile.path,
+                    //         id: state.todays.id.toString(),
+                    //         lat:
+                    //       ),
+                    //     );
+                    // if (attState is AttendanceOut) {
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //   successSnackBar('Check out Successfully'),
+                    // );
+                    // Navigator.pop(context);
+                    // Navigator.pop(context);
+                    // }
+                    // Navigator.push(
+                    //     context, AttendancePage.route());
+                    // }
+                    // }
                     // setState(() {
                     //   isCheck = false;
                     // });
@@ -157,77 +197,8 @@ class CheckInOut extends StatelessWidget {
         if (state is AttendanceError) {
           ScaffoldMessenger.of(context)
               .showSnackBar(errorSnackBar(state.msg ?? ''));
-          // showDialog(
-          //   context: context,
-          //   builder: (context) => Text(state.msg ?? ''),
-          // );
         }
-
-        // if (state is AttendanceSuccess) {
-        //   final loginState = context.read<LoginBloc>().state;
-        //   if (loginState is LoginSuccess) {
-        //     context
-        //         .read<AttendanceBloc>()
-        //         .add(CheckInEvent(token: loginState.successLoginEntity.token));
-        //   }
-        // }
       },
     );
-    /* return isCheck
-        ? Column(
-            children: [
-              Row(
-                children: [
-                  CustomPaint(
-                    painter: PlayArrowShape(),
-                    size: const Size(32, 32),
-                  ),
-                  SizedBox(
-                    width: getProportionateScreenWidth(20),
-                  ),
-                  RichText(
-                    text: const TextSpan(
-                      text: 'You checked in at ',
-                      style: TextStyle(
-                        color: secondaryColor,
-                      ),
-                      children: [
-                        TextSpan(
-                          text: '9:30 AM today',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: secondaryColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const Divider(
-                indent: 20,
-                endIndent: 20,
-                color: Colors.black,
-              ),
-              SecondayButtonGreen(
-                btnColor: priceBoxColor,
-                onpress: () {
-                  setState(() {
-                    isCheck = false;
-                  });
-                },
-                title: 'চেকআউট করুন',
-              ),
-            ],
-          )
-        : SecondayButtonGreen(
-            btnColor: priceBoxColor,
-            onpress: () {
-              // setState(() {
-              //   isCheck = true;
-              // });
-            },
-            title: 'চেক ইন করুন',
-          ); */
   }
 }
