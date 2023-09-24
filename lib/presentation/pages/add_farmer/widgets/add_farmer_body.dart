@@ -1,21 +1,20 @@
 import 'package:deshifarmer/presentation/cubit/groups/get_group_cubit.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/components/children_form_field.dart';
-import 'package:deshifarmer/presentation/pages/add_farmer/components/dist_select_field.dart';
-import 'package:deshifarmer/presentation/pages/add_farmer/components/division_form_field.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/components/famer_focused_corp_multi.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/components/family_member_field.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/components/farmer_dob_field.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/components/farmer_gender_field.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/components/farmer_profile_field.dart';
+import 'package:deshifarmer/presentation/pages/add_farmer/components/farmer_village_address.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/components/field_form_type_field.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/components/group_fields_cubit.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/components/living_type_field.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/components/living_year_field.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/components/m_bank_ac_type_field.dart';
-import 'package:deshifarmer/presentation/pages/add_farmer/components/upozilla_form_field.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/widgets/add_farmer_btn.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +40,14 @@ class AddFarmerBody extends StatelessWidget {
               // FarmerPicUploadStateCompo(),
 
               if (state is AddFarmerInitial) ...[
-                /// first name
+                Text(
+                  'কৃষকের ব্যাক্তিগত তথ্য',
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: priceBoxColor,
+                      ),
+                ),
+
+                ///! first name
                 Padding(
                   padding: const EdgeInsets.all(8),
                   child: TextFormField(
@@ -128,16 +134,6 @@ class AddFarmerBody extends StatelessWidget {
                     controller: state.farmerPhoneController,
                     maxLength: 11,
                     decoration: const InputDecoration(
-                      // helperText: '019999999999',
-                      // icon: Text('+88'),
-                      // prefixIcon: Container(
-                      //   alignment: Alignment.centerLeft,
-                      //   child: Text(
-                      //     '+88',
-                      //     textAlign: TextAlign.center,
-                      //   ),
-                      // ),
-                      // prefix: Text('+88'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                         borderSide: BorderSide.none,
@@ -152,21 +148,32 @@ class AddFarmerBody extends StatelessWidget {
                 // PhoneWidget(),
 
                 ///* gender & marital Status
-
-                const Row(
-                  children: [
-                    Expanded(child: GenderField()),
-                    Expanded(child: MaritalStatusField()),
-                  ],
+                const GenderField(),
+                const MaritalStatusField(),
+                // const Row(
+                //   children: [
+                //     Expanded(child: GenderField()),
+                //     Expanded(child: MaritalStatusField()),
+                //   ],
+                // ),
+                // SizedBox(
+                //   height: getProportionateScreenHeight(15),
+                // ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: getProportionateScreenHeight(15),
+                  ),
+                  child: Text(
+                    'কৃষকের ঠিকানা',
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          color: priceBoxColor,
+                        ),
+                  ),
                 ),
-
-                const Row(
-                  children: [
-                    Expanded(child: DistFormField()),
-                    Expanded(child: DivisionFormField()),
-                  ],
-                ),
-                const UpzillaFormField(),
+                const FarmerVillageAddress(),
+                // DistFormField(),
+                // DivisionFormField(),
+                // const UpzillaFormField(),
 
                 ///* union
                 Padding(
@@ -228,18 +235,18 @@ class AddFarmerBody extends StatelessWidget {
                   ),
                 ),
 
-                const Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: ChildrenFormField(),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: FamilyMemberFormField(),
-                    ),
-                  ],
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: getProportionateScreenHeight(15),
+                  ),
+                  child: Text(
+                    'কৃষকের আরও তথ্য',
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          color: priceBoxColor,
+                        ),
+                  ),
                 ),
+                const ChildrenFormField(), const FamilyMemberFormField(),
 
                 ///* how long is he/she living there
                 const LivingYearFormField(),
@@ -283,12 +290,14 @@ class AddFarmerBody extends StatelessWidget {
                 ///* living house type (own/rantal)
 
                 ///* land type
-                const Row(
-                  children: [
-                    Expanded(child: FieldTypeFormField()),
-                    Expanded(child: LivingTypeFormField()),
-                  ],
-                ),
+                // const Row(
+                //   children: [
+                //     Expanded(child: FieldTypeFormField()),
+                //     Expanded(child: LivingTypeFormField()),
+                //   ],
+                // ),
+                const FieldTypeFormField(),
+                const LivingTypeFormField(),
 
                 ///* land messure
                 Padding(
@@ -385,7 +394,7 @@ class AddFarmerBody extends StatelessWidget {
                   margin: const EdgeInsets.all(8),
                   child: ExpansionTile(
                     title: const Text(
-                        'বিকাশ /নগদ/উপায় বা অন্যান্য MFS একাউন্ট রয়েছে'),
+                        'বিকাশ /নগদ/উপায় বা অন্যান্য MFS একাউন্ট রয়েছে',),
                     children: [
                       const MBankAccountType(),
                       Padding(
@@ -426,16 +435,16 @@ class AddFarmerBody extends StatelessWidget {
                         ? loginState.successLoginEntity.token
                         : '';
 
-                    if (value){
+                    if (value) {
                       // GetGroupCubit
                       context.read<GetGroupCubit>().addAllGroupFields(token);
                     }
                     // print('value -> isOpen $value');
                   },
-                  title: Text(
+                  title: const Text(
                     'গ্রুপে যোগ করতে চাইলে এইখানে ক্লিক করুন এবং গ্রুপ সিলেক্ট করুন',
                   ),
-                  children: [
+                  children: const [
                     GroupSelector(),
                   ],
                 ),
@@ -443,35 +452,6 @@ class AddFarmerBody extends StatelessWidget {
 
               //! a multi select field
               const FarmerCurrentProducingCorp(),
-
-              // if (state is AddFarmerInitial)
-              //   Padding(
-              //     padding: const EdgeInsets.all(8),
-              //     child: MultiSelectDropDown(
-              //       hint: 'বর্তমান উৎপাদনকারী ফসল নির্বাচন করুন',
-              //       chipConfig: ChipConfig(
-              //         wrapType: WrapType.wrap,
-              //         backgroundColor: Colors.green[400],
-              //       ),
-              //       selectedOptionTextColor: Colors.green,
-              //       options: cropsDatabase
-              //           .map((e) => ValueItem(label: e.name))
-              //           .toList(),
-              //       onOptionSelected: (selectedOptions) {
-              //         final values = [];
-              //         // print(selectedOptions);
-              //         for (final vi in selectedOptions) {
-              //           // print(vi.label);
-              //           values.add(vi.label);
-              //         }
-
-              //         state.farmerCurrentProducingCorpController.text =
-              //             values.toSet().toString();
-              //       },
-              //       padding: const EdgeInsets.all(8),
-              //       dropdownHeight: MediaQuery.of(context).size.height / 2.5,
-              //     ),
-              //   ),
 
               // if (state is AddFarmerInitial)
               const FarmerFocusedCorpMulti(),

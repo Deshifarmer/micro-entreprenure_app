@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:deshifarmer/core/usecase/location_current.dart';
 import 'package:deshifarmer/data/datasources/remote/apis/attendance_api.dart';
 import 'package:deshifarmer/presentation/pages/activity/activity.dart';
-import 'package:deshifarmer/presentation/pages/attendance/bloc/attendance_bloc.dart';
 import 'package:deshifarmer/presentation/pages/attendance/view/attendance_page.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
@@ -239,7 +238,7 @@ class _ImportDialogState extends State<ImportDialog> {
                             title: widget.attStatus == AttendanceStatus.checkIn
                                 ? 'চেক ইন করুন'
                                 : 'চেক আউট করুন',
-                          )
+                          ),
                         ],
                       ),
               ),

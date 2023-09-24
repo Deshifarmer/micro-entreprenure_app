@@ -7,9 +7,7 @@ import 'package:flutter/material.dart';
 
 class LastStageOrderList extends StatelessWidget {
   const LastStageOrderList({
-    super.key,
-    required this.readyToCollectForMe,
-    required this.token,
+    required this.readyToCollectForMe, required this.token, super.key,
   });
 
   final List<OrderEntity> readyToCollectForMe;
@@ -28,7 +26,7 @@ class LastStageOrderList extends StatelessWidget {
           closedBuilder: (context, action) {
             return Card(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

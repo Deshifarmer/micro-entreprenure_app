@@ -106,10 +106,10 @@ class DeshiFarmerAPI {
     String token,
   ) async {
     // String _LOCAL_TOKEN = '55|9062I8GhTHqaQWFrfOu5HzcRG3df73axEgL5rBUK';
-    String _LOCAL_TOKEN = '';
+    String localToken = '';
     Map<String, String> auth = <String, String>{
       'Authorization':
-          'Bearer ${_LOCAL_TOKEN.isNotEmpty ? _LOCAL_TOKEN : token}',
+          'Bearer ${localToken.isNotEmpty ? localToken : token}',
     };
     final Uri url = Uri.parse(
       ApiDatabaseParams.orderApi,
@@ -155,11 +155,11 @@ class DeshiFarmerAPI {
 
   ///! Collect ORDERS
   FutureOr<bool> collectOrder(String id, String token) async {
-    String _LOCAL_TOKEN = '';
+    String localToken = '';
     // String _LOCAL_TOKEN = '55|9062I8GhTHqaQWFrfOu5HzcRG3df73axEgL5rBUK';
     Map<String, String> auth = <String, String>{
       'Authorization':
-          'Bearer ${_LOCAL_TOKEN.isNotEmpty ? _LOCAL_TOKEN : token}',
+          'Bearer ${localToken.isNotEmpty ? localToken : token}',
     };
     final Uri url = Uri.parse(
       ApiDatabaseParams.collectOrderApi + id,
@@ -408,15 +408,15 @@ class DeshiFarmerAPI {
     String farmerID,
   ) async {
     // String _LOCAL_TOKEN = '55|9062I8GhTHqaQWFrfOu5HzcRG3df73axEgL5rBUK';
-    String _LOCAL_TOKEN = '';
+    String localToken = '';
     Map<String, String> auth = <String, String>{
       'Authorization':
-          'Bearer ${_LOCAL_TOKEN.isNotEmpty ? _LOCAL_TOKEN : token}',
+          'Bearer ${localToken.isNotEmpty ? localToken : token}',
     };
     final Uri url = Uri.parse(
       '${ApiDatabaseParams.myFarmerApi}/$farmerID',
     );
-    print('url -> $url ${_LOCAL_TOKEN.isNotEmpty ? _LOCAL_TOKEN : token}');
+    print('url -> $url ${localToken.isNotEmpty ? localToken : token}');
     try {
       _headers.addAll(auth);
       final http.Response response = await http.get(
@@ -435,7 +435,7 @@ class DeshiFarmerAPI {
           return farmEntity;
         } catch (e) {
           print(
-              'error comverting data FarmerEntityAgain->  ${result.runtimeType}, $e \n');
+              'error comverting data FarmerEntityAgain->  ${result.runtimeType}, $e \n',);
         }
         // print('converting to farmEntity -> ${farmEntity.runtimeType}');
         return null;
@@ -453,17 +453,17 @@ class DeshiFarmerAPI {
   ///
   ///* Get the Farmer LIST
   Future<Result<AllFarmerListResp, Exception>> getFarmers(String token) async {
-    String _LOCAL_TOKEN = '';
+    String localToken = '';
     // String _LOCAL_TOKEN = '55|9062I8GhTHqaQWFrfOu5HzcRG3df73axEgL5rBUK';
     Map<String, String> auth = <String, String>{
       'Authorization':
-          'Bearer ${_LOCAL_TOKEN.isNotEmpty ? _LOCAL_TOKEN : token}',
+          'Bearer ${localToken.isNotEmpty ? localToken : token}',
     };
     final Uri url = Uri.parse(
       ApiDatabaseParams.myFarmerApi,
     );
     print(
-        'getting farmers url -> $url ${_LOCAL_TOKEN.isNotEmpty ? _LOCAL_TOKEN : token}');
+        'getting farmers url -> $url ${localToken.isNotEmpty ? localToken : token}',);
     try {
       _headers.addAll(auth);
       final http.Response response = await http.get(
@@ -487,7 +487,7 @@ class DeshiFarmerAPI {
             );
           } catch (e) {
             print(
-                'error comverting data FarmerEntity->  ${element.runtimeType}, $e \n');
+                'error comverting data FarmerEntity->  ${element.runtimeType}, $e \n',);
             // e2.forEach((key, value) {
             //   if (value.runtimeType != String) {
             //     print('${value.runtimeType} $key $value');

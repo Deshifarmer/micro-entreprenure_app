@@ -1,4 +1,3 @@
-import 'package:deshifarmer/presentation/pages/activity/activity.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/order/bloc/order_bloc.dart';
 import 'package:deshifarmer/presentation/pages/order/widgets/order_body.dart';
@@ -52,7 +51,7 @@ class OrderPage extends StatelessWidget {
               context.read<OrderBloc>().add(InitOrders(token));
             }
           },
-          child: const OrderView()),
+          child: const OrderView(),),
     );
   }
 }

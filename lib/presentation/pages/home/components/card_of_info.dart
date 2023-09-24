@@ -25,14 +25,14 @@ class CardOfSmallInfo extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenWidth(10)),
+                horizontal: getProportionateScreenWidth(10),),
             // child: Icon(
             //   icon,
             //   // size: 25,
             //   color: Colors.white,
             // ),
             child: isIcon
-                ? Icon(
+                ? const Icon(
                     Icons.format_list_numbered,
                     color: Colors.white,
                   )

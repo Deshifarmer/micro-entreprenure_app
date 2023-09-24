@@ -33,7 +33,7 @@ class AttendanceAPI {
       final request = http.MultipartRequest('POST', url);
       request.fields.addAll({
         'cout_note': msg ?? '',
-        'cout_location': [lat, lon].toString()
+        'cout_location': [lat, lon].toString(),
       });
       request.files.add(
         await http.MultipartFile.fromPath(
@@ -49,7 +49,7 @@ class AttendanceAPI {
         return (true, '');
       } else {
         print(
-            'error occured cut -> ${response.statusCode} ${await response.stream.bytesToString()}}');
+            'error occured cut -> ${response.statusCode} ${await response.stream.bytesToString()}}',);
         return (false, '');
       }
     } catch (e) {
@@ -80,7 +80,7 @@ class AttendanceAPI {
         return TodaysAttendance.fromJson(result);
       } else {
         print(
-            'error occured on getting todays attendance -> ${response.statusCode} ${response.body}');
+            'error occured on getting todays attendance -> ${response.statusCode} ${response.body}',);
         return null;
       }
     } catch (e) {
@@ -111,12 +111,12 @@ class AttendanceAPI {
             as List<dynamic>;
         final list = result
             .map((e) =>
-                AttendaceHistoryEntity.fromJson(e as Map<String, dynamic>))
+                AttendaceHistoryEntity.fromJson(e as Map<String, dynamic>),)
             .toList();
         return (list, true);
       } else {
         print(
-            'error occured on getting attendance history -> ${response.statusCode} ${response.body}');
+            'error occured on getting attendance history -> ${response.statusCode} ${response.body}',);
         return (<AttendaceHistoryEntity>[], false);
       }
     } catch (e) {
@@ -162,7 +162,7 @@ class AttendanceAPI {
         return (true, true);
       } else {
         print(
-            'check in failed -> ${response.statusCode} ${await response.stream.bytesToString()} }');
+            'check in failed -> ${response.statusCode} ${await response.stream.bytesToString()} }',);
         return (false, false);
       }
     } catch (e) {

@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:deshifarmer/core/error/exceptions.dart';
 import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
 import 'package:deshifarmer/domain/entities/farm_entity/all_farm_entity.dart';
 import 'package:deshifarmer/domain/entities/farm_entity/farm_entity.dart';
@@ -19,11 +18,11 @@ class FarmerFetchFarmBloc
 
       // List<FarmEntity> _farms = data.farm_list
       /// convert all data.farm_list to List<FarmEntity>
-      final _farms = <FarmEntity>[];
+      final farms = <FarmEntity>[];
       data?.farm_list.forEach((element) {
-        _farms.add(FarmEntity.fromJson(element as Map<String, dynamic>));
+        farms.add(FarmEntity.fromJson(element as Map<String, dynamic>));
       });
-      final value = AllFarmListResp(_farms);
+      final value = AllFarmListResp(farms);
       emit(FarmerFetchFarmSuccess(value));
       emit(FarmerFetchFarmFailed());
       // if (value is AllFarmListResp) {
