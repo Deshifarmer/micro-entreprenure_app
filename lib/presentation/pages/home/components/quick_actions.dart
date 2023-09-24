@@ -52,7 +52,7 @@ class QuickActions extends StatelessWidget {
                     crossAxisCount: 4,
                     mainAxisExtent: getProportionateScreenHeight(120),
                   ),
-                  itemCount: 7,
+                  itemCount: 8,
                   itemBuilder: (context, index) {
                     final currentIcon =
                         HomePageParams.homePageIconDatas2nd.elementAt(index);
