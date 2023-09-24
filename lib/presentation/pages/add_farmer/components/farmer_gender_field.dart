@@ -28,6 +28,11 @@ class GenderField extends StatelessWidget {
             borderSide: BorderSide(width: 2),
           ),
           filled: true,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderSide: BorderSide.none,
+          ),
+          contentPadding: EdgeInsets.all(10),
           // fillColor: Colors.greenAccent,
           // contentPadding: EdgeInsets.all(10),
         ),

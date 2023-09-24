@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,10 +23,9 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
 
   //we can upload image from camera or from gallery based on parameter
   Future<void> getImage(ImageSource media) async {
-    final appDocumentsDir = await getTemporaryDirectory();
     final img = await picker.pickImage(
       source: media,
-      imageQuality: 50,
+      imageQuality: 80,
       maxHeight: 500,
       maxWidth: 500,
     );
@@ -44,10 +44,12 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: backgroundColor2,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          title: const Text('Please choose media to select'),
+          title: const Text('একটি পদ্ধতি নির্বাচন করুন'),
           content: SizedBox(
             height: MediaQuery.of(context).size.height / 6,
+            width: MediaQuery.of(context).size.width / 2,
             child: ListView(
               children: [
                 ElevatedButton(
@@ -56,23 +58,59 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
                     Navigator.pop(context);
                     getImage(ImageSource.gallery);
                   },
-                  child: const Row(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        const MaterialStatePropertyAll(priceBoxColor),
+                    shape: MaterialStatePropertyAll(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                  child: Row(
                     children: [
-                      Icon(Icons.image),
-                      Text('From Gallery'),
+                      const Icon(
+                        Icons.image,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: getProportionateScreenWidth(10),
+                      ),
+                      const Text(
+                        'From Gallery',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ],
                   ),
                 ),
                 ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        const MaterialStatePropertyAll(priceBoxColor),
+                    shape: MaterialStatePropertyAll(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
                   //if user click this button. user can upload image from camera
                   onPressed: () {
                     Navigator.pop(context);
                     getImage(ImageSource.camera);
                   },
-                  child: const Row(
+                  child: Row(
                     children: [
-                      Icon(Icons.camera),
-                      Text('From Camera'),
+                      const Icon(
+                        Icons.camera,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: getProportionateScreenWidth(10),
+                      ),
+                      const Text(
+                        'From Camera',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ],
                   ),
                 ),
