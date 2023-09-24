@@ -156,7 +156,9 @@ class AttendanceAPI {
       request.headers.addAll(auth);
       final response = await request.send();
       if (response.statusCode == 200) {
+        /// print the response body
         print('successfully checed in ');
+        print('check in response -> ${await response.stream.bytesToString()}');
         return (true, true);
       } else {
         print(
