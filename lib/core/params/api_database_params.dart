@@ -90,4 +90,8 @@ class ApiDatabaseParams {
   ///! attendance api (todays attendanc3)
   static String attendanceHistory =
       '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/attendance_history';
+
+  /// comission aka (all transaction) 
+  static String comissionAPI =
+      '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/all_transaction';
 }
