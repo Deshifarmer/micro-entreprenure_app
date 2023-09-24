@@ -1,5 +1,10 @@
 import 'package:deshifarmer/core/params/home_page_params.dart';
+import 'package:deshifarmer/data/datasources/remote/apis/attendance_api.dart';
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
+import 'package:deshifarmer/presentation/pages/add_farmer/view/add_farmer_page.dart';
+import 'package:deshifarmer/presentation/pages/attendance/attendance.dart';
+import 'package:deshifarmer/presentation/pages/commision/commision.dart';
+import 'package:deshifarmer/presentation/pages/farmadd_form/view/farmadd_form_page.dart';
 import 'package:deshifarmer/presentation/pages/home/components/customapp_bar.dart';
 import 'package:deshifarmer/presentation/pages/home/components/farmer_weather_card.dart';
 import 'package:deshifarmer/presentation/pages/home/components/home_page_orders.dart';
@@ -8,6 +13,7 @@ import 'package:deshifarmer/presentation/pages/home/components/quick_actions.dar
 import 'package:deshifarmer/presentation/pages/home/components/simple_banner.dart';
 import 'package:deshifarmer/presentation/pages/home/components/total_farmer_r_order.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
+import 'package:deshifarmer/presentation/widgets/a_dialog_forimage.dart';
 import 'package:deshifarmer/presentation/widgets/home_page_icon_widget.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
@@ -90,15 +96,62 @@ class HomeBody extends StatelessWidget {
 
               SliverPadding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(20)),
+                  horizontal: getProportionateScreenWidth(20),
+                ),
                 sliver: SliverGrid(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       final currentShortCut =
                           HomePageParams.homePageShortCuts.elementAt(index);
                       return InkWell(
-                        onTap: () {
-                          print('tapped on $index');
+                        onTap: () async {
+                          final loginState = context.read<LoginBloc>().state;
+                          final token = loginState is LoginSuccess
+                              ? loginState.successLoginEntity.token
+                              : '';
+                          switch (currentShortCut.title) {
+                            case 'উপস্থিতি':
+                              // if todays attendance is not checked in
+                              // CheckInFromFuture
+                              final today = await AttendanceAPI()
+                                  .getTodaysAttendance(token);
+                              if (today != null) {
+                                print('today is not null');
+                                context
+                                    .read<AttendanceBloc>()
+                                    .add(CheckInFromFuture(today));
+                                await Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) => const AttendancePage(),
+                                  ),
+                                );
+                              } else {
+                                print('today is nULLLL');
+                                await showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      ImportDialog(
+                                    attStatus: AttendanceStatus.checkIn,
+                                    id: '',
+                                  ),
+                                );
+                              }
+
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (_) => const AttendancePage(),
+                            //   ),
+                            // );
+                            case 'নতুন কৃষক যোগ':
+                              Navigator.push(context, AddFarmerPage.route());
+
+                            case 'কমিশন':
+                              Navigator.push(context, CommisionPage.route());
+                            case 'নতুন ফার্ম যোগ':
+                              Navigator.push(context, FarmaddFormPage.route());
+                            default:
+                          }
                         },
                         child: HomePageIconWidget(
                           title: currentShortCut.title,
