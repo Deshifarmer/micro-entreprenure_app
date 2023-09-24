@@ -1,10 +1,9 @@
-import 'package:deshifarmer/core/params/login_page_params.dart';
+import 'package:deshifarmer/data/datasources/local/shared_prefs/local_database_sf.dart';
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/pages/home/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/shapes/deshifarmer_logo.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
-import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -36,6 +35,7 @@ class LoginBody extends StatelessWidget {
           context
               .read<UserProfileBloc>()
               .add(GetUserProfileEvent(token: state.successLoginEntity.token));
+          SharedPrefDBServices().setLoginToken(state.successLoginEntity.token);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               behavior: SnackBarBehavior.floating,

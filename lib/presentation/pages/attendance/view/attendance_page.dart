@@ -26,6 +26,15 @@ class AttendancePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: backgroundColor2,
         surfaceTintColor: backgroundColor2,
+        // leading: IconButton(
+        //   onPressed: () {
+        //     Navigator.pop(context);
+        //   },
+        //   icon: const Icon(
+        //     Icons.arrow_back_ios,
+        //     color: primaryColor,
+        //   ),
+        // ),
         title: const Text(
           'দৈনিক উপস্থিতি',
           style: TextStyle(

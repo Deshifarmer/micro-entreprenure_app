@@ -75,7 +75,7 @@ class _ImportDialogState extends State<ImportDialog> {
                       child: Column(
                         children: [
                           /// you have to open the camera to give attendance
-                          Text(
+                          const Text(
                             'উপস্থিতি দেওয়ার জন্য আপনাকে ক্যামেরাটি খুলতে হবে',
                           ),
                           Container(
@@ -165,10 +165,10 @@ class _ImportDialogState extends State<ImportDialog> {
                         children: <Widget>[
                           SecondayButtonGreen(
                             onpress: () async {
-                              final location = await determinePosition();
                               setState(() {
                                 isLoading = true;
                               });
+                              final location = await determinePosition();
                               final loginState =
                                   context.read<LoginBloc>().state;
                               final token = loginState is LoginSuccess
@@ -188,6 +188,7 @@ class _ImportDialogState extends State<ImportDialog> {
                                   );
                                   // if success then navigate to attendance page
                                   if (api.$1) {
+                                    print('success -> ${api.$1}');
                                     setState(() {
                                       isLoading = false;
                                     });
@@ -237,7 +238,7 @@ class _ImportDialogState extends State<ImportDialog> {
                             },
                             title: widget.attStatus == AttendanceStatus.checkIn
                                 ? 'চেক ইন করুন'
-                                : "চেক আউট করুন",
+                                : 'চেক আউট করুন',
                           )
                         ],
                       ),

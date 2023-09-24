@@ -12,7 +12,9 @@ class GroupSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<GetGroupCubit, AllFarmerGroupFieldResp>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        print('current stae -> $state');
+      },
       builder: (context, state) {
         if (state.farmers.isEmpty) {
           return const Text('No Group Found');
@@ -29,10 +31,13 @@ class GroupSelector extends StatelessWidget {
               label: Text('গ্রুপ সিলেক্ট করুন'),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
-                borderSide: BorderSide(
-                  width: 2,
-                ),
+                borderSide: BorderSide.none,
               ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+                borderSide: BorderSide.none,
+              ),
+              contentPadding: EdgeInsets.all(10),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 borderSide: BorderSide(width: 2),

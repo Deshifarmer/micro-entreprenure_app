@@ -18,7 +18,7 @@ class FarmaddFormPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Farm'),
+        title: const Text('খামার যোগ করুন'),
         surfaceTintColor: backgroundColor2,
       ),
       body: const FarmaddFormView(),
