@@ -462,7 +462,8 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.myFarmerApi,
     );
-    print('url -> $url ${_LOCAL_TOKEN.isNotEmpty ? _LOCAL_TOKEN : token}');
+    print(
+        'getting farmers url -> $url ${_LOCAL_TOKEN.isNotEmpty ? _LOCAL_TOKEN : token}');
     try {
       _headers.addAll(auth);
       final http.Response response = await http.get(
@@ -470,6 +471,7 @@ class DeshiFarmerAPI {
         headers: _headers,
       );
       if (response.statusCode == 200) {
+        print('getting farmer resp -> ${response.statusCode}');
         final result = await Isolate.run(() => json.decode(response.body))
             as List<dynamic>;
         print(
@@ -502,6 +504,7 @@ class DeshiFarmerAPI {
           }
         }
         AllFarmerListResp successResonse = AllFarmerListResp(companyE);
+        print('returning successResonse -> ${companyE.length}');
 
         return Success<AllFarmerListResp, Exception>(successResonse);
       } else {
@@ -584,6 +587,7 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.getGroupsFormField,
     );
+    print('group url -> $url $token');
     try {
       _headers.addAll(auth);
       final http.Response response = await http.get(
@@ -592,9 +596,9 @@ class DeshiFarmerAPI {
       );
       if (response.statusCode == 200) {
         final result = json.decode(response.body) as List<dynamic>;
-        // print(
-        //   'successfuly Unassign GROUPs -> ${result.runtimeType} ${result.length}',
-        // );
+        print(
+          'successfuly Unassign GROUPs -> ${result.runtimeType} ${result.length}',
+        );
         List<GroupFieldEntity> companyE = [];
         for (int i = 0; i < result.length; i++) {
           final element = result[i] as Map<String, dynamic>;
@@ -604,9 +608,9 @@ class DeshiFarmerAPI {
               GroupFieldEntity.fromJson(element),
             );
           } catch (e) {
-//             print(
-//               'error comverting data Unassing GroupFieldEntity ->  ${element.runtimeType}, $e \n',
-//             );
+            print(
+              'error comverting data Unassing GroupFieldEntity ->  ${element.runtimeType}, $e \n',
+            );
 // // getFarmersGroup
             // final e2 = element;
             // e2.forEach((key, value) {
@@ -1146,5 +1150,5 @@ class DeshiFarmerAPI {
     }
   }
 
-
+  ///! comission api
 }
