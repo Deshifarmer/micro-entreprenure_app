@@ -48,7 +48,7 @@ class ProfileBody extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                       child: Image.network(
                         checkDomain(
-                                Strings.getServerOrLocal(ServerOrLocal.server))
+                                Strings.getServerOrLocal(ServerOrLocal.server),)
                             ? dummyImage
                             : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${userProfile.userProfile.photo}',
                         fit: BoxFit.cover,
@@ -290,7 +290,7 @@ class ProfileBody extends StatelessWidget {
                         loginState.successLoginEntity.token,
                       );
                       if (value) {
-                        Navigator.pushAndRemoveUntil(
+                        await Navigator.pushAndRemoveUntil(
                           context,
                           LoginPage.route(),
                           (route) => false,
@@ -298,7 +298,7 @@ class ProfileBody extends StatelessWidget {
                       } else {
                         /// show a snackbar
                         ScaffoldMessenger.of(context).showSnackBar(
-                            errorSnackBar('লগ আউট করা সম্ভব হচ্ছে না'));
+                            errorSnackBar('লগ আউট করা সম্ভব হচ্ছে না'),);
                       }
                     }
                   },

@@ -407,7 +407,7 @@ class ViewOrderDetail extends StatelessWidget {
                 return Container(
                   padding: const EdgeInsets.all(8),
                   alignment: Alignment.center,
-                  child: PrimaryLoadingIndicator(),
+                  child: const PrimaryLoadingIndicator(),
                 );
               },
             ),

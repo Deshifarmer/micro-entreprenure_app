@@ -51,7 +51,7 @@ class OrderBody extends StatelessWidget {
                         .copyWith(color: primaryColor),
                   ),
                   LastStageOrderList(
-                      readyToCollectForMe: readyToCollectForMe, token: token),
+                      readyToCollectForMe: readyToCollectForMe, token: token,),
                   const Divider(
                     color: Color(0xffa6a6a6),
                   ),

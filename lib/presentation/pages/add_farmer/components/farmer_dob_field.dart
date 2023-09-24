@@ -12,7 +12,7 @@ class FarmarDOB extends StatefulWidget {
 }
 
 class _FarmarDOBState extends State<FarmarDOB> {
-  DateTime? _dob = DateTime.now();
+  DateTime? _dob = DateTime.now().subtract(const Duration(days: 365 * 17));
   //TextEditingController textEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,6 @@ class _FarmarDOBState extends State<FarmarDOB> {
             borderRadius: BorderRadius.all(Radius.circular(15)),
             borderSide: BorderSide.none,
           ),
-          
           contentPadding: EdgeInsets.all(10),
           labelText: 'কৃষকের জন্ম তারিখ',
           hintText: '',

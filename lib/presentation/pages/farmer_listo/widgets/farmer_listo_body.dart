@@ -1,10 +1,5 @@
-import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
-import 'package:deshifarmer/presentation/pages/add_farmer/view/add_farmer_page.dart';
-import 'package:deshifarmer/presentation/pages/farmer_listo/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/farmer_listo/components/farmer_listo_comp.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
-import 'package:deshifarmer/presentation/widgets/primary_btn.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// {@template farmer_listo_body}

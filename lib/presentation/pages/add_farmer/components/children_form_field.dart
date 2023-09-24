@@ -1,11 +1,17 @@
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:flutter/material.dart';
 
-class ChildrenFormField extends StatelessWidget {
+class ChildrenFormField extends StatefulWidget {
   const ChildrenFormField({
     super.key,
   });
 
+  @override
+  State<ChildrenFormField> createState() => _ChildrenFormFieldState();
+}
+
+class _ChildrenFormFieldState extends State<ChildrenFormField> {
+  int _childrens = 0;
   @override
   Widget build(BuildContext context) {
     final addFarmerB = context.read<AddFarmerBloc>().state;
@@ -36,7 +42,7 @@ class ChildrenFormField extends StatelessWidget {
         // decoration: ShapeDecoration(),
 
         elevation: 16,
-        value: 0,
+        value: _childrens,
         items: List.generate(10, (index) => index)
             .map<DropdownMenuItem<int>>((int value) {
           return DropdownMenuItem<int>(
@@ -49,6 +55,9 @@ class ChildrenFormField extends StatelessWidget {
           if (addFarmerB is AddFarmerInitial) {
             addFarmerB.farmerChildrenController.text = val.toString();
           }
+          setState(() {
+            _childrens = val ?? 0;
+          });
 
           // context.read<DropdownCubit>().changeDropdownValue(val ?? '');
         },

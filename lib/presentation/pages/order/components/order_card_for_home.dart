@@ -89,7 +89,7 @@ class OrderCardForHome extends StatelessWidget {
                                                         : singleOrder.status ==
                                                                 'ready to collect for me'
                                                             ? const Color(
-                                                                0xfff1e826)
+                                                                0xfff1e826,)
                                                             : Colors.green,
                                       ),
                                     ),

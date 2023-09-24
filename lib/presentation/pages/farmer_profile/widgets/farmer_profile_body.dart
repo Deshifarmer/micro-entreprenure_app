@@ -150,7 +150,7 @@ class FarmerProfileBody extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final currentFarm = FarmEntity.fromJson(
                               singleFarmer.farm_list.elementAt(index)
-                                  as Map<String, dynamic>);
+                                  as Map<String, dynamic>,);
 
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.center,

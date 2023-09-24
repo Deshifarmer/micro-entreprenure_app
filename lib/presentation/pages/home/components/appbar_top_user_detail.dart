@@ -79,11 +79,11 @@ class AppBarTopUserDetail extends StatelessWidget {
                 await launchUrl(url);
               },
               child: Padding(
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 child: Text(
                   'হেল্প?',
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: Color(0xff93EE93),
+                        color: const Color(0xff93EE93),
                       ),
                 ),
               ),

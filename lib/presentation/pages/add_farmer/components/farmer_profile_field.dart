@@ -5,7 +5,6 @@ import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 
 class FarmerProfilePicUpload extends StatefulWidget {
   const FarmerProfilePicUpload({
@@ -50,7 +49,7 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
           content: SizedBox(
             height: MediaQuery.of(context).size.height / 6,
             width: MediaQuery.of(context).size.width / 2,
-            child: ListView(
+            child: Column(
               children: [
                 ElevatedButton(
                   //if user click this button, user can upload image from gallery

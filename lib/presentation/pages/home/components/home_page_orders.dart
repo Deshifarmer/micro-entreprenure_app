@@ -46,7 +46,7 @@ class HomePageOrders extends StatelessWidget {
                   OpenContainer(
                     closedBuilder: (context, action) {
                       return OrderCardForHome(
-                        singleOrder: order as OrderEntity,
+                        singleOrder: order,
                       );
                     },
                     closedColor: Colors.transparent,
@@ -55,7 +55,7 @@ class HomePageOrders extends StatelessWidget {
                     middleColor: Colors.transparent,
                     openElevation: 0,
                     openBuilder: (context, action) {
-                      final singleOrder = order as OrderEntity;
+                      final singleOrder = order;
                       return ViewOrderDetail(
                         orderID: singleOrder.order_id ?? '',
                       );
