@@ -1,4 +1,3 @@
-
 import 'package:deshifarmer/data/models/home_page_icon_model.dart';
 
 import 'package:deshifarmer/presentation/shapes/agri_input_shape.dart';
@@ -131,7 +130,16 @@ class HomePageParams {
       ),
       title: 'নিরাপদ উৎপাদন',
     ),
+    HomeIconModel(
+      icon: const Icon(
+        Icons.payment_outlined,
+        color: Color(0xff219653),
+      ),
+      title: 'Finance',
+    ),
   ];
+
+  ///! shortcuts
   static List<HomeIconModel> homePageShortCuts = [
     HomeIconModel(
       // painter: AgriInputShape(),
