@@ -125,7 +125,7 @@ class FarmaddFormBody extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10),
                                 child: Image.network(
                                   checkDomain(Strings.getServerOrLocal(
-                                          ServerOrLocal.server))
+                                          ServerOrLocal.server,),)
                                       ? dummyImage
                                       : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
                                   height: 50,

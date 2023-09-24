@@ -131,7 +131,7 @@ class HomeBody extends StatelessWidget {
                                 await showDialog(
                                   context: context,
                                   builder: (BuildContext context) =>
-                                      ImportDialog(
+                                      const ImportDialog(
                                     attStatus: AttendanceStatus.checkIn,
                                     id: '',
                                   ),
@@ -146,11 +146,11 @@ class HomeBody extends StatelessWidget {
                             // );
                             case 'নতুন কৃষক যোগ':
                               await Navigator.push(
-                                  context, AddFarmerPage.route());
+                                  context, AddFarmerPage.route(),);
 
                             case 'কমিশন':
                               await Navigator.push(
-                                  context, CommisionPage.route());
+                                  context, CommisionPage.route(),);
                             case 'নতুন ফার্ম যোগ':
                               // MyFarmerBloc
                               context.read<MyFarmerBloc>().add(
@@ -159,7 +159,7 @@ class HomeBody extends StatelessWidget {
                                     ),
                                   );
                               await Navigator.push(
-                                  context, FarmaddFormPage.route());
+                                  context, FarmaddFormPage.route(),);
                             default:
                           }
                         },

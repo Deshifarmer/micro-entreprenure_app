@@ -57,6 +57,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       token: event.token,
       df_id: '',
       full_name: '',
-    )));
+    ),),);
   }
 }

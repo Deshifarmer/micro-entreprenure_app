@@ -7,8 +7,7 @@ import 'package:flutter/material.dart';
 
 class MyCustomAppBar extends StatelessWidget {
   const MyCustomAppBar({
-    super.key,
-    required this.usrProfile,
+    required this.usrProfile, super.key,
   });
 
   final UserProfileEntity usrProfile;

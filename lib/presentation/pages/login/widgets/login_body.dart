@@ -83,7 +83,7 @@ class LoginBody extends StatelessWidget {
                   /// a space between logo and company name
                   SizedBox(
                     height: getProportionateScreenHeight(
-                        MediaQuery.sizeOf(context).height * 0.25),
+                        MediaQuery.sizeOf(context).height * 0.25,),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(
@@ -97,7 +97,7 @@ class LoginBody extends StatelessWidget {
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                        bottom: getProportionateScreenHeight(20)),
+                        bottom: getProportionateScreenHeight(20),),
                     child: Text(
                       'একাউন্ট ম্যানেজ করুন',
                       style: theme.textTheme.headlineSmall!.copyWith(
@@ -139,9 +139,6 @@ class LoginBody extends StatelessWidget {
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(15)),
-                          borderSide: BorderSide(
-                              // color: Colors.black.withOpacity(0.2),
-                              ),
                         ),
                         // inputer text color to white
 

@@ -1,6 +1,5 @@
 
 import 'package:deshifarmer/data/datasources/remote/apis/attendance_api.dart';
-import 'package:deshifarmer/domain/entities/attendance/att_history.dart';
 import 'package:deshifarmer/presentation/pages/activity/activity.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
@@ -29,7 +28,7 @@ class CheckInHistory extends StatelessWidget {
           print('successully got the data -> ${snapshot.data}');
           // print('datatype atthis -> ${snapshot.data.$2}')
 
-          final data = snapshot.data!.$1 as List<AttendaceHistoryEntity>;
+          final data = snapshot.data!.$1;
           print('data -> ${data.length}');
 
           return ListView.builder(
@@ -38,11 +37,11 @@ class CheckInHistory extends StatelessWidget {
             itemBuilder: (context, index) {
               final currentHistry = data.elementAt(index);
 
-              final int _h = int.parse(currentHistry.work_hour);
+              final h = int.parse(currentHistry.work_hour);
               // return Text('hola');
               print('history -> $currentHistry');
               return Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -58,7 +57,7 @@ class CheckInHistory extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '${_h}hrs',
+                          '${h}hrs',
                           style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
@@ -73,7 +72,7 @@ class CheckInHistory extends StatelessWidget {
                             backgroundColor: const Color(0xffd9d9d9),
                             progressColor: primaryColor,
                             verticalDirection: VerticalDirection.up,
-                            currentValue: _h.toDouble(),
+                            currentValue: h.toDouble(),
                             maxValue: 9,
                             // size: 81,
                           ),

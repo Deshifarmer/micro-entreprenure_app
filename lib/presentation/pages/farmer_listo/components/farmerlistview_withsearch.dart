@@ -44,7 +44,7 @@ class _FarmerListViewWithSearchState extends State<FarmerListViewWithSearch> {
                             .contains(value.toLowerCase()) ||
                         element.phone!
                             .toLowerCase()
-                            .contains(value.toLowerCase()))
+                            .contains(value.toLowerCase()),)
                     .toList();
               });
             },
@@ -86,7 +86,7 @@ class _FarmerListViewWithSearchState extends State<FarmerListViewWithSearch> {
                     context.read<FarmerFetchFarmBloc>().add(FramFetchEvent(
                           farmerID: currentFarmer.farmer_id ?? '',
                           token: token,
-                        ));
+                        ),);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -122,7 +122,7 @@ class _FarmerListViewWithSearchState extends State<FarmerListViewWithSearch> {
                     context.read<FarmerFetchFarmBloc>().add(FramFetchEvent(
                           farmerID: currentFarmer.farmer_id ?? '',
                           token: token,
-                        ));
+                        ),);
                     Navigator.push(
                       context,
                       MaterialPageRoute(

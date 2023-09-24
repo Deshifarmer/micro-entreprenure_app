@@ -54,8 +54,8 @@ class ErrorButtonRed extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: MaterialStatePropertyAll(
-            const Color(0xffFF4D4D),
+          backgroundColor: const MaterialStatePropertyAll(
+            Color(0xffFF4D4D),
           ),
           shape: MaterialStatePropertyAll(
             RoundedRectangleBorder(

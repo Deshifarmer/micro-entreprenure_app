@@ -1,15 +1,11 @@
 import 'package:animations/animations.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/view/add_farmer_page.dart';
-import 'package:deshifarmer/presentation/pages/commision/bloc/bloc.dart';
-import 'package:deshifarmer/presentation/pages/commision/view/commision_page.dart';
-import 'package:deshifarmer/presentation/pages/farmadd_form/view/farmadd_form_page.dart';
 import 'package:deshifarmer/presentation/pages/farmer_listo/farmer_listo.dart';
 import 'package:deshifarmer/presentation/pages/home/bloc/home_bloc.dart';
 import 'package:deshifarmer/presentation/pages/home/components/home_bottom_nav.dart';
 import 'package:deshifarmer/presentation/pages/home/widgets/home_body.dart';
 import 'package:deshifarmer/presentation/pages/order/view/order_page.dart';
 import 'package:deshifarmer/presentation/pages/profile/view/profile_page.dart';
-import 'package:deshifarmer/presentation/pages/profile/widgets/profile_body.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:flutter/material.dart';
 

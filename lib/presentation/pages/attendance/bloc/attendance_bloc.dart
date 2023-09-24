@@ -40,7 +40,7 @@ class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
 
       emit(const AttendanceInitial());
     } else {
-      emit(AttendanceError());
+      emit(const AttendanceError());
       emit(const AttendanceInitial());
     }
   }
@@ -73,7 +73,7 @@ class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
         if (checkingIN.$1) {
           final todaysAtten =
               await deshiFarmerAPI.getTodaysAttendance(event.token);
-          print('todays attendance From BLOC ${todaysAtten}');
+          print('todays attendance From BLOC $todaysAtten');
           if (todaysAtten != null) {
             emit(AttendanceSuccess(todays: todaysAtten));
           }
