@@ -1,5 +1,6 @@
 import 'package:deshifarmer/core/params/home_page_params.dart';
 import 'package:deshifarmer/data/datasources/remote/apis/attendance_api.dart';
+import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/view/add_farmer_page.dart';
 import 'package:deshifarmer/presentation/pages/attendance/attendance.dart';
@@ -144,12 +145,21 @@ class HomeBody extends StatelessWidget {
                             //   ),
                             // );
                             case 'নতুন কৃষক যোগ':
-                              Navigator.push(context, AddFarmerPage.route());
+                              await Navigator.push(
+                                  context, AddFarmerPage.route());
 
                             case 'কমিশন':
-                              Navigator.push(context, CommisionPage.route());
+                              await Navigator.push(
+                                  context, CommisionPage.route());
                             case 'নতুন ফার্ম যোগ':
-                              Navigator.push(context, FarmaddFormPage.route());
+                              // MyFarmerBloc
+                              context.read<MyFarmerBloc>().add(
+                                    MyFarmerFetchEvent(
+                                      token,
+                                    ),
+                                  );
+                              await Navigator.push(
+                                  context, FarmaddFormPage.route());
                             default:
                           }
                         },
