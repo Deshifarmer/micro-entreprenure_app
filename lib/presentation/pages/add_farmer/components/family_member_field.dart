@@ -1,11 +1,17 @@
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:flutter/material.dart';
 
-class FamilyMemberFormField extends StatelessWidget {
+class FamilyMemberFormField extends StatefulWidget {
   const FamilyMemberFormField({
     super.key,
   });
 
+  @override
+  State<FamilyMemberFormField> createState() => _FamilyMemberFormFieldState();
+}
+
+class _FamilyMemberFormFieldState extends State<FamilyMemberFormField> {
+  int _familyMembers = 0;
   @override
   Widget build(BuildContext context) {
     final addFarmerB = context.read<AddFarmerBloc>().state;
@@ -18,9 +24,7 @@ class FamilyMemberFormField extends StatelessWidget {
           label: Text('কৃষকের পরিবারের সদস্য সংখ্যা'),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(
-              width: 2,
-            ),
+            borderSide: BorderSide.none,
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -29,7 +33,7 @@ class FamilyMemberFormField extends StatelessWidget {
           contentPadding: EdgeInsets.all(10),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(width: 2),
+            borderSide: BorderSide.none,
           ),
           filled: true,
           // fillColor: Colors.greenAccent,
@@ -38,7 +42,7 @@ class FamilyMemberFormField extends StatelessWidget {
         // decoration: ShapeDecoration(),
 
         elevation: 16,
-        value: 0,
+        value: _familyMembers,
         items: List.generate(10, (index) => index)
             .map<DropdownMenuItem<int>>((int value) {
           return DropdownMenuItem<int>(
@@ -50,6 +54,9 @@ class FamilyMemberFormField extends StatelessWidget {
         onChanged: (int? val) {
           if (addFarmerB is AddFarmerInitial) {
             addFarmerB.farmerFamilyMembersController.text = val.toString();
+            setState(() {
+              _familyMembers = val ?? 0;
+            });
           }
         },
       ),
