@@ -22,7 +22,7 @@ class ProductsBBloc extends Bloc<ProductsEEvent, ProductsSState> {
           _productDatas.addAll(value.data!);
         }
         emit(
-          ProductSuccess(
+          ProductSSuccess(
             productEntity: value,
             productDatas: _productDatas,
           ),
@@ -31,8 +31,8 @@ class ProductsBBloc extends Bloc<ProductsEEvent, ProductsSState> {
         emit(ProductFailed());
       }
     });
-    on<ProductFetchPaginationEvent>(
-        (ProductFetchPaginationEvent event, emit) async {
+    on<ProductFFetchPaginationEvent>(
+        (ProductFFetchPaginationEvent event, emit) async {
       final pp = await productListRepoImpl.getProductListoPaginate(
         event.token,
         event.nextPage,
@@ -46,7 +46,7 @@ class ProductsBBloc extends Bloc<ProductsEEvent, ProductsSState> {
           _productDatas.addAll(value.data!);
         }
         emit(
-          ProductSuccess(
+          ProductSSuccess(
             productEntity: value,
             productDatas: _productDatas,
           ),
