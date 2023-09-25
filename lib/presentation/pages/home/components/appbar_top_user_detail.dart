@@ -74,7 +74,6 @@ class AppBarTopUserDetail extends StatelessWidget {
           children: [
             InkWell(
               onTap: () async {
-                /// open help url (co.deshi.farmer.help)
                 final url = Uri.parse('https://me.deshifarmer.co/help');
                 await launchUrl(url);
               },
