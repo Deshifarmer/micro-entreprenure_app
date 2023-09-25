@@ -179,7 +179,8 @@ class ProductsBody2 extends StatelessWidget {
                             //     );
                             ///! PERF: check if any company is selected
                             print(
-                                'is any company selected: -> ${productState.companyID}',);
+                              'is any company selected: -> ${productState.companyID}',
+                            );
                             if (productState.companyID != null) {
                               if (loginState is LoginSuccess) {
                                 ///! TODO: uncomment this
@@ -741,11 +742,12 @@ class ProductsBody2 extends StatelessWidget {
                 children: [
                   /// Row -> Text, Text
                   Padding(
-                    padding: const EdgeInsets.all(10,
-                        // top: 10,
-                        // left: 10,
-                        // left: 15,
-                        ),
+                    padding: const EdgeInsets.all(
+                      10,
+                      // top: 10,
+                      // left: 10,
+                      // left: 15,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
