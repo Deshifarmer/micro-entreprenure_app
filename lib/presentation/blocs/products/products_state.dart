@@ -11,8 +11,8 @@ class ProductsIInitial extends ProductsSState {}
 
 class ProductFailed extends ProductsSState {}
 
-class ProductSuccess extends ProductsSState {
-  const ProductSuccess({
+class ProductSSuccess extends ProductsSState {
+  const ProductSSuccess({
     required this.productEntity,
     required this.productDatas,
   });
