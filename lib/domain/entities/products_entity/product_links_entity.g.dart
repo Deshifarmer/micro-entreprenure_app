@@ -9,7 +9,7 @@ part of 'product_links_entity.dart';
 ProductLinks _$ProductLinksFromJson(Map<String, dynamic> json) => ProductLinks(
       first: json['first'] as String?,
       last: json['last'] as String?,
-      next: json['next'] as String?,
+      next: json['next'] as int?,
       prev: json['prev'] as String?,
     );
 
