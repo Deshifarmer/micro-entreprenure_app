@@ -25,15 +25,41 @@ class AddFarmerApiBloc extends Bloc<AddFarmerApiEvent, AddFarmerApiState> {
       Success(data: final succ) => succ,
       ServerFailor(error: final err) => err,
     };
-
     if (value is bool) {
-      if (value) {
-        emit(AddFarmerAPISuccess());
-      } else {
-        emit(AddFarmerAPIErrorState());
-      }
+      emit(AddFarmerAPISuccess());
+    } else if (value is Exception) {
+      print('farmer add form resp value -> $value');
+      emit(
+        AddFarmerAPIErrorState(
+          value.toString(),
+        ),
+      );
     } else {
-      emit(AddFarmerAPIErrorState());
+      emit(const AddFarmerAPIErrorState('Something went wrong'));
     }
+    // print(
+    //     'farmer add form resp value -> ${farmerAddingResp is ServerFailor} || ${farmerAddingResp is Exception} $value');
+    // if (farmerAddingResp is Success) {
+    //   emit(AddFarmerAPISuccess());
+    // } else if (farmerAddingResp is ServerFailor) {
+    //   // get the error message from the server
+    //   emit(
+    //     AddFarmerAPIErrorState(
+    //       'Working on the message',
+    //     ),
+    //   );
+    //   // emit(AddFarmerAPIErrorState(farmerAddingResp ));
+    // } else {
+    //   emit(const AddFarmerAPIErrorState('Something went wrong'));
+    // }
+    // if (value is bool) {
+    //   if (value) {
+    //     emit(AddFarmerAPISuccess());
+    //   } else {
+    //     emit(AddFarmerAPIErrorState());
+    //   }
+    // } else {
+    //   emit(AddFarmerAPIErrorState());
+    // }
   }
 }
