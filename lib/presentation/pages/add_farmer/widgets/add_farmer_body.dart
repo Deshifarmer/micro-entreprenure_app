@@ -1,4 +1,3 @@
-import 'package:deshifarmer/presentation/cubit/groups/get_group_cubit.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/components/children_form_field.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/components/famer_focused_corp_multi.dart';
@@ -13,7 +12,6 @@ import 'package:deshifarmer/presentation/pages/add_farmer/components/living_type
 import 'package:deshifarmer/presentation/pages/add_farmer/components/living_year_field.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/components/m_bank_ac_type_field.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/widgets/add_farmer_btn.dart';
-import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +32,7 @@ class AddFarmerBody extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.all(10),
           child: ListView(
+            cacheExtent: 10000,
             children: [
               ///* picture upload
               const FarmerProfilePicUpload(),
@@ -222,7 +221,10 @@ class AddFarmerBody extends StatelessWidget {
                     keyboardType: TextInputType.multiline,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                        borderSide: BorderSide.none,
                       ),
                       labelText: 'ঠিকানা',
                       contentPadding: EdgeInsets.symmetric(
@@ -394,7 +396,8 @@ class AddFarmerBody extends StatelessWidget {
                   margin: const EdgeInsets.all(8),
                   child: ExpansionTile(
                     title: const Text(
-                        'বিকাশ /নগদ/উপায় বা অন্যান্য MFS একাউন্ট রয়েছে',),
+                      'বিকাশ /নগদ/উপায় বা অন্যান্য MFS একাউন্ট রয়েছে',
+                    ),
                     children: [
                       const MBankAccountType(),
                       Padding(
@@ -428,26 +431,7 @@ class AddFarmerBody extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.all(8),
                 margin: const EdgeInsets.all(8),
-                child: ExpansionTile(
-                  onExpansionChanged: (value) {
-                    final loginState = context.read<LoginBloc>().state;
-                    final token = loginState is LoginSuccess
-                        ? loginState.successLoginEntity.token
-                        : '';
-
-                    if (value) {
-                      // GetGroupCubit
-                      context.read<GetGroupCubit>().addAllGroupFields(token);
-                    }
-                    // print('value -> isOpen $value');
-                  },
-                  title: const Text(
-                    'গ্রুপে যোগ করতে চাইলে এইখানে ক্লিক করুন এবং গ্রুপ সিলেক্ট করুন',
-                  ),
-                  children: const [
-                    GroupSelector(),
-                  ],
-                ),
+                child: SelectGroupExpansionTile(),
               ),
 
               //! a multi select field
