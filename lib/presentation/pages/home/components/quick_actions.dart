@@ -1,4 +1,5 @@
 import 'package:deshifarmer/core/params/home_page_params.dart';
+import 'package:deshifarmer/presentation/cubit/groups/get_group_cubit.dart';
 import 'package:deshifarmer/presentation/pages/activity/activity.dart';
 import 'package:deshifarmer/presentation/pages/add_group/add_group.dart';
 import 'package:deshifarmer/presentation/pages/agri_advisory/agri_advisory.dart';
@@ -9,6 +10,7 @@ import 'package:deshifarmer/presentation/pages/farmadd_form/view/farmadd_form_pa
 import 'package:deshifarmer/presentation/pages/farmer_listo/farmer_listo.dart';
 import 'package:deshifarmer/presentation/pages/harvest/harvest.dart';
 import 'package:deshifarmer/presentation/pages/kpi/kpi.dart';
+import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/logistic/logistic.dart';
 import 'package:deshifarmer/presentation/pages/order/view/order_page.dart';
 import 'package:deshifarmer/presentation/pages/products/widgets/pbody_2.dart';
@@ -134,6 +136,14 @@ class QuickActions extends StatelessWidget {
                               LogisticPage.route(),
                             );
                           case 'গ্রুপ':
+                            final loginState = context.read<LoginBloc>().state;
+                            final token = loginState is LoginSuccess
+                                ? loginState.successLoginEntity.token
+                                : '';
+                            // GetGroupCubit
+                            context.read<GetGroupCubit>().addAllGroupFields(
+                                  token,
+                                );
                             Navigator.push(
                               context,
                               AddGroupPage.route(),
@@ -154,7 +164,8 @@ class QuickActions extends StatelessWidget {
                             launchUrl(url);
                           case 'নিরাপদ উৎপাদন':
                             final url = Uri.parse(
-                                'https://me.deshifarmer.co/safe-production');
+                              'https://me.deshifarmer.co/safe-production',
+                            );
                             launchUrl(url);
                           default:
                         }
