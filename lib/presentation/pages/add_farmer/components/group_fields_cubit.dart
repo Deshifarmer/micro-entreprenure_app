@@ -2,7 +2,41 @@ import 'package:deshifarmer/domain/entities/group_field_entity/all_farmer_group_
 import 'package:deshifarmer/domain/entities/group_field_entity/group_field_entity.dart';
 import 'package:deshifarmer/presentation/cubit/groups/get_group_cubit.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
+import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:flutter/material.dart';
+
+class SelectGroupExpansionTile extends StatelessWidget {
+  const SelectGroupExpansionTile({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ExpansionTile(
+      
+      // initiallyExpanded: true,
+      onExpansionChanged: (value) {
+        final loginState = context.read<LoginBloc>().state;
+        final token = loginState is LoginSuccess
+            ? loginState.successLoginEntity.token
+            : '';
+
+        if (value) {
+          // GetGroupCubit
+          context.read<GetGroupCubit>().addAllGroupFields(token);
+        }
+        // print('value -> isOpen $value');
+      },
+      // ignore: lines_longer_than_80_chars
+      title: const Text(
+        'গ্রুপে যোগ করতে চাইলে এইখানে ক্লিক করুন এবং গ্রুপ সিলেক্ট করুন',
+      ),
+      children: const [
+        GroupSelector(),
+      ],
+    );
+  }
+}
 
 class GroupSelector extends StatefulWidget {
   const GroupSelector({

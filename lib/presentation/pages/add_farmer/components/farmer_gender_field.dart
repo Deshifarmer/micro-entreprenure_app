@@ -25,9 +25,7 @@ class _GenderFieldState extends State<GenderField> {
           label: Text('কৃষকটি ছেলে / মেয়ে ?'),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(
-              width: 2,
-            ),
+            borderSide: BorderSide.none,
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -95,13 +93,11 @@ class _MaritalStatusFieldState extends State<MaritalStatusField> {
           label: Text('বৈবাহিক অবস্থা'),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(
-              width: 2,
-            ),
+            borderSide: BorderSide.none,
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(width: 2),
+            borderSide: BorderSide.none,
           ),
           filled: true,
           // fillColor: Colors.greenAccent,

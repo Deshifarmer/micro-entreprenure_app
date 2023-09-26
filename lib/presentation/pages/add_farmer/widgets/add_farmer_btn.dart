@@ -1,11 +1,10 @@
-import 'package:deshifarmer/data/datasources/local/location_db/dist_db.dart';
-import 'package:deshifarmer/data/datasources/local/location_db/division_db.dart';
-import 'package:deshifarmer/data/datasources/local/location_db/upozilla_db.dart';
 import 'package:deshifarmer/data/models/add_farmer_model.dart';
 import 'package:deshifarmer/presentation/blocs/farmer_api/add_farmer_api_bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/bloc/add_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
+import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
+import 'package:deshifarmer/presentation/widgets/snackbar_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -23,7 +22,7 @@ class AddFarmerButton extends StatelessWidget {
             SnackBar(
               behavior: SnackBarBehavior.floating,
               backgroundColor: Colors.red[700],
-              content: const Text('Failed to add a farmer'),
+              content: Text(state.message),
             ),
           );
         }
@@ -45,166 +44,253 @@ class AddFarmerButton extends StatelessWidget {
               ? const Center(
                   child: PrimaryLoadingIndicator(),
                 )
-              : ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStatePropertyAll(Colors.green[600]),
-                  ),
-                  onPressed: () {
+              : SecondayButtonGreen(
+                  onpress: () {
                     final formState = context.read<AddFarmerBloc>().state;
-
                     final loginState = context.read<LoginBloc>().state;
-                    if (formState is AddFarmerInitial) {
-                      // print(formState.);
-                      final farmerModel = AddFarmerModel(
-                        govtFarmerID: formState.farmerGovtIDController.text,
-                        nid: formState.farmerNIDController.text,
-                        firstName: formState.firstNameController.text,
-                        lastName: formState.lastNameController.text,
-                        fathersName: formState.farmerFatherController.text,
-                        phone: formState.farmerPhoneController.text,
-                        isMarried:
-                            formState.farmerRelationalStatusController.text ==
-                                        'true' ||
-                                    formState.farmerRelationalStatusController
-                                        .text.isEmpty
-                                ? '1'
-                                : '0',
-                        gender: formState.farmerGenderController.text.isEmpty
-                            ? 'Male'
-                            : formState.farmerGenderController.text,
-                        dateOfBirth:
-                            DateTime.parse(formState.dobController.text),
-                        address: formState.farmerAddressController.text,
-                        village: formState.farmerVillageController.text,
-                        union: formState.farmerUnionController.text,
-                        upazila:
-                            formState.farmerUpozillaController.text.isNotEmpty
-                                ? formState.farmerUpozillaController.text
-                                : upzillaDatabase.first.id,
-                        // upazila: int.parse(state.farmerUpozillaController.text),
-                        district: formState.farmerDistController.text.isNotEmpty
-                            ? formState.farmerDistController.text
-                            : distDatabase.first.id,
-                        division:
-                            formState.farmerDivisionController.text.isEmpty
-                                ? divisionDatabase.first.id
-                                : formState.farmerDivisionController.text,
-                        residentType:
-                            formState.farmerLivingTypeController.text.isEmpty
-                                ? formState.farmerLivingTypeController.text ==
-                                        'Own (নিজের বাড়ি)'
-                                    ? 'own'
-                                    : 'ranted'
-                                : formState.farmerLivingTypeController.text,
-                        familyMember:
-                            formState.farmerFamilyMembersController.text.isEmpty
-                                ? '0'
-                                : formState.farmerFamilyMembersController.text,
-                        numberOfChildren:
-                            formState.farmerChildrenController.text,
-                        yearlyIncome: formState.farmerIncomeController.text,
-                        yearOfStayIn: formState.farmerLivingYearController.text,
-                        // yearOfStayIn:
-                        //     double.parse(state.farmerLivingYearController.text),
-                        groupId: formState.farmerGroupIDController.text,
-                        farmArea: formState.farmerQtLandController.text,
-                        farmType:
-                            formState.farmerLandTypeController.text.isEmpty
-                                ? formState.farmerLandTypeController.text ==
-                                        'Own (নিজস্ব)'
-                                    ? 'Own'
-                                    : 'Lease'
-                                : formState.farmerLandTypeController.text,
-                        bankDetails: <String, String>{
-                          'bank_name': formState.farmerBankNameController.text,
-                          'branch_name':
-                              formState.farmerBranchNameController.text,
-                          'account_number':
-                              formState.farmerBankAccountNumberController.text,
-                        },
-                        mfsAccount: <String, String>{
-                          'mfs_type': formState
-                                  .farmerMFSAccountTypeController.text.isEmpty
-                              ? 'বিকাশ'
-                              : formState.farmerMFSAccountTypeController.text,
-                          'mfs_account':
-                              formState.farmerMFSAccountNumberController.text,
-                        },
-                        currentProducingCrop:
-                            formState.farmerCurrentProducingCorpController.text,
-                        focusedCrop: formState.farmerFocusedCorpController.text,
-                        image: formState.farmerImageController.text,
-                        farmerType: '',
-                      );
-                      print(
-                        '${farmerModel.dateOfBirth.year}-${farmerModel.dateOfBirth.month}-${farmerModel.dateOfBirth.day}',
-                      );
-                      // print(DateFormat.yM(farmerModel.dateOfBirth));
 
-                      final testD = {
-                        'farmer_type': '1',
-                        // 'onboard_by': farmerModel.onboardBy ?? '', //! NOT NEEDED
-                        'nid': farmerModel.nid,
-                        'gov_farmer_id': farmerModel.govtFarmerID
-                            .toString(), //? check if govt id or DO NOT ADD THE FIELD
-                        'first_name': farmerModel.firstName,
-                        'last_name': farmerModel.lastName,
-                        'fathers_name': farmerModel.fathersName,
-                        'phone': farmerModel.phone,
-                        'is_married': farmerModel.isMarried,
-                        'gender': farmerModel.gender,
-                        'date_of_birth':
-                            '${farmerModel.dateOfBirth.year}-${farmerModel.dateOfBirth.month}-${farmerModel.dateOfBirth.day}',
-                        'address': farmerModel.address,
-                        'village': farmerModel.village,
-                        'union': farmerModel.union,
-                        'upazila': farmerModel.upazila,
-                        'district': farmerModel.district,
-                        'division': farmerModel.division,
-                        // 'resident_type': 'Rental', //* OWN/Rental
-                        'resident_type':
-                            farmerModel.residentType, //* OWN/Rental
-                        'family_member': farmerModel.familyMember,
-                        'number_of_children': farmerModel.numberOfChildren,
-                        'yearly_income': farmerModel.yearlyIncome,
-                        'group_id': farmerModel.groupId.toString(),
-                        'farm_area': farmerModel.farmArea.toString(),
-                        'farm_type': farmerModel.farmType.toString(),
-                        'bank_details':
-                            farmerModel.bankDetails.toString(), //JSON
-                        'mfs_account':
-                            farmerModel.mfsAccount.toString(), // JSON
-                        'current_producing_crop':
-                            farmerModel.currentProducingCrop.toString(), //JSON
-                        'focused_crop':
-                            farmerModel.focusedCrop.toString(), // JSON
-                        // 'farm_id': farmerModel.farmId.toString(),
-                        'year_of_stay_in': farmerModel.yearOfStayIn,
-                      };
-                      // testD.forEach((key, value) {
-                      //   print('$key : $value');
-                      // });
-                      // print(testD);
+                    if (formState is AddFarmerInitial) {
+                      try {
+                        if (formState.firstNameController.text.isEmpty) {
+                          /// show a snackbar
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            errorSnackBar('প্রথম নাম প্রদান করুন'),
+                          );
+                        } else if (formState.lastNameController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            errorSnackBar('শেষ নাম প্রদান করুন'),
+                          );
+                        } else if (formState.farmerNIDController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            errorSnackBar('জাতীয় পরিচয় পত্র নম্বর প্রদান করুন'),
+                          );
+                        } else if (formState
+                            .farmerFatherController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            errorSnackBar('পিতার নাম প্রদান করুন'),
+                          );
+                        } else if (formState
+                            .farmerPhoneController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            errorSnackBar('ফোন নম্বর প্রদান করুন'),
+                          );
+                        } else if (formState
+                            .farmerRelationalStatusController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            errorSnackBar('বৈবাহিক অবস্থা প্রদান করুন'),
+                          );
+                        } else if (formState
+                            .farmerGenderController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            errorSnackBar('লিঙ্গ প্রদান করুন'),
+                          );
+                        }
+
+                        /// check if the dob is 18 years old
+                        else if (formState.dobController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            errorSnackBar('জন্ম তারিখ প্রদান করুন'),
+                          );
+                        } else if (DateTime.now()
+                                .difference(DateTime.parse(
+                                    formState.dobController.text))
+                                .inDays <
+                            6570) {
+                          print(DateTime.now()
+                                  .difference(DateTime.parse(
+                                      formState.dobController.text))
+                                  .inDays <
+                              (17 * 365));
+
+                          /// 17 years in days
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            errorSnackBar('আপনার বয়স ১৭ বছরের কম হতে পারে না'),
+                          );
+                        } else if (formState
+                            .farmerAddressController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            errorSnackBar('ঠিকানা প্রদান করুন'),
+                          );
+                        } else if (formState
+                            .farmerVillageController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            errorSnackBar('গ্রাম প্রদান করুন'),
+                          );
+                        } else if (formState
+                            .farmerUpozillaController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            errorSnackBar('উপজেলা প্রদান করুন'),
+                          );
+                        } else if (formState
+                            .farmerUnionController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            errorSnackBar('ইউনিয়ন প্রদান করুন'),
+                          );
+                        } else if (formState
+                            .farmerDistController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            errorSnackBar('জেলা প্রদান করুন'),
+                          );
+                        } else if (formState
+                            .farmerLivingTypeController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            errorSnackBar('বাসিন্দা প্রদান করুন'),
+                          );
+                        } else if (formState
+                            .farmerFamilyMembersController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            errorSnackBar('পরিবারের সদস্য সংখ্যা প্রদান করুন'),
+                          );
+                        } else if (formState
+                            .farmerChildrenController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            errorSnackBar('সন্তানের সংখ্যা প্রদান করুন'),
+                          );
+                        } else if (formState
+                            .farmerIncomeController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            errorSnackBar('বার্ষিক আয় প্রদান করুন'),
+                          );
+                        } else if (formState
+                            .farmerLivingYearController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            errorSnackBar('বসবাসের সময় প্রদান করুন'),
+                          );
+                        } else {
+                          // /// check if the user dob is greater then 17 or not
+                          // if (DateTime.now()
+                          //         .difference(DateTime.parse(
+                          //             formState.dobController.text))
+                          //         .inDays <
+                          //     6570) {
+                          //   ScaffoldMessenger.of(context).showSnackBar(
+                          //     errorSnackBar('আপনার বয়স ১৮ বছরের কম হতে পারে না'),
+                          //   );
+                          // }
+                          // print(formState.);
+                          final farmerModel = AddFarmerModel(
+                            govtFarmerID: formState.farmerGovtIDController.text,
+                            nid: formState.farmerNIDController.text,
+                            firstName: formState.firstNameController.text,
+                            lastName: formState.lastNameController.text,
+                            fathersName: formState.farmerFatherController.text,
+                            phone: formState.farmerPhoneController.text,
+                            isMarried:
+                                formState.farmerRelationalStatusController.text,
+                            gender: formState.farmerGenderController.text,
+                            dateOfBirth:
+                                DateTime.parse(formState.dobController.text),
+                            address: formState.farmerAddressController.text,
+                            village: formState.farmerVillageController.text,
+                            union: formState.farmerUnionController.text,
+                            upazila: formState.farmerUpozillaController.text,
+                            // upazila: int.parse(state.farmerUpozillaController.text),
+                            district: formState.farmerDistController.text,
+                            division: formState.farmerDivisionController.text,
+                            residentType:
+                                formState.farmerLivingTypeController.text,
+                            familyMember:
+                                formState.farmerFamilyMembersController.text,
+                            numberOfChildren:
+                                formState.farmerChildrenController.text,
+                            yearlyIncome: formState.farmerIncomeController.text,
+                            yearOfStayIn:
+                                formState.farmerLivingYearController.text,
+                            // yearOfStayIn:
+                            //     double.parse(state.farmerLivingYearController.text),
+                            groupId: formState.farmerGroupIDController.text,
+                            farmArea: formState.farmerQtLandController.text,
+                            farmType: formState.farmerLandTypeController.text,
+                            bankDetails: <String, String>{
+                              'bank_name':
+                                  formState.farmerBankNameController.text,
+                              'branch_name':
+                                  formState.farmerBranchNameController.text,
+                              'account_number': formState
+                                  .farmerBankAccountNumberController.text,
+                            },
+                            mfsAccount: <String, String>{
+                              'mfs_type':
+                                  formState.farmerMFSAccountTypeController.text,
+                              'mfs_account': formState
+                                  .farmerMFSAccountNumberController.text,
+                            },
+                            currentProducingCrop: formState
+                                .farmerCurrentProducingCorpController.text,
+                            focusedCrop:
+                                formState.farmerFocusedCorpController.text,
+                            image: formState.farmerImageController.text,
+                            farmerType: '',
+                          );
+
+                          // print(DateFormat.yM(farmerModel.dateOfBirth));
+                          // TODO(nice): Uncomment this to add farmer
+                          if (loginState is LoginSuccess) {
+                            context.read<AddFarmerApiBloc>().add(
+                                  AddFarmerBtnPressEvent(
+                                    farmerModel: farmerModel,
+                                    token: loginState.successLoginEntity.token,
+                                  ),
+                                );
+                          }
+                          final testD = {
+                            'farmer_type': '1',
+                            // 'onboard_by': farmerModel.onboardBy ?? '', //! NOT NEEDED
+                            'nid': farmerModel.nid,
+                            'gov_farmer_id': farmerModel.govtFarmerID
+                                .toString(), //? check if govt id or DO NOT ADD THE FIELD
+                            'first_name': farmerModel.firstName,
+                            'last_name': farmerModel.lastName,
+                            'fathers_name': farmerModel.fathersName,
+                            'phone': farmerModel.phone,
+                            'is_married': farmerModel.isMarried,
+                            'gender': farmerModel.gender,
+                            'date_of_birth':
+                                '${farmerModel.dateOfBirth.year}-${farmerModel.dateOfBirth.month}-${farmerModel.dateOfBirth.day}',
+                            'address': farmerModel.address,
+                            'village': farmerModel.village,
+                            'union': farmerModel.union,
+                            'upazila': farmerModel.upazila,
+                            'district': farmerModel.district,
+                            'division': farmerModel.division,
+                            // 'resident_type': 'Rental', //* OWN/Rental
+                            'resident_type':
+                                farmerModel.residentType, //* OWN/Rental
+                            'family_member': farmerModel.familyMember,
+                            'number_of_children': farmerModel.numberOfChildren,
+                            'yearly_income': farmerModel.yearlyIncome,
+                            'group_id': farmerModel.groupId.toString(),
+                            'farm_area': farmerModel.farmArea.toString(),
+                            'farm_type': farmerModel.farmType.toString(),
+                            'bank_details':
+                                farmerModel.bankDetails.toString(), //JSON
+                            'mfs_account':
+                                farmerModel.mfsAccount.toString(), // JSON
+                            'current_producing_crop': farmerModel
+                                .currentProducingCrop
+                                .toString(), //JSON
+                            'focused_crop':
+                                farmerModel.focusedCrop.toString(), // JSON
+                            // 'farm_id': farmerModel.farmId.toString(),
+                            'year_of_stay_in': farmerModel.yearOfStayIn,
+                          };
+                          // print(testD);
+                          testD.forEach((key, value) {
+                            print('$key : $value');
+                          });
+                        }
+                      } catch (e) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(errorSnackBar(e.toString()));
+                      }
+
                       // debugPrint(testD.toString());
                       // if (state.farmerChildrenController.text.isEmpty) {}
 
                       // print(farmerModel);
-                      if (loginState is LoginSuccess) {
-                        // print(loginState.successLoginEntity.token);
-                        context.read<AddFarmerApiBloc>().add(
-                              AddFarmerBtnPressEvent(
-                                farmerModel: farmerModel,
-                                token: loginState.successLoginEntity.token,
-                              ),
-                            );
-                      }
                     }
                   },
-                  child: const Text(
-                    'কৃষক যোগ',
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  title: 'কৃষক যোগ',
                 ),
         );
       },

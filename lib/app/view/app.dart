@@ -13,6 +13,7 @@ import 'package:deshifarmer/presentation/cubit/add_group/add_farmer_to_group_cub
 import 'package:deshifarmer/presentation/cubit/groups/get_group_cubit.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:deshifarmer/presentation/pages/add_group/bloc/bloc.dart';
+import 'package:deshifarmer/presentation/pages/agri_advisory/bloc/agri_advisory_bloc.dart';
 import 'package:deshifarmer/presentation/pages/attendance/bloc/attendance_bloc.dart';
 import 'package:deshifarmer/presentation/pages/farmadd_form/bloc/farmadd_form_bloc.dart';
 import 'package:deshifarmer/presentation/pages/group_detail/bloc/group_detail_bloc.dart';
@@ -136,6 +137,10 @@ class App extends StatelessWidget {
         // AttendanceBloc
         BlocProvider<AttendanceBloc>(
           create: (BuildContext context) => AttendanceBloc(),
+        ),
+        // AgriAdvisoryBloc
+        BlocProvider<AgriAdvisoryBloc>(
+          create: (BuildContext context) => AgriAdvisoryBloc(),
         ),
       ],
       // create: (context) => SubjectBloc(),
