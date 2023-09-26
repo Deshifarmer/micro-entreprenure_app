@@ -113,9 +113,7 @@ class _FarmerVillageAddressState extends State<FarmerVillageAddress> {
                 label: Text('জেলা নির্বাচন করুন'),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide(
-                    width: 2,
-                  ),
+                  borderSide: BorderSide.none,
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -124,7 +122,7 @@ class _FarmerVillageAddressState extends State<FarmerVillageAddress> {
                 contentPadding: EdgeInsets.all(10),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide(width: 2),
+                  borderSide: BorderSide.none,
                 ),
                 filled: true,
               ),
@@ -195,7 +193,7 @@ class _FarmerVillageAddressState extends State<FarmerVillageAddress> {
                 contentPadding: EdgeInsets.all(10),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide(width: 2),
+                  borderSide: BorderSide.none,
                 ),
                 filled: true,
                 // fillColor: Colors.greenAccent,
