@@ -12,8 +12,8 @@ class ProductFetchEvent extends ProductsEEvent {
   final String token;
 }
 
-class ProductFetchPaginationEvent extends ProductsEEvent {
-  const ProductFetchPaginationEvent({
+class ProductFFetchPaginationEvent extends ProductsEEvent {
+  const ProductFFetchPaginationEvent({
     required this.nextPage,
     required this.token,
   });

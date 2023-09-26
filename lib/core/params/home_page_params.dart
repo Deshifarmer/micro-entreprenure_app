@@ -80,13 +80,14 @@ class HomePageParams {
     ),
   ];
 
+  ///! 2nd 8 items
   static List<HomeIconModel> homePageIconDatas2nd = [
     HomeIconModel(
       icon: Icon(
         Icons.record_voice_over_outlined,
         color: Colors.black.withOpacity(0.54),
       ),
-      title: 'বাজার চাহিদা ',
+      title: 'বাজার চাহিদা',
     ),
     HomeIconModel(
       icon: const Icon(

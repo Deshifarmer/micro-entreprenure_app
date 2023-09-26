@@ -13,7 +13,7 @@ class ProductGridViewWidgets extends StatelessWidget {
     return BlocConsumer<ProductsBBloc, ProductsSState>(
       listener: (context, ProductsSState state) {},
       builder: (context, state) {
-        if (state is ProductSuccess) {
+        if (state is ProductSSuccess) {
           // final companyState = context.read<ProductsBloc>().state;
           return BlocConsumer<ProductsBloc, ProductsState>(
             listener: (context, companyState) {},
