@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 
@@ -42,4 +44,15 @@ SizedBox height10 = SizedBox(
 enum ServerOrLocal {
   server,
   local,
+}
+
+/// get random color
+Color getRandomColor() {
+  final _random = Random();
+  return Color.fromARGB(
+    255,
+    _random.nextInt(256),
+    _random.nextInt(256),
+    _random.nextInt(256),
+  );
 }
