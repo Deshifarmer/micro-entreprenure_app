@@ -8,11 +8,8 @@ import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:flutter/material.dart';
 
-/// {@template agri_advisory_body}
 /// Body of the AgriAdvisoryPage.
-///
 /// Add what it does
-/// {@endtemplate}
 
 GroupDetailRepoImpl groupDetailRepoImpl = GroupDetailRepoImpl();
 
