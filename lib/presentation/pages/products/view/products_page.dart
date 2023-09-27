@@ -18,8 +18,8 @@ class ProductsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const prevItem = 0;
-    final cartBloc = context.read<CartBloc>().state;
+    // const prevItem = 0;
+    // final cartBloc = context.read<CartBloc>().state;
     return Scaffold(
       appBar: AppBar(
         title: const Text('পণ্য কিনুন'),

@@ -56,15 +56,15 @@ class ApiDatabaseParams {
 
   ///! Get Groups
   static String getGroupDetailAPI =
-      '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/group';
+      '${Strings.getServerOrLocal(ServerOrLocal.local)}/api/v1/me/group';
 
   ///! Unassign Farmers in Group
   static String unassignFarmersApi =
-      '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/unassign_farmer';
+      '${Strings.getServerOrLocal(ServerOrLocal.local)}/api/v1/me/unassign_farmer';
 
   ///! Create Group
   static String createGroupAPI =
-      '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/create_group';
+      '${Strings.getServerOrLocal(ServerOrLocal.local)}/api/v1/me/create_group';
 
   ///! Create Farm
   static String farmAddAPI =
@@ -91,7 +91,7 @@ class ApiDatabaseParams {
   static String attendanceHistory =
       '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/attendance_history';
 
-  /// comission aka (all transaction) 
+  /// comission aka (all transaction)
   static String comissionAPI =
       '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/all_transaction';
 }

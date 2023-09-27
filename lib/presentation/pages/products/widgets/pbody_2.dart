@@ -620,8 +620,9 @@ class ProductsBody2 extends StatelessWidget {
                     ),
                   ),
               ],
-            ), */
-
+            ),
+             */
+//TODO:undo this
             Container(
               // color: backgroundColor2,
               decoration: BoxDecoration(
@@ -642,6 +643,7 @@ class ProductsBody2 extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  //! TODO: undo this (PROBLEM)
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       vertical: 10,
@@ -658,7 +660,8 @@ class ProductsBody2 extends StatelessWidget {
                                     color: Colors.grey[800],
                                   ),
                         ),
-                        InkWell(
+                        //! CULPRIT
+                        GestureDetector(
                           onTap: () {
                             Navigator.push(
                               context,
@@ -679,6 +682,7 @@ class ProductsBody2 extends StatelessWidget {
                     ),
                   ),
 
+                  /// TODO: undo this
                   const Divider(
                     height: 4,
                     thickness: 0.4,
@@ -686,6 +690,7 @@ class ProductsBody2 extends StatelessWidget {
                   ),
 
                   /// company listview
+                  /// TODO: undo this
                   const CampanyCircularListView(),
                   /* TextButton(
                     onPressed: () async {
@@ -705,6 +710,7 @@ class ProductsBody2 extends StatelessWidget {
             ),
 
             height10,
+            //TODO:undo this
             Container(
               // margin: const EdgeInsets.symmetric(
               //   horizontal: 10,
@@ -725,7 +731,7 @@ class ProductsBody2 extends StatelessWidget {
               ),
             ),
             height10,
-
+//TODO: undo this
             Container(
               margin: const EdgeInsets.symmetric(
                 vertical: 10,
@@ -772,6 +778,7 @@ class ProductsBody2 extends StatelessWidget {
                   ),
 
                   /// product LIST GridView
+                  /// TODO: undo this
                   const ProductGridViewWidgets(),
                 ],
               ),

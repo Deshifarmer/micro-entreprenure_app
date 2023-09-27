@@ -13,7 +13,7 @@ import 'package:deshifarmer/presentation/pages/kpi/kpi.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/logistic/logistic.dart';
 import 'package:deshifarmer/presentation/pages/order/view/order_page.dart';
-import 'package:deshifarmer/presentation/pages/products/widgets/pbody_2.dart';
+import 'package:deshifarmer/presentation/pages/products/view/products_page.dart';
 import 'package:deshifarmer/presentation/widgets/home_page_icon_widget.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/cupertino.dart';
@@ -87,7 +87,7 @@ class QuickActions extends StatelessWidget {
                             Navigator.push(
                               context,
                               CupertinoPageRoute(
-                                builder: (_) => ProductsBody2(),
+                                builder: (_) => ProductsPage(),
                               ),
                             );
                           case 'অর্ডার তালিকা':
