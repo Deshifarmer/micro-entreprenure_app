@@ -77,9 +77,9 @@ class AddGroupBody extends StatelessWidget {
                 onPressed: () {
                   final loginState = context.read<LoginBloc>().state;
                   if (loginState is LoginSuccess && state is AddGroupInitial) {
-                    print('token -> ${loginState.successLoginEntity.token}');
-                    print('Group NAME -> ${state.groupNameController.text}');
-                    print('Leader ID -> ${state.leaderID}');
+                    // print('token -> ${loginState.successLoginEntity.token}');
+                    // print('Group NAME -> ${state.groupNameController.text}');
+                    // print('Leader ID -> ${state.leaderID}');
                     context.read<AddGroupBloc>().add(
                           CustomAddGroupEvent(
                             groupName: state.groupNameController.text,
