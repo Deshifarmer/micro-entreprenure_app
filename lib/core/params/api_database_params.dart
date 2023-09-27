@@ -1,4 +1,5 @@
 import 'package:deshifarmer/core/app_strings.dart';
+import 'package:deshifarmer/presentation/utils/secrets_.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
 
 class ApiDatabaseParams {
@@ -94,4 +95,9 @@ class ApiDatabaseParams {
   /// comission aka (all transaction)
   static String comissionAPI =
       '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/all_transaction';
+  static String getCurrentWeatherURL(
+    String lat,
+    String lon,
+  ) =>
+      'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$weatherAPIKey&units=metric';
 }
