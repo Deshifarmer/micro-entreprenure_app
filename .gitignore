@@ -176,3 +176,14 @@ lib/domain/entities/login_entity/login_response_entity.g.dart
 lib/domain/entities/farmer_entity/farmer_entity_again.g.dart
 lib/domain/entities/farmer_entity/farmer_order_entity.g.dart
 lib/domain/entities/products_entity/product_links_entity.g.dart
+lib/domain/entities/weather/wind_weather.g.dart
+lib/domain/entities/weather/weather_weather.g.dart
+lib/domain/entities/weather/coord_weather.g.dart
+lib/domain/entities/orders_entity/farmer_detail_entity.g.dart
+lib/domain/entities/weather/main_weather.g.dart
+lib/domain/entities/login_entity/login_response_entity.g.dart
+lib/domain/entities/weather/weather_entity.g.dart
+lib/domain/entities/weather/clouds_weather.g.dart
+lib/domain/entities/login_entity/login_response_entity.g.dart
+lib/domain/entities/weather/sys_weather.g.dart
+lib/presentation/utils/secrets_.dart
