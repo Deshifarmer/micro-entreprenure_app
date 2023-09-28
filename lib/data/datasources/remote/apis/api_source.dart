@@ -528,6 +528,7 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.unassignFarmersApi,
     );
+    print('unassign url -> $url $token');
     try {
       _headers.addAll(auth);
       final http.Response response = await http.get(
@@ -535,7 +536,8 @@ class DeshiFarmerAPI {
         headers: _headers,
       );
       if (response.statusCode == 200) {
-        final result = json.decode(response.body) as List<dynamic>;
+        final result = await Isolate.run(() => json.decode(response.body))
+            as List<dynamic>;
         // print(
         //   'successfuly got the Unassing LISTO -> ${result.runtimeType} ${result.length}',
         // );
@@ -713,6 +715,7 @@ class DeshiFarmerAPI {
         url,
         headers: _headers,
       );
+      print('url -> $url \n token -> $token');
       // print('toekn $token \n groupid -> $groupID');
       if (response.statusCode == 200) {
         final result = json.decode(response.body) as Map<String, dynamic>;
@@ -723,7 +726,11 @@ class DeshiFarmerAPI {
 
           return Success<GroupDetailEntity, Exception>(successResonse);
         } catch (e) {
-          result.forEach((key, value) {});
+          result.forEach((key, value) {
+            if (value.runtimeType != String) {
+              print('${value.runtimeType} $key $value');
+            }
+          });
 
           return ServerFailor<GroupDetailEntity, Exception>(
             Exception('Converting Data Erro -> $e'),
