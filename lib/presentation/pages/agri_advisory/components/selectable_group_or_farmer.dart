@@ -6,6 +6,7 @@ import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/cubit/groups/get_group_cubit.dart';
 import 'package:deshifarmer/presentation/pages/activity/activity.dart';
 import 'package:deshifarmer/presentation/pages/agri_advisory/bloc/agri_advisory_bloc.dart';
+import 'package:deshifarmer/presentation/pages/agri_advisory/components/farmer_list_selectable.dart';
 import 'package:deshifarmer/presentation/pages/agri_advisory/widgets/agri_advisory_body.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
@@ -41,15 +42,16 @@ class _SelectableGroupOrFarmerState extends State<SelectableGroupOrFarmer> {
             Row(
               children: [
                 Radio(
-                    activeColor: priceBoxColor,
-                    value: _selectedValues.first,
-                    groupValue: selectValue,
-                    onChanged: (String? val) {
-                      if (val != null) {
-                        selectValue = val;
-                        setState(() {});
-                      }
-                    },),
+                  activeColor: priceBoxColor,
+                  value: _selectedValues.first,
+                  groupValue: selectValue,
+                  onChanged: (String? val) {
+                    if (val != null) {
+                      selectValue = val;
+                      setState(() {});
+                    }
+                  },
+                ),
                 const Text(
                   'Farmer Group',
                   style: TextStyle(
@@ -65,15 +67,16 @@ class _SelectableGroupOrFarmerState extends State<SelectableGroupOrFarmer> {
             Row(
               children: [
                 Radio(
-                    activeColor: priceBoxColor,
-                    value: _selectedValues.last,
-                    groupValue: selectValue,
-                    onChanged: (String? val) {
-                      if (val != null) {
-                        selectValue = val;
-                        setState(() {});
-                      }
-                    },),
+                  activeColor: priceBoxColor,
+                  value: _selectedValues.last,
+                  groupValue: selectValue,
+                  onChanged: (String? val) {
+                    if (val != null) {
+                      selectValue = val;
+                      setState(() {});
+                    }
+                  },
+                ),
                 const Text(
                   'Single Farmer',
                   style: TextStyle(
@@ -141,8 +144,9 @@ class _SelectableGroupOrFarmerState extends State<SelectableGroupOrFarmer> {
                         context: context,
                         builder: (context) => FutureBuilder<Object>(
                           future: groupDetailRepoImpl.getGroupDetails(
-                              loginState.successLoginEntity.token,
-                              val!.farmer_group_id,),
+                            loginState.successLoginEntity.token,
+                            val!.farmer_group_id,
+                          ),
                           builder: (context, snapshot) {
                             if (snapshot.hasData &&
                                 ConnectionState.done ==
@@ -155,10 +159,11 @@ class _SelectableGroupOrFarmerState extends State<SelectableGroupOrFarmer> {
                               };
 
                               if (value2 is GroupDetailEntity) {
-                                ///! TODO: uncomment this
-                                // return SelectFarmerList(
-                                //   farmers: value2.farmer_list,
-                                // );
+                                return SelectFarmerList(
+                                  ///! TODO: uncomment this
+                                  // farmers: value2.farmer_list,
+                                  farmers: [],
+                                );
                               } else {
                                 return const Center(
                                   child: Text('No Group Members Found'),
