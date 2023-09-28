@@ -3,6 +3,7 @@ import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
 import 'package:deshifarmer/presentation/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_group/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 
 class SelectGroupLeader extends StatelessWidget {
@@ -31,25 +32,27 @@ class SelectGroupLeader extends StatelessWidget {
                   borderRadius: const BorderRadius.all(Radius.circular(15)),
                   isExpanded: true,
                   decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 10,
+                    ),
                     label: Text('গ্রুপ লিডার নির্বাচন করুন'),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(10),
                       ),
-                      borderSide: BorderSide(
-                        width: 2,
-                      ),
+                      borderSide: BorderSide.none,
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide: BorderSide(width: 2),
+                      borderSide: BorderSide.none,
                       gapPadding: 10,
                     ),
                     filled: true,
                   ),
                   // decoration: ShapeDecoration(),
                   // itemHeight: 300,
-                  elevation: 16,
+                  elevation: 0,
                   value: state.allFarmerListResp.farmers.isNotEmpty
                       ? state.allFarmerListResp.farmers.first
                       : null,
@@ -58,20 +61,43 @@ class SelectGroupLeader extends StatelessWidget {
                     return DropdownMenuItem<FarmerEntity>(
                       alignment: Alignment.center,
                       value: value,
-                      child: ListTile(
-                        leading: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            checkDomain(Strings.getServerOrLocal(
-                                    ServerOrLocal.server,),)
-                                ? dummyImage
-                                : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
-                            height: 50,
-                            width: 50,
+                      // child: ListTile(
+                      //   leading: ClipRRect(
+                      //     borderRadius: BorderRadius.circular(10),
+                      //     child: Image.network(
+                      //       checkDomain(
+                      //         Strings.getServerOrLocal(
+                      //           ServerOrLocal.server,
+                      //         ),
+                      //       )
+                      //           ? dummyImage
+                      //           : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
+                      //       height: 50,
+                      //       width: 50,
+                      //     ),
+                      //   ),
+                      //   title: Text(value.full_name ?? ''),
+                      //   // subtitle: Text(value.phone ?? ''),
+                      // ),
+                      child: Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              checkDomain(
+                                Strings.getServerOrLocal(
+                                  ServerOrLocal.server,
+                                ),
+                              )
+                                  ? dummyImage
+                                  : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
+                              height: 50,
+                              width: 50,
+                            ),
                           ),
-                        ),
-                        title: Text(value.full_name ?? ''),
-                        subtitle: Text(value.phone ?? ''),
+                          SizedBox(width: getProportionateScreenWidth(15)),
+                          Text(value.full_name ?? '')
+                        ],
                       ),
                     );
                   }).toList(),

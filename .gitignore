@@ -187,3 +187,4 @@ lib/domain/entities/weather/clouds_weather.g.dart
 lib/domain/entities/login_entity/login_response_entity.g.dart
 lib/domain/entities/weather/sys_weather.g.dart
 lib/presentation/utils/secrets_.dart
+lib/domain/entities/farmer_entity/group_farmer_entity.g.dart

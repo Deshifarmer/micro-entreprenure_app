@@ -1,10 +1,6 @@
-import 'package:deshifarmer/data/datasources/remote/apis/get_weather_api.dart';
 import 'package:deshifarmer/domain/entities/user_entity/user_profile_entity.dart';
-import 'package:deshifarmer/domain/entities/weather/weather_entity.dart';
-import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 
 class FarmerWeatherCard extends StatelessWidget {
   const FarmerWeatherCard({required this.usrProfile, super.key});
@@ -12,6 +8,7 @@ class FarmerWeatherCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /*
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: getProportionateScreenWidth(20),
@@ -174,5 +171,7 @@ class FarmerWeatherCard extends StatelessWidget {
         },
       ),
     );
+    */
+    return const SizedBox.shrink();
   }
 }
