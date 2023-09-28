@@ -57,15 +57,15 @@ class ApiDatabaseParams {
 
   ///! Get Groups
   static String getGroupDetailAPI =
-      '${Strings.getServerOrLocal(ServerOrLocal.local)}/api/v1/me/group';
+      '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/group';
 
   ///! Unassign Farmers in Group
   static String unassignFarmersApi =
-      '${Strings.getServerOrLocal(ServerOrLocal.local)}/api/v1/me/unassign_farmer';
+      '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/unassign_farmer';
 
   ///! Create Group
   static String createGroupAPI =
-      '${Strings.getServerOrLocal(ServerOrLocal.local)}/api/v1/me/create_group';
+      '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/create_group';
 
   ///! Create Farm
   static String farmAddAPI =
