@@ -42,28 +42,40 @@ class CampanyCircularListView extends StatelessWidget {
                                 .add(const UnSelectCompanyEvent());
                           } else {
                             context.read<ProductsBloc>().add(
-                                SelectCompanysEvent(
-                                    currentCompany.df_id ?? '',),);
+                                  SelectCompanysEvent(
+                                    currentCompany.df_id ?? '',
+                                  ),
+                                );
                           }
                         } else {
                           context.read<ProductsBloc>().add(
-                              SelectCompanysEvent(currentCompany.df_id ?? ''),);
+                                SelectCompanysEvent(currentCompany.df_id ?? ''),
+                              );
                         }
                         print("company ID -> ${currentCompany.df_id ?? ''}");
                       },
-                      child: Container(
-                        margin: const EdgeInsets.all(5),
-                        padding: const EdgeInsets.all(10),
+                      child: Tooltip(
+                        message: currentCompany.full_name ?? '',
                         decoration: BoxDecoration(
-                          color: companyState is ProductComanySelect
-                              ? currentCompany.df_id == companyState.companyID
-                                  ? Colors.green[400]!.withOpacity(0.4)
-                                  : null
-                              : null,
+                          color: Colors.green[400]!.withOpacity(0.4),
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(20)),
+                              const BorderRadius.all(Radius.circular(10)),
                         ),
-                        child: CompanyCardView(currentCompany: currentCompany),
+                        child: Container(
+                          margin: const EdgeInsets.all(5),
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: companyState is ProductComanySelect
+                                ? currentCompany.df_id == companyState.companyID
+                                    ? Colors.green[400]!.withOpacity(0.4)
+                                    : null
+                                : null,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
+                          ),
+                          child:
+                              CompanyCardView(currentCompany: currentCompany),
+                        ),
                       ),
                     );
                   },
