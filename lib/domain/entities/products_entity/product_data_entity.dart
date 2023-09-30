@@ -21,6 +21,8 @@ class ProductData {
     required this.unit_id,
     required this.image,
     required this.company,
+    required this.sell_price_from_company,
+    required this.unit,
   });
 
   /// factory.
@@ -30,15 +32,17 @@ class ProductData {
   final String? product_id;
   final String? name;
   final String image;
-  final String? company;
   final String? description;
-  final String? preferred;
   final String? category;
-  final String? subcategory;
   final String? company_id;
+  final String? company;
+  final String? preferred;
+  final String? subcategory;
   final String? unit_id;
   final String? sell_price;
   final String? discount;
   final String? status;
   final int? total_order;
+  final String? sell_price_from_company;
+  final String? unit;
 }

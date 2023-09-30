@@ -53,10 +53,8 @@ class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
     final todaysAtten = await deshiFarmerAPI.getTodaysAttendance(event.token);
 
     if (todaysAtten != null) {
-      // print('BLOCK att is not NULL');
       emit(AttendanceSuccess(todays: todaysAtten));
     } else {
-      // print('else is running');
       try {
         // print('trying get the location');
         final getCurrentPosition = await determinePosition();
@@ -73,13 +71,11 @@ class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
         if (checkingIN.$1) {
           final todaysAtten =
               await deshiFarmerAPI.getTodaysAttendance(event.token);
-          print('todays attendance From BLOC $todaysAtten');
           if (todaysAtten != null) {
             emit(AttendanceSuccess(todays: todaysAtten));
           }
         }
       } catch (e) {
-        print('error happend on getting location $e');
         emit(AttendanceError(msg: e.toString()));
       }
       // print('')
@@ -89,7 +85,6 @@ class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
   }
 
   FutureOr<void> _onCheckInFromFuture(CheckInFromFuture event, emit) {
-    print('check in FROm FUTURE From BLOC ${event.today}');
     emit(AttendanceSuccess(todays: event.today));
   }
 }

@@ -9,7 +9,7 @@ abstract class ProductsSState extends Equatable {
 
 class ProductsIInitial extends ProductsSState {}
 
-class ProductFailed extends ProductsSState {}
+class ProductFFailed extends ProductsSState {}
 
 class ProductSSuccess extends ProductsSState {
   const ProductSSuccess({

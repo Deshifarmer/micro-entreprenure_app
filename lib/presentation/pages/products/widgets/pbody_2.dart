@@ -1,10 +1,10 @@
-import 'package:deshifarmer/domain/entities/category_entity/category_entity.dart';
 import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/bloc/products_bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/components/cart_btn_components.dart';
+import 'package:deshifarmer/presentation/pages/products/components/category_menu_items.dart';
 import 'package:deshifarmer/presentation/pages/products/components/company_c_list_view.dart';
 import 'package:deshifarmer/presentation/pages/products/pages/view_companies.dart';
 import 'package:deshifarmer/presentation/pages/products/widgets/product_gird_view.dart';
@@ -161,111 +161,11 @@ class ProductsBody2 extends StatelessWidget {
                         ),
                       ),
                     ),
-                    if (categoryState is CategorySuccess)
+                    const CategoryMenuItems()
 
-                      ///! PERF: categories
-                      PopupMenuButton<CategoryEntity>(
-                        padding: EdgeInsets.zero,
-                        // surfaceTintColor: primaryColor,
-                        onSelected: (CategoryEntity value) {
-                          // print('cat -> ${value.title} ${value.id}');
-                          if (productState is ProductComanySelect) {
-                            // context.read<ProductsBloc>().add(
-                            //       SelectCompanysEvent(
-                            //         productState.companyID,
-                            //         category: value.id.toString(),
-                            //         query: productState.query,
-                            //       ),
-                            //     );
-                            ///! PERF: check if any company is selected
-                            print(
-                              'is any company selected: -> ${productState.companyID}',
-                            );
-                            if (productState.companyID != null) {
-                              if (loginState is LoginSuccess) {
-                                ///! TODO: uncomment this
-                                // context.read<ProductsBBloc>().add(
-                                //       ProductSearchEvent(
-                                //         loginState.successLoginEntity.token,
-                                //         cat: value.id.toString(),
-                                //         company: productState.companyID,
-                                //         query: productState.query,
-                                //       ),
-                                //     );
-                              }
-                            } else {
-                              /// COMPOANY IS NOT SELECTED
-                              ///! TODO: uncomment this
-                              // if (loginState is LoginSuccess) {
-                              //   context.read<ProductsBBloc>().add(
-                              //         ProductSearchEvent(
-                              //           loginState.successLoginEntity.token,
-                              //           cat: value.id.toString(),
-                              //           // company: null,
-                              //           query: productState.query,
-                              //         ),
-                              //       );
-                              // }
-                            }
+                    // if (categoryState is CategorySuccess)
 
-                            // print('category -> ${productState.category}');
-                            // print('query -> ${productState.query}');
-                            // print('company -> ${productState.companyID}');
-                          } else {
-                            ///! TODO: uncomment this
-                            // context.read<ProductsBloc>().add(
-                            //       SelectCompanysEvent(
-                            //         null,
-                            //         category: value.id.toString(),
-                            //         query: null,
-                            //       ),
-                            //     );
-
-                            // if (loginState is LoginSuccess) {
-                            //   context.read<ProductsBBloc>().add(
-                            //         ProductSearchEvent(
-                            //           loginState.successLoginEntity.token,
-                            //           cat: value.id.toString(),
-                            //           // query: null,
-                            //           // company: null,
-                            //         ),
-                            //       );
-                            // }
-                          }
-                        },
-                        enableFeedback: true,
-                        surfaceTintColor: backgroundColor2,
-                        itemBuilder: (BuildContext context) =>
-                            categoryState.allCategoryListResp.category
-                                .map(
-                                  (CategoryEntity e) =>
-                                      PopupMenuItem<CategoryEntity>(
-                                    value: e,
-                                    child: Text(e.title.split('-').last),
-                                  ),
-                                )
-                                .toList(),
-                        color: backgroundColor2,
-                        icon: Container(
-                          // margin: EdgeInsets.all(0),
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 10,
-                            horizontal: 10,
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            border: Border.all(
-                              width: 0.6,
-                              // strokeAlign: 0.6,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          child: const Icon(
-                            Icons.menu,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
+                    //   ,
                   ],
                 ),
               ),
