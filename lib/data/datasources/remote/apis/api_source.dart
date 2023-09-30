@@ -253,8 +253,13 @@ class DeshiFarmerAPI {
               CompanyEntity.fromJson(element as Map<String, dynamic>),
             );
           } catch (e) {
+            print('exception occurd on Company $e');
             final e2 = element as Map<String, dynamic>;
-            e2.forEach((key, value) {});
+            // e2.forEach((key, value) {
+            //   if (value.runtimeType != String) {
+            //     print('${value.runtimeType} $key $value');
+            //   }
+            // });
           }
         }
         AllCompanyListResp successResonse = AllCompanyListResp(companyE);
@@ -339,10 +344,12 @@ class DeshiFarmerAPI {
       );
       if (response.statusCode == 200) {
         final result = json.decode(response.body) as Map<String, dynamic>;
+        print('product successfully got');
         try {
           ProductEntity successResonse = ProductEntity.fromJson(result);
           return Success<ProductEntity, Exception>(successResonse);
         } catch (e) {
+          print('error -> $e');
           result.forEach((key, value) {});
         }
         return ServerFailor<ProductEntity, Exception>(
