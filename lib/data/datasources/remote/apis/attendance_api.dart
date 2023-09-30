@@ -34,6 +34,7 @@ class AttendanceAPI {
       request.fields.addAll({
         'cout_note': msg ?? '',
         'cout_location': [lat, lon].toString(),
+        'check_out': '',
       });
       request.files.add(
         await http.MultipartFile.fromPath(
@@ -44,12 +45,13 @@ class AttendanceAPI {
       print('check out api called -> $url $id $token');
       request.headers.addAll(auth);
       final response = await request.send();
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         print('successfully checed out ');
         return (true, '');
       } else {
         print(
-            'error occured cut -> ${response.statusCode} ${await response.stream.bytesToString()}}',);
+          'error occured cut -> ${response.statusCode} ${await response.stream.bytesToString()}}',
+        );
         return (false, '');
       }
     } catch (e) {
@@ -80,7 +82,8 @@ class AttendanceAPI {
         return TodaysAttendance.fromJson(result);
       } else {
         print(
-            'error occured on getting todays attendance -> ${response.statusCode} ${response.body}',);
+          'error occured on getting todays attendance -> ${response.statusCode} ${response.body}',
+        );
         return null;
       }
     } catch (e) {
@@ -110,13 +113,15 @@ class AttendanceAPI {
         final result = await Isolate.run(() => json.decode(response.body))
             as List<dynamic>;
         final list = result
-            .map((e) =>
-                AttendaceHistoryEntity.fromJson(e as Map<String, dynamic>),)
+            .map(
+              (e) => AttendaceHistoryEntity.fromJson(e as Map<String, dynamic>),
+            )
             .toList();
         return (list, true);
       } else {
         print(
-            'error occured on getting attendance history -> ${response.statusCode} ${response.body}',);
+          'error occured on getting attendance history -> ${response.statusCode} ${response.body}',
+        );
         return (<AttendaceHistoryEntity>[], false);
       }
     } catch (e) {
@@ -139,13 +144,14 @@ class AttendanceAPI {
     final url = Uri.parse(
       ApiDatabaseParams.checkinAPI,
     );
+    print('check in api called -> $url $token');
     try {
-      print('check in api called');
       _headers.addAll(auth);
       final request = http.MultipartRequest('POST', url);
       request.fields.addAll({
         'cin_note': msg ?? '',
         'cin_location': [lat, lon].toString(),
+        'check_in': '',
       });
       request.files.add(
         await http.MultipartFile.fromPath(
@@ -155,14 +161,15 @@ class AttendanceAPI {
       );
       request.headers.addAll(auth);
       final response = await request.send();
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         /// print the response body
-        print('successfully checed in ');
+        print('successfully checed in ${response.statusCode}');
         print('check in response -> ${await response.stream.bytesToString()}');
         return (true, true);
       } else {
         print(
-            'check in failed -> ${response.statusCode} ${await response.stream.bytesToString()} }',);
+          'check in failed -> ${response.statusCode} ${await response.stream.bytesToString()} }',
+        );
         return (false, false);
       }
     } catch (e) {
