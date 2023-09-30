@@ -168,6 +168,10 @@ class CheckInOut extends StatelessWidget {
               ],
             ],
           );
+        } else if (state is AttendanceLoading) {
+          return const Center(
+            child: PrimaryLoadingIndicator(),
+          );
         }
         return SecondayButtonGreen(
           btnColor: priceBoxColor,
@@ -197,6 +201,9 @@ class CheckInOut extends StatelessWidget {
         if (state is AttendanceError) {
           ScaffoldMessenger.of(context)
               .showSnackBar(errorSnackBar(state.msg ?? ''));
+        } else if (state is AttendanceSuccess) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(successSnackBar('Check In Successfully'));
         }
       },
     );
