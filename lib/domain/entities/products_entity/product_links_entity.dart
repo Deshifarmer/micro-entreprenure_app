@@ -19,5 +19,5 @@ class ProductLinks {
   final String? first;
   final String? last;
   final String? prev;
-  final int? next;
+  final String? next;
 }
