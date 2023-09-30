@@ -7,8 +7,8 @@ abstract class ProductsEEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class ProductFetchEvent extends ProductsEEvent {
-  const ProductFetchEvent(this.token);
+class ProductFFetchEvent extends ProductsEEvent {
+  const ProductFFetchEvent(this.token);
   final String token;
 }
 
