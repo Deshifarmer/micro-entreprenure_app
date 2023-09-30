@@ -1,6 +1,5 @@
 import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
 import 'package:deshifarmer/presentation/pages/commision/bloc/bloc.dart';
-import 'package:deshifarmer/presentation/pages/products/bloc/products_bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/components/product_card.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +63,7 @@ class ProductGridViewWidgets extends StatelessWidget {
         }
         // return
 
-        if (state is ProductFailed) {
+        if (state is ProductFFailed) {
           return const Center(
             child: Text('Failed'),
           );
