@@ -13,10 +13,11 @@ class CompanyCardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Column(
       children: [
         SizedBox(
-          height: 50,
+          height: 42,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Image.network(
@@ -24,12 +25,23 @@ class CompanyCardView extends StatelessWidget {
             ),
           ),
         ),
-        Text(
-          currentCompany.full_name ?? '',
-          style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                fontWeight: FontWeight.normal,
-                overflow: TextOverflow.fade,
-              ),
+        // Text(
+        //   currentCompany.full_name ?? '',
+        //   style: Theme.of(context).textTheme.titleSmall!.copyWith(
+        //         fontWeight: FontWeight.normal,
+        //         overflow: TextOverflow.fade,
+        //       ),
+        // ),
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Text(
+            '${currentCompany.full_name?.substring(0, 7)}...',
+            // currentCompany.full_name ?? '',
+            style: textTheme.bodySmall,
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
       ],
     );

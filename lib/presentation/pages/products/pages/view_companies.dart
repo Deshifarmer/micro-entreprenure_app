@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
+import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/pages/view_companies_products.dart';
@@ -21,28 +22,29 @@ class ViewAllComapnies extends StatelessWidget {
       onWillPop: () async {
         final loginState = context.read<LoginBloc>().state;
 
-        if (loginState is LoginSuccess) {
-          context.read<CompanyBloc>().add(
-                CompanyFetchEvent(
-                  loginState.successLoginEntity.token,
-                ),
-              );
+        final token = loginState is LoginSuccess
+            ? loginState.successLoginEntity.token
+            : '';
+        context.read<CompanyBloc>().add(
+              CompanyFetchEvent(
+                token,
+              ),
+            );
 
-          ///! Category BLOCK
-          context.read<CategoryBloc>().add(
-                CategoryDataFetch(
-                  loginState.successLoginEntity.token,
-                ),
-              );
+        ///! Category BLOCK
+        context.read<CategoryBloc>().add(
+              CategoryDataFetch(
+                token,
+              ),
+            );
 
-          ///! Fetch Products
-          ///! TODO: uncomment this
-          // context.read<ProductsBBloc>().add(
-          //       ProductFFetchEvent(
-          //         loginState.successLoginEntity.token,
-          //       ),
-          //     );
-        }
+        ///! Fetch Products
+        ///! TODO: uncomment this
+        context.read<ProductsBBloc>().add(
+              ProductFFetchEvent(
+                token,
+              ),
+            );
 
         return true;
       },
@@ -160,8 +162,11 @@ class ViewAllComapnies extends StatelessWidget {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
                                     child: Image.network(
-                                      checkDomain(Strings.getServerOrLocal(
-                                              ServerOrLocal.server,),)
+                                      checkDomain(
+                                        Strings.getServerOrLocal(
+                                          ServerOrLocal.server,
+                                        ),
+                                      )
                                           ? dummyImage
                                           : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage${currentCompany.photo}',
                                       errorBuilder: (
@@ -204,8 +209,10 @@ class ViewAllComapnies extends StatelessWidget {
                           closedColor: backgroundColor2,
                           openElevation: 0,
                           closedElevation: 0,
-                          openBuilder: (BuildContext context,
-                              void Function({Object? returnValue}) action,) {
+                          openBuilder: (
+                            BuildContext context,
+                            void Function({Object? returnValue}) action,
+                          ) {
                             final loginState = context.read<LoginBloc>().state;
                             if (loginState is LoginSuccess) {
                               ///! TODO: uncomment this
