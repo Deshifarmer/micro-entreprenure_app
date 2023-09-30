@@ -11,7 +11,7 @@ part 'products_state.dart';
 
 class ProductsBBloc extends Bloc<ProductsEEvent, ProductsSState> {
   ProductsBBloc() : super(ProductsIInitial()) {
-    on<ProductFetchEvent>((ProductFetchEvent event, emit) async {
+    on<ProductFFetchEvent>((ProductFFetchEvent event, emit) async {
       final products = await productListRepoImpl.getProductListo(event.token);
       final value = switch (products) {
         Success(data: final succ) => succ,
@@ -28,7 +28,7 @@ class ProductsBBloc extends Bloc<ProductsEEvent, ProductsSState> {
           ),
         );
       } else {
-        emit(ProductFailed());
+        emit(ProductFFailed());
       }
     });
     on<ProductFFetchPaginationEvent>(
