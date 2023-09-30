@@ -1,4 +1,7 @@
 import 'package:deshifarmer/core/params/home_page_params.dart';
+import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
+import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
+import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
 import 'package:deshifarmer/presentation/cubit/groups/get_group_cubit.dart';
 import 'package:deshifarmer/presentation/pages/activity/activity.dart';
 import 'package:deshifarmer/presentation/pages/add_group/add_group.dart';
@@ -84,6 +87,23 @@ class QuickActions extends StatelessWidget {
                               KpiPage.route(),
                             );
                           case 'কৃষি ইনপুট':
+                            final loginState = context.read<LoginBloc>().state;
+                            final token = loginState is LoginSuccess
+                                ? loginState.successLoginEntity.token
+                                : '';
+                            //? fetching the category data
+                            context
+                                .read<CategoryBloc>()
+                                .add(CategoryDataFetch(token));
+                            //? fetching the company data
+                            context
+                                .read<CompanyBloc>()
+                                .add(CompanyFetchEvent(token));
+                            // ProductsBBloc
+                            // fetch the products data
+                            context
+                                .read<ProductsBBloc>()
+                                .add(ProductFFetchEvent(token));
                             Navigator.push(
                               context,
                               CupertinoPageRoute(
