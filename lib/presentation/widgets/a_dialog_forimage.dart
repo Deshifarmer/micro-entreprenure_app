@@ -187,13 +187,14 @@ class _ImportDialogState extends State<ImportDialog> {
                                   );
                                   // if success then navigate to attendance page
                                   if (api.$1) {
-                                    print('success -> ${api.$1}');
                                     setState(() {
                                       isLoading = false;
                                     });
                                     await Navigator.of(context).push(
                                       MaterialPageRoute(
-                                        builder: (_) => const AttendancePage(),
+                                        builder: (_) => AttendancePage(
+                                          imageFile: imageFile,
+                                        ),
                                       ),
                                     );
                                   } else {
