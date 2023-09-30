@@ -16,16 +16,15 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
 
   CategoryRepoImpl categoryRepoImpl = CategoryRepoImpl();
   FutureOr<void> _onCategoryFetch(CategoryDataFetch event, emit) async {
+    emit(CategoryLoading());
     final allCategory = await categoryRepoImpl.getCategories(event.token);
     final value = switch (allCategory) {
       Success(data: final succ) => succ,
       ServerFailor(error: final err) => err,
     };
     if (value is AllCategoryListResp) {
-      // print('company success !');
       emit(CategorySuccess(value));
     } else {
-      // print('company failor !');
       emit(CategoryFailed());
     }
   }
