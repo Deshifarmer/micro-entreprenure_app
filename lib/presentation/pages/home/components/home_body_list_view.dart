@@ -150,11 +150,11 @@ class HomeBodyListView extends StatelessWidget {
                       );
 
                   ///! Fetch Products
-                  context.read<ProductsBBloc>().add(
-                        ProductFFetchEvent(
-                          logINState.successLoginEntity.token,
-                        ),
-                      );
+                  // context.read<ProductsBBloc>().add(
+                  //       ProductFFetchEvent(
+                  //         logINState.successLoginEntity.token,
+                  //       ),
+                  //     );
                   // ProductsPage.route();
                   await Navigator.push(context, ProductsPage.route());
                 }

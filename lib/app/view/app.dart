@@ -68,9 +68,9 @@ class App extends StatelessWidget {
           create: (BuildContext context) => CategoryBloc(),
         ),
         //? products bloc (1st)
-        BlocProvider<ProductsBBloc>(
-          create: (BuildContext context) => ProductsBBloc(),
-        ),
+        // BlocProvider<ProductsBBloc>(
+        //   create: (BuildContext context) => ProductsBBloc(),
+        // ),
         //? product bloc
         BlocProvider<ProductsBloc>(
           create: (BuildContext context) => ProductsBloc(),

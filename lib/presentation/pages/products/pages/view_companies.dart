@@ -6,8 +6,7 @@ import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
-import 'package:deshifarmer/presentation/pages/products/bloc/products_bloc.dart';
-import 'package:deshifarmer/presentation/pages/products/pages/view_companies_products.dart';
+import 'package:deshifarmer/presentation/pages/products/pages/view_company_product2.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
@@ -41,12 +40,11 @@ class ViewAllComapnies extends StatelessWidget {
             );
 
         ///! Fetch Products
-        ///! TODO: uncomment this
-        context.read<ProductsBBloc>().add(
-              ProductFFetchEvent(
-                token,
-              ),
-            );
+        // context.read<ProductsBBloc>().add(
+        //       ProductFFetchEvent(
+        //         token,
+        //       ),
+        //     );
 
         return true;
       },
@@ -127,7 +125,6 @@ class ViewAllComapnies extends StatelessWidget {
               // ),
               BlocConsumer<CompanyBloc, CompanyState>(
                 listener: (context, state) {
-                  print('current copmany state -> $state');
                   if (state is CompanyFailed) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
@@ -205,24 +202,30 @@ class ViewAllComapnies extends StatelessWidget {
                             void Function({Object? returnValue}) action,
                           ) {
                             final loginState = context.read<LoginBloc>().state;
-                            if (loginState is LoginSuccess) {
-                              ///! TODO: uncomment this
-                              context.read<ProductsBBloc>().add(
-                                    ProductSearchEvent(
-                                      loginState.successLoginEntity.token,
-                                      company: currentCompany.df_id,
-                                      // query: productState.query,
-                                    ),
-                                  );
-                            }
+                            final token = loginState is LoginSuccess
+                                ? loginState.successLoginEntity.token
+                                : '';
+                            print(
+                                'current company from allcompanygridview -> ${currentCompany.full_name}');
+                            // context.read<ProductsBBloc>().add(
+                            //       ProductSearchEvent(
+                            //         token,
+                            //         company: currentCompany.df_id,
+                            //         // query: productState.query,
+                            //       ),
+                            //     );
 
-                            ///! TODO: uncomment this
-                            context.read<ProductsBloc>().add(
-                                  SelectCompanysEvent(
-                                    currentCompany.df_id ?? '',
-                                  ),
-                                );
-                            return CompanyProducts(
+                            // context.read<ProductsBloc>().add(
+                            //       SelectCompanysEvent(
+                            //         currentCompany.df_id ?? '',
+                            //       ),
+                            //     );
+                            // return CompanyProducts(
+                            //   companyName: currentCompany.full_name ?? '',
+                            //   companyID: currentCompany.df_id ?? '',
+                            // );
+                            return ViewCompanyProducts2(
+                              token: token,
                               companyName: currentCompany.full_name ?? '',
                               companyID: currentCompany.df_id ?? '',
                             );
