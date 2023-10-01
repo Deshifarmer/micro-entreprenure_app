@@ -15,8 +15,13 @@ class CustomProductsEvent extends ProductsEvent {
 }
 
 class SelectCompanysEvent extends ProductsEvent {
-  const SelectCompanysEvent(this.companyID);
+  const SelectCompanysEvent(this.companyID,{
+     this.category,
+     this.query,
+  });
   final String companyID;
+  final String? category;
+  final String? query;
 }
 
 class UnSelectCompanyEvent extends ProductsEvent {
