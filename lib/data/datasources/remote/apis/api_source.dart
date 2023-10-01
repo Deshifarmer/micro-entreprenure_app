@@ -329,127 +329,130 @@ class DeshiFarmerAPI {
   ///!(DANGER)
   ///!(DANGER)
 
-  ///! get PRODUCTS (DONOTEDIT)
-  Future<Result<ProductEntity, Exception>> getProducts(String token) async {
-    Map<String, String> auth = <String, String>{
-      'Authorization': 'Bearer $token',
-    };
-    final Uri url = Uri.parse(
-      ApiDatabaseParams.productListAPI,
-    );
-    try {
-      _headers.addAll(auth);
-      final http.Response response = await http.get(
-        url,
-        headers: _headers,
-      );
-      if (response.statusCode == 200) {
-        final result = await Isolate.run(() => json.decode(response.body)) as Map<String, dynamic>;
-        print('product successfully got');
-        try {
-          ProductEntity successResonse = ProductEntity.fromJson(result);
-          return Success<ProductEntity, Exception>(successResonse);
-        } catch (e) {
-          print('error -> $e');
-          result.forEach((key, value) {});
-        }
-        return ServerFailor<ProductEntity, Exception>(
-          Exception('Server failor'),
-        );
-      } else {
-        return ServerFailor<ProductEntity, Exception>(
-          Exception('Server failor'),
-        );
-      }
-    } catch (e) {
-      return ServerFailor<ProductEntity, Exception>(
-        Exception('Server failor -> $e'),
-      );
-    }
-  }
+  // ///! get PRODUCTS (DONOTEDIT)
+  // Future<Result<ProductEntity, Exception>> getProducts(String token) async {
+  //   Map<String, String> auth = <String, String>{
+  //     'Authorization': 'Bearer $token',
+  //   };
+  //   final Uri url = Uri.parse(
+  //     ApiDatabaseParams.productListAPI,
+  //   );
+  //   try {
+  //     _headers.addAll(auth);
+  //     final http.Response response = await http.get(
+  //       url,
+  //       headers: _headers,
+  //     );
+  //     if (response.statusCode == 200) {
+  //       final result = await Isolate.run(() => json.decode(response.body))
+  //           as Map<String, dynamic>;
+  //       print('product successfully got');
+  //       try {
+  //         ProductEntity successResonse = ProductEntity.fromJson(result);
+  //         return Success<ProductEntity, Exception>(successResonse);
+  //       } catch (e) {
+  //         print('error -> $e');
+  //         result.forEach((key, value) {});
+  //       }
+  //       return ServerFailor<ProductEntity, Exception>(
+  //         Exception('Server failor'),
+  //       );
+  //     } else {
+  //       return ServerFailor<ProductEntity, Exception>(
+  //         Exception('Server failor'),
+  //       );
+  //     }
+  //   } catch (e) {
+  //     return ServerFailor<ProductEntity, Exception>(
+  //       Exception('Server failor -> $e'),
+  //     );
+  //   }
+  // }
 
-  /// get product (search, company, category)
-  Future<Result<ProductEntity, Exception>> getProductSearch(
-      String token, String? company, String? category, String? query) async {
-    Map<String, String> auth = <String, String>{
-      'Authorization': 'Bearer $token',
-    };
-    final Uri url = getTheProductURL(
-      query,
-      company,
-      category,
-    );
-    print('search url -> $url');
-    try {
-      _headers.addAll(auth);
-      final http.Response response = await http.get(
-        url,
-        headers: _headers,
-      );
-      print('search response -> ${response.statusCode}');
-      if (response.statusCode == 200) {
-        final result = await Isolate.run(() => json.decode(response.body)) as Map<String, dynamic>;
-        try {
-          ProductEntity successResonse = ProductEntity.fromJson(result);
-          return Success<ProductEntity, Exception>(successResonse);
-        } catch (e) {
-          print('error -> $e');
-          result.forEach((key, value) {});
-        }
-        return ServerFailor<ProductEntity, Exception>(
-          Exception('Server failor'),
-        );
-      } else {
-        return ServerFailor<ProductEntity, Exception>(
-          Exception('Server failor'),
-        );
-      }
-    } catch (e) {
-      return ServerFailor<ProductEntity, Exception>(
-        Exception('Server failor -> $e'),
-      );
-    }
-  }
+  // /// get product (search, company, category)
+  // Future<Result<ProductEntity, Exception>> getProductSearch(
+  //     String token, String? company, String? category, String? query) async {
+  //   Map<String, String> auth = <String, String>{
+  //     'Authorization': 'Bearer $token',
+  //   };
+  //   final Uri url = getTheProductURL(
+  //     query,
+  //     company,
+  //     category,
+  //   );
+  //   print('search url -> $url');
+  //   try {
+  //     _headers.addAll(auth);
+  //     final http.Response response = await http.get(
+  //       url,
+  //       headers: _headers,
+  //     );
+  //     print('search response -> ${response.statusCode}');
+  //     if (response.statusCode == 200) {
+  //       final result = await Isolate.run(() => json.decode(response.body))
+  //           as Map<String, dynamic>;
+  //       try {
+  //         ProductEntity successResonse = ProductEntity.fromJson(result);
+  //         return Success<ProductEntity, Exception>(successResonse);
+  //       } catch (e) {
+  //         print('error -> $e');
+  //         result.forEach((key, value) {});
+  //       }
+  //       return ServerFailor<ProductEntity, Exception>(
+  //         Exception('Server failor'),
+  //       );
+  //     } else {
+  //       return ServerFailor<ProductEntity, Exception>(
+  //         Exception('Server failor'),
+  //       );
+  //     }
+  //   } catch (e) {
+  //     return ServerFailor<ProductEntity, Exception>(
+  //       Exception('Server failor -> $e'),
+  //     );
+  //   }
+  // }
 
-  ///! Get Product Paginate
-  Future<Result<ProductEntity, Exception>> getProductsPaginate(
-    String token,
-    String page,
-  ) async {
-    Map<String, String> auth = <String, String>{
-      'Authorization': 'Bearer $token',
-    };
-    final Uri url = Uri.parse(
-      page,
-    );
-    try {
-      _headers.addAll(auth);
-      final http.Response response = await http.get(
-        url,
-        headers: _headers,
-      );
-      if (response.statusCode == 200) {
-        final result = json.decode(response.body) as Map<String, dynamic>;
-        try {
-          ProductEntity successResonse = ProductEntity.fromJson(result);
-          return Success<ProductEntity, Exception>(successResonse);
-        } catch (e) {
-          result.forEach((key, value) {});
-        }
-        return ServerFailor<ProductEntity, Exception>(
-          Exception('Server failor'),
-        );
-      } else {
-        return ServerFailor<ProductEntity, Exception>(
-          Exception('Server failor'),
-        );
-      }
-    } catch (e) {
-      return ServerFailor<ProductEntity, Exception>(
-        Exception('Server failor -> $e'),
-      );
-    }
-  }
+  // ///! Get Product Paginate
+  // Future<Result<ProductEntity, Exception>> getProductsPaginate(
+  //   String token,
+  //   String page,
+  // ) async {
+  //   Map<String, String> auth = <String, String>{
+  //     'Authorization': 'Bearer $token',
+  //   };
+  //   final Uri url = Uri.parse(
+  //     page,
+  //   );
+  //   try {
+  //     _headers.addAll(auth);
+  //     final http.Response response = await http.get(
+  //       url,
+  //       headers: _headers,
+  //     );
+  //     if (response.statusCode == 200) {
+  //       final result = await Isolate.run(() => json.decode(response.body))
+  //           as Map<String, dynamic>;
+  //       try {
+  //         ProductEntity successResonse = ProductEntity.fromJson(result);
+  //         return Success<ProductEntity, Exception>(successResonse);
+  //       } catch (e) {
+  //         result.forEach((key, value) {});
+  //       }
+  //       return ServerFailor<ProductEntity, Exception>(
+  //         Exception('Server failor'),
+  //       );
+  //     } else {
+  //       return ServerFailor<ProductEntity, Exception>(
+  //         Exception('Server failor'),
+  //       );
+  //     }
+  //   } catch (e) {
+  //     return ServerFailor<ProductEntity, Exception>(
+  //       Exception('Server failor -> $e'),
+  //     );
+  //   }
+  // }
 
   ///* Get single Farmer LIST
   Future<FarmerEntityAgain?> getSingleFarmer(
