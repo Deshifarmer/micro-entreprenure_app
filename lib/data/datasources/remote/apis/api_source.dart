@@ -24,6 +24,7 @@ import 'package:deshifarmer/domain/entities/orders_entity/all_orders.dart';
 import 'package:deshifarmer/domain/entities/orders_entity/order_response_entity.dart';
 import 'package:deshifarmer/domain/entities/products_entity/product_entity.dart';
 import 'package:deshifarmer/domain/entities/user_entity/user_profile_entity.dart';
+import 'package:deshifarmer/presentation/utils/get_product_url_utils.dart';
 import 'package:http/http.dart' as http;
 
 class DeshiFarmerAPI {
@@ -343,8 +344,51 @@ class DeshiFarmerAPI {
         headers: _headers,
       );
       if (response.statusCode == 200) {
-        final result = json.decode(response.body) as Map<String, dynamic>;
+        final result = await Isolate.run(() => json.decode(response.body)) as Map<String, dynamic>;
         print('product successfully got');
+        try {
+          ProductEntity successResonse = ProductEntity.fromJson(result);
+          return Success<ProductEntity, Exception>(successResonse);
+        } catch (e) {
+          print('error -> $e');
+          result.forEach((key, value) {});
+        }
+        return ServerFailor<ProductEntity, Exception>(
+          Exception('Server failor'),
+        );
+      } else {
+        return ServerFailor<ProductEntity, Exception>(
+          Exception('Server failor'),
+        );
+      }
+    } catch (e) {
+      return ServerFailor<ProductEntity, Exception>(
+        Exception('Server failor -> $e'),
+      );
+    }
+  }
+
+  /// get product (search, company, category)
+  Future<Result<ProductEntity, Exception>> getProductSearch(
+      String token, String? company, String? category, String? query) async {
+    Map<String, String> auth = <String, String>{
+      'Authorization': 'Bearer $token',
+    };
+    final Uri url = getTheProductURL(
+      query,
+      company,
+      category,
+    );
+    print('search url -> $url');
+    try {
+      _headers.addAll(auth);
+      final http.Response response = await http.get(
+        url,
+        headers: _headers,
+      );
+      print('search response -> ${response.statusCode}');
+      if (response.statusCode == 200) {
+        final result = await Isolate.run(() => json.decode(response.body)) as Map<String, dynamic>;
         try {
           ProductEntity successResonse = ProductEntity.fromJson(result);
           return Success<ProductEntity, Exception>(successResonse);
@@ -370,13 +414,13 @@ class DeshiFarmerAPI {
   ///! Get Product Paginate
   Future<Result<ProductEntity, Exception>> getProductsPaginate(
     String token,
-    int page,
+    String page,
   ) async {
     Map<String, String> auth = <String, String>{
       'Authorization': 'Bearer $token',
     };
     final Uri url = Uri.parse(
-      '${ApiDatabaseParams.productListPaginationAPI}$page',
+      page,
     );
     try {
       _headers.addAll(auth);
