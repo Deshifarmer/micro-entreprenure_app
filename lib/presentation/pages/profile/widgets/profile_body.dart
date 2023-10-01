@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
@@ -46,8 +47,8 @@ class ProfileBody extends StatelessWidget {
                     backgroundColor: Colors.transparent,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        checkDomain(
+                      child: CachedNetworkImage(
+                       imageUrl:  checkDomain(
                                 Strings.getServerOrLocal(ServerOrLocal.server),)
                             ? dummyImage
                             : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${userProfile.userProfile.photo}',

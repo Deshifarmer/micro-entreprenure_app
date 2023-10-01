@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/domain/entities/company_entity/company_response_entity.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
@@ -20,8 +21,9 @@ class CompanyCardView extends StatelessWidget {
           height: 42,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: Image.network(
-              '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage${currentCompany.photo}',
+            child: CachedNetworkImage(
+              imageUrl:
+                  '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage${currentCompany.photo}',
             ),
           ),
         ),

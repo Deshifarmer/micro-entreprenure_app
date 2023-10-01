@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/data/datasources/local/corps/corps_db.dart';
 import 'package:deshifarmer/data/models/add_farm_model.dart';
@@ -79,8 +80,9 @@ class FarmaddFormBody extends StatelessWidget {
                     if (farmAddState is FarmaddFormInitial) {
                       farmAddState.farmerID.text =
                           state.allFarmerListResp.farmers.first.farmer_id!;
-                    }                    ///! TODO: uncomment this
+                    }
 
+                    ///! TODO: uncomment this
 
                     return Padding(
                       padding: const EdgeInsets.symmetric(
@@ -123,32 +125,26 @@ class FarmaddFormBody extends StatelessWidget {
                             child: ListTile(
                               leading: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
-                                child: Image.network(
-                                  checkDomain(Strings.getServerOrLocal(
-                                          ServerOrLocal.server,),)
+                                child: CachedNetworkImage(
+                                  imageUrl: checkDomain(
+                                    Strings.getServerOrLocal(
+                                      ServerOrLocal.server,
+                                    ),
+                                  )
                                       ? dummyImage
                                       : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
                                   height: 50,
                                   width: 50,
-                                  errorBuilder: (
-                                    context,
-                                    error,
-                                    stackTrace,
-                                  ) {
-                                    return Center(
-                                      child: Text(
-                                        'Image Error',
-                                        textAlign: TextAlign.center,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall!
-                                            .copyWith(
-                                              color: Colors.redAccent,
-                                              fontStyle: FontStyle.italic,
-                                            ),
-                                      ),
-                                    );
-                                  },
+                                  progressIndicatorBuilder:
+                                      (context, url, downloadProgress) =>
+                                          Center(
+                                    child: CircularProgressIndicator(
+                                      value: downloadProgress.progress,
+                                      color: Colors.green[600],
+                                    ),
+                                  ),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.error),
                                 ),
                               ),
                               title: Text(value.full_name ?? ''),

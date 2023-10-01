@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
 import 'package:deshifarmer/presentation/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
@@ -83,8 +84,8 @@ class SelectGroupLeader extends StatelessWidget {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10),
-                            child: Image.network(
-                              checkDomain(
+                            child: CachedNetworkImage(
+                              imageUrl: checkDomain(
                                 Strings.getServerOrLocal(
                                   ServerOrLocal.server,
                                 ),
@@ -93,6 +94,14 @@ class SelectGroupLeader extends StatelessWidget {
                                   : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
                               height: 50,
                               width: 50,
+                              progressIndicatorBuilder:
+                                  (context, url, downloadProgress) =>
+                                      Center(
+                                        child: CircularProgressIndicator(
+                                                                      value: downloadProgress.progress,
+                                                                      color: Colors.green[600],
+                                                                    ),
+                                      ),
                             ),
                           ),
                           SizedBox(width: getProportionateScreenWidth(15)),

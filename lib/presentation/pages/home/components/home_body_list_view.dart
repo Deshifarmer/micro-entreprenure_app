@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/core/params/home_page_params.dart';
 import 'package:deshifarmer/domain/entities/user_entity/user_profile_entity.dart';
@@ -42,8 +43,9 @@ class HomeBodyListView extends StatelessWidget {
                 size: const Size.fromRadius(
                   100,
                 ), // Image radius
-                child: Image.network(
-                  '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage${usrProfile.photo}',
+                child: CachedNetworkImage(
+                  imageUrl:
+                      '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage${usrProfile.photo}',
                   fit: BoxFit.cover,
                 ),
               ),
