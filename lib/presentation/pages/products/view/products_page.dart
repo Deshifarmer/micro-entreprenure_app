@@ -1,7 +1,9 @@
 import 'package:deshifarmer/presentation/blocs/cart/cart_bloc.dart';
+import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/pdetail/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/components/cart_btn_components.dart';
 import 'package:deshifarmer/presentation/pages/products/widgets/pbody_2.dart';
+import 'package:deshifarmer/presentation/pages/products/widgets/pbody_3.dart';
 import 'package:flutter/material.dart';
 
 /// {@template products_page}
@@ -21,12 +23,12 @@ class ProductsPage extends StatelessWidget {
     // const prevItem = 0;
     // final cartBloc = context.read<CartBloc>().state;
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('পণ্য কিনুন'),
-      //   actions: const [
-      //     CartBtnPP(),
-      //   ],
-      // ),
+      appBar: AppBar(
+        title: const Text('পণ্য কিনুন'),
+        actions: const [
+          CartBtnPP(),
+        ],
+      ),
       body: const ProductsView(),
     );
   }
@@ -41,6 +43,11 @@ class ProductsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProductsBody2();
+    final loginState = context.read<LoginBloc>().state;
+    final token =
+        (loginState is LoginSuccess) ? loginState.successLoginEntity.token : '';
+    return ProductsBody3(
+      token: token,
+    );
   }
 }
