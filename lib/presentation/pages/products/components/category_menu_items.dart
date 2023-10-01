@@ -1,6 +1,5 @@
 import 'package:deshifarmer/domain/entities/category_entity/category_entity.dart';
 import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
 import 'package:deshifarmer/presentation/pages/activity/activity.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/bloc/products_bloc.dart';
@@ -76,27 +75,27 @@ class CategoryMenuItems extends StatelessWidget {
               if (productState.companyID != null) {
                 if (loginState is LoginSuccess) {
                   ///! TODO: uncomment this
-                  context.read<ProductsBBloc>().add(
-                        ProductSearchEvent(
-                          loginState.successLoginEntity.token,
-                          cat: value.id.toString(),
-                          company: productState.companyID,
-                          query: productState.query,
-                        ),
-                      );
+                  // context.read<ProductsBBloc>().add(
+                  //       ProductSearchEvent(
+                  //         loginState.successLoginEntity.token,
+                  //         cat: value.id.toString(),
+                  //         company: productState.companyID,
+                  //         query: productState.query,
+                  //       ),
+                  //     );
                 }
               } else {
                 /// COMPOANY IS NOT SELECTED
                 ///! TODO: uncomment this
                 if (loginState is LoginSuccess) {
-                  context.read<ProductsBBloc>().add(
-                        ProductSearchEvent(
-                          loginState.successLoginEntity.token,
-                          cat: value.id.toString(),
-                          // company: null,
-                          query: productState.query,
-                        ),
-                      );
+                  // context.read<ProductsBBloc>().add(
+                  //       ProductSearchEvent(
+                  //         loginState.successLoginEntity.token,
+                  //         cat: value.id.toString(),
+                  //         // company: null,
+                  //         query: productState.query,
+                  //       ),
+                  //     );
                 }
               }
 
