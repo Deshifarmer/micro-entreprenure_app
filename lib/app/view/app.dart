@@ -10,11 +10,15 @@ import 'package:deshifarmer/presentation/blocs/my_unassign_farmers/my_unassign_f
 import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/cubit/add_group/add_farmer_to_group_cubit.dart';
+
 import 'package:deshifarmer/presentation/cubit/groups/get_group_cubit.dart';
+import 'package:deshifarmer/presentation/cubit/product_search/search_products_cubit_cubit.dart';
+import 'package:deshifarmer/presentation/pages/activity/activity.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:deshifarmer/presentation/pages/add_group/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/agri_advisory/bloc/agri_advisory_bloc.dart';
 import 'package:deshifarmer/presentation/pages/attendance/bloc/attendance_bloc.dart';
+import 'package:deshifarmer/presentation/pages/crop_insurance/bloc/crop_insurance_bloc.dart';
 import 'package:deshifarmer/presentation/pages/farmadd_form/bloc/farmadd_form_bloc.dart';
 import 'package:deshifarmer/presentation/pages/group_detail/bloc/group_detail_bloc.dart';
 import 'package:deshifarmer/presentation/pages/home/home.dart';
@@ -141,6 +145,20 @@ class App extends StatelessWidget {
         // AgriAdvisoryBloc
         BlocProvider<AgriAdvisoryBloc>(
           create: (BuildContext context) => AgriAdvisoryBloc(),
+        ),
+
+        /// SearchProductsCubitCubit
+        BlocProvider<SearchProductsCubitCubit>(
+          create: (BuildContext context) => SearchProductsCubitCubit(),
+        ),
+
+        /// activity bloc
+        BlocProvider<ActivityBloc>(
+          create: (BuildContext context) => ActivityBloc(),
+        ),
+        // CropInsuranceBloc
+        BlocProvider<CropInsuranceBloc>(
+          create: (BuildContext context) => CropInsuranceBloc(),
         ),
       ],
       // create: (context) => SubjectBloc(),

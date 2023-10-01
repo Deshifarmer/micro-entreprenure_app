@@ -1,5 +1,6 @@
 import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
 import 'package:deshifarmer/presentation/pages/commision/bloc/bloc.dart';
+import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/bloc/products_bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/components/company_card_view.dart';
 import 'package:flutter/material.dart';
@@ -35,24 +36,47 @@ class CampanyCircularListView extends StatelessWidget {
                   builder: (context, companyState) {
                     return InkWell(
                       onTap: () {
+                        final loginState = context.read<LoginBloc>().state;
+                        final token = loginState is LoginSuccess
+                            ? loginState.successLoginEntity.token
+                            : '';
                         if (companyState is ProductComanySelect) {
                           if (currentCompany.df_id == companyState.companyID) {
                             context
                                 .read<ProductsBloc>()
                                 .add(const UnSelectCompanyEvent());
+
+                            // get the company products from ProductsBBloc
+                            // context.read<ProductsBBloc>().add(
+                            //       ProductSearchEvent(
+                            //         token,
+                            //         company: '',
+                            //         cat: '',
+                            //         query: '',
+                            //       ),
+                            //     );
                           } else {
                             context.read<ProductsBloc>().add(
                                   SelectCompanysEvent(
                                     currentCompany.df_id ?? '',
                                   ),
                                 );
+
+                            // get the company products from ProductsBBloc
+                            // context.read<ProductsBBloc>().add(
+                            //       ProductSearchEvent(
+                            //         token,
+                            //         company: currentCompany.df_id ?? '',
+                            //         cat: '',
+                            //         query: '',
+                            //       ),
+                            //     );
                           }
                         } else {
                           context.read<ProductsBloc>().add(
                                 SelectCompanysEvent(currentCompany.df_id ?? ''),
                               );
                         }
-                        print("company ID -> ${currentCompany.df_id ?? ''}");
                       },
                       child: Tooltip(
                         message: currentCompany.full_name ?? '',

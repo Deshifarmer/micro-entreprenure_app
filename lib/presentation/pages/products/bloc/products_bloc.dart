@@ -22,8 +22,13 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     SelectCompanysEvent event,
     Emitter<ProductsState> emit,
   ) {
-    print('selecting company -> ${event.companyID}');
-    emit(ProductComanySelect(event.companyID));
+    emit(
+      ProductComanySelect(
+        event.companyID,
+        event.category,
+        event.query,
+      ),
+    );
   }
 
   ///? unselect company

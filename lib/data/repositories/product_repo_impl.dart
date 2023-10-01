@@ -12,7 +12,7 @@ class ProductListRepoImpl extends ProductRepo {
 
   @override
   Future<Result<ProductEntity, Exception>> getProductListoPaginate(
-      String token, int page,) {
+      String token, String page,) {
     return _dfAPi.getProductsPaginate(token, page);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:deshifarmer/core/error/exceptions.dart';
+import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
 import 'package:deshifarmer/data/repositories/product_repo_impl.dart';
 import 'package:deshifarmer/domain/entities/products_entity/product_data_entity.dart';
 import 'package:deshifarmer/domain/entities/products_entity/product_entity.dart';
@@ -53,10 +54,38 @@ class ProductsBBloc extends Bloc<ProductsEEvent, ProductsSState> {
         );
       }
     });
+    on<ProductSearchEvent>((ProductSearchEvent event, emit) async {
+      // clear the product list
+      _productDatas.clear();
+      final products = await deshiFarmerAPI.getProductSearch(
+        event.token,
+        event.company,
+        event.cat,
+        event.query,
+      );
+      final value = switch (products) {
+        Success(data: final succ) => succ,
+        ServerFailor(error: final err) => err,
+      };
+      if (value is ProductEntity) {
+        if (value.data != null) {
+          _productDatas.addAll(value.data!);
+        }
+        emit(
+          ProductSSuccess(
+            productEntity: value,
+            productDatas: _productDatas,
+          ),
+        );
+      } else {
+        emit(ProductFFailed());
+      }
+    });
   }
   final List<ProductData> _productDatas = [];
 
   /// Fetch next page paginate
 
   ProductListRepoImpl productListRepoImpl = ProductListRepoImpl();
+  DeshiFarmerAPI deshiFarmerAPI = DeshiFarmerAPI();
 }

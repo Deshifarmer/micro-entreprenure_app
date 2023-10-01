@@ -1,11 +1,13 @@
 import 'package:deshifarmer/domain/entities/category_entity/category_entity.dart';
 import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
+import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
 import 'package:deshifarmer/presentation/pages/activity/activity.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/bloc/products_bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/snackbar_custom.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class CategoryMenuItems extends StatelessWidget {
   const CategoryMenuItems({
@@ -40,8 +42,17 @@ class CategoryMenuItems extends StatelessWidget {
               color: Colors.grey,
             ),
           ),
-          child: const CircularProgressIndicator(),
-        );
+          child: Icon(
+            Icons.menu,
+            color: Colors.black.withOpacity(0.5),
+          ),
+        )
+            .animate(
+              onPlay: (controller) => controller.repeat(reverse: true),
+            )
+            .shimmer(
+              color: Colors.grey,
+            );
       } else if (state is CategorySuccess) {
         ///! PERF: categories
         return PopupMenuButton<CategoryEntity>(
@@ -65,28 +76,28 @@ class CategoryMenuItems extends StatelessWidget {
               if (productState.companyID != null) {
                 if (loginState is LoginSuccess) {
                   ///! TODO: uncomment this
-                  // context.read<ProductsBBloc>().add(
-                  //       ProductSearchEvent(
-                  //         loginState.successLoginEntity.token,
-                  //         cat: value.id.toString(),
-                  //         company: productState.companyID,
-                  //         query: productState.query,
-                  //       ),
-                  //     );
+                  context.read<ProductsBBloc>().add(
+                        ProductSearchEvent(
+                          loginState.successLoginEntity.token,
+                          cat: value.id.toString(),
+                          company: productState.companyID,
+                          query: productState.query,
+                        ),
+                      );
                 }
               } else {
                 /// COMPOANY IS NOT SELECTED
                 ///! TODO: uncomment this
-                // if (loginState is LoginSuccess) {
-                //   context.read<ProductsBBloc>().add(
-                //         ProductSearchEvent(
-                //           loginState.successLoginEntity.token,
-                //           cat: value.id.toString(),
-                //           // company: null,
-                //           query: productState.query,
-                //         ),
-                //       );
-                // }
+                if (loginState is LoginSuccess) {
+                  context.read<ProductsBBloc>().add(
+                        ProductSearchEvent(
+                          loginState.successLoginEntity.token,
+                          cat: value.id.toString(),
+                          // company: null,
+                          query: productState.query,
+                        ),
+                      );
+                }
               }
 
               // print('category -> ${productState.category}');
@@ -147,7 +158,7 @@ class CategoryMenuItems extends StatelessWidget {
           ),
         );
       }
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     });
   }
 }

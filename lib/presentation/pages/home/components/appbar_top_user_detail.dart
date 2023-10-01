@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/domain/entities/user_entity/user_profile_entity.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
@@ -28,8 +29,9 @@ class AppBarTopUserDetail extends StatelessWidget {
                 size: const Size.fromRadius(
                   25,
                 ), // Image radius
-                child: Image.network(
-                  '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage${usrProfile.photo}',
+                child: CachedNetworkImage(
+                  imageUrl:
+                      '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage${usrProfile.photo}',
                   fit: BoxFit.cover,
                 ),
               ),

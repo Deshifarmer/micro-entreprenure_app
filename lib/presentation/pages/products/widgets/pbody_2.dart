@@ -92,49 +92,49 @@ class ProductsBody2 extends StatelessWidget {
                             ///! TODO: uncomment this
                             ///! PERF: 1st. check if theres any company/cat already select
 
-                            // if (productState is ProductComanySelect) {
-                            //   ///! TODO: Implement the Search functionality with holding the prev args
-                            //   context.read<ProductsBloc>().add(
-                            //         SelectCompanysEvent(
-                            //           productState.companyID,
-                            //           category: productState.category,
-                            //           query: value.isEmpty ? '' : value,
-                            //         ),
-                            //       );
+                            if (productState is ProductComanySelect) {
+                              ///! TODO: Implement the Search functionality with holding the prev args
+                              context.read<ProductsBloc>().add(
+                                    SelectCompanysEvent(
+                                      productState.companyID,
+                                      category: productState.category,
+                                      query: value.isEmpty ? '' : value,
+                                    ),
+                                  );
 
-                            //   if (loginState is LoginSuccess) {
-                            //     context.read<ProductsBBloc>().add(
-                            //           ProductSearchEvent(
-                            //             loginState.successLoginEntity.token,
-                            //             query: value.isEmpty ? '' : value,
-                            //             cat: productState.category,
-                            //             company: productState.companyID,
-                            //             // cat: productState.category,
-                            //             // company: productState.companyID,
-                            //           ),
-                            //         );
-                            //   }
-                            // } else {
-                            //   ///! TODO: Implement the Search functionality with holding the prev args
-                            //   context.read<ProductsBloc>().add(
-                            //         SelectCompanysEvent(
-                            //           '',
-                            //           category: '',
-                            //           query: value.isEmpty ? '' : value,
-                            //         ),
-                            //       );
+                              if (loginState is LoginSuccess) {
+                                context.read<ProductsBBloc>().add(
+                                      ProductSearchEvent(
+                                        loginState.successLoginEntity.token,
+                                        query: value.isEmpty ? '' : value,
+                                        cat: productState.category,
+                                        company: productState.companyID,
+                                        // cat: productState.category,
+                                        // company: productState.companyID,
+                                      ),
+                                    );
+                              }
+                            } else {
+                              ///! TODO: Implement the Search functionality with holding the prev args
+                              context.read<ProductsBloc>().add(
+                                    SelectCompanysEvent(
+                                      '',
+                                      category: '',
+                                      query: value.isEmpty ? '' : value,
+                                    ),
+                                  );
 
-                            //   if (loginState is LoginSuccess) {
-                            //     context.read<ProductsBBloc>().add(
-                            //           ProductSearchEvent(
-                            //             loginState.successLoginEntity.token,
-                            //             query: value.isEmpty ? '' : value,
-                            //             // cat: productState.category,
-                            //             // company: productState.companyID,
-                            //           ),
-                            //         );
-                            //   }
-                            // }
+                              if (loginState is LoginSuccess) {
+                                context.read<ProductsBBloc>().add(
+                                      ProductSearchEvent(
+                                        loginState.successLoginEntity.token,
+                                        query: value.isEmpty ? '' : value,
+                                        // cat: productState.category,
+                                        // company: productState.companyID,
+                                      ),
+                                    );
+                              }
+                            }
                           },
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.all(8),
@@ -328,6 +328,7 @@ class ProductsBody2 extends StatelessWidget {
           horizontal: 10,
         ),
         child: ListView(
+          cacheExtent: 1000,
           physics: const BouncingScrollPhysics(),
           controller: _scrollController
             ..addListener(() {
@@ -336,45 +337,46 @@ class ProductsBody2 extends StatelessWidget {
                 final pb = context.read<ProductsBBloc>().state;
                 // print('goin 60% of the screen -> $pb');
                 ///! TODO: uncomment this
-                // if (pb is ProductSSuccess) {
-                //   // print('success productsssssssss');
-                //   if (pb.productEntity.links?.next != null) {
-                //     //? fetch the nxt page
-                //     if (loginState is LoginSuccess) {
-                //       // print(
-                //       //   'nexty page ${pb.productEntity.links?.next} ${loginState.successLoginEntity.token}',
-                //       // );
-                //       context.read<ProductsBBloc>().add(
-                //             ProductFFetchPaginationEvent(
-                //               nextPage: pb.productEntity.links!.next!,
-                //               token: loginState.successLoginEntity.token,
-                //             ),
-                //           );
-                //     }
-                //   }
-                /* else {
+                if (pb is ProductSSuccess) {
+                  // print('success productsssssssss');
+                  if (pb.productEntity.links?.next != null) {
+                    //? fetch the nxt page
+                    if (loginState is LoginSuccess) {
+                      // print(
+                      //   'nexty page ${pb.productEntity.links?.next} ${loginState.successLoginEntity.token}',
+                      // );
+                      context.read<ProductsBBloc>().add(
+                            ProductFFetchPaginationEvent(
+                              nextPage: pb.productEntity.links!.next!,
+                              token: loginState.successLoginEntity.token,
+                            ),
+                          );
+                    }
+                  }
+                  /* else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       errorSnackBar('Reached at the end of the List!'),
                     );
                   } */
-              } else {
-                print('not success product');
-              }
-              // print(
-              //     'offset -> ${_scrollController.offset} || ${_scrollController.position.maxScrollExtent * 0.6}');
-              // print('aaaaaaaaaaaaaaaaaaa');
-              // print(
-              //   _scrollController.offset >
-              //       _scrollController.position.maxScrollExtent * 0.6,
-              // );
+                } else {
+                  print('not success product');
+                }
+                // print(
+                //     'offset -> ${_scrollController.offset} || ${_scrollController.position.maxScrollExtent * 0.6}');
+                // print('aaaaaaaaaaaaaaaaaaa');
+                // print(
+                //   _scrollController.offset >
+                //       _scrollController.position.maxScrollExtent * 0.6,
+                // );
 // ProductsBBloc
-              //? check if the next page is not [null]
-              // state.productEntity.links.next
-              // final nxtPage =
-              //     state.productEntity.links?.next?.split('=').last;
+                //? check if the next page is not [null]
+                // state.productEntity.links.next
+                // final nxtPage =
+                //     state.productEntity.links?.next?.split('=').last;
 
-              // print('end of the page $nxtPage');
-              // }
+                // print('end of the page $nxtPage');
+                // }
+              }
             }),
           children: [
             /// TextField
@@ -589,7 +591,7 @@ class ProductsBody2 extends StatelessWidget {
                     color: Colors.grey,
                   ),
 
-                  /// company listview
+                  ///! company listview
                   /// TODO: undo this
                   const CampanyCircularListView(),
                   /* TextButton(
@@ -610,7 +612,6 @@ class ProductsBody2 extends StatelessWidget {
             ),
 
             height10,
-            //TODO:undo this
             Container(
               // margin: const EdgeInsets.symmetric(
               //   horizontal: 10,
@@ -631,7 +632,6 @@ class ProductsBody2 extends StatelessWidget {
               ),
             ),
             height10,
-//TODO: undo this
             Container(
               margin: const EdgeInsets.symmetric(
                 vertical: 10,
