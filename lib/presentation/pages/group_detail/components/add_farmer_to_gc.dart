@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
 import 'package:deshifarmer/presentation/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
@@ -59,8 +60,9 @@ class AddFarmerToTheAGroup extends StatelessWidget {
                   child: ListTile(
                     leading: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
                         height: 50,
                         width: 50,
                       ),

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/group_farmer_entity.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
@@ -46,8 +47,8 @@ class _SingleFarmerCardState extends State<SingleFarmerCard> {
                       padding: const EdgeInsets.all(8.0),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                          checkDomain(
+                        child: CachedNetworkImage(
+                          imageUrl: checkDomain(
                             Strings.getServerOrLocal(
                               ServerOrLocal.server,
                             ),

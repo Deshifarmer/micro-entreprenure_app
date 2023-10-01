@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:flutter/material.dart';
@@ -21,30 +22,23 @@ class FarmerCircularAvater extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: image != null
-                ? Image.network(
-                    checkDomain(Strings.getServerOrLocal(ServerOrLocal.server))
+                ? CachedNetworkImage(
+                   imageUrl:  checkDomain(Strings.getServerOrLocal(ServerOrLocal.server))
                         ? dummyImage
                         : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/$image',
                     // : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${state.groupDetailEntity.group_leader?.image}',
                     height: 80,
                     width: 80,
-                    errorBuilder: (
-                      context,
-                      error,
-                      stackTrace,
-                    ) {
-                      return Center(
-                        child: Text(
-                          'Image Error',
-                          textAlign: TextAlign.center,
-                          style:
-                              Theme.of(context).textTheme.titleSmall!.copyWith(
-                                    color: Colors.redAccent,
-                                    fontStyle: FontStyle.italic,
-                                  ),
-                        ),
-                      );
-                    },
+                    progressIndicatorBuilder:
+                                          (context, url, downloadProgress) =>
+                                              Center(
+                                        child: CircularProgressIndicator(
+                                          value: downloadProgress.progress,
+                                          color: Colors.green[600],
+                                        ),
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
                   )
                 : const CircleAvatar(radius: 40),
           ),

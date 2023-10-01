@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/core/params/api_database_params.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
@@ -192,29 +193,21 @@ class ViewOrderDetail extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(
                                       getProportionateScreenWidth(10),
                                     ),
-                                    child: Image.network(
-                                      '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${product['product_details']['image']}',
+                                    child: CachedNetworkImage(
+                                      imageUrl:
+                                          '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${product['product_details']['image']}',
                                       height: getProportionateScreenHeight(60),
                                       width: getProportionateScreenWidth(60),
-                                      errorBuilder: (
-                                        context,
-                                        error,
-                                        stackTrace,
-                                      ) {
-                                        return Center(
-                                          child: Text(
-                                            'Image Error',
-                                            textAlign: TextAlign.center,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall!
-                                                .copyWith(
-                                                  color: Colors.redAccent,
-                                                  fontStyle: FontStyle.italic,
-                                                ),
-                                          ),
-                                        );
-                                      },
+                                      progressIndicatorBuilder:
+                                          (context, url, downloadProgress) =>
+                                              Center(
+                                        child: CircularProgressIndicator(
+                                          value: downloadProgress.progress,
+                                          color: Colors.green[600],
+                                        ),
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
                                     ),
                                   ),
                                   Padding(
