@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:deshifarmer/domain/entities/products_entity/product_data_entity.dart';
 import 'package:deshifarmer/presentation/pages/pdetail/view/pdetail_page.dart';
 import 'package:deshifarmer/presentation/pages/products/components/product_image.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 // import 'package:flutter_html/flutter_html.dart';
@@ -19,8 +20,11 @@ class ProductCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8),
       child: OpenContainer(
-        closedColor: Colors.green,
-        openColor: Colors.transparent,
+        // closedColor: Colors.green,
+        openColor: backgroundColor2,
+        closedColor: backgroundColor2,
+        openElevation: 0,
+        closedElevation: 0,
         middleColor: Colors.transparent,
         closedBuilder: (context, cb) {
           return Card(
@@ -48,10 +52,15 @@ class ProductCard extends StatelessWidget {
                   ),
                 ),
                 // title
-                Text(
-                  product.name ?? '',
-                  style: Theme.of(context).textTheme.titleSmall,
-                  textAlign: TextAlign.center,
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 4,
+                  ),
+                  child: Text(
+                    product.name ?? '',
+                    style: Theme.of(context).textTheme.titleSmall,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
                 // type
                 Text(

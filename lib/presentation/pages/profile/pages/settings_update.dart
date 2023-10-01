@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
@@ -33,8 +34,9 @@ class ProfileSettingsPage extends StatelessWidget {
             backgroundColor: Colors.transparent,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                checkDomain(Strings.getServerOrLocal(ServerOrLocal.server))
+              child: CachedNetworkImage(
+                imageUrl: checkDomain(
+                        Strings.getServerOrLocal(ServerOrLocal.server))
                     ? dummyImage
                     : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/$farmerPhoto',
                 fit: BoxFit.cover,

@@ -1,10 +1,12 @@
 import 'package:animations/animations.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
+import 'package:deshifarmer/presentation/pages/products/bloc/products_bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/pages/view_companies_products.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
@@ -161,33 +163,22 @@ class ViewAllComapnies extends StatelessWidget {
                                   height: getProportionateScreenHeight(50),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
-                                    child: Image.network(
-                                      checkDomain(
+                                    child: CachedNetworkImage(
+                                      imageUrl: checkDomain(
                                         Strings.getServerOrLocal(
                                           ServerOrLocal.server,
                                         ),
                                       )
                                           ? dummyImage
                                           : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage${currentCompany.photo}',
-                                      errorBuilder: (
-                                        context,
-                                        error,
-                                        stackTrace,
-                                      ) {
-                                        return Center(
-                                          child: Text(
-                                            'Image Error',
-                                            textAlign: TextAlign.center,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall!
-                                                .copyWith(
-                                                  color: Colors.redAccent,
-                                                  fontStyle: FontStyle.italic,
-                                                ),
-                                          ),
-                                        );
-                                      },
+                                      progressIndicatorBuilder:
+                                          (context, url, downloadProgress) =>
+                                              CircularProgressIndicator(
+                                        value: downloadProgress.progress,
+                                        color: Colors.green[600],
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
                                     ),
                                   ),
                                 ),
@@ -216,23 +207,21 @@ class ViewAllComapnies extends StatelessWidget {
                             final loginState = context.read<LoginBloc>().state;
                             if (loginState is LoginSuccess) {
                               ///! TODO: uncomment this
-                              // context.read<ProductsBBloc>().add(
-                              //       ProductSearchEvent(
-                              //         loginState.successLoginEntity.token,
-                              //         company: currentCompany.df_id,
-                              //         // query: productState.query,
-                              //       ),
-                              //     );
+                              context.read<ProductsBBloc>().add(
+                                    ProductSearchEvent(
+                                      loginState.successLoginEntity.token,
+                                      company: currentCompany.df_id,
+                                      // query: productState.query,
+                                    ),
+                                  );
                             }
 
                             ///! TODO: uncomment this
-                            // context.read<ProductsBloc>().add(
-                            //       SelectCompanysEvent(
-                            //         currentCompany.df_id,
-                            //         category: null,
-                            //         query: null,
-                            //       ),
-                            //     );
+                            context.read<ProductsBloc>().add(
+                                  SelectCompanysEvent(
+                                    currentCompany.df_id ?? '',
+                                  ),
+                                );
                             return CompanyProducts(
                               companyName: currentCompany.full_name ?? '',
                               companyID: currentCompany.df_id ?? '',
