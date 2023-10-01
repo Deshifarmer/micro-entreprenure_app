@@ -17,6 +17,7 @@ import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/logistic/logistic.dart';
 import 'package:deshifarmer/presentation/pages/order/view/order_page.dart';
 import 'package:deshifarmer/presentation/pages/products/view/products_page.dart';
+import 'package:deshifarmer/presentation/pages/products/widgets/pbody_3.dart';
 import 'package:deshifarmer/presentation/widgets/home_page_icon_widget.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/cupertino.dart';
@@ -101,13 +102,15 @@ class QuickActions extends StatelessWidget {
                                 .add(CompanyFetchEvent(token));
                             // ProductsBBloc
                             // fetch the products data
-                            context
-                                .read<ProductsBBloc>()
-                                .add(ProductFFetchEvent(token));
+                            // context
+                            //     .read<ProductsBBloc>()
+                            //     .add(ProductFFetchEvent(token));
                             Navigator.push(
                               context,
                               CupertinoPageRoute(
-                                builder: (_) => ProductsPage(),
+                                builder: (_) => const ProductsPage(),
+                                // builder: (_) => ProductsBody3(token: token),
+                                // ProductsBody3
                               ),
                             );
                           case 'অর্ডার তালিকা':

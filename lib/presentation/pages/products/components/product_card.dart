@@ -28,6 +28,8 @@ class ProductCard extends StatelessWidget {
         middleColor: Colors.transparent,
         closedBuilder: (context, cb) {
           return Card(
+            color: Colors.white,
+            elevation: 0,
             child: Column(
               children: [
                 Hero(
@@ -46,9 +48,11 @@ class ProductCard extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   child: Text(
                     product.company ?? '',
-                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                        // fontStyle: FontStyle.italic,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          // fontStyle: FontStyle.italic,
+                          color: companyTextColor,
                         ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 // title
@@ -58,11 +62,11 @@ class ProductCard extends StatelessWidget {
                   ),
                   child: Text(
                     product.name ?? '',
-                    style: Theme.of(context).textTheme.titleSmall,
+                    style: Theme.of(context).textTheme.bodyMedium,
                     textAlign: TextAlign.center,
                   ),
                 ),
-                // type
+                // category
                 Text(
                   product.category ?? '',
                   style: Theme.of(context).textTheme.labelSmall!.copyWith(
@@ -74,8 +78,9 @@ class ProductCard extends StatelessWidget {
                 // ammount
                 Flexible(
                   child: Text(
-                    "${product.sell_price ?? ''} টাকা",
+                    "৳ ${product.sell_price ?? ''} টাকা",
                     overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ),
               ],

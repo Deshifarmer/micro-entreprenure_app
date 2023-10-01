@@ -15,11 +15,8 @@ import 'package:deshifarmer/presentation/widgets/snackbar_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-/// {@template profile_body}
 /// Body of the ProfilePage.
-///
 /// Add what it does
-/// {@endtemplate}
 class ProfileBody extends StatelessWidget {
   /// {@macro profile_body}
   const ProfileBody({super.key});
