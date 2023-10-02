@@ -17,9 +17,11 @@ import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/widgets/a_dialog_forimage.dart';
 import 'package:deshifarmer/presentation/widgets/home_page_icon_widget.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
+import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:restart_app/restart_app.dart';
 
 /// {@template home_body}
 /// Body of the HomePage.
@@ -146,11 +148,15 @@ class HomeBody extends StatelessWidget {
                             // );
                             case 'নতুন কৃষক যোগ':
                               await Navigator.push(
-                                  context, AddFarmerPage.route(),);
+                                context,
+                                AddFarmerPage.route(),
+                              );
 
                             case 'কমিশন':
                               await Navigator.push(
-                                  context, CommisionPage.route(),);
+                                context,
+                                CommisionPage.route(),
+                              );
                             case 'নতুন ফার্ম যোগ':
                               // MyFarmerBloc
                               context.read<MyFarmerBloc>().add(
@@ -159,7 +165,9 @@ class HomeBody extends StatelessWidget {
                                     ),
                                   );
                               await Navigator.push(
-                                  context, FarmaddFormPage.route(),);
+                                context,
+                                FarmaddFormPage.route(),
+                              );
                             default:
                           }
                         },
@@ -225,6 +233,12 @@ class HomeBody extends StatelessWidget {
                   children: [
                     LottieBuilder.asset('assets/animations/failed.json'),
                     const Text('কিছু ভুল হয়েছে'),
+
+                    /// a button to restart the app
+                    const SecondayButtonGreen(
+                      onpress: Restart.restartApp,
+                      title: 'পুনরায় চেষ্টা করুন',
+                    ),
                   ],
                 ),
               ),
