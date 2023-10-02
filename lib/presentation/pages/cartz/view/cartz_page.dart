@@ -1,4 +1,9 @@
+import 'package:deshifarmer/presentation/blocs/cart/cart_bloc.dart';
+import 'package:deshifarmer/presentation/cubit/dropdown/dropdown_cubit.dart';
+import 'package:deshifarmer/presentation/pages/cartz/bloc/bloc.dart';
+import 'package:deshifarmer/presentation/pages/cartz/pages/conformation_page.dart';
 import 'package:deshifarmer/presentation/pages/cartz/widgets/cartz_body.dart';
+import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:flutter/material.dart';
 
 /// {@template cartz_page}
@@ -21,16 +26,46 @@ class CartzPage extends StatelessWidget {
       ),
       body: const CartzView(),
       bottomNavigationBar: BottomAppBar(
-        child: ElevatedButton(
-          style: const ButtonStyle(
-            surfaceTintColor: MaterialStatePropertyAll(Colors.green),
-            shadowColor: MaterialStatePropertyAll(Colors.greenAccent),
-            // overlayColor: MaterialStatePropertyAll(
-            //   Colors.green[600],
-            // ),
-          ),
-          onPressed: () {},
-          child: const Text('অর্ডার করুন'),
+        color: Colors.transparent,
+        elevation: 0,
+        child: SecondayButtonGreen(
+          onpress: () {
+            final cartItems = context.read<CartBloc>().state;
+
+            /// check if the items are not empty
+            if (cartItems is CartAddingState) {
+              if (cartItems.carts.isEmpty) {
+                // show a snackbar
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('আপনার ব্যাগে কোন পণ্য নেই'),
+                  ),
+                );
+              }
+            } else if (context.read<DropdownForFarmerCubit>().state == null) {
+              // show a snackbar
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('আপনার কোন কৃষক নির্বাচন করা হয়নি'),
+                ),
+              );
+            } else if (context.read<DropdownForPaymentCubit>().state.isEmpty) {
+              // show a snackbar
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('আপনার কোন পেমেন্ট পদ্ধতি নির্বাচন করা হয়নি'),
+                ),
+              );
+            }
+
+            /// check if any farmer selected
+            /// if user selected user
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const OrderConformationPage()),
+            );
+          },
+          title: 'অর্ডার করুন',
         ),
       ),
     );
@@ -46,6 +81,9 @@ class CartzView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CartzBody();
+    return const Padding(
+      padding: EdgeInsets.all(10),
+      child: CartzBody(),
+    );
   }
 }
