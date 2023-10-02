@@ -23,6 +23,15 @@ class CartAddingState extends CartState {
     return total;
   }
 
+  int getTotalItems(){
+    var total = 0;
+    for (final element in carts.values) {
+      total = total + element.$2;
+    }
+
+    return total;
+  }
+
   @override
   List<Object> get props => [carts];
 }
