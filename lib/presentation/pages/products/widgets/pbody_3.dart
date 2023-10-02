@@ -3,22 +3,16 @@ import 'package:deshifarmer/domain/entities/category_entity/category_entity.dart
 import 'package:deshifarmer/domain/entities/products_entity/product_data_entity.dart';
 import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/bloc/products_bloc.dart';
-import 'package:deshifarmer/presentation/pages/products/components/cart_btn_components.dart';
-import 'package:deshifarmer/presentation/pages/products/components/category_menu_items.dart';
-import 'package:deshifarmer/presentation/pages/products/components/company_c_list_view.dart';
 import 'package:deshifarmer/presentation/pages/products/components/company_card_view.dart';
 import 'package:deshifarmer/presentation/pages/products/components/product_card.dart';
 import 'package:deshifarmer/presentation/pages/products/pages/view_companies.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
-import 'package:deshifarmer/presentation/widgets/snackbar_custom.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 /// {@template products_body}
@@ -50,6 +44,8 @@ class _ProductsBody3State extends State<ProductsBody3> {
     _pagingController.addPageRequestListener(_fetchPage);
     super.initState();
   }
+
+  String companySelect = '';
 
   Future<void> _fetchPage(int pageKey) async {
     try {
@@ -84,6 +80,10 @@ class _ProductsBody3State extends State<ProductsBody3> {
     _pagingController.refresh();
   }
 
+  final ScrollController customController = ScrollController();
+  final ScrollController pagingController = ScrollController();
+  final TextEditingController productSearchController = TextEditingController();
+  bool isTheEnd = false;
   @override
   Widget build(BuildContext context) {
     // final productState = context.read<ProductsBloc>().state;
@@ -93,24 +93,47 @@ class _ProductsBody3State extends State<ProductsBody3> {
         horizontal: 10,
       ),
       child: CustomScrollView(
+        cacheExtent: 100,
         shrinkWrap: true,
+        // if scrollcontroller reached then the end is true
+        controller: customController
+          ..addListener(
+            () {
+              if (customController.position.atEdge) {
+                // print(
+                //     'scroll controller -> ${customController.position.pixels}');
+                if (customController.position.pixels != 0) {
+                  setState(() {
+                    isTheEnd = true;
+                  });
+                } else {
+                  setState(() {
+                    isTheEnd = false;
+                  });
+                }
+              } else {
+                setState(() {
+                  isTheEnd = false;
+                });
+              }
+            },
+          ),
         slivers: [
+          ///! Search, Companies and Banner
           SliverAppBar(
             automaticallyImplyLeading: false,
             expandedHeight: getProportionateScreenHeight(200),
-            // floating: false,
-            // pinned: false,
-            // snap: false,
-            // stretch: false,
+            toolbarHeight: 0,
             bottom: PreferredSize(
               preferredSize: Size(
                 MediaQuery.of(context).size.width / 1,
-                getProportionateScreenHeight(250),
+                getProportionateScreenHeight(310),
               ),
               child: Column(
                 // mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  ///! Search field and category
                   Row(
                     children: [
                       Expanded(
@@ -123,6 +146,7 @@ class _ProductsBody3State extends State<ProductsBody3> {
 
                           ///! PERF: Searching Text Field
                           child: TextField(
+                            controller: productSearchController,
                             onChanged: (value) {
                               _updateSearchParams(
                                 value,
@@ -164,6 +188,11 @@ class _ProductsBody3State extends State<ProductsBody3> {
                           onSelected: (CategoryEntity value) {
                             // print('cat -> ${value.title} ${value.id}');
                             // _updateCat(value.id.toString());
+                            _updateSearchParams(
+                              _searchTerm ?? '',
+                              value.id.toString(),
+                              _company ?? '',
+                            );
                           },
                           enableFeedback: true,
                           surfaceTintColor: backgroundColor2,
@@ -203,105 +232,206 @@ class _ProductsBody3State extends State<ProductsBody3> {
 
                   ///! company list
                   Container(
-                    margin: const EdgeInsets.all(10),
-                    height: 100,
-                    child: BlocConsumer<CompanyBloc, CompanyState>(
-                      listener: (context, state) {},
-                      builder: (context, state) {
-                        if (state is CompanySuccess) {
-                          final allCompany = state.allCompanyListResp;
-                          return ListView.builder(
-                            shrinkWrap: true,
-                            reverse: true,
-                            scrollDirection: Axis.horizontal,
-                            itemCount: allCompany.allCompany.length,
-                            itemBuilder: (context, index) {
-                              final currentCompany =
-                                  allCompany.allCompany.elementAt(index);
-                              // final companyState = context.read<ProductsBloc>().state;
-                              // print('${Strings.domain}/storage${currentCompany.photo}');
-                              return BlocConsumer<ProductsBloc, ProductsState>(
-                                listener: (context, companyState) {
-                                  print('company states -> $companyState');
-                                },
-                                builder: (context, companyState) {
-                                  return InkWell(
-                                    onTap: () {
-                                      final loginState =
-                                          context.read<LoginBloc>().state;
-                                      final token = loginState is LoginSuccess
-                                          ? loginState.successLoginEntity.token
-                                          : '';
-                                      if (companyState is ProductComanySelect) {
-                                        if (currentCompany.df_id ==
-                                            companyState.companyID) {
-                                          context.read<ProductsBloc>().add(
-                                              const UnSelectCompanyEvent());
-
-                                          _updateSearchParams(
-                                            _searchTerm ?? '',
-                                            _cat ?? '',
-                                            '',
-                                          );
-                                        } else {
-                                          context.read<ProductsBloc>().add(
-                                                SelectCompanysEvent(
-                                                  currentCompany.df_id ?? '',
-                                                ),
-                                              );
-
-                                          _updateSearchParams(
-                                            _searchTerm ?? '',
-                                            _cat ?? '',
-                                            currentCompany.df_id ?? '',
-                                          );
-                                        }
-                                      } else {
-                                        context.read<ProductsBloc>().add(
-                                              SelectCompanysEvent(
-                                                  currentCompany.df_id ?? ''),
-                                            );
-                                      }
-                                    },
-                                    child: Tooltip(
-                                      message: currentCompany.full_name ?? '',
-                                      decoration: BoxDecoration(
-                                        color:
-                                            Colors.green[400]!.withOpacity(0.4),
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(10)),
-                                      ),
-                                      child: Container(
-                                        margin: const EdgeInsets.all(5),
-                                        padding: const EdgeInsets.all(10),
-                                        decoration: BoxDecoration(
-                                          color: companyState
-                                                  is ProductComanySelect
-                                              ? currentCompany.df_id ==
-                                                      companyState.companyID
-                                                  ? Colors.green[400]!
-                                                      .withOpacity(0.4)
-                                                  : null
-                                              : null,
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(10)),
-                                        ),
-                                        child: CompanyCardView(
-                                            currentCompany: currentCompany),
-                                      ),
+                    // margin: const EdgeInsets.all(10),
+                    // color: backgroundColor2,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6),
+                      border: Border.all(
+                        width: 0.6,
+                        // strokeAlign: 0.6,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    margin: const EdgeInsets.only(
+                      bottom: 10,
+                    ),
+                    // elevation: 1,
+                    // margin: const EdgeInsets.only(
+                    //   bottom: 20,
+                    // ),
+                    height: 140,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 10,
+                            horizontal: 15,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'কোম্পানি সমূহ ',
+                                // 'Companies',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall!
+                                    .copyWith(
+                                      color: Colors.grey[800],
+                                    ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    CupertinoPageRoute<ViewAllComapnies>(
+                                      builder: (context) =>
+                                          const ViewAllComapnies(),
                                     ),
                                   );
                                 },
+                                child: Text(
+                                  'আরো দেখুন',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall!
+                                      .copyWith(
+                                        color: primaryColor,
+                                      ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Divider(
+                          height: 4,
+                          thickness: 0.4,
+                          color: Colors.grey,
+                        ),
+                        Expanded(
+                          child: BlocConsumer<CompanyBloc, CompanyState>(
+                            listener: (context, state) {},
+                            builder: (context, state) {
+                              if (state is CompanySuccess) {
+                                final allCompany = state.allCompanyListResp;
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  reverse: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: allCompany.allCompany.length,
+                                  itemBuilder: (context, index) {
+                                    final currentCompany =
+                                        allCompany.allCompany.elementAt(index);
+                                    // final companyState = context.read<ProductsBloc>().state;
+                                    // print('${Strings.domain}/storage${currentCompany.photo}');
+                                    return BlocConsumer<ProductsBloc,
+                                        ProductsState>(
+                                      listener: (context, companyState) {
+                                        print(
+                                          'company states -> $companyState',
+                                        );
+                                      },
+                                      builder: (context, companyState) {
+                                        return InkWell(
+                                          onTap: () {
+                                            final loginState =
+                                                context.read<LoginBloc>().state;
+                                            final token =
+                                                loginState is LoginSuccess
+                                                    ? loginState
+                                                        .successLoginEntity
+                                                        .token
+                                                    : '';
+                                            if (companySelect ==
+                                                currentCompany.df_id) {
+                                              setState(() {
+                                                companySelect = '';
+                                              });
+                                              _updateSearchParams(
+                                                _searchTerm ?? '',
+                                                _cat ?? '',
+                                                '',
+                                              );
+                                            } else {
+                                              setState(() {
+                                                companySelect =
+                                                    currentCompany.df_id ?? '';
+                                              });
+                                              _updateSearchParams(
+                                                _searchTerm ?? '',
+                                                _cat ?? '',
+                                                currentCompany.df_id ?? '',
+                                              );
+                                            }
+                                            // if (companyState
+                                            //     is ProductComanySelect) {
+                                            //   if (currentCompany.df_id ==
+                                            //       companyState.companyID) {
+                                            //     _updateSearchParams(
+                                            //       _searchTerm ?? '',
+                                            //       _cat ?? '',
+                                            //       '',
+                                            //     );
+                                            //     context.read<ProductsBloc>().add(
+                                            //         const UnSelectCompanyEvent());
+                                            //   } else {
+                                            //     _updateSearchParams(
+                                            //       _searchTerm ?? '',
+                                            //       _cat ?? '',
+                                            //       currentCompany.df_id ?? '',
+                                            //     );
+                                            //     context
+                                            //         .read<ProductsBloc>()
+                                            //         .add(
+                                            //           SelectCompanysEvent(
+                                            //             currentCompany.df_id ??
+                                            //                 '',
+                                            //           ),
+                                            //         );
+                                            //   }
+                                            // } else {
+                                            //   context.read<ProductsBloc>().add(
+                                            //         SelectCompanysEvent(
+                                            //             currentCompany.df_id ??
+                                            //                 ''),
+                                            //       );
+                                            // }
+                                          },
+                                          child: Tooltip(
+                                            message:
+                                                currentCompany.full_name ?? '',
+                                            decoration: BoxDecoration(
+                                              color: Colors.green[400]!
+                                                  .withOpacity(0.4),
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(10)),
+                                            ),
+                                            child: Container(
+                                              margin: const EdgeInsets.all(5),
+                                              padding: const EdgeInsets.all(10),
+                                              decoration: BoxDecoration(
+                                                color: companySelect.isNotEmpty
+                                                    ? currentCompany.df_id ==
+                                                            companySelect
+                                                        ? Colors.green[400]!
+                                                            .withOpacity(0.4)
+                                                        : null
+                                                    : null,
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(10)),
+                                              ),
+                                              child: CompanyCardView(
+                                                  currentCompany:
+                                                      currentCompany),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                );
+                              }
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.green[600],
+                                ),
                               );
                             },
-                          );
-                        }
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.green[600],
                           ),
-                        );
-                      },
+                        ),
+                      ],
                     ),
                   ),
 
@@ -329,6 +459,8 @@ class _ProductsBody3State extends State<ProductsBody3> {
               ),
             ),
           ),
+
+          ///! ONLY THE PRODUCT
           SliverFillRemaining(
             child: Container(
               margin: const EdgeInsets.symmetric(
@@ -374,14 +506,33 @@ class _ProductsBody3State extends State<ProductsBody3> {
                   ),
                   Expanded(
                     child: PagedGridView<int, ProductData>(
-                      physics: const NeverScrollableScrollPhysics(),
-                      // shrinkWrap: true,
+                      // scrollController: pagingController
+                      //   ..addListener(() {
+                      //     // if the scroll controller reached the start then the end is false
+                      //     // if (pagingController.position.atEdge) {
+                      //     //   if (pagingController.position.pixels != 0) {
+                      //     //     print('reached the first of list');
+                      //     //     setState(() {
+                      //     //       isTheEnd = true;
+                      //     //     });
+                      //     //   } else {
+                      //     //     setState(() {
+                      //     //       isTheEnd = false;
+                      //     //     });
+                      //     //   }
+                      //     // } else {
+                      //     //   setState(() {
+                      //     //     isTheEnd = false;
+                      //     //   });
+                      //     // }
+                      //   }),
+                      physics: isTheEnd
+                          ? const BouncingScrollPhysics()
+                          : const NeverScrollableScrollPhysics(),
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         childAspectRatio: 2 / 3.5,
-                        // mainAxisSpacing: 10,
-                        // crossAxisSpacing: 10,
                       ),
                       pagingController: _pagingController,
                       builderDelegate: PagedChildBuilderDelegate<ProductData>(
