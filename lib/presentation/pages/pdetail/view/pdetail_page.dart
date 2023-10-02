@@ -6,6 +6,7 @@ import 'package:deshifarmer/presentation/pages/cartz/view/cartz_page.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/pages/pdetail/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/pdetail/widgets/pdetail_body.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:flutter/material.dart';
 
 /// {@template pdetail_page}
@@ -100,6 +101,9 @@ class _PdetailPageState extends State<PdetailPage> {
       ),
       // floatingActionButton:
       bottomNavigationBar: BottomAppBar(
+        color: priceBoxColor.withOpacity(
+          0.1,
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -133,6 +137,12 @@ class _PdetailPageState extends State<PdetailPage> {
                 minimumSize: MaterialStateProperty.all(
                   Size(MediaQuery.of(context).size.width / 2, 80),
                 ),
+                backgroundColor: const MaterialStatePropertyAll(priceBoxColor),
+                shape: MaterialStatePropertyAll(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
               ),
               onPressed: () {
                 for (var i = 0; i < _itemBag; i++) {
@@ -149,7 +159,10 @@ class _PdetailPageState extends State<PdetailPage> {
                   _itemBag = 0;
                 });
               },
-              child: const Text('Add to Cart'),
+              child: const Text(
+                'Add to Cart',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
             // remove button
             // quantity
