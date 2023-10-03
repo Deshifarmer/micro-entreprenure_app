@@ -16,7 +16,6 @@ CompanyEntity _$CompanyEntityFromJson(Map<String, dynamic> json) =>
       phone: json['phone'] as String?,
       photo: json['photo'] as String?,
       status: json['status'] as String?,
-      type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$CompanyEntityToJson(CompanyEntity instance) =>
@@ -28,6 +27,5 @@ Map<String, dynamic> _$CompanyEntityToJson(CompanyEntity instance) =>
       'photo': instance.photo,
       'email': instance.email,
       'channel': instance.channel,
-      'type': instance.type,
       'total_product': instance.total_product,
     };

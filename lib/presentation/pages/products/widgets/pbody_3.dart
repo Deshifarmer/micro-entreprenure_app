@@ -304,14 +304,18 @@ class _ProductsBody3State extends State<ProductsBody3> {
                             builder: (context, state) {
                               if (state is CompanySuccess) {
                                 final allCompany = state.allCompanyListResp;
+                                print(
+                                  'company length -> ${allCompany.allCompany.length}',
+                                );
                                 return ListView.builder(
                                   shrinkWrap: true,
-                                  reverse: true,
+                                  // reverse: true,
                                   scrollDirection: Axis.horizontal,
                                   itemCount: allCompany.allCompany.length,
                                   itemBuilder: (context, index) {
                                     final currentCompany =
                                         allCompany.allCompany.elementAt(index);
+                                    print('$index ${currentCompany.full_name}');
                                     // final companyState = context.read<ProductsBloc>().state;
                                     // print('${Strings.domain}/storage${currentCompany.photo}');
                                     return BlocConsumer<ProductsBloc,

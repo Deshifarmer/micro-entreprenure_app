@@ -24,6 +24,7 @@ class CompanyCardView extends StatelessWidget {
             child: CachedNetworkImage(
               imageUrl:
                   '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage${currentCompany.photo}',
+              errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ),
         ),

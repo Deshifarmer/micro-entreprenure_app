@@ -23,7 +23,7 @@ class CompanyEntity {
     // required this.present_address,
     // required this.product_list,
     required this.status,
-    required this.type,
+    // required this.type,
     // required this.updated_at,
   });
 
@@ -46,7 +46,7 @@ class CompanyEntity {
   // final String? nid;
   final String? channel;
   // final String? date_of_birth;
-  final String? type;
+  // final String? type;
   // final List<ProductListEntity> product_list;
   final int total_product;
 }
