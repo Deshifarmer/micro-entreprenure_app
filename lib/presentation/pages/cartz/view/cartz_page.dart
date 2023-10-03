@@ -62,7 +62,9 @@ class CartzPage extends StatelessWidget {
             /// if user selected user
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => const OrderConformationPage()),
+              MaterialPageRoute(
+                builder: (_) => const OrderConformationPage(),
+              ),
             );
           },
           title: 'অর্ডার করুন',

@@ -25,3 +25,5 @@ class RemoveFromCart extends CartEvent {
   // final int quantity;
   final ProductData productData;
 }
+
+class ResetCart extends CartEvent {}

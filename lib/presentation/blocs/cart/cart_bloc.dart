@@ -14,6 +14,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<CartEvent>((event, emit) {});
     on<AddtoCartEvent>(_addtoCartEvent);
     on<RemoveFromCart>(_removeFromCart);
+    on<ResetCart>(_resetCart);
   }
   FutureOr<void> _addtoCartEvent(AddtoCartEvent event, emit) async {
     emit(CartInitial());
@@ -21,7 +22,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     if (_carts.containsKey(event.productData.product_id)) {
       var currentQ = _carts[event.productData.product_id]!.$2;
       print(
-          'key already exists -> $currentQ : ${_carts[event.productData.product_id]?.$1.name}',);
+        'key already exists -> $currentQ : ${_carts[event.productData.product_id]?.$1.name}',
+      );
       _carts.update(
         event.productData.product_id ?? '',
         (value) => (event.productData, ++currentQ),
@@ -68,5 +70,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       //! if not then DO NOTHING
       ///! NO CODE MEANS THERE'S NOTHING (XD)
     }
+  }
+
+  FutureOr<void> _resetCart(ResetCart event, emit) async {
+    emit(CartInitial());
+    _carts.clear();
+    emit(CartAddingState(_carts));
   }
 }

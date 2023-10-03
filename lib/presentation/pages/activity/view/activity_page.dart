@@ -1,6 +1,8 @@
 import 'package:deshifarmer/presentation/animations/page_animations.dart';
+import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/pages/activity/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/activity/pages/activity_select_farm.dart';
+import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +39,15 @@ class ActivityPage extends StatelessWidget {
           ),
           child: SecondayButtonGreen(
             onpress: () {
+              final loginState = context.read<LoginBloc>().state;
+              final token = loginState is LoginSuccess
+                  ? loginState.successLoginEntity.token
+                  : '';
+              context.read<MyFarmerBloc>().add(
+                    MyFarmerFetchEvent(
+                      token,
+                    ),
+                  );
               Navigator.push(
                 context,
                 PageAnimationWrapper.fadeThroughTransitionPageWrapper(
@@ -63,7 +74,7 @@ class ActivityView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ///! TODO: uncomment this
+    // /! TODO: uncomment this
     // return const ActivityBody();
     return Container();
   }

@@ -31,12 +31,10 @@ class SelectFarmerMethods extends StatelessWidget {
                   'কোন কৃষকের জন্য অর্ডারটি করছেন ?',
                 ),
                 DropdownButtonFormField<FarmerEntity>(
-                  // padding: const EdgeInsets.all(10),
-                  // menuMaxHeight: 80,
-                  // isDense: false,
-                  // itemHeight: 100,
-                  // borderRadius: const BorderRadius.all(Radius.circular(15)),
-                  // isExpanded: true,
+                  isExpanded: true,
+                  // itemHeight: 300,
+                  // menuMaxHeight: 200,
+
                   decoration: const InputDecoration(
                     // label: Text('কৃষক নির্বাচন করুন'),
                     enabledBorder: OutlineInputBorder(
@@ -50,31 +48,58 @@ class SelectFarmerMethods extends StatelessWidget {
                       borderSide: BorderSide.none,
                       gapPadding: 5,
                     ),
-                    contentPadding: EdgeInsets.all(1),
+                    // contentPadding: EdgeInsets.all(1),
                     filled: true,
                   ),
-
-                  // decoration: ShapeDecoration(),
-                  // itemHeight: 300,
-                  // elevation: 16,
+                  elevation: 16,
                   value: state.allFarmerListResp.farmers.first,
                   items: state.allFarmerListResp.farmers
                       .map<DropdownMenuItem<FarmerEntity>>((value) {
                     return DropdownMenuItem<FarmerEntity>(
                       alignment: Alignment.center,
                       value: value,
-                      child: ListTile(
-                        leading: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.error),
-                          ),
+                      // child: ListTile(
+                      //   leading: ClipRRect(
+                      //     borderRadius: BorderRadius.circular(10),
+                      //     child: CachedNetworkImage(
+                      //       imageUrl:
+                      //           '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
+                      //       errorWidget: (context, url, error) =>
+                      //           const Icon(Icons.error),
+                      //     ),
+                      //   ),
+                      //   title: Text(value.full_name ?? ''),
+                      //   subtitle: Text(value.phone ?? ''),
+                      // ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Row(
+                          // mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: CachedNetworkImage(
+                                imageUrl:
+                                    '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.error),
+                                height: 50,
+                                width: 50,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              value.full_name ?? '',
+                              style: Theme.of(context).textTheme.labelSmall,
+                            ),
+                            Text(
+                              ' (${value.phone})',
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                          ],
                         ),
-                        title: Text(value.full_name ?? ''),
-                        subtitle: Text(value.phone ?? ''),
                       ),
                     );
                   }).toList(),
