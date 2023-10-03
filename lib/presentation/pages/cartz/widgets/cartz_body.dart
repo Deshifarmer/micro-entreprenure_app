@@ -30,7 +30,6 @@ class CartzBody extends StatelessWidget {
                 itemCount: itemToList.length,
                 itemBuilder: (context, index) {
                   final currentItem = itemToList.elementAt(index);
-
                   return Padding(
                     padding: const EdgeInsets.all(8),
                     child: CartCard2(

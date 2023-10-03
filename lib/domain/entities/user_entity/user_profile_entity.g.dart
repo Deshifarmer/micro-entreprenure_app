@@ -10,7 +10,6 @@ UserProfileEntity _$UserProfileEntityFromJson(Map<String, dynamic> json) =>
     UserProfileEntity(
       df_id: json['df_id'] as String?,
       full_name: json['full_name'] as String?,
-      nid: json['nid'] as String,
       phone: json['phone'] as String?,
       email: json['email'] as String?,
       designation: json['designation'] as String?,
@@ -23,7 +22,6 @@ UserProfileEntity _$UserProfileEntityFromJson(Map<String, dynamic> json) =>
       permanent_address: json['permanent_address'] as String?,
       home_district: json['home_district'] as String?,
       joining_date: json['joining_date'] as String?,
-      type: json['type'] as String?,
       gender: json['gender'] as String?,
       department: json['department'] as String?,
       work_place: json['work_place'] as String?,
@@ -44,7 +42,6 @@ Map<String, dynamic> _$UserProfileEntityToJson(UserProfileEntity instance) =>
     <String, dynamic>{
       'df_id': instance.df_id,
       'full_name': instance.full_name,
-      'nid': instance.nid,
       'phone': instance.phone,
       'email': instance.email,
       'designation': instance.designation,
@@ -57,7 +54,6 @@ Map<String, dynamic> _$UserProfileEntityToJson(UserProfileEntity instance) =>
       'permanent_address': instance.permanent_address,
       'home_district': instance.home_district,
       'joining_date': instance.joining_date,
-      'type': instance.type,
       'gender': instance.gender,
       'department': instance.department,
       'work_place': instance.work_place,

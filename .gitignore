@@ -190,3 +190,4 @@ lib/presentation/utils/secrets_.dart
 lib/domain/entities/farmer_entity/group_farmer_entity.g.dart
 lib/domain/entities/company_entity/company_response_entity.g.dart
 lib/domain/entities/products_entity/product_links_entity.g.dart
+lib/domain/entities/user_entity/user_profile_entity.g.dart

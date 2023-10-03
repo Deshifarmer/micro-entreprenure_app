@@ -27,62 +27,64 @@ class SelectFarmerMethods extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('কোন কৃষকের জন্য অর্ডারটি করছেন ?'),
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: DropdownButtonFormField<FarmerEntity>(
-                    // padding: const EdgeInsets.all(10),
-                    // menuMaxHeight: 80,
-                    isDense: false,
-                    // itemHeight: 100,
-                    borderRadius: const BorderRadius.all(Radius.circular(15)),
-                    isExpanded: true,
-                    decoration: const InputDecoration(
-                      // label: Text('কৃষক নির্বাচন করুন'),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                        borderSide: BorderSide.none,
+                const Text(
+                  'কোন কৃষকের জন্য অর্ডারটি করছেন ?',
+                ),
+                DropdownButtonFormField<FarmerEntity>(
+                  // padding: const EdgeInsets.all(10),
+                  // menuMaxHeight: 80,
+                  // isDense: false,
+                  // itemHeight: 100,
+                  // borderRadius: const BorderRadius.all(Radius.circular(15)),
+                  // isExpanded: true,
+                  decoration: const InputDecoration(
+                    // label: Text('কৃষক নির্বাচন করুন'),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        borderSide: BorderSide.none,
-                        gapPadding: 10,
-                      ),
-                      contentPadding: EdgeInsets.all(1),
-                      filled: true,
+                      borderSide: BorderSide.none,
                     ),
-
-                    // decoration: ShapeDecoration(),
-                    // itemHeight: 300,
-                    elevation: 16,
-                    value: state.allFarmerListResp.farmers.first,
-                    items: state.allFarmerListResp.farmers
-                        .map<DropdownMenuItem<FarmerEntity>>((value) {
-                      return DropdownMenuItem<FarmerEntity>(
-                        alignment: Alignment.center,
-                        value: value,
-                        child: ListTile(
-                          leading: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
-                            ),
-                          ),
-                          title: Text(value.full_name ?? ''),
-                          subtitle: Text(value.phone ?? ''),
-                        ),
-                      );
-                    }).toList(),
-                    onChanged: (FarmerEntity? val) {
-                      if (val != null)
-                        context
-                            .read<DropdownForFarmerCubit>()
-                            .changeDropdownValue(val);
-                    },
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderSide: BorderSide.none,
+                      gapPadding: 5,
+                    ),
+                    contentPadding: EdgeInsets.all(1),
+                    filled: true,
                   ),
+
+                  // decoration: ShapeDecoration(),
+                  // itemHeight: 300,
+                  // elevation: 16,
+                  value: state.allFarmerListResp.farmers.first,
+                  items: state.allFarmerListResp.farmers
+                      .map<DropdownMenuItem<FarmerEntity>>((value) {
+                    return DropdownMenuItem<FarmerEntity>(
+                      alignment: Alignment.center,
+                      value: value,
+                      child: ListTile(
+                        leading: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                          ),
+                        ),
+                        title: Text(value.full_name ?? ''),
+                        subtitle: Text(value.phone ?? ''),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (FarmerEntity? val) {
+                    if (val != null) {
+                      context
+                          .read<DropdownForFarmerCubit>()
+                          .changeDropdownValue(val);
+                    }
+                  },
                 ),
               ],
             ),
