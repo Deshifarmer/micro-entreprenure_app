@@ -9,6 +9,7 @@ import 'package:deshifarmer/core/params/api_database_params.dart';
 import 'package:deshifarmer/data/models/add_farm_model.dart';
 import 'package:deshifarmer/data/models/add_farmer_model.dart';
 import 'package:deshifarmer/data/models/order_model.dart';
+import 'package:deshifarmer/domain/entities/batch/batch_entity.dart';
 import 'package:deshifarmer/domain/entities/category_entity/all_categorys.dart';
 import 'package:deshifarmer/domain/entities/category_entity/category_entity.dart';
 import 'package:deshifarmer/domain/entities/company_entity/all_company_entity.dart';
@@ -1219,5 +1220,59 @@ class DeshiFarmerAPI {
     }
   }
 
-  ///! comission api
+  ///! Batch Creation API
+  Future<BatchEnity?> batchCreationAPI({
+    required String token,
+    required String farmID,
+    required String season,
+    required String whichCrop,
+  }) async {
+    Map<String, String> auth = <String, String>{
+      'Authorization': 'Bearer $token',
+    };
+    final Uri url = Uri.parse(
+      ApiDatabaseParams.batchCreationAPI,
+    );
+    print('batch url -> $url $token');
+
+    try {
+      _headers.addAll(auth);
+      final http.Response response = await http.post(
+        url,
+        body: {
+          'farm_id': farmID,
+          'season': season,
+          'which_crop': whichCrop,
+        },
+        headers: _headers,
+      );
+      final x = {
+        'farm_id': farmID,
+        'season': season,
+        'which_crop': whichCrop,
+      };
+      print('status code -> ${response.statusCode}');
+      print('body -> $x');
+      if (response.statusCode == 200) {
+        final result = await Isolate.run(() => json.decode(response.body))
+            as Map<String, dynamic>;
+        print(
+          'successfuly got the batch LISTO -> ${result.runtimeType} ${result.length}',
+        );
+        try {
+          BatchEnity successResonse = BatchEnity.fromJson(result);
+          return successResonse;
+        } catch (e) {
+          print(
+            'error comverting data BatchEnity ->  ${result.runtimeType}, $e \n',
+          );
+        }
+        return null;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
 }

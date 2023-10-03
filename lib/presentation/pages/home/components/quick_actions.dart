@@ -1,7 +1,7 @@
 import 'package:deshifarmer/core/params/home_page_params.dart';
 import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/products/products_bloc.dart';
+import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/cubit/groups/get_group_cubit.dart';
 import 'package:deshifarmer/presentation/pages/activity/activity.dart';
 import 'package:deshifarmer/presentation/pages/add_group/add_group.dart';
@@ -17,7 +17,6 @@ import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/logistic/logistic.dart';
 import 'package:deshifarmer/presentation/pages/order/view/order_page.dart';
 import 'package:deshifarmer/presentation/pages/products/view/products_page.dart';
-import 'package:deshifarmer/presentation/pages/products/widgets/pbody_3.dart';
 import 'package:deshifarmer/presentation/widgets/home_page_icon_widget.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/cupertino.dart';
@@ -56,6 +55,10 @@ class QuickActions extends StatelessWidget {
                         HomePageParams.homePageIconDatas1st.elementAt(index);
                     return GestureDetector(
                       onTap: () {
+                        final loginState = context.read<LoginBloc>().state;
+                        final token = loginState is LoginSuccess
+                            ? loginState.successLoginEntity.token
+                            : '';
                         print('tapped on $index');
                         switch (currentIcon.title) {
                           case 'কৃষি ইন্সুরেন্স':
@@ -70,14 +73,19 @@ class QuickActions extends StatelessWidget {
                             Navigator.push(
                               context,
                               CupertinoPageRoute(
-                                builder: (_) => Material(
-                                  child: const FarmerListoPage(
+                                builder: (_) => const Material(
+                                  child: FarmerListoPage(
                                     isBack: true,
                                   ),
                                 ),
                               ),
                             );
                           case 'ফার্ম যোগ':
+                            context.read<MyFarmerBloc>().add(
+                                  MyFarmerFetchEvent(
+                                    token,
+                                  ),
+                                );
                             Navigator.push(
                               context,
                               FarmaddFormPage.route(),
@@ -88,10 +96,7 @@ class QuickActions extends StatelessWidget {
                               KpiPage.route(),
                             );
                           case 'কৃষি ইনপুট':
-                            final loginState = context.read<LoginBloc>().state;
-                            final token = loginState is LoginSuccess
-                                ? loginState.successLoginEntity.token
-                                : '';
+
                             //? fetching the category data
                             context
                                 .read<CategoryBloc>()
@@ -100,11 +105,7 @@ class QuickActions extends StatelessWidget {
                             context
                                 .read<CompanyBloc>()
                                 .add(CompanyFetchEvent(token));
-                            // ProductsBBloc
                             // fetch the products data
-                            // context
-                            //     .read<ProductsBBloc>()
-                            //     .add(ProductFFetchEvent(token));
                             Navigator.push(
                               context,
                               CupertinoPageRoute(
@@ -145,7 +146,7 @@ class QuickActions extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final currentIcon =
                         HomePageParams.homePageIconDatas2nd.elementAt(index);
-                    return InkWell(
+                    return GestureDetector(
                       onTap: () {
                         switch (currentIcon.title) {
                           case 'বাজার চাহিদা':

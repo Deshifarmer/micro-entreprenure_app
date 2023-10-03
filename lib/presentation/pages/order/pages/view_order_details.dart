@@ -90,10 +90,8 @@ class ViewOrderDetail extends StatelessWidget {
                   '${ApiDatabaseParams.orderApi}/$orderID',
                 ),
                 headers: {
-                  ///! TODO: Do not forget to remove the token
                   'Authorization':
-                      // 'Bearer ${loginState.successLoginEntity.token}',
-                      'Bearer 55|9062I8GhTHqaQWFrfOu5HzcRG3df73axEgL5rBUK',
+                      'Bearer ${loginState.successLoginEntity.token}',
                 },
               ),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -223,12 +221,18 @@ class ViewOrderDetail extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          product['product_details']['name']
-                                              .toString(),
-                                          style: const TextStyle(
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w600,
+                                        SizedBox(
+                                          width:
+                                              getProportionateScreenWidth(200),
+                                          child: Text(
+                                            product['product_details']['name']
+                                                .toString(),
+                                            style: const TextStyle(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                            // maxLines: 2 ,
                                           ),
                                         ),
                                         Text(

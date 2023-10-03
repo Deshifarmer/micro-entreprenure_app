@@ -9,10 +9,12 @@ class FarmListDropDown extends StatelessWidget {
   @override
   @override
   Widget build(BuildContext context) {
-    final farmFetchState = context.read<FarmerFetchFarmBloc>().state;
+    // final farmFetchState = context.read<FarmerFetchFarmBloc>().state;
     final activityState = context.read<ActivityBloc>().state;
     return BlocConsumer<FarmerFetchFarmBloc, FarmerFetchFarmState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        debugPrint('getting farm state  -> $state');
+      },
       builder: (context, FarmerFetchFarmState state) {
         if (state is FarmerFetchFarmSuccess) {
           if (state.allFarmListo.allCompany.isEmpty) {
@@ -62,14 +64,14 @@ class FarmListDropDown extends StatelessWidget {
             onChanged: (FarmEntity? val) {
               if (activityState is ActivityInitial) {
                 if (val != null) {
-                  activityState.farmID.text = val.farmer_id;
+                  activityState.farmID.text = val.farm_id;
                 }
               }
             },
           );
-        } else if (farmFetchState is FarmerFetchFarmFailed) {
+        } else if (state is FarmerFetchFarmFailed) {
           return const Text('Farm Fetching Failed');
-        } else if (farmFetchState is FarmerFetchFarmLoading) {
+        } else if (state is FarmerFetchFarmLoading) {
           return const CircularProgressIndicator.adaptive();
         }
         return const SizedBox.shrink();
