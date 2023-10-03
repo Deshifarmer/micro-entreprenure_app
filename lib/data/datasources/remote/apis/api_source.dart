@@ -22,9 +22,7 @@ import 'package:deshifarmer/domain/entities/group_field_entity/group_field_entit
 import 'package:deshifarmer/domain/entities/login_entity/login_response_entity.dart';
 import 'package:deshifarmer/domain/entities/orders_entity/all_orders.dart';
 import 'package:deshifarmer/domain/entities/orders_entity/order_response_entity.dart';
-import 'package:deshifarmer/domain/entities/products_entity/product_entity.dart';
 import 'package:deshifarmer/domain/entities/user_entity/user_profile_entity.dart';
-import 'package:deshifarmer/presentation/utils/get_product_url_utils.dart';
 import 'package:http/http.dart' as http;
 
 class DeshiFarmerAPI {
@@ -114,6 +112,7 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.orderApi,
     );
+    print('url $url $token');
     try {
       _headers.addAll(auth);
       final http.Response response = await http.get(
@@ -194,6 +193,7 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.profileApi,
     );
+    print('url $url $token');
     try {
       _headers.addAll(auth);
       final http.Response response = await http.get(
@@ -238,12 +238,14 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.companyListAPI,
     );
+    print('url $url $token');
     try {
       _headers.addAll(auth);
       final http.Response response = await http.get(
         url,
         headers: _headers,
       );
+      print('url $url $token');
       if (response.statusCode == 200) {
         final result = json.decode(response.body) as List<dynamic>;
         List<CompanyEntity> companyE = [];
@@ -288,12 +290,14 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.categoryListAPI,
     );
+    print('url $url $token');
     try {
       _headers.addAll(auth);
       final http.Response response = await http.get(
         url,
         headers: _headers,
       );
+      print('url $url $token');
       if (response.statusCode == 200) {
         final result = json.decode(response.body) as List<dynamic>;
         List<CategoryEntity> companyE = [];
@@ -894,6 +898,7 @@ class DeshiFarmerAPI {
       ApiDatabaseParams.addFarmerApi,
       // 'https://core.deshifarmer.co/api/v1/me/add_farmer'
     );
+    print('url $url $token');
 
     ///! Trying request to SErVER
     try {
@@ -949,6 +954,7 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.createGroupAPI,
     );
+    print('url $url $token');
 
     ///! Trying request to SErVER
     try {
@@ -996,6 +1002,7 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.assignFarmerToGroup(groupID),
     );
+    print('url $url $token');
 
     ///! Trying request to SErVER
     try {
@@ -1043,6 +1050,7 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.updateLeaderToGroup(groupID),
     );
+    print('url $url $token');
 
     ///! Trying request to SErVER
     try {
@@ -1111,6 +1119,7 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.farmAddAPI,
     );
+    print('url $url $token');
     try {
       _headers.addAll(headers);
       var request = http.MultipartRequest('POST', url);
@@ -1183,6 +1192,7 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.inputerOrderApi,
     );
+    print('url $url $token');
 
     ///! Trying request to SErVER
     try {

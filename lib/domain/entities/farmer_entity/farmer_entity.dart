@@ -11,8 +11,8 @@ class FarmerEntity {
     required this.image,
     required this.farmer_type,
     required this.onboard_by,
-    required this.nid,
-    required this.gov_farmer_id,
+    // required this.nid,
+    // required this.gov_farmer_id,
     required this.first_name,
     required this.last_name,
     required this.full_name,
@@ -30,9 +30,9 @@ class FarmerEntity {
     required this.credit_score,
     required this.residentType,
     required this.land_status,
-    required this.family_member,
-    required this.number_of_children,
-    required this.yearly_income,
+    // required this.family_member,
+    // required this.number_of_children,
+    // required this.yearly_income,
     required this.year_of_stay_in,
     required this.group_id,
     required this.bank_details,
@@ -55,10 +55,10 @@ class FarmerEntity {
   final String? image;
   final String? farmer_type;
   final String? onboard_by;
-  final String? nid;
+  // final String? nid;
   // final int? nid; //! for LOCAL
   // final int? gov_farmer_id; //! LOC
-  final String? gov_farmer_id;
+  // final String? gov_farmer_id;
   final String? first_name;
   final String? last_name;
   final String? full_name;
@@ -76,12 +76,12 @@ class FarmerEntity {
   final String? credit_score;
   final String? residentType;
   final String? land_status;
-  final String? family_member;
+  // final String? family_member;
   // final int? family_member; //! for LOCAL
   // final int? number_of_children; //! for LOCAL
-  final String? number_of_children;
+  // final String? number_of_children;
   // final int? yearly_income;
-  final String? yearly_income;
+  // final String? yearly_income;
   final String? year_of_stay_in;
   final String? group_id;
   final String? bank_details;
