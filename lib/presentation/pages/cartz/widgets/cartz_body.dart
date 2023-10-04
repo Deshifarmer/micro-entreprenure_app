@@ -38,14 +38,12 @@ class CartzBody extends StatelessWidget {
                       productData: currentItem.value.$1,
                     ),
                   );
-               
                 },
               ),
               // CartCard2(
               //     // items: 234,
               //     // product: ,
               //     ),
-
               ///! total price
               Container(
                 padding: const EdgeInsets.all(10),
@@ -56,7 +54,7 @@ class CartzBody extends StatelessWidget {
               ///! select farmer
 
               const SelectFarmerMethods(),
-               SizedBox(
+              SizedBox(
                 height: getProportionateScreenHeight(20),
               ),
 
@@ -65,9 +63,7 @@ class CartzBody extends StatelessWidget {
             ],
           );
         }
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
+        return const SizedBox.shrink();
       },
     );
   }
