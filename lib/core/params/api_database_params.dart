@@ -104,4 +104,7 @@ class ApiDatabaseParams {
   /// batch creation api
   static String batchCreationAPI =
       '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/batch'; //*POST
+  //! get batch list api
+  static String batchListAPI =
+      '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/farm_batch'; //*GET
 }
