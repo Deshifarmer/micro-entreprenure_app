@@ -41,31 +41,54 @@ class CartzPage extends StatelessWidget {
                     content: Text('আপনার ব্যাগে কোন পণ্য নেই'),
                   ),
                 );
+              } else if (context.read<DropdownForFarmerCubit>().state == null) {
+                // show a snackbar
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('আপনার কোন কৃষক নির্বাচন করা হয়নি'),
+                  ),
+                );
+              } else if (context
+                  .read<DropdownForPaymentCubit>()
+                  .state
+                  .isEmpty) {
+                // show a snackbar
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('আপনার কোন পেমেন্ট পদ্ধতি নির্বাচন করা হয়নি'),
+                  ),
+                );
+              } else if (context
+                      .read<DropdownForFarmerCubit>()
+                      .state
+                      ?.farmer_id ==
+                  'x') {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('আপনার কোন কৃষক নির্বাচন করা হয়নি'),
+                  ),
+                );
+              } else {
+                /// check if any farmer selected
+                /// if user selected user
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const OrderConformationPage(),
+                  ),
+                );
               }
-            } else if (context.read<DropdownForFarmerCubit>().state == null) {
-              // show a snackbar
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('আপনার কোন কৃষক নির্বাচন করা হয়নি'),
-                ),
-              );
-            } else if (context.read<DropdownForPaymentCubit>().state.isEmpty) {
-              // show a snackbar
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('আপনার কোন পেমেন্ট পদ্ধতি নির্বাচন করা হয়নি'),
-                ),
-              );
+              return;
             }
 
             /// check if any farmer selected
             /// if user selected user
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => const OrderConformationPage(),
-              ),
-            );
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (_) => const OrderConformationPage(),
+            //   ),
+            // );
           },
           title: 'অর্ডার করুন',
         ),
