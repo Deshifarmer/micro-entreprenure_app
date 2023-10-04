@@ -134,8 +134,9 @@ class DeshiFarmerAPI {
             );
             // print('entity added successfully -> $i');
           } catch (e) {
+            print('exception occurd on OrderEntity $e');
             final result2 = element as Map<String, dynamic>;
-            result2.forEach((key, value) {});
+            // result2.forEach((key, value) {});
           }
         }
         AllOrdersEntity successResonse = AllOrdersEntity(orderEntitys);
@@ -808,7 +809,7 @@ class DeshiFarmerAPI {
   }
 
   ///! * ------------------------- POST METHODS -----------------------
-  ///
+  ///! DANGER ZONEEEEEEEEEEEEEEEEEEE
   /// adding Farmers
   Future<Result<bool, Exception>> addFarmer(
     AddFarmerModel farmerModel,
@@ -987,11 +988,6 @@ class DeshiFarmerAPI {
     String farmerID,
     String groupID,
   ) async {
-    ///! POST BODY
-    var body = json.encode({
-      'list': [farmerID],
-    });
-
     ///! POST HEADER
     Map<String, String> headers = <String, String>{
       'Accept': 'application/json',
@@ -1253,7 +1249,7 @@ class DeshiFarmerAPI {
       };
       print('status code -> ${response.statusCode}');
       print('body -> $x');
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         final result = await Isolate.run(() => json.decode(response.body))
             as Map<String, dynamic>;
         print(
@@ -1268,6 +1264,52 @@ class DeshiFarmerAPI {
           );
         }
         return null;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  //! batch getting api
+  Future<List<BatchEnity>?> getFarmBatches(
+      {required String token, required String farmID}) async {
+    Map<String, String> auth = <String, String>{
+      'Authorization': 'Bearer $token',
+    };
+    final Uri url = Uri.parse(
+      '${ApiDatabaseParams.batchListAPI}?farm_id=$farmID',
+    );
+    print('batch get url -> $url $token');
+    try {
+      _headers.addAll(auth);
+      final http.Response response = await http.get(
+        url,
+        headers: _headers,
+      );
+      print('status code -> ${response.statusCode}');
+      if (response.statusCode == 200) {
+        final result = await Isolate.run(() => json.decode(response.body))
+            as List<dynamic>;
+        print(
+          'successfuly got the batch LISTO -> ${result.runtimeType} ${result.length}',
+        );
+        List<BatchEnity> companyE = [];
+        for (int i = 0; i < result.length; i++) {
+          final element = result[i] as Map<String, dynamic>;
+          // print('element runtime -> ${element.runtimeType}');
+          try {
+            companyE.add(
+              BatchEnity.fromJson(element),
+            );
+          } catch (e) {
+            print(
+              'error comverting data BatchEnity ->  ${element.runtimeType}, $e \n',
+            );
+          }
+        }
+        return companyE;
       } else {
         return null;
       }
