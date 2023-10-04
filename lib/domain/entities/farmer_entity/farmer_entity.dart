@@ -12,6 +12,7 @@ class FarmerEntity {
     required this.farmer_type,
     required this.onboard_by,
     // required this.nid,
+    required this.usaid_id,
     // required this.gov_farmer_id,
     required this.first_name,
     required this.last_name,
@@ -55,6 +56,7 @@ class FarmerEntity {
   final String? image;
   final String? farmer_type;
   final String? onboard_by;
+  final String? usaid_id;
   // final String? nid;
   // final int? nid; //! for LOCAL
   // final int? gov_farmer_id; //! LOC
