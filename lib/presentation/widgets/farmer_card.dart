@@ -43,9 +43,20 @@ class FarmerCard extends StatelessWidget {
               padding: const EdgeInsets.only(
                 left: 5,
               ),
-              child: Text(
-                currentFarmer?.phone ?? '',
-                style: Theme.of(context).textTheme.titleSmall,
+              child: Column(
+                children: [
+                  Text(
+                    currentFarmer?.phone ?? '',
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+
+                  /// usaid ID
+                  if (currentFarmer?.usaid_id != null)
+                    Text(
+                      'usaid : ${currentFarmer?.usaid_id}',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                ],
               ),
             ),
           ),

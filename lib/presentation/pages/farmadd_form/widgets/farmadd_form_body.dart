@@ -14,6 +14,7 @@ import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:deshifarmer/presentation/widgets/snackbar_custom.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 
@@ -54,121 +55,120 @@ class FarmaddFormBody extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.all(10),
           child: ListView(
+            cacheExtent: 2000,
             children: [
-              Text(
-                'কৃষক নির্বাচন করুন',
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      color: primaryColor,
-                    ),
-              ),
-              //! A dropdown of all farmers which has created by the USER
-              BlocConsumer<MyFarmerBloc, MyFarmerState>(
-                listener: (context, state) {},
-                builder: (context, state) {
-                  if (state is MyFarmerInitial) {
-                    return const Center(
-                      child: PrimaryLoadingIndicator(),
-                    );
-                  } else if (state is MyFarmerFailed) {
-                    return const Center(
-                      child: Text(
-                        'Fam Fetched Failed',
-                      ),
-                    );
-                  } else if (state is MyFarmerSuccess) {
-                    ///! TODO: uncomment this
-                    if (farmAddState is FarmaddFormInitial) {
-                      farmAddState.farmerID.text =
-                          state.allFarmerListResp.farmers.first.farmer_id!;
-                    }
-
-                    ///! TODO: uncomment this
-
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 20,
-                      ),
-                      child: DropdownButtonFormField<FarmerEntity>(
-                        isDense: false,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(15)),
-                        isExpanded: true,
-                        decoration: const InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 5,
-                          ),
-                          label: Text('কৃষক নির্বাচন করুন'),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                            borderSide: BorderSide.none,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide: BorderSide.none,
-                            gapPadding: 10,
-                          ),
-                          filled: true,
-                        ),
-                        // decoration: ShapeDecoration(),
-                        // itemHeight: 300,
-                        elevation: 16,
-                        value: state.allFarmerListResp.farmers.isNotEmpty
-                            ? state.allFarmerListResp.farmers.first
-                            : null,
-                        items: state.allFarmerListResp.farmers
-                            .map<DropdownMenuItem<FarmerEntity>>((value) {
-                          return DropdownMenuItem<FarmerEntity>(
-                            alignment: Alignment.center,
-                            value: value,
-                            child: ListTile(
-                              leading: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: CachedNetworkImage(
-                                  imageUrl: checkDomain(
-                                    Strings.getServerOrLocal(
-                                      ServerOrLocal.server,
-                                    ),
-                                  )
-                                      ? dummyImage
-                                      : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
-                                  height: 50,
-                                  width: 50,
-                                  progressIndicatorBuilder:
-                                      (context, url, downloadProgress) =>
-                                          Center(
-                                    child: CircularProgressIndicator(
-                                      value: downloadProgress.progress,
-                                      color: Colors.green[600],
-                                    ),
-                                  ),
-                                  errorWidget: (context, url, error) =>
-                                      const Icon(Icons.error),
-                                ),
-                              ),
-                              title: Text(value.full_name ?? ''),
-                              subtitle: Text(value.phone ?? ''),
-                            ),
-                          );
-                        }).toList(),
-
-                        onChanged: (FarmerEntity? val) {
-                          if (farmAddState is FarmaddFormInitial) {
-                            if (val != null) {
-                              farmAddState.farmerID.text = val.farmer_id!;
-                            }
-                          }
-                        },
-                      ),
-                    );
-                  }
-                  return const SizedBox.shrink();
-                },
-              ),
               //! Farm Reg Form Fields
               // AddFarmerBloc
               if (farmAddState is FarmaddFormInitial) ...[
+                Text(
+                  'কৃষক নির্বাচন করুন',
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: primaryColor,
+                      ),
+                ),
+                //! A dropdown of all farmers which has created by the USER
+                BlocConsumer<MyFarmerBloc, MyFarmerState>(
+                  listener: (context, state) {},
+                  builder: (context, state) {
+                    if (state is MyFarmerInitial) {
+                      return const Center(
+                        child: PrimaryLoadingIndicator(),
+                      );
+                    } else if (state is MyFarmerFailed) {
+                      return const Center(
+                        child: Text(
+                          'Fam Fetched Failed',
+                        ),
+                      );
+                    } else if (state is MyFarmerSuccess) {
+                      if (farmAddState is FarmaddFormInitial) {
+                        farmAddState.farmerID.text =
+                            state.allFarmerListResp.farmers.first.farmer_id!;
+                      }
+
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 20,
+                        ),
+                        child: DropdownButtonFormField<FarmerEntity>(
+                          isDense: false,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(15)),
+                          isExpanded: true,
+                          decoration: const InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 5,
+                            ),
+                            label: Text('কৃষক নির্বাচন করুন'),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                              borderSide: BorderSide.none,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide.none,
+                              gapPadding: 10,
+                            ),
+                            filled: true,
+                          ),
+                          // decoration: ShapeDecoration(),
+                          // itemHeight: 300,
+                          elevation: 16,
+                          value: state.allFarmerListResp.farmers.isNotEmpty
+                              ? state.allFarmerListResp.farmers.first
+                              : null,
+                          items: state.allFarmerListResp.farmers
+                              .map<DropdownMenuItem<FarmerEntity>>((value) {
+                            return DropdownMenuItem<FarmerEntity>(
+                              alignment: Alignment.center,
+                              value: value,
+                              child: ListTile(
+                                leading: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: CachedNetworkImage(
+                                    imageUrl: checkDomain(
+                                      Strings.getServerOrLocal(
+                                        ServerOrLocal.server,
+                                      ),
+                                    )
+                                        ? dummyImage
+                                        : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
+                                    height: 50,
+                                    width: 50,
+                                    progressIndicatorBuilder:
+                                        (context, url, downloadProgress) =>
+                                            Center(
+                                      child: CircularProgressIndicator(
+                                        value: downloadProgress.progress,
+                                        color: Colors.green[600],
+                                      ),
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
+                                  ),
+                                ),
+                                title: Text(value.full_name ?? ''),
+                                subtitle: Text(value.phone ?? ''),
+                              ),
+                            );
+                          }).toList(),
+
+                          onChanged: (FarmerEntity? val) {
+                            if (farmAddState is FarmaddFormInitial) {
+                              if (val != null) {
+                                farmAddState.farmerID.text = val.farmer_id!;
+                              }
+                            }
+                          },
+                        ),
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
+                ),
                 Text(
                   'ফার্মের বিবরণ',
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
@@ -393,7 +393,21 @@ class FarmaddFormBody extends StatelessWidget {
                 /// farmer profile picccc upload
                 const FarmerProfilePicUpload(),
               ] else
-                Lottie.asset('assets/animations/farmer.json'),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Lottie.asset('assets/animations/farmer.json'),
+                    const Text('ফার্ম যোগ করা হচ্ছে..........')
+                        .animate(onPlay: (c) => c.repeat())
+                        .shimmer(
+                      colors: [
+                        primaryColor,
+                        primaryColor2,
+                        priceBoxColor,
+                      ],
+                    ),
+                  ],
+                ),
 
               if (farmAddState is! FarmAddLoading)
                 SecondayButtonGreen(

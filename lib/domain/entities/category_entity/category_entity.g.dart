@@ -10,7 +10,6 @@ CategoryEntity _$CategoryEntityFromJson(Map<String, dynamic> json) =>
     CategoryEntity(
       id: json['id'] as int,
       image: json['image'] as String,
-      is_active: json['is_active'] as String,
       title: json['title'] as String,
       total_product: json['total_product'] as int,
     );
@@ -21,5 +20,4 @@ Map<String, dynamic> _$CategoryEntityToJson(CategoryEntity instance) =>
       'total_product': instance.total_product,
       'title': instance.title,
       'image': instance.image,
-      'is_active': instance.is_active,
     };

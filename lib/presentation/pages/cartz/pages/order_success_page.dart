@@ -1,5 +1,6 @@
 import 'package:deshifarmer/presentation/animations/page_animations.dart';
 import 'package:deshifarmer/presentation/pages/home/home.dart';
+import 'package:deshifarmer/presentation/pages/login/login.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:flutter/cupertino.dart';
@@ -89,11 +90,12 @@ class OrderSuccessPage extends StatelessWidget {
             ),
             onPressed: () {
               Navigator.pushAndRemoveUntil(
-                  context,
-                  PageAnimationWrapper.fadeThroughTransitionPageWrapper(
-                    const HomePage(),
-                  ),
-                  (route) => false,);
+                context,
+                PageAnimationWrapper.fadeThroughTransitionPageWrapper(
+                  const LoginPage(),
+                ),
+                (route) => false,
+              );
             },
             child: const Text(
               'back to homepage',

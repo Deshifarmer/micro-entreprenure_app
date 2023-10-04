@@ -3,6 +3,7 @@ import 'package:deshifarmer/presentation/pages/cartz/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/cartz/components/select_farmer_methods.dart';
 import 'package:deshifarmer/presentation/pages/cartz/components/select_payment_methods.dart';
 import 'package:deshifarmer/presentation/pages/cartz/widgets/card_cart_item.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 // import 'package:deshifarmer/presentation/pages/cartz/widgets/cart_compocard.dart';
 import 'package:flutter/material.dart';
 
@@ -37,81 +38,12 @@ class CartzBody extends StatelessWidget {
                       productData: currentItem.value.$1,
                     ),
                   );
-                  // return Card(
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //     children: [
-                  //       // product row (iamge, Column -> title, company, money)
-                  //       Row(
-                  //         children: [
-                  //           // image
-                  //           Hero(
-                  //             tag: currentItem.value.$1.product_id ?? '',
-                  //             child: SizedBox(
-                  //               height: getProportionateScreenHeight(100),
-                  //               width: getProportionateScreenWidth(150),
-                  //               child:
-                  //                   ProductImage(product: currentItem.value.$1),
-                  //             ),
-                  //           ),
-                  //           SizedBox(
-                  //             width: getProportionateScreenWidth(10),
-                  //           ),
-                  //           // column -> title, company , money
-                  //           Column(
-                  //             mainAxisSize: MainAxisSize.min,
-                  //             children: [
-                  //               Text(
-                  //                 currentItem.value.$1.name ?? '',
-                  //                 overflow: TextOverflow.ellipsis,
-                  //                 maxLines: 1,
-                  //                 softWrap: false,
-                  //               ),
-                  //               Text(
-                  //                 currentItem.value.$1.company ?? '',
-                  //               ),
-                  //               Text(
-                  //                 '${currentItem.value.$1.sell_price} টাকা',
-                  //               ),
-                  //             ],
-                  //           ),
-                  //         ],
-                  //       ),
-                  //       // element, delete icon
-                  //       Expanded(
-                  //         child: Column(
-                  //           children: [
-                  //             Text(
-                  //               'x${currentItem.value.$2}',
-                  //               style: Theme.of(context).textTheme.labelLarge,
-                  //             ),
-                  //             IconButton(
-                  //               onPressed: () {
-                  //                 context.read<CartBloc>().add(
-                  //                       RemoveFromCart(
-                  //                         // quantity: 1,
-                  //                         productData: currentItem.value.$1,
-                  //                       ),
-                  //                     );
-                  //               },
-                  //               icon: const Icon(
-                  //                 Icons.delete,
-                  //                 color: Colors.red,
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // );
                 },
               ),
               // CartCard2(
               //     // items: 234,
               //     // product: ,
               //     ),
-
               ///! total price
               Container(
                 padding: const EdgeInsets.all(10),
@@ -122,8 +54,8 @@ class CartzBody extends StatelessWidget {
               ///! select farmer
 
               const SelectFarmerMethods(),
-              const SizedBox(
-                height: 20,
+              SizedBox(
+                height: getProportionateScreenHeight(20),
               ),
 
               ///! payment methods
@@ -131,9 +63,7 @@ class CartzBody extends StatelessWidget {
             ],
           );
         }
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
+        return const SizedBox.shrink();
       },
     );
   }

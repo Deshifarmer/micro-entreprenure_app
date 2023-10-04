@@ -1,6 +1,10 @@
+import 'package:deshifarmer/data/datasources/remote/apis/get_weather_api.dart';
 import 'package:deshifarmer/domain/entities/user_entity/user_profile_entity.dart';
+import 'package:deshifarmer/domain/entities/weather/weather_entity.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class FarmerWeatherCard extends StatelessWidget {
   const FarmerWeatherCard({required this.usrProfile, super.key});
@@ -8,7 +12,6 @@ class FarmerWeatherCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: getProportionateScreenWidth(20),
@@ -91,7 +94,7 @@ class FarmerWeatherCard extends StatelessWidget {
                 Colors.grey[300]!,
                 Colors.white,
               ],
-              duration: Duration(seconds: 2),
+              duration: const Duration(seconds: 2),
               curve: Curves.ease,
             );
           }
@@ -102,9 +105,7 @@ class FarmerWeatherCard extends StatelessWidget {
           }
           final weather = snapshot.data;
           if (weather == null) {
-            return const Center(
-              child: Text('No Data'),
-            );
+            return const SizedBox.shrink();
           }
 
           return Card(
@@ -171,7 +172,7 @@ class FarmerWeatherCard extends StatelessWidget {
         },
       ),
     );
-    */
-    return const SizedBox.shrink();
+
+    // return const SizedBox.shrink();
   }
 }

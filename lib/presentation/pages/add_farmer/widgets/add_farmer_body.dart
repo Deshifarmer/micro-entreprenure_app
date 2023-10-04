@@ -306,7 +306,7 @@ class AddFarmerBody extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   child: TextFormField(
                     controller: state.farmerQtLandController,
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.text,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -431,7 +431,7 @@ class AddFarmerBody extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.all(8),
                 margin: const EdgeInsets.all(8),
-                child: SelectGroupExpansionTile(),
+                child: const SelectGroupExpansionTile(),
               ),
 
               //! a multi select field

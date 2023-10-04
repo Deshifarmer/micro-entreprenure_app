@@ -403,6 +403,27 @@ class FarmerDetailInDetail extends StatelessWidget {
               ),
             ],
           ),
+          if (farmerProfilePage.usaid_id != null)
+            Row(
+              children: [
+                const Icon(
+                  Icons.iso_rounded,
+                  size: 10,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(8),
+                    vertical: getProportionateScreenHeight(8),
+                  ),
+                  child: Text(
+                    farmerProfilePage.usaid_id ?? '',
+                    style: const TextStyle(
+                      fontSize: 10,
+                    ),
+                  ),
+                ),
+              ],
+            ),
         ],
       ),
     );

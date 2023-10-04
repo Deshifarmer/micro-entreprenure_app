@@ -15,7 +15,48 @@ class SelectFarmerMethods extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<MyFarmerBloc, MyFarmerState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        // if state is myfarmersuccess then insert a dummy FarmerEntity to the dropdown
+        if (state is MyFarmerSuccess) {
+          state.allFarmerListResp.farmers.insert(
+              0,
+              const FarmerEntity(
+                farmer_id: 'x',
+                full_name: '------------',
+                phone: '',
+                image: '',
+                address: '',
+                farmer_type: '',
+                onboard_by: '',
+                usaid_id: '',
+                first_name: '',
+                last_name: '',
+                fathers_name: '',
+                is_married: '',
+                gender: '',
+                date_of_birth: '',
+                village: '',
+                upazila: '',
+                district: '',
+                division: '',
+                union: '',
+                credit_score: '',
+                residentType: '',
+                land_status: '',
+                year_of_stay_in: '',
+                group_id: '',
+                bank_details: '',
+                mfs_account: '',
+                current_producing_crop: '',
+                focused_crop: '',
+                cropping_intensity: '',
+                cultivation_practice: '',
+                farmer_role: '',
+                farm_id: '',
+                order_list: [],
+              ));
+        }
+      },
       builder: (context, state) {
         if (state is MyFarmerSuccess) {
           // print(
@@ -31,12 +72,10 @@ class SelectFarmerMethods extends StatelessWidget {
                   'কোন কৃষকের জন্য অর্ডারটি করছেন ?',
                 ),
                 DropdownButtonFormField<FarmerEntity>(
-                  // padding: const EdgeInsets.all(10),
-                  // menuMaxHeight: 80,
-                  // isDense: false,
-                  // itemHeight: 100,
-                  // borderRadius: const BorderRadius.all(Radius.circular(15)),
-                  // isExpanded: true,
+                  isExpanded: true,
+                  // itemHeight: 300,
+                  // menuMaxHeight: 200,
+
                   decoration: const InputDecoration(
                     // label: Text('কৃষক নির্বাচন করুন'),
                     enabledBorder: OutlineInputBorder(
@@ -50,31 +89,60 @@ class SelectFarmerMethods extends StatelessWidget {
                       borderSide: BorderSide.none,
                       gapPadding: 5,
                     ),
-                    contentPadding: EdgeInsets.all(1),
+                    // contentPadding: EdgeInsets.all(1),
                     filled: true,
                   ),
-
-                  // decoration: ShapeDecoration(),
-                  // itemHeight: 300,
-                  // elevation: 16,
+                  elevation: 16,
                   value: state.allFarmerListResp.farmers.first,
                   items: state.allFarmerListResp.farmers
                       .map<DropdownMenuItem<FarmerEntity>>((value) {
                     return DropdownMenuItem<FarmerEntity>(
                       alignment: Alignment.center,
                       value: value,
-                      child: ListTile(
-                        leading: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.error),
-                          ),
+                      // child: ListTile(
+                      //   leading: ClipRRect(
+                      //     borderRadius: BorderRadius.circular(10),
+                      //     child: CachedNetworkImage(
+                      //       imageUrl:
+                      //           '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
+                      //       errorWidget: (context, url, error) =>
+                      //           const Icon(Icons.error),
+                      //     ),
+                      //   ),
+                      //   title: Text(value.full_name ?? ''),
+                      //   subtitle: Text(value.phone ?? ''),
+                      // ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Row(
+                          // mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: CachedNetworkImage(
+                                imageUrl:
+                                    '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.error),
+                                height: 50,
+                                width: 50,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              value.full_name ?? '',
+                              style: Theme.of(context).textTheme.labelSmall,
+                            ),
+                            if (value.phone != null)
+                              if (value.phone!.isNotEmpty)
+                                Text(
+                                  ' (${value.phone})',
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                          ],
                         ),
-                        title: Text(value.full_name ?? ''),
-                        subtitle: Text(value.phone ?? ''),
                       ),
                     );
                   }).toList(),

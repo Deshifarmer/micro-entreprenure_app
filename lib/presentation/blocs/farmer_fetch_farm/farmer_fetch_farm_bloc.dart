@@ -19,12 +19,18 @@ class FarmerFetchFarmBloc
       // List<FarmEntity> _farms = data.farm_list
       /// convert all data.farm_list to List<FarmEntity>
       final farms = <FarmEntity>[];
-      data?.farm_list.forEach((element) {
-        farms.add(FarmEntity.fromJson(element as Map<String, dynamic>));
-      });
-      final value = AllFarmListResp(farms);
-      emit(FarmerFetchFarmSuccess(value));
-      emit(FarmerFetchFarmFailed());
+      if (data == null) {
+        emit(FarmerFetchFarmFailed());
+      } else {
+        for (final element in data.farm_list) {
+          farms.add(FarmEntity.fromJson(element as Map<String, dynamic>));
+        }
+        final value = AllFarmListResp(farms);
+
+        emit(FarmerFetchFarmSuccess(value));
+      }
+
+      // emit(FarmerFetchFarmFailed());
       // if (value is AllFarmListResp) {
       //   print('farm value is good');
       // } else {

@@ -7,6 +7,7 @@ import 'package:deshifarmer/presentation/blocs/farmer_api/add_farmer_api_bloc.da
 import 'package:deshifarmer/presentation/blocs/farmer_fetch_farm/farmer_fetch_farm_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
+import 'package:deshifarmer/presentation/blocs/record_sowing/record_sowing_bloc.dart';
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/cubit/add_group/add_farmer_to_group_cubit.dart';
 import 'package:deshifarmer/presentation/cubit/dropdown/dropdown_cubit.dart';
@@ -159,6 +160,10 @@ class App extends StatelessWidget {
         // CropInsuranceBloc
         BlocProvider<CropInsuranceBloc>(
           create: (BuildContext context) => CropInsuranceBloc(),
+        ),
+        // RecordSowingBloc
+        BlocProvider<RecordSowingBloc>(
+          create: (BuildContext context) => RecordSowingBloc(),
         ),
       ],
       // create: (context) => SubjectBloc(),

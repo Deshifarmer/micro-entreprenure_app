@@ -9,7 +9,7 @@ part 'group_detail_entity.g.dart';
 @JsonSerializable()
 class GroupDetailEntity {
   GroupDetailEntity({
-    required this.cluster_id,
+    // required this.cluster_id,
     // required this.color,
     required this.created_at,
     required this.farmer_group_id,
@@ -17,8 +17,8 @@ class GroupDetailEntity {
     required this.farmer_list,
     required this.group_leader,
     required this.group_manager_id,
-    required this.inactive_at,
-    required this.isActive,
+    // required this.inactive_at,
+    // required this.isActive,
     required this.total_farmers,
     required this.updated_at,
   });
@@ -27,10 +27,10 @@ class GroupDetailEntity {
       _$GroupDetailEntityFromJson(json);
   final String? farmer_group_id;
   final String? farmer_group_name;
-  final String? cluster_id;
+  // final String? cluster_id;
   // final int? isActive; // local
-  final String? isActive;
-  final String? inactive_at;
+  // final String? isActive;
+  // final String? inactive_at;
   final String? group_manager_id;
   final String? created_at;
   final String? updated_at;

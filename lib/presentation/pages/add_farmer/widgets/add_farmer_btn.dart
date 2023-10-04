@@ -74,6 +74,11 @@ class AddFarmerButton extends StatelessWidget {
                           ScaffoldMessenger.of(context).showSnackBar(
                             errorSnackBar('ফোন নম্বর প্রদান করুন'),
                           );
+                        } else if (formState.farmerPhoneController.text.length <
+                            11) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            errorSnackBar('ফোন নম্বর ঠিক করুন'),
+                          );
                         } else if (formState
                             .farmerRelationalStatusController.text.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -155,6 +160,11 @@ class AddFarmerButton extends StatelessWidget {
                             .farmerLivingYearController.text.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             errorSnackBar('বসবাসের সময় প্রদান করুন'),
+                          );
+                        } else if (formState
+                            .farmerImageController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            errorSnackBar('ছবি আপলোড করুন'),
                           );
                         } else {
                           // /// check if the user dob is greater then 17 or not
