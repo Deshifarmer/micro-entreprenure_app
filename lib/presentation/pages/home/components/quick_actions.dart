@@ -15,6 +15,7 @@ import 'package:deshifarmer/presentation/pages/harvest/harvest.dart';
 import 'package:deshifarmer/presentation/pages/kpi/kpi.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/logistic/logistic.dart';
+import 'package:deshifarmer/presentation/pages/order/bloc/order_bloc.dart';
 import 'package:deshifarmer/presentation/pages/order/view/order_page.dart';
 import 'package:deshifarmer/presentation/pages/products/view/products_page.dart';
 import 'package:deshifarmer/presentation/widgets/home_page_icon_widget.dart';
@@ -70,6 +71,11 @@ class QuickActions extends StatelessWidget {
                               AgriAdvisoryPage.route(),
                             );
                           case 'আমার কৃষক':
+                            if (loginState is LoginSuccess) {
+                              context.read<MyFarmerBloc>().add(
+                                  MyFarmerFetchEvent(
+                                      loginState.successLoginEntity.token));
+                            }
                             Navigator.push(
                               context,
                               CupertinoPageRoute(
@@ -96,7 +102,6 @@ class QuickActions extends StatelessWidget {
                               KpiPage.route(),
                             );
                           case 'কৃষি ইনপুট':
-
                             //? fetching the category data
                             context
                                 .read<CategoryBloc>()
@@ -115,6 +120,12 @@ class QuickActions extends StatelessWidget {
                               ),
                             );
                           case 'অর্ডার তালিকা':
+                            // OrderBloc
+                            context.read<OrderBloc>().add(
+                                  InitOrders(
+                                    token,
+                                  ),
+                                );
                             Navigator.push(
                               context,
                               OrderPage.route(),
