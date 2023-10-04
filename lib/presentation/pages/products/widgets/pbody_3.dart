@@ -179,54 +179,87 @@ class _ProductsBody3State extends State<ProductsBody3> {
                           ),
                         ),
                       ),
-                      if (categoryState is CategorySuccess)
 
-                        ///! PERF: categories
-                        PopupMenuButton<CategoryEntity>(
-                          padding: EdgeInsets.zero,
-                          // surfaceTintColor: primaryColor,
-                          onSelected: (CategoryEntity value) {
-                            // print('cat -> ${value.title} ${value.id}');
-                            // _updateCat(value.id.toString());
-                            _updateSearchParams(
-                              _searchTerm ?? '',
-                              value.id.toString(),
-                              _company ?? '',
-                            );
-                          },
-                          enableFeedback: true,
-                          surfaceTintColor: backgroundColor2,
-                          itemBuilder: (BuildContext context) =>
-                              categoryState.allCategoryListResp.category
-                                  .map(
-                                    (CategoryEntity e) =>
-                                        PopupMenuItem<CategoryEntity>(
-                                      value: e,
-                                      child: Text(e.title.split('-').last),
-                                    ),
-                                  )
-                                  .toList(),
-                          color: backgroundColor2,
-                          icon: Container(
-                            // margin: EdgeInsets.all(0),
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 10,
-                              horizontal: 10,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6),
-                              border: Border.all(
-                                width: 0.6,
-                                // strokeAlign: 0.6,
-                                color: Colors.grey,
+                      ///! PERF: categories
+                      BlocConsumer<CategoryBloc, CategoryState>(
+                        listener: (context, state) {
+                          // TODO: implement listener
+                        },
+                        builder: (context, categoryState) {
+                          if (categoryState is CategorySuccess) {
+                            return PopupMenuButton<CategoryEntity>(
+                              padding: EdgeInsets.zero,
+                              // surfaceTintColor: primaryColor,
+                              onSelected: (CategoryEntity value) {
+                                // print('cat -> ${value.title} ${value.id}');
+                                // _updateCat(value.id.toString());
+                                // if select the same category then unselect
+                                if (_cat == value.id.toString()) {
+                                  _updateSearchParams(
+                                    _searchTerm ?? '',
+                                    '',
+                                    _company ?? '',
+                                  );
+                                  setState(() {
+                                    _cat = '';
+                                  });
+                                  return;
+                                }
+                                _updateSearchParams(
+                                  _searchTerm ?? '',
+                                  value.id.toString(),
+                                  _company ?? '',
+                                );
+                                setState(() {
+                                  _cat = value.id.toString();
+                                });
+                              },
+                              enableFeedback: true,
+                              surfaceTintColor: backgroundColor2,
+                              itemBuilder: (BuildContext context) =>
+                                  categoryState.allCategoryListResp.category
+                                      .map(
+                                        (CategoryEntity e) =>
+                                            PopupMenuItem<CategoryEntity>(
+                                          value: e,
+                                          child: Text(
+                                            e.title.split('-').last,
+                                            style: TextStyle(
+                                              color: _cat == e.id.toString()
+                                                  ? primaryColor
+                                                  : Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                      .toList(),
+                              color: backgroundColor2,
+                              icon: Container(
+                                // margin: EdgeInsets.all(0),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 10,
+                                  horizontal: 10,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  border: Border.all(
+                                    width: 0.6,
+                                    // strokeAlign: 0.6,
+                                    color: _cat != null
+                                        ? primaryColor
+                                        : Colors.grey,
+                                  ),
+                                ),
+                                child: Icon(
+                                  Icons.menu,
+                                  color: Colors.black,
+                                ),
                               ),
-                            ),
-                            child: const Icon(
-                              Icons.menu,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
+                            );
+                          }
+                          return const SizedBox.shrink();
+                        },
+                      ),
                     ],
                   ),
 
