@@ -155,6 +155,13 @@ class _PdetailPageState extends State<PdetailPage> {
                         ),
                       );
                 }
+                // show snackbar when item added
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('পণ্য কার্ট এ যোগ হয়েছে'),
+                    backgroundColor: priceBoxColor,
+                  ),
+                );
                 setState(() {
                   _itemBag = 0;
                 });
