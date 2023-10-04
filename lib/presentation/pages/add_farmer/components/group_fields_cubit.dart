@@ -13,7 +13,6 @@ class SelectGroupExpansionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      
       // initiallyExpanded: true,
       onExpansionChanged: (value) {
         final loginState = context.read<LoginBloc>().state;
@@ -59,6 +58,21 @@ class _GroupSelectorState extends State<GroupSelector> {
         setState(
           () {
             _groups = state.farmers;
+
+            // set an empty GroupFieldEntity to the first index
+            _groups.insert(
+              0,
+              const GroupFieldEntity(
+                farmer_group_id: 'x',
+                farmer_group_name: '------------',
+                total_farmers: 0,
+                color: '',
+                cluster_id: '',
+                group_manager_id: '',
+                member_pic: [],
+                group_leader: null,
+              ),
+            );
             _selectedGroup = state.farmers.first;
           },
         );
@@ -98,15 +112,17 @@ class _GroupSelectorState extends State<GroupSelector> {
             elevation: 16,
             value: _selectedGroup,
             items: _groups.map<DropdownMenuItem<GroupFieldEntity>>(
-                (GroupFieldEntity value) {
-              return DropdownMenuItem<GroupFieldEntity>(
-                // alignment: Alignment.center,
-                value: value,
-                child: Text(value.farmer_group_name),
-              );
-            }).toList(),
+              (GroupFieldEntity value) {
+                return DropdownMenuItem<GroupFieldEntity>(
+                  value: value,
+                  child: Text(value.farmer_group_name),
+                );
+              },
+            ).toList(),
             onChanged: (GroupFieldEntity? val) {
-              if (addFarmerB is AddFarmerInitial && val != null) {
+              if (addFarmerB is AddFarmerInitial &&
+                  val != null &&
+                  val.farmer_group_id != 'x') {
                 addFarmerB.farmerGroupIDController.text = val.farmer_group_id;
                 setState(() {
                   _selectedGroup = val;
