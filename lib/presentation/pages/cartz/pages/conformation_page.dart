@@ -8,6 +8,7 @@ import 'package:deshifarmer/presentation/cubit/dropdown/dropdown_cubit.dart';
 import 'package:deshifarmer/presentation/pages/cartz/widgets/card_cart3.dart';
 import 'package:deshifarmer/presentation/pages/home/home.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
+import 'package:deshifarmer/presentation/pages/login/login.dart';
 import 'package:deshifarmer/presentation/shapes/my_farmers_shape.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
@@ -654,14 +655,14 @@ ${cartItems.getTotalPrices() + cartItems.getTotalPrices()}''',
                             onPressed: () {
                               // goto the order page
 
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                LoginPage.route(),
+                                (route) => false,
+                              );
                               context
                                   .read<HomeBloc>()
                                   .add(const ChangePageEvent(2));
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                HomePage.route(),
-                                (route) => false,
-                              );
                             },
                             style: ButtonStyle(
                               backgroundColor:
