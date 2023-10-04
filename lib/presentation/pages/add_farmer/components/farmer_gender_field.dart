@@ -22,7 +22,7 @@ class _GenderFieldState extends State<GenderField> {
         isExpanded: true,
         // underline: Container(),
         decoration: const InputDecoration(
-          label: Text('কৃষকটি ছেলে / মেয়ে ?'),
+          label: Text('কৃষকটি পুরুষ / মহিলা ?'),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide.none,
@@ -46,8 +46,8 @@ class _GenderFieldState extends State<GenderField> {
         value: _gender,
         items: <String>[
           '----------',
-          'Male',
-          'Female',
+          'পুরুষ',
+          'মহিলা',
         ].map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             // alignment: Alignment.center,
@@ -109,8 +109,8 @@ class _MaritalStatusFieldState extends State<MaritalStatusField> {
         value: _maritalStatus,
         items: <String>[
           '----------',
-          'Married',
-          'Unmarried',
+          'বিবাহিত',
+          'অবিবাহিত',
         ].map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             // alignment: Alignment.center,
