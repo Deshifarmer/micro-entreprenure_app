@@ -17,6 +17,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc() : super(const LoginInitial()) {
     on<CheckLoginEvent>(_onSuccessLoginEvent);
     on<LoginSuccessEvent>(_onLoalLoginSuccessEvent);
+    on<ResetLoginEvent>(_onResetLoginEvent);
   }
   LoginRepoImpl loginRepoImpl = LoginRepoImpl();
 
@@ -53,10 +54,22 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async {
     emit(LoginLoading());
 
-    emit(LoginSuccess(SuccessLoginEntity(
-      token: event.token,
-      df_id: '',
-      full_name: '',
-    ),),);
+    emit(
+      LoginSuccess(
+        SuccessLoginEntity(
+          token: event.token,
+          df_id: '',
+          full_name: '',
+        ),
+      ),
+    );
+  }
+
+  // on reset login event
+  FutureOr<void> _onResetLoginEvent(
+    ResetLoginEvent event,
+    Emitter<LoginState> emit,
+  ) async {
+    emit(const LoginInitial());
   }
 }
