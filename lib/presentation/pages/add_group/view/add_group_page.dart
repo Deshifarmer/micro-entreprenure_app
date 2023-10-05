@@ -1,5 +1,6 @@
 import 'package:deshifarmer/presentation/pages/add_group/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_group/widgets/add_group_body.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:flutter/material.dart';
 
 /// {@template add_group_page}
@@ -22,15 +23,15 @@ class AddGroupPage extends StatelessWidget {
         appBar: AppBar(
           leading: IconButton(
             onPressed: () => Navigator.pop(context),
-            icon: Icon(
+            icon: const Icon(
               Icons.navigate_before,
-              color: Colors.green[600],
+              color: primaryColor,
             ),
           ),
-          title: Text(
+          title: const Text(
             'গ্রুপ তৈরি করুন',
             style: TextStyle(
-              color: Colors.green[700],
+              color: primaryColor,
             ),
           ),
         ),
