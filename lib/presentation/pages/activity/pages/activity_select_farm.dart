@@ -99,11 +99,13 @@ class ActivityAddFarm extends StatelessWidget {
 
         onpress: () {
           if (activityState is ActivityInitial) {
-            if (activityState.farmerID.text.isEmpty) {
+            if (activityState.farmerID.text.isEmpty ||
+                activityState.farmerID.text == 'x') {
               // errorSnackBar('Select a farmer');
               ScaffoldMessenger.of(context)
                   .showSnackBar(errorSnackBar('Select a farmer'));
-            } else if (activityState.farmID.text.isEmpty) {
+            } else if (activityState.farmID.text.isEmpty ||
+                activityState.farmID.text == 'x') {
               ScaffoldMessenger.of(context)
                   .showSnackBar(errorSnackBar('Select Farm for this Farmer'));
             } else {

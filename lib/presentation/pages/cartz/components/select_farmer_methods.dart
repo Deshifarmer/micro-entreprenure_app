@@ -113,7 +113,8 @@ class SelectFarmerMethods extends StatelessWidget {
                       //   subtitle: Text(value.phone ?? ''),
                       // ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 5),
                         child: Row(
                           // mainAxisAlignment: MainAxisAlignment.center,
                           children: [
