@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 
 class MyCustomAppBar extends StatelessWidget {
   const MyCustomAppBar({
-    required this.usrProfile, super.key,
+    required this.usrProfile,
+    super.key,
   });
 
   final UserProfileEntity usrProfile;
@@ -16,7 +17,7 @@ class MyCustomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       backgroundColor: tertiaryColor,
-      expandedHeight: getProportionateScreenHeight(250),
+      expandedHeight: getProportionateScreenHeight(200),
       shape: const RoundedRectangleBorder(
         /// only for bottom
         borderRadius: BorderRadius.only(
@@ -31,7 +32,7 @@ class MyCustomAppBar extends StatelessWidget {
       bottom: PreferredSize(
         preferredSize: Size(
           MediaQuery.of(context).size.width / 1,
-          getProportionateScreenHeight(65),
+          getProportionateScreenHeight(70),
         ),
         child: HomeBalanceCard(usrProfile: usrProfile),
       ),

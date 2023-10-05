@@ -48,16 +48,16 @@ class HomeBody extends StatelessWidget {
               TotalFarmerTotalOrders(usrProfile: usrProfile),
 
               ///! Weather Card
-              // SliverList(
-              //   delegate: SliverChildBuilderDelegate(
-              //     (_, int index) {
-              //       return FarmerWeatherCard(
-              //         usrProfile: usrProfile,
-              //       );
-              //     },
-              //     childCount: 1,
-              //   ),
-              // ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (_, int index) {
+                    return FarmerWeatherCard(
+                      usrProfile: usrProfile,
+                    );
+                  },
+                  childCount: 1,
+                ),
+              ),
 
               ///! Quick Actions
               const QuickActions(),

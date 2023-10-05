@@ -16,7 +16,49 @@ class FarmerListDropDown extends StatelessWidget {
     final activityState = context.read<ActivityBloc>().state;
     final loginState = context.read<LoginBloc>().state;
     return BlocConsumer<MyFarmerBloc, MyFarmerState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is MyFarmerSuccess) {
+          // insert a dummy farmer id to avoid null error
+          state.allFarmerListResp.farmers.insert(
+            0,
+            const FarmerEntity(
+              farmer_id: 'x',
+              full_name: '------------',
+              phone: '',
+              image: '',
+              address: '',
+              farmer_type: '',
+              onboard_by: '',
+              usaid_id: '',
+              first_name: '',
+              last_name: '',
+              fathers_name: '',
+              is_married: '',
+              gender: '',
+              date_of_birth: '',
+              village: '',
+              upazila: '',
+              district: '',
+              division: '',
+              union: '',
+              credit_score: '',
+              residentType: '',
+              land_status: '',
+              year_of_stay_in: '',
+              group_id: '',
+              bank_details: '',
+              mfs_account: '',
+              current_producing_crop: '',
+              focused_crop: '',
+              cropping_intensity: '',
+              cultivation_practice: '',
+              farmer_role: '',
+              farm_id: '',
+              order_list: [],
+            ),
+          );
+        }
+      },
       builder: (context, state) {
         if (state is MyFarmerInitial) {
           return const Center(
@@ -86,7 +128,7 @@ class FarmerListDropDown extends StatelessWidget {
                           error,
                           stackTrace,
                         ) {
-                          return SizedBox.shrink();
+                          return const SizedBox.shrink();
                         },
                       ),
                     ),

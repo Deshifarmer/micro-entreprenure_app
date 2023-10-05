@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/data/datasources/local/corps/corps_db.dart';
@@ -81,10 +83,47 @@ class FarmaddFormBody extends StatelessWidget {
                         ),
                       );
                     } else if (state is MyFarmerSuccess) {
-                      if (farmAddState is FarmaddFormInitial) {
-                        farmAddState.farmerID.text =
-                            state.allFarmerListResp.farmers.first.farmer_id!;
-                      }
+                      // a dummy farmer to the first index of the list
+                      state.allFarmerListResp.farmers.insert(
+                        0,
+                        const FarmerEntity(
+                          farmer_id: 'x',
+                          full_name: '------------',
+                          phone: '',
+                          image: '',
+                          address: '',
+                          farmer_type: '',
+                          onboard_by: '',
+                          usaid_id: '',
+                          first_name: '',
+                          last_name: '',
+                          fathers_name: '',
+                          is_married: '',
+                          gender: '',
+                          date_of_birth: '',
+                          village: '',
+                          upazila: '',
+                          district: '',
+                          division: '',
+                          union: '',
+                          credit_score: '',
+                          residentType: '',
+                          land_status: '',
+                          year_of_stay_in: '',
+                          group_id: '',
+                          bank_details: '',
+                          mfs_account: '',
+                          current_producing_crop: '',
+                          focused_crop: '',
+                          cropping_intensity: '',
+                          cultivation_practice: '',
+                          farmer_role: '',
+                          farm_id: '',
+                          order_list: [],
+                        ),
+                      );
+                      farmAddState.farmerID.text =
+                          state.allFarmerListResp.farmers.first.farmer_id!;
 
                       return Padding(
                         padding: const EdgeInsets.symmetric(
@@ -126,30 +165,32 @@ class FarmaddFormBody extends StatelessWidget {
                               alignment: Alignment.center,
                               value: value,
                               child: ListTile(
-                                leading: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: CachedNetworkImage(
-                                    imageUrl: checkDomain(
-                                      Strings.getServerOrLocal(
-                                        ServerOrLocal.server,
+                                leading: value.image!.isEmpty
+                                    ? null
+                                    : ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: CachedNetworkImage(
+                                          imageUrl: checkDomain(
+                                            Strings.getServerOrLocal(
+                                              ServerOrLocal.server,
+                                            ),
+                                          )
+                                              ? dummyImage
+                                              : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
+                                          height: 50,
+                                          width: 50,
+                                          progressIndicatorBuilder: (context,
+                                                  url, downloadProgress) =>
+                                              Center(
+                                            child: CircularProgressIndicator(
+                                              value: downloadProgress.progress,
+                                              color: Colors.green[600],
+                                            ),
+                                          ),
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
+                                        ),
                                       ),
-                                    )
-                                        ? dummyImage
-                                        : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
-                                    height: 50,
-                                    width: 50,
-                                    progressIndicatorBuilder:
-                                        (context, url, downloadProgress) =>
-                                            Center(
-                                      child: CircularProgressIndicator(
-                                        value: downloadProgress.progress,
-                                        color: Colors.green[600],
-                                      ),
-                                    ),
-                                    errorWidget: (context, url, error) =>
-                                        const Icon(Icons.error),
-                                  ),
-                                ),
                                 title: Text(value.full_name ?? ''),
                                 subtitle: Text(value.phone ?? ''),
                               ),
@@ -418,6 +459,12 @@ class FarmaddFormBody extends StatelessWidget {
                   onpress: () async {
                     if (farmAddState is FarmaddFormInitial) {
                       print('farmer id -> ${farmAddState.farmerID.text}');
+                      if (farmAddState.farmerID.text.isEmpty ||
+                          farmAddState.farmerID.text == 'x') {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          errorSnackBar('Farmer ID cannot be empty'),
+                        );
+                      }
                       if (farmAddState.farmName.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           errorSnackBar('Farm Name cannot be empty'),
@@ -450,6 +497,19 @@ class FarmaddFormBody extends StatelessWidget {
                         ScaffoldMessenger.of(context).showSnackBar(
                           errorSnackBar(
                             'Farm Producing Crop cannot be empty',
+                          ),
+                        );
+                      } else if (farmAddState.farmSoilType.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          errorSnackBar(
+                            'Farm Soil Type cannot be empty',
+                          ),
+                        );
+                      } else if (farmAddState.farmSoilType.text ==
+                          soilTypes.first) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          errorSnackBar(
+                            'Farm Soil Type cannot be empty',
                           ),
                         );
                       } else {
