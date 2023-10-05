@@ -1,10 +1,11 @@
 import 'package:animations/animations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:deshifarmer/app/app.dart';
 import 'package:deshifarmer/core/app_strings.dart';
+import 'package:deshifarmer/data/datasources/local/shared_prefs/local_database_sf.dart';
 import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
-import 'package:deshifarmer/presentation/pages/login/view/login_page.dart';
 import 'package:deshifarmer/presentation/pages/profile/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/profile/pages/details_update.dart';
 import 'package:deshifarmer/presentation/pages/profile/pages/settings_update.dart';
@@ -45,8 +46,9 @@ class ProfileBody extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: CachedNetworkImage(
-                       imageUrl:  checkDomain(
-                                Strings.getServerOrLocal(ServerOrLocal.server),)
+                        imageUrl: checkDomain(
+                          Strings.getServerOrLocal(ServerOrLocal.server),
+                        )
                             ? dummyImage
                             : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${userProfile.userProfile.photo}',
                         fit: BoxFit.cover,
@@ -287,16 +289,23 @@ class ProfileBody extends StatelessWidget {
                       final value = await api.userLogout(
                         loginState.successLoginEntity.token,
                       );
+
                       if (value) {
-                        await Navigator.pushAndRemoveUntil(
+                        context.read<LoginBloc>().add(const ResetLoginEvent());
+
+                        /// remove the token from shared pref
+                        await SharedPrefDBServices().removeLoginToken();
+                        Navigator.pushAndRemoveUntil(
                           context,
-                          LoginPage.route(),
+                          // LoginPage.route(),
+                          MaterialPageRoute(builder: (context) => App()),
                           (route) => false,
                         );
                       } else {
                         /// show a snackbar
                         ScaffoldMessenger.of(context).showSnackBar(
-                            errorSnackBar('লগ আউট করা সম্ভব হচ্ছে না'),);
+                          errorSnackBar('লগ আউট করা সম্ভব হচ্ছে না'),
+                        );
                       }
                     }
                   },
