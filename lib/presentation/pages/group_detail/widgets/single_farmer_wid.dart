@@ -41,10 +41,22 @@ class _SingleFarmerCardState extends State<SingleFarmerCard> {
               return SizedBox(
                 height: MediaQuery.sizeOf(context).height * 0.55,
                 width: MediaQuery.of(context).size.width,
-                child: Column(
+                child: ListView(
                   children: [
+                    // farmer detail text
+                    const Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Text(
+                        'কৃষকের বিস্তারিত তথ্য',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: CachedNetworkImage(
@@ -63,10 +75,12 @@ class _SingleFarmerCardState extends State<SingleFarmerCard> {
                     Text(
                       '#${widget.gfe?.farmer_id}',
                       style: textTheme.bodySmall,
+                      textAlign: TextAlign.center,
                     ),
                     Text(
                       widget.gfe?.full_name ?? '',
                       style: textTheme.titleMedium,
+                      textAlign: TextAlign.center,
                     ),
                     Card(
                       elevation: 0,
@@ -78,7 +92,7 @@ class _SingleFarmerCardState extends State<SingleFarmerCard> {
                           // crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(8),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -89,7 +103,7 @@ class _SingleFarmerCardState extends State<SingleFarmerCard> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(8),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -99,30 +113,30 @@ class _SingleFarmerCardState extends State<SingleFarmerCard> {
                                 ],
                               ),
                             ),
+                            // Padding(
+                            //   padding: const EdgeInsets.all(8),
+                            //   child: Row(
+                            //     mainAxisAlignment:
+                            //         MainAxisAlignment.spaceBetween,
+                            //     children: [
+                            //       const Text('ঠিকানা'),
+                            //       Text(widget.gfe?.address ?? ''),
+                            //     ],
+                            //   ),
+                            // ),
+                            // Padding(
+                            //   padding: const EdgeInsets.all(8),
+                            //   child: Row(
+                            //     mainAxisAlignment:
+                            //         MainAxisAlignment.spaceBetween,
+                            //     children: [
+                            //       const Text('জন্ম তারিখ'),
+                            //       Text(widget.gfe?.date_of_birth ?? ''),
+                            //     ],
+                            //   ),
+                            // ),
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text('ঠিকানা'),
-                                  Text(widget.gfe?.address ?? ''),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text('জন্ম তারিখ'),
-                                  Text(widget.gfe?.date_of_birth ?? ''),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(8),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -133,7 +147,7 @@ class _SingleFarmerCardState extends State<SingleFarmerCard> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(8),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
