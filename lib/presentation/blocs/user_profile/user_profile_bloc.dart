@@ -28,10 +28,10 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
     };
 
     if (value is UserProfileEntity) {
-      print('user profile entity: $value');
+      // print('user profile entity: $value');
       emit(UserProfileFetchSuccess(value));
     } else {
-      print('user profile error: $value');
+      // print('user profile error: $value');
       emit(UserProfileFetchFailed());
     }
   }

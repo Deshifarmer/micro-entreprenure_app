@@ -17,6 +17,7 @@ SizedBox widgetWeight(double w) =>
 
 ///! soil types
 List<String> soilTypes = [
+  '----------',
   'Sandy soil( বেলে মাটি)',
   'Loamy soil(দোআঁশ মাটি)',
   'Clay soil(কাঁদা মাটি)',

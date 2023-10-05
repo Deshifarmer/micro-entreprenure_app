@@ -2,6 +2,7 @@ import 'package:deshifarmer/data/datasources/local/shared_prefs/local_database_s
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/pages/home/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
+import 'package:deshifarmer/presentation/pages/order/bloc/order_bloc.dart';
 import 'package:deshifarmer/presentation/shapes/deshifarmer_logo.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
@@ -36,11 +37,16 @@ class LoginBody extends StatelessWidget {
               .read<UserProfileBloc>()
               .add(GetUserProfileEvent(token: state.successLoginEntity.token));
           SharedPrefDBServices().setLoginToken(state.successLoginEntity.token);
+
+          /// get my orders
+          context
+              .read<OrderBloc>()
+              .add(InitOrders(state.successLoginEntity.token));
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               behavior: SnackBarBehavior.floating,
-              backgroundColor: Colors.green[700],
-              content: const Text('Successfully Logged In'),
+              backgroundColor: primaryColor,
+              content: Text('Successfully Logged In'),
             ),
           );
         }
@@ -83,7 +89,8 @@ class LoginBody extends StatelessWidget {
                   /// a space between logo and company name
                   SizedBox(
                     height: getProportionateScreenHeight(
-                        MediaQuery.sizeOf(context).height * 0.25,),
+                      MediaQuery.sizeOf(context).height * 0.25,
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(
@@ -97,7 +104,8 @@ class LoginBody extends StatelessWidget {
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                        bottom: getProportionateScreenHeight(20),),
+                      bottom: getProportionateScreenHeight(20),
+                    ),
                     child: Text(
                       'একাউন্ট ম্যানেজ করুন',
                       style: theme.textTheme.headlineSmall!.copyWith(

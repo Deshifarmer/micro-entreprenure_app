@@ -14,6 +14,29 @@ class FarmListDropDown extends StatelessWidget {
     return BlocConsumer<FarmerFetchFarmBloc, FarmerFetchFarmState>(
       listener: (context, state) {
         debugPrint('getting farm state  -> $state');
+        if (state is FarmerFetchFarmSuccess) {
+          // add a dummy farm id to avoid null error
+          state.allFarmListo.allCompany.insert(
+              0,
+              FarmEntity(
+                address: '',
+                created_at: '',
+                farm_id: 'x',
+                current_crop: '',
+                farm_area: '',
+                farm_name: '',
+                farmer_id: '',
+                farm_reg_no: '',
+                gallery: [],
+                lat: 0,
+                long: 0,
+                mouaza: '',
+                soil_type: '',
+                starting_date: '',
+                union: '',
+                updated_at: '',
+              ));
+        }
       },
       builder: (context, FarmerFetchFarmState state) {
         if (state is FarmerFetchFarmSuccess) {

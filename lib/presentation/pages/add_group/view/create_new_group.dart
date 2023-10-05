@@ -164,6 +164,7 @@ class CreateGroupForm extends StatelessWidget {
                     //   ),
                     // ),
                     onpress: () {
+                      print('clikcing button');
                       final loginState = context.read<LoginBloc>().state;
                       if (loginState is LoginSuccess &&
                           state is AddGroupInitial) {
@@ -173,7 +174,37 @@ class CreateGroupForm extends StatelessWidget {
                         print(
                           'Group NAME -> ${state.groupNameController.text}',
                         );
+                        if (state.groupNameController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Text('গ্রুপের নাম লিখুন'),
+                              // content: Text('Enter a group name'),
+                            ),
+                          );
+                          return;
+                        }
                         print('Leader ID -> ${state.leaderID}');
+                        if (state.leaderID == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Text('গ্রুপ লিডার নির্বাচন করুন'),
+                              // content: Text('Select a group leader'),
+                            ),
+                          );
+                          return;
+                        }
+                        if (state.leaderID == 'x') {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Text('গ্রুপ লিডার নির্বাচন করুন'),
+                              // content: Text('Select a group leader'),
+                            ),
+                          );
+                          return;
+                        }
                         context.read<AddGroupBloc>().add(
                               CustomAddGroupEvent(
                                 groupName: state.groupNameController.text,
