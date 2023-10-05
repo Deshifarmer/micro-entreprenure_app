@@ -29,8 +29,14 @@ class AddGroupBloc extends Bloc<AddGroupEvent, AddGroupState> {
     );
 
     final value = switch (result) {
-      Success(data: final bool _) => emit(GroupCreatedSuccessfully()),
-      ServerFailor(error: final _) => emit(GroupCreatedFailed()),
+      Success(data: final bool _) => {
+          emit(GroupCreatedSuccessfully()),
+          emit(AddGroupInitial()),
+        },
+      ServerFailor(error: final _) => {
+          emit(GroupCreatedFailed()),
+          emit(AddGroupInitial()),
+        },
     };
   }
 }
