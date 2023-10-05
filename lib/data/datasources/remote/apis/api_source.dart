@@ -957,6 +957,7 @@ class DeshiFarmerAPI {
       ApiDatabaseParams.createGroupAPI,
     );
     print('url $url $token');
+    print('body -> $body');
 
     ///! Trying request to SErVER
     try {
@@ -968,13 +969,17 @@ class DeshiFarmerAPI {
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 201) {
+        print('group created successfully -> ${response.statusCode}');
         return Success<bool, Exception>(true);
       } else {
+        var respMsg = await response.stream.bytesToString();
+        print('group created failed -> ${response.statusCode} $respMsg');
         return ServerFailor<bool, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
+      print('group created failed -> $e');
       return ServerFailor<bool, Exception>(
         Exception('Server failor -> $e'),
       );
