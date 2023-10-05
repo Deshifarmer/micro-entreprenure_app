@@ -42,3 +42,8 @@ class LoginSuccessEvent extends LoginEvent {
         token,
       ];
 }
+
+// Reset Login Event
+class ResetLoginEvent extends LoginEvent {
+  const ResetLoginEvent();
+}
