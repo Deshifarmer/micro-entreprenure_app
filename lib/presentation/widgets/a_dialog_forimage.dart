@@ -190,13 +190,16 @@ class _ImportDialogState extends State<ImportDialog> {
                                     setState(() {
                                       isLoading = false;
                                     });
-                                    await Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (_) => AttendancePage(
-                                          imageFile: imageFile,
-                                        ),
-                                      ),
-                                    );
+                                    // await Navigator.of(context).push(
+                                    //   MaterialPageRoute(
+                                    //     builder: (_) => AttendancePage(
+                                    //       imageFile: imageFile,
+                                    //     ),
+                                    //   ),
+                                    // );
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pop();
+                                    // await Navigator.pushAndRemoveUntil(context, Ma , (route) => false)
                                   } else {
                                     setState(() {
                                       isLoading = false;
