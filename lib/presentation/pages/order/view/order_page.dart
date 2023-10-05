@@ -1,3 +1,4 @@
+import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/order/bloc/order_bloc.dart';
 import 'package:deshifarmer/presentation/pages/order/widgets/order_body.dart';
@@ -20,26 +21,42 @@ class OrderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'আমার অর্ডার  সমূহ',
-          style: TextStyle(
-            color: priceBoxColor,
-            fontWeight: FontWeight.w500,
+    return WillPopScope(
+      onWillPop: () async {
+        final loginState = context.read<LoginBloc>().state;
+        final token = loginState is LoginSuccess
+            ? loginState.successLoginEntity.token
+            : '';
+        context.read<UserProfileBloc>().add(GetUserProfileEvent(token: token));
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'আমার অর্ডার  সমূহ',
+            style: TextStyle(
+              color: priceBoxColor,
+              fontWeight: FontWeight.w500,
+            ),
           ),
+          // centerTitle: true,
+          leading: isBack == true
+              ? IconButton(
+                  icon: const Icon(Icons.arrow_back_ios),
+                  onPressed: () {
+                    final loginState = context.read<LoginBloc>().state;
+                    final token = loginState is LoginSuccess
+                        ? loginState.successLoginEntity.token
+                        : '';
+                    context
+                        .read<UserProfileBloc>()
+                        .add(GetUserProfileEvent(token: token));
+                    Navigator.of(context).pop();
+                  },
+                )
+              : null,
         ),
-        // centerTitle: true,
-        leading: isBack == true
-            ? IconButton(
-                icon: const Icon(Icons.arrow_back_ios),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            : null,
-      ),
-      body: RefreshIndicator(
+        body: RefreshIndicator(
           backgroundColor: priceBoxColor,
           color: Colors.white,
           onRefresh: () async {
@@ -51,7 +68,9 @@ class OrderPage extends StatelessWidget {
               context.read<OrderBloc>().add(InitOrders(token));
             }
           },
-          child: const OrderView(),),
+          child: const OrderView(),
+        ),
+      ),
     );
   }
 }
