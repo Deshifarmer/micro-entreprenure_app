@@ -1,5 +1,7 @@
+import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/pages/farmer_listo/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/farmer_listo/widgets/farmer_listo_body.dart';
+import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:flutter/material.dart';
 
 /// {@template farmer_listo_page}
@@ -20,13 +22,25 @@ class FarmerListoPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => FarmerListoBloc(),
       child: SafeArea(
-        child: Scaffold(
-          appBar: isBack != null
-              ? AppBar(
-                  // title: Text('আমার কৃষক তালিকা'),
-                  )
-              : null,
-          body: const FarmerListoView(),
+        child: WillPopScope(
+          onWillPop: () async {
+            final loginState = context.read<LoginBloc>().state;
+            final token = loginState is LoginSuccess
+                ? loginState.successLoginEntity.token
+                : '';
+            context
+                .read<UserProfileBloc>()
+                .add(GetUserProfileEvent(token: token));
+            return true;
+          },
+          child: Scaffold(
+            appBar: isBack != null
+                ? AppBar(
+                    // title: Text('আমার কৃষক তালিকা'),
+                    )
+                : null,
+            body: const FarmerListoView(),
+          ),
         ),
       ),
     );
