@@ -25,6 +25,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.watch<HomeBloc>().state;
     return Scaffold(
+      // maintainBottomViewPadding: true,
+      extendBody: true,
       backgroundColor: const Color(0xffF5F8FF),
       // body: HomeView(),
       body: state is HomeInitial
@@ -35,14 +37,6 @@ class HomePage extends StatelessWidget {
                   ? const OrderPage()
                   : const ProfilePage(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      // floatingActionButton: FloatingActionButton(
-      //   // make it circle
-      //   shape: const CircleBorder(),
-      //   // background color to tertiary color
-      //   backgroundColor: tertiaryColor,
-      //   onPressed: () {},
-      //   child: const Icon(Icons.add),
-      // ),
       floatingActionButton: OpenContainer(
         closedBuilder: (context, action) {
           return FloatingActionButton(

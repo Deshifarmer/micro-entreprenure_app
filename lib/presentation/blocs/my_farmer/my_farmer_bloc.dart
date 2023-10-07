@@ -28,7 +28,7 @@ class MyFarmerBloc extends Bloc<MyFarmerEvent, MyFarmerState> {
     } else {
       // print('company failor !');
 
-      emit(MyFarmerFailed());
+      emit(MyFarmerFailed(message: value.toString()));
     }
   }
 }
