@@ -83,11 +83,11 @@ class _ProductsBody3State extends State<ProductsBody3> {
   final ScrollController customController = ScrollController();
   final ScrollController pagingController = ScrollController();
   final TextEditingController productSearchController = TextEditingController();
-  bool isTheEnd = false;
+  bool isTheEnd = true;
   @override
   Widget build(BuildContext context) {
     // final productState = context.read<ProductsBloc>().state;
-    final categoryState = context.read<CategoryBloc>().state;
+    // final categoryState = context.read<CategoryBloc>().state;
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 10,
@@ -95,27 +95,43 @@ class _ProductsBody3State extends State<ProductsBody3> {
       child: CustomScrollView(
         cacheExtent: 100,
         shrinkWrap: true,
+        physics: isTheEnd // if true then the scroll is enabled
+            ? const BouncingScrollPhysics()
+            : const NeverScrollableScrollPhysics(),
         // if scrollcontroller reached then the end is true
         controller: customController
           ..addListener(
             () {
+              // check if the scroll controller reached the end
               if (customController.position.atEdge) {
-                // print(
-                //     'scroll controller -> ${customController.position.pixels}');
-                if (customController.position.pixels != 0) {
-                  setState(() {
-                    isTheEnd = true;
-                  });
-                } else {
+                print(
+                    'CS: reached the end of list -> ${customController.position.pixels}');
+                if (customController.position.pixels ==
+                    customController.position.maxScrollExtent) {
+                  print('CS: reached at the bottom of list');
+                  // now let's make the CS false
                   setState(() {
                     isTheEnd = false;
                   });
                 }
-              } else {
-                setState(() {
-                  isTheEnd = false;
-                });
               }
+              // if (customController.position.atEdge) {
+              //   // print(
+              //   //     'scroll controller -> ${customController.position.pixels}');
+              //   if (customController.position.pixels != 0) {
+              //     setState(() {
+              //       isTheEnd = true;
+              //     });
+              //   } else {
+              //     setState(() {
+              //       isTheEnd = false;
+              //     });
+              //   }
+              // } else {
+              //   setState(() {
+              //     isTheEnd = false;
+              //   });
+              // }
             },
           ),
         slivers: [
@@ -337,9 +353,9 @@ class _ProductsBody3State extends State<ProductsBody3> {
                             builder: (context, state) {
                               if (state is CompanySuccess) {
                                 final allCompany = state.allCompanyListResp;
-                                print(
-                                  'company length -> ${allCompany.allCompany.length}',
-                                );
+                                // print(
+                                //   'company length -> ${allCompany.allCompany.length}',
+                                // );
                                 return ListView.builder(
                                   shrinkWrap: true,
                                   // reverse: true,
@@ -348,15 +364,15 @@ class _ProductsBody3State extends State<ProductsBody3> {
                                   itemBuilder: (context, index) {
                                     final currentCompany =
                                         allCompany.allCompany.elementAt(index);
-                                    print('$index ${currentCompany.full_name}');
+                                    // print('$index ${currentCompany.full_name}');
                                     // final companyState = context.read<ProductsBloc>().state;
                                     // print('${Strings.domain}/storage${currentCompany.photo}');
                                     return BlocConsumer<ProductsBloc,
                                         ProductsState>(
                                       listener: (context, companyState) {
-                                        print(
-                                          'company states -> $companyState',
-                                        );
+                                        // print(
+                                        //   'company states -> $companyState',
+                                        // );
                                       },
                                       builder: (context, companyState) {
                                         return InkWell(
@@ -543,29 +559,59 @@ class _ProductsBody3State extends State<ProductsBody3> {
                   ),
                   Expanded(
                     child: PagedGridView<int, ProductData>(
-                      // scrollController: pagingController
-                      //   ..addListener(() {
-                      //     // if the scroll controller reached the start then the end is false
-                      //     // if (pagingController.position.atEdge) {
-                      //     //   if (pagingController.position.pixels != 0) {
-                      //     //     print('reached the first of list');
-                      //     //     setState(() {
-                      //     //       isTheEnd = true;
-                      //     //     });
-                      //     //   } else {
-                      //     //     setState(() {
-                      //     //       isTheEnd = false;
-                      //     //     });
-                      //     //   }
-                      //     // } else {
-                      //     //   setState(() {
-                      //     //     isTheEnd = false;
-                      //     //   });
-                      //     // }
-                      //   }),
+                      scrollController: pagingController
+                        ..addListener(() {
+                          // check if the scroll controller reached the beginning
+                          if (pagingController.position.atEdge) {
+                            // print(
+                            //     'PS: reached the end of list -> ${pagingController.position.pixels}');
+                            if (pagingController.position.pixels ==
+                                pagingController.position.minScrollExtent) {
+                              // making it true
+                              setState(() {
+                                isTheEnd = true;
+                              });
+                            }
+                          }
+                          // if (pagingController.position.atEdge) {
+                          //   print('reached the end of list');
+
+                          //   //   if (pagingController.position.pixels != 0) {
+                          //   //     print('reached the first of list');
+                          //   setState(() {
+                          //     isTheEnd = true;
+                          //   });
+                          //   //   } else {
+                          //   //     setState(() {
+                          //   //       isTheEnd = false;
+                          //   //     });
+                          //   //   }
+                          //   // } else {
+                          //   //   setState(() {
+                          //   //     isTheEnd = false;
+                          //   //   });
+                          //   // }
+                          //   // if the scroll controller reached the start then the end is false
+                          //   // if (pagingController.position.atEdge) {
+                          //   //   if (pagingController.position.pixels != 0) {
+                          //   //     print('reached the first of list');
+                          //   //     setState(() {
+                          //   //       isTheEnd = true;
+                          //   //     });
+                          //   //   } else {
+                          //   //     setState(() {
+                          //   //       isTheEnd = false;
+                          //   //     });
+                          //   //   }
+                          //   // } else {
+                          //   //   setState(() {
+                          //   //     isTheEnd = false;
+                          //   //   });
+                          // }
+                        }),
                       physics: isTheEnd
-                          ? const BouncingScrollPhysics()
-                          : const NeverScrollableScrollPhysics(),
+                          ? const NeverScrollableScrollPhysics()
+                          : const BouncingScrollPhysics(),
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
