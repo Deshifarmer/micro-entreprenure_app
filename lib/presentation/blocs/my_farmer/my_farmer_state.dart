@@ -19,4 +19,7 @@ class MyFarmerSuccess extends MyFarmerState {
       ];
 }
 
-class MyFarmerFailed extends MyFarmerState {}
+class MyFarmerFailed extends MyFarmerState {
+  const MyFarmerFailed({required this.message});
+  final String message;
+}

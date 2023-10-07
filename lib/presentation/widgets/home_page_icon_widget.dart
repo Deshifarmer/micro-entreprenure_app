@@ -1,3 +1,4 @@
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 
 class HomePageIconWidget extends StatelessWidget {
@@ -15,6 +16,7 @@ class HomePageIconWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         if (icon != null)
           icon!
@@ -23,8 +25,8 @@ class HomePageIconWidget extends StatelessWidget {
             painter: painter,
             size: const Size(25, 25),
           ),
-        const SizedBox(
-          height: 8,
+        SizedBox(
+          height: getProportionateScreenHeight(8),
         ),
         Text(
           title,

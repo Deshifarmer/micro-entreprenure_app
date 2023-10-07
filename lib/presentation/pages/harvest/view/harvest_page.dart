@@ -1,5 +1,11 @@
+import 'package:animations/animations.dart';
+import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
+import 'package:deshifarmer/presentation/pages/activity/activity.dart';
+import 'package:deshifarmer/presentation/pages/harvest/pages/harvest_recod_page.dart';
 import 'package:deshifarmer/presentation/pages/harvest/widgets/harvest_body.dart';
+import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
+import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:flutter/material.dart';
 
 /// {@template harvest_page}
@@ -22,6 +28,37 @@ class HarvestPage extends StatelessWidget {
         backgroundColor: backgroundColor2,
       ),
       body: const HarvestView(),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 35,
+        ),
+        child: OpenContainer(
+          closedBuilder: (c, f) {
+            return SecondayButtonGreen(
+              onpress: f,
+              title: 'সেলস রেকর্ড করুন ',
+            );
+          },
+          openElevation: 0,
+          closedElevation: 0,
+          closedColor: Colors.transparent,
+          openColor: Colors.transparent,
+          openBuilder: (c, f) {
+            final loginState = context.read<LoginBloc>().state;
+            final token = loginState is LoginSuccess
+                ? loginState.successLoginEntity.token
+                : '';
+
+            context.read<MyFarmerBloc>().add(
+                  MyFarmerFetchEvent(
+                    token,
+                  ),
+                );
+            return const HarvestRecordPage();
+          },
+        ),
+      ),
     );
   }
 }

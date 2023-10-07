@@ -1,5 +1,6 @@
 import 'package:deshifarmer/presentation/pages/add_farmer/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/widgets/add_farmer_body.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:flutter/material.dart';
 
 /// {@template add_farmer_page}
@@ -21,15 +22,16 @@ class AddFarmerPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: Icon(
-                Icons.navigate_before,
-                color: Colors.green[600],
-              ),),
-          title: Text(
+            onPressed: () => Navigator.pop(context),
+            icon: const Icon(
+              Icons.navigate_before,
+              color: priceBoxColor,
+            ),
+          ),
+          title: const Text(
             'কৃষকের রেজিস্ট্রেশন করুন',
             style: TextStyle(
-              color: Colors.green[700],
+              color: priceBoxColor,
             ),
           ),
         ),

@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:deshifarmer/core/params/home_page_params.dart';
 import 'package:deshifarmer/data/datasources/remote/apis/attendance_api.dart';
 import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
@@ -7,7 +8,6 @@ import 'package:deshifarmer/presentation/pages/attendance/attendance.dart';
 import 'package:deshifarmer/presentation/pages/commision/commision.dart';
 import 'package:deshifarmer/presentation/pages/farmadd_form/view/farmadd_form_page.dart';
 import 'package:deshifarmer/presentation/pages/home/components/customapp_bar.dart';
-import 'package:deshifarmer/presentation/pages/home/components/farmer_weather_card.dart';
 import 'package:deshifarmer/presentation/pages/home/components/home_page_orders.dart';
 import 'package:deshifarmer/presentation/pages/home/components/my_kpi.dart';
 import 'package:deshifarmer/presentation/pages/home/components/quick_actions.dart';
@@ -48,16 +48,16 @@ class HomeBody extends StatelessWidget {
               TotalFarmerTotalOrders(usrProfile: usrProfile),
 
               ///! Weather Card
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (_, int index) {
-                    return FarmerWeatherCard(
-                      usrProfile: usrProfile,
-                    );
-                  },
-                  childCount: 1,
-                ),
-              ),
+              // SliverList(
+              //   delegate: SliverChildBuilderDelegate(
+              //     (_, int index) {
+              //       return FarmerWeatherCard(
+              //         usrProfile: usrProfile,
+              //       );
+              //     },
+              //     childCount: 1,
+              //   ),
+              // ),
 
               ///! Quick Actions
               const QuickActions(),
@@ -119,7 +119,7 @@ class HomeBody extends StatelessWidget {
                               final today = await AttendanceAPI()
                                   .getTodaysAttendance(token);
                               if (today != null) {
-                                print('today is not null');
+                                // print('today is not null');
                                 context
                                     .read<AttendanceBloc>()
                                     .add(CheckInFromFuture(today));
@@ -129,7 +129,7 @@ class HomeBody extends StatelessWidget {
                                   ),
                                 );
                               } else {
-                                print('today is nULLLL');
+                                // print('today is nULLLL');
                                 await showDialog(
                                   context: context,
                                   builder: (BuildContext context) =>
@@ -228,19 +228,46 @@ class HomeBody extends StatelessWidget {
                     .read<UserProfileBloc>()
                     .add(GetUserProfileEvent(token: token));
               },
-              child: Center(
-                child: Column(
-                  children: [
-                    LottieBuilder.asset('assets/animations/failed.json'),
-                    const Text('কিছু ভুল হয়েছে'),
+              child: FutureBuilder<ConnectivityResult>(
+                future: Connectivity().checkConnectivity(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData &&
+                      snapshot.data == ConnectivityResult.none) {
+                    return Center(
+                      child: Column(
+                        children: [
+                          LottieBuilder.asset(
+                              'assets/animations/no_internet.json'),
+                          const Text('ইন্টারনেট সংযোগ নেই'),
 
-                    /// a button to restart the app
-                    const SecondayButtonGreen(
-                      onpress: Restart.restartApp,
-                      title: 'পুনরায় চেষ্টা করুন',
+                          /// a button to restart the app
+                          SecondayButtonGreen(
+                            onpress: () async {
+                              await Restart.restartApp();
+                            },
+                            title: 'পুনরায় চেষ্টা করুন',
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                  return Center(
+                    child: Column(
+                      children: [
+                        LottieBuilder.asset('assets/animations/failed.json'),
+                        const Text('কিছু ভুল হয়েছে'),
+
+                        /// a button to restart the app
+                        SecondayButtonGreen(
+                          onpress: () async {
+                            await Restart.restartApp();
+                          },
+                          title: 'পুনরায় চেষ্টা করুন',
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  );
+                },
               ),
             ),
           );
