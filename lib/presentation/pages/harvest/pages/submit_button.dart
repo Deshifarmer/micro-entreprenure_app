@@ -10,11 +10,11 @@ class SumbitButtonForHervest extends StatefulWidget {
   const SumbitButtonForHervest({
     // required this.batchID,
     required this.harvestModel,
-    required this.onPressed,
+    // required this.onPressed,
     super.key,
   });
   final HarvestModel harvestModel;
-  final Function onPressed;
+  // final Function onPressed;
   @override
   State<SumbitButtonForHervest> createState() => _SumbitButtonForHervestState();
 }
@@ -75,6 +75,7 @@ class _SumbitButtonForHervestState extends State<SumbitButtonForHervest> {
                     content: Text('সফলভাবে সাবমিট হয়েছে'),
                   ),
                 );
+                Navigator.pop(context);
                 // clear all the fields and pop
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
