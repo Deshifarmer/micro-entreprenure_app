@@ -38,8 +38,11 @@ class _GetImageForHarvestState extends State<GetImageForHarvest> {
       image = img;
     });
     if (image != null) {
+      print(
+          'image size is -> ${await image!.length()} and path -> ${image!.path}');
       widget.selectIMGController?.text = image!.path;
-      // print('image size state -> ${await image!.length()}');
+      print(
+          'image path from controller -> ${widget.selectIMGController?.text}');
     }
   }
 
