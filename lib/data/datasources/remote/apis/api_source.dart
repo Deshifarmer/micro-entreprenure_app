@@ -549,19 +549,6 @@ class DeshiFarmerAPI {
             print(
               'error comverting data FarmerEntity->  ${element.runtimeType}, $e \n',
             );
-            // e2.forEach((key, value) {
-            //   if (value.runtimeType != String) {
-            //     print('${value.runtimeType} $key $value');
-            //   }
-            // });
-
-            // final e2 = element;
-            // print('exception occured $e');
-            // e2.forEach(
-            //   (key, value) {
-            //     print('$key | ${value.runtimeType} | $value');
-            //   },
-            // );
           }
         }
         AllFarmerListResp successResonse = AllFarmerListResp(companyE);
@@ -1413,6 +1400,52 @@ class DeshiFarmerAPI {
     } catch (e) {
       print('Exception -> $e');
       return false;
+    }
+  }
+
+  /// get farmers without any shit
+  ///* Get the Farmer LIST
+  Future<AllFarmerListResp?> getFarmers2(String token) async {
+    String localToken = '';
+    // String _LOCAL_TOKEN = '55|9062I8GhTHqaQWFrfOu5HzcRG3df73axEgL5rBUK';
+    Map<String, String> auth = <String, String>{
+      'Authorization': 'Bearer ${localToken.isNotEmpty ? localToken : token}',
+    };
+    final Uri url = Uri.parse(
+      ApiDatabaseParams.myFarmerApi,
+    );
+    print('url -> $url $token');
+    try {
+      _headers.addAll(auth);
+      final http.Response response = await http.get(
+        url,
+        headers: _headers,
+      );
+      if (response.statusCode == 200) {
+        print('yeah successfully got the data');
+        final result = await Isolate.run(() => json.decode(response.body))
+            as List<dynamic>;
+        List<FarmerEntity> companyE = [];
+        for (int i = 0; i < result.length; i++) {
+          final element = result[i] as Map<String, dynamic>;
+          try {
+            companyE.add(
+              FarmerEntity.fromJson(element),
+            );
+          } catch (e) {}
+        }
+        AllFarmerListResp successResonse = AllFarmerListResp(companyE);
+
+        return successResonse;
+      } else {
+        print(
+            'farmer list getting error -> ${response.statusCode} ${response.body}');
+        return null;
+      }
+    } catch (e) {
+      print(
+          'FArmer getting EXC#EPTION -> ${e.toString().split(':').firstOrNull}');
+      return null;
     }
   }
 }
