@@ -521,9 +521,9 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.myFarmerApi,
     );
-    print(
-      'getting farmers url -> $url ${localToken.isNotEmpty ? localToken : token}',
-    );
+    // print(
+    //   'getting farmers url -> $url ${localToken.isNotEmpty ? localToken : token}',
+    // );
     try {
       _headers.addAll(auth);
       final http.Response response = await http.get(

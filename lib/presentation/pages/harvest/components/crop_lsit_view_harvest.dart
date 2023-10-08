@@ -16,70 +16,78 @@ class SelectCropharvest extends StatelessWidget {
     return FutureBuilder<List<SingleCropEntity>>(
       future: DeshiFarmerAPI().getCropFromAnotherAPI(),
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          // add an empty crop to the list
-          snapshot.data!.insert(
-            0,
-            const SingleCropEntity(
-              name: '',
-            ),
-          );
+        if (snapshot.hasData && snapshot.data!.isNotEmpty) {
           // show a dropdown
-          return DropdownButtonFormField<SingleCropEntity>(
-            isDense: false,
-            borderRadius: const BorderRadius.all(Radius.circular(15)),
-            isExpanded: true,
-            decoration: InputDecoration(
-              fillColor: backgroundColor2,
-              focusedBorder: OutlineInputBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                borderSide: BorderSide(
-                  color: Colors.black.withOpacity(0.2),
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 10,
                 ),
+                child: Text('ফসল নির্বাচন করুন'),
               ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                borderSide: BorderSide(
-                  color: Colors.black.withOpacity(0.2),
-                ),
-              ),
-              border: OutlineInputBorder(
+              DropdownButtonFormField<SingleCropEntity>(
+                isDense: false,
                 borderRadius: const BorderRadius.all(Radius.circular(15)),
-                borderSide: BorderSide(
-                  color: Colors.black.withOpacity(0.2),
+                isExpanded: true,
+                decoration: InputDecoration(
+                  fillColor: backgroundColor2,
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    borderSide: BorderSide(
+                      color: Colors.black.withOpacity(0.2),
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    borderSide: BorderSide(
+                      color: Colors.black.withOpacity(0.2),
+                    ),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
+                    borderSide: BorderSide(
+                      color: Colors.black.withOpacity(0.2),
+                    ),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    // vertical: 20,
+                    horizontal: 15,
+                  ),
+                  labelStyle: const TextStyle(
+                    color: Colors.black,
+                  ),
+                  hintText: '',
+                  filled: true,
                 ),
+                // decoration: ShapeDecoration(),
+                // itemHeight: 300,
+                elevation: 16,
+                // value: snapshot.data!.isNotEmpty ? snapshot.data!.first : null,
+                hint: const Text('ফসল নির্বাচন করুন'),
+                icon: const Icon(Icons.keyboard_arrow_down_outlined),
+                items: snapshot.data!
+                    .toSet()
+                    .toList()
+                    .map<DropdownMenuItem<SingleCropEntity>>((value) {
+                  return DropdownMenuItem<SingleCropEntity>(
+                    alignment: Alignment.center,
+                    value: value,
+                    child: ListTile(
+                      title:
+                          value.name == '' ? const Text('') : Text(value.name),
+                    ),
+                  );
+                }).toList(),
+                onChanged: (SingleCropEntity? val) {
+                  // print('on pressed called');
+                  if (val != null) {
+                    selectCropController.text = val.name;
+                  }
+                },
               ),
-              contentPadding: const EdgeInsets.symmetric(
-                // vertical: 20,
-                horizontal: 15,
-              ),
-              labelStyle: const TextStyle(
-                color: Colors.black,
-              ),
-              hintText: '',
-              filled: true,
-            ),
-            // decoration: ShapeDecoration(),
-            // itemHeight: 300,
-            elevation: 16,
-            value: snapshot.data!.isNotEmpty ? snapshot.data!.first : null,
-            icon: const Icon(Icons.keyboard_arrow_down_outlined),
-            items:
-                snapshot.data!.map<DropdownMenuItem<SingleCropEntity>>((value) {
-              return DropdownMenuItem<SingleCropEntity>(
-                alignment: Alignment.center,
-                value: value,
-                child: ListTile(
-                  title: value.name == '' ? const Text('') : Text(value.name),
-                ),
-              );
-            }).toList(),
-            onChanged: (SingleCropEntity? val) {
-              // print('on pressed called');
-              if (val != null) {
-                selectCropController.text = val.name;
-              }
-            },
+            ],
           );
         }
         return const SizedBox.shrink();

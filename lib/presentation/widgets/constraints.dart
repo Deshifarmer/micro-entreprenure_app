@@ -10,6 +10,14 @@ bool checkDomain(String domain) {
   return domain.contains('192');
 }
 
+const List<String> units = <String>[
+  'KG',
+  'Ton',
+  'Mon',
+  'PSC',
+  'Ati',
+  'Palla',
+];
 SizedBox widgetHeight(double h) =>
     SizedBox(height: getProportionateScreenHeight(h));
 SizedBox widgetWeight(double w) =>

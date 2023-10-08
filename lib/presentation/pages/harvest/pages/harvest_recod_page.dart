@@ -128,25 +128,15 @@ class _HarvestRecordPageState extends State<HarvestRecordPage> {
               ),
             ),
             //! select farmer
-            const Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 10,
-              ),
-              child: Text(
-                'কৃষক নির্বাচন করুন',
-              ),
-            ),
-            SelectFarmerMethodsForHarvest(
-              selectFarmerController: selectFarmerController,
-            ),
+            // SelectFarmerMethodsForHarvest(
+            //   selectFarmerController: selectFarmerController,
+            // ),
             //! select g
-            const Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 10,
-              ),
-              child: Text('ফসল নির্বাচন করুন'),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child:
+                  SelectCropharvest(selectCropController: selectCropController),
             ),
-            SelectCropharvest(selectCropController: selectCropController),
             //! jatt
             const Padding(
               padding: EdgeInsets.symmetric(
@@ -204,7 +194,7 @@ class _HarvestRecordPageState extends State<HarvestRecordPage> {
                         padding: EdgeInsets.symmetric(
                           horizontal: 10,
                         ),
-                        child: Text('পরিমান  ( কেজি/KG )'),
+                        child: Text('পরিমান '),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8),
