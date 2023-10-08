@@ -14,6 +14,7 @@ import 'package:deshifarmer/domain/entities/category_entity/all_categorys.dart';
 import 'package:deshifarmer/domain/entities/category_entity/category_entity.dart';
 import 'package:deshifarmer/domain/entities/company_entity/all_company_entity.dart';
 import 'package:deshifarmer/domain/entities/company_entity/company_response_entity.dart';
+import 'package:deshifarmer/domain/entities/crop_entity/single_crop_entity.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/all_farmer_entity.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity_again.dart';
@@ -24,6 +25,7 @@ import 'package:deshifarmer/domain/entities/login_entity/login_response_entity.d
 import 'package:deshifarmer/domain/entities/orders_entity/all_orders.dart';
 import 'package:deshifarmer/domain/entities/orders_entity/order_response_entity.dart';
 import 'package:deshifarmer/domain/entities/user_entity/user_profile_entity.dart';
+import 'package:deshifarmer/presentation/pages/harvest/model/harvest_model.dart';
 import 'package:http/http.dart' as http;
 
 class DeshiFarmerAPI {
@@ -113,7 +115,7 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.orderApi,
     );
-    print('url $url $token');
+    // print('url $url $token');
     try {
       _headers.addAll(auth);
       final http.Response response = await http.get(
@@ -134,7 +136,7 @@ class DeshiFarmerAPI {
             );
             // print('entity added successfully -> $i');
           } catch (e) {
-            print('exception occurd on OrderEntity $e');
+            // print('exception occurd on OrderEntity $e');
             final result2 = element as Map<String, dynamic>;
             // result2.forEach((key, value) {});
           }
@@ -144,12 +146,12 @@ class DeshiFarmerAPI {
         return Success<AllOrdersEntity, Exception>(successResonse);
       } else {
         return ServerFailor<AllOrdersEntity, Exception>(
-          Exception('Server failor'),
+          Exception('${response.statusCode} ${response.body}'),
         );
       }
     } catch (e) {
       return ServerFailor<AllOrdersEntity, Exception>(
-        Exception('Server failor -> $e'),
+        Exception('${e.toString().split(':').firstOrNull}'),
       );
     }
   }
@@ -568,12 +570,13 @@ class DeshiFarmerAPI {
         return Success<AllFarmerListResp, Exception>(successResonse);
       } else {
         return ServerFailor<AllFarmerListResp, Exception>(
-          Exception('Server failor'),
+          Exception('${response.statusCode} ${response.body}'),
         );
       }
     } catch (e) {
+      // print('EXC#EPTION -> ${e.toString().split(':').firstOrNull}');
       return ServerFailor<AllFarmerListResp, Exception>(
-        Exception('Server failor -> $e'),
+        Exception('${e.toString().split(':').firstOrNull}'),
       );
     }
   }
@@ -588,7 +591,7 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.unassignFarmersApi,
     );
-    print('unassign url -> $url $token');
+    // print('unassign url -> $url $token');
     try {
       _headers.addAll(auth);
       final http.Response response = await http.get(
@@ -626,12 +629,12 @@ class DeshiFarmerAPI {
         return Success<AllFarmerListResp, Exception>(successResonse);
       } else {
         return ServerFailor<AllFarmerListResp, Exception>(
-          Exception('Server failor'),
+          Exception('${response.statusCode} ${response.body}'),
         );
       }
     } catch (e) {
       return ServerFailor<AllFarmerListResp, Exception>(
-        Exception('Server failor -> $e'),
+        Exception('Server failor $e'),
       );
     }
   }
@@ -1320,6 +1323,96 @@ class DeshiFarmerAPI {
       }
     } catch (e) {
       return null;
+    }
+  }
+
+  //! get CROP from different API
+  Future<List<SingleCropEntity>> getCropFromAnotherAPI() async {
+    final Uri url = Uri.parse(
+      'https://server.krishibebsha.com/api/v1/product',
+    );
+    print('crop url -> $url');
+
+    List<SingleCropEntity> cropList = [];
+
+    try {
+      final http.Response response = await http.get(
+        url,
+      );
+      print('status code -> ${response.statusCode}');
+      if (response.statusCode == 200) {
+        final result = await Isolate.run(() => json.decode(response.body))
+            as List<dynamic>;
+        print(
+          'successfuly got the batch LISTO -> ${result.runtimeType} ${result.length}',
+        );
+
+        for (int i = 0; i < result.length; i++) {
+          final element = result[i] as Map<String, dynamic>;
+          // print('element runtime -> ${element.runtimeType}');
+          try {
+            cropList.add(
+              SingleCropEntity.fromJson(element),
+            );
+          } catch (e) {
+            print(
+              'error comverting data BatchEnity ->  ${element.runtimeType}, $e \n',
+            );
+          }
+        }
+        return cropList;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      return [];
+    }
+  }
+
+  // harvest post
+  Future<bool> postHarvest(
+      {required HarvestModel hm, required String token}) async {
+    final Uri url = Uri.parse(
+      ApiDatabaseParams.harvestPostAPI,
+    );
+
+    ///! POST HEADER
+    Map<String, String> headers = <String, String>{
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    var body = {
+      'product_name': hm.crop,
+      'variety': hm.jatt,
+      'buy_price': hm.price,
+      'quantity': hm.quantity,
+      'unit': hm.unit,
+      'description': hm.note,
+      'source_location': hm.location,
+      'which_farmer': hm.name,
+    };
+    print('harvest url -> $url');
+    try {
+      _headers.addAll(headers);
+      var request = http.MultipartRequest('POST', url);
+      request.fields.addAll(body);
+      request.files
+          .add(await http.MultipartFile.fromPath('product_images[]', hm.image));
+      request.headers.addAll(headers);
+      http.StreamedResponse response = await request.send();
+      print('status code -> ${response.statusCode}');
+      if (response.statusCode == 201) {
+        return true;
+      } else {
+        print('body -> $body');
+        print(
+            'error -> ${response.statusCode} ${response.reasonPhrase} ${await response.stream.bytesToString()}');
+        return false;
+      }
+    } catch (e) {
+      print('Exception -> $e');
+      return false;
     }
   }
 }

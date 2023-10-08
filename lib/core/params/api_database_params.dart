@@ -107,4 +107,8 @@ class ApiDatabaseParams {
   //! get batch list api
   static String batchListAPI =
       '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/farm_batch'; //*GET
+
+  //! post a harvest
+  static String harvestPostAPI =
+      '${Strings.getServerOrLocal(ServerOrLocal.local)}/api/v1/me/sourcing'; //*POST
 }

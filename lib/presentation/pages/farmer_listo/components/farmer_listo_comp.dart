@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/pages/farmer_listo/components/farmerlistview_withsearch.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
@@ -21,19 +22,34 @@ class MyFarmerListo extends StatelessWidget {
             child: const PrimaryLoadingIndicator(),
           );
         } else if (state is MyFarmerFailed) {
-          return Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              children: [
-                LottieBuilder.asset('assets/animations/failed.json'),
-                // const Text('কোন অর্ডার নেই'),
-                /// failed to fetch order message in Bangla
-                Text(
-                  'কোনও কৃষক পাওয়া যায় নি',
-                  style: Theme.of(context).textTheme.bodyMedium,
+          final connectivityResult = Connectivity().checkConnectivity();
+          return FutureBuilder<ConnectivityResult>(
+            future: connectivityResult,
+            builder: (context, snapshot) {
+              if (snapshot.hasData &&
+                  snapshot.data == ConnectivityResult.none) {
+                return Column(
+                  children: [
+                    LottieBuilder.asset('assets/animations/no_internet.json'),
+                    const Text('ইন্টারনেট সংযোগ নেই'),
+                  ],
+                );
+              }
+              return Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    LottieBuilder.asset('assets/animations/failed.json'),
+
+                    /// failed to fetch order message in Bangla
+                    Text(
+                      state.message,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              );
+            },
           );
         } else if (state is MyFarmerSuccess) {
           return FarmerListViewWithSearch(

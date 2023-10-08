@@ -1,6 +1,6 @@
 name: deshifarmer
 description: A agro flutter based project
-version: 3.2.1+17
+version: 3.2.1+18
 publish_to: none
 
 environment:
@@ -14,6 +14,7 @@ dependencies:
   carousel_slider: ^4.2.1
   connectivity_plus: ^4.0.2
   dotted_border: ^2.0.0+3
+  dropdown_button2: ^2.3.9
   equatable: ^2.0.5
   flutter:
     sdk: flutter

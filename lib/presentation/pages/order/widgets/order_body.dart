@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/pages/order/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/order/components/last_stage_orderlist.dart';
@@ -51,7 +52,9 @@ class OrderBody extends StatelessWidget {
                         .copyWith(color: primaryColor),
                   ),
                   LastStageOrderList(
-                      readyToCollectForMe: readyToCollectForMe, token: token,),
+                    readyToCollectForMe: readyToCollectForMe,
+                    token: token,
+                  ),
                   const Divider(
                     color: Color(0xffa6a6a6),
                   ),
@@ -118,16 +121,31 @@ class OrderBody extends StatelessWidget {
           );
         }
         if (state is OrderFetchFailed) {
-          return Column(
-            children: [
-              LottieBuilder.asset('assets/animations/failed.json'),
-              // const Text('কোন অর্ডার নেই'),
-              /// failed to fetch order message in Bangla
-              Text(
-                'অর্ডার তালিকা পাওয়া যায়নি',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-            ],
+          final connectivityResult = Connectivity().checkConnectivity();
+          return FutureBuilder<ConnectivityResult>(
+            future: connectivityResult,
+            builder: (context, snapshot) {
+              if (snapshot.hasData &&
+                  snapshot.data == ConnectivityResult.none) {
+                return Column(
+                  children: [
+                    LottieBuilder.asset('assets/animations/no_internet.json'),
+                    const Text('ইন্টারনেট সংযোগ নেই'),
+                  ],
+                );
+              }
+              return Column(
+                children: [
+                  LottieBuilder.asset('assets/animations/failed.json'),
+                  // const Text('কোন অর্ডার নেই'),
+                  /// failed to fetch order message in Bangla
+                  Text(
+                    state.message,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
+              );
+            },
           );
         }
         return const Center(child: PrimaryLoadingIndicator());

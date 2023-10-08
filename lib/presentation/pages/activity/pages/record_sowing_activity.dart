@@ -60,7 +60,8 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
 
   /// Date
   DateTime? _irrigationDate = DateTime.now();
-  final TextEditingController _irrigationDateController = TextEditingController();
+  final TextEditingController _irrigationDateController =
+      TextEditingController();
 
   /// Date
   DateTime? _weedingDate = DateTime.now();
@@ -68,7 +69,8 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
   @override
   Widget build(BuildContext context) {
     print(
-        'name -> ${widget.recordName} ${activityRecordValues[widget.recordName] == ActivityTypeEnums.landpref}',);
+      'name -> ${widget.recordName} ${activityRecordValues[widget.recordName] == ActivityTypeEnums.landpref}',
+    );
 
     // final recordSowingState = context.read<RecordSowingBloc>().state;
     return Scaffold(
@@ -97,12 +99,14 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Center(
-                    child: Text('রেকর্ড ${widget.recordName}',
-                        // child: Text('Record Sowing',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),),
+                    child: Text(
+                      'রেকর্ড ${widget.recordName}',
+                      // child: Text('Record Sowing',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                   const Padding(
                     padding: EdgeInsets.all(8),
