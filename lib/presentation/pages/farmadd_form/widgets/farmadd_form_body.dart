@@ -414,12 +414,12 @@ class FarmaddFormBody extends StatelessWidget {
                         .map((e) => ValueItem(label: e.name))
                         .toList(),
                     onOptionSelected: (selectedOptions) {
-                      // print(
+                      // debugPrint(
                       //     'multi select controller -> ${_multiSelectController.selectedOptions}');
                       final values = [];
-                      // print(selectedOptions);
+                      // debugPrint(selectedOptions);
                       for (final vi in selectedOptions) {
-                        // print(vi.label);
+                        // debugPrint(vi.label);
                         values.add(vi.label);
                       }
 
@@ -458,7 +458,7 @@ class FarmaddFormBody extends StatelessWidget {
                   // ),
                   onpress: () async {
                     if (farmAddState is FarmaddFormInitial) {
-                      print('farmer id -> ${farmAddState.farmerID.text}');
+                      debugPrint('farmer id -> ${farmAddState.farmerID.text}');
                       if (farmAddState.farmerID.text.isEmpty ||
                           farmAddState.farmerID.text == 'x') {
                         ScaffoldMessenger.of(context).showSnackBar(

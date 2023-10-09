@@ -5,6 +5,7 @@ import 'package:deshifarmer/core/error/exceptions.dart';
 import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
 import 'package:deshifarmer/data/models/add_farmer_model.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/rendering.dart';
 
 part 'add_farmer_api_event.dart';
 part 'add_farmer_api_state.dart';
@@ -28,7 +29,7 @@ class AddFarmerApiBloc extends Bloc<AddFarmerApiEvent, AddFarmerApiState> {
     if (value is bool) {
       emit(AddFarmerAPISuccess());
     } else if (value is Exception) {
-      print('farmer add form resp value -> $value');
+      debugPrint('farmer add form resp value -> $value');
       emit(
         AddFarmerAPIErrorState(
           value.toString(),
@@ -37,7 +38,7 @@ class AddFarmerApiBloc extends Bloc<AddFarmerApiEvent, AddFarmerApiState> {
     } else {
       emit(const AddFarmerAPIErrorState('Something went wrong'));
     }
-    // print(
+    // debugPrint(
     //     'farmer add form resp value -> ${farmerAddingResp is ServerFailor} || ${farmerAddingResp is Exception} $value');
     // if (farmerAddingResp is Success) {
     //   emit(AddFarmerAPISuccess());

@@ -37,7 +37,7 @@ class _OrderConformationPageState extends State<OrderConformationPage> {
     final cartItems = context.read<CartBloc>().state;
     return WillPopScope(
       onWillPop: () async {
-        // print('is this button presssed');
+        // debugPrint('is this button presssed');
 
         // context.read<DropdownForPaymentCubit>().changeDropdownValue('');
         return true;
@@ -592,7 +592,7 @@ ${cartItems.getTotalPrices() + cartItems.getTotalPrices()}''',
 
             /// check if the items are not empty
             if (cartItems is CartAddingState && cartItems.carts.isEmpty) {
-              debugPrint("nice state!");
+              debugPrint('nice state!');
 
               // show a snackbar
               ScaffoldMessenger.of(context).showSnackBar(
@@ -732,11 +732,11 @@ class ConfirmOrderFutreBldr extends StatelessWidget {
           final value = snapshot.data;
           if (value is Success) {
             // pop this page after 2 seconds
-            print('success response!');
+            debugPrint('success response!');
             Future.delayed(
               const Duration(seconds: 2),
               () {
-                print('poping hopping');
+                debugPrint('poping hopping');
                 Navigator.pop(context);
               },
             );

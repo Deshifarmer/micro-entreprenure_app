@@ -47,7 +47,15 @@ class _ActivityTypeSelectionState extends State<ActivityTypeSelection> {
             children: [
               for (final String s in activityRecordValues.keys)
                 FilterChip(
-                  label: Text(s),
+                  selectedColor: priceBoxColor,
+                  label: Text(
+                    s,
+                    style: TextStyle(
+                      color: _activityTypes.contains(s)
+                          ? Colors.white
+                          : Colors.black,
+                    ),
+                  ),
                   onSelected: (bool isSelected) {
                     // if (isSelected) {
                     //   _activityTypes.add(s);
@@ -68,7 +76,7 @@ class _ActivityTypeSelectionState extends State<ActivityTypeSelection> {
           ? SecondayButtonGreen(
               btnColor: priceBoxColor,
               onpress: () {
-                print('list of types -> $_activityTypes');
+                debugPrint('list of types -> $_activityTypes');
 // RecordSowingActivity
                 Navigator.push(
                   context,

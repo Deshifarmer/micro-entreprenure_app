@@ -24,22 +24,22 @@ class _SumbitButtonForHervestState extends State<SumbitButtonForHervest> {
 
   @override
   Widget build(BuildContext context) {
-    // print('file path is -> ${widget.harvestModel.image}');
+    // debugPrint('file path is -> ${widget.harvestModel.image}');
     return isLoading
         ? const Center(child: PrimaryLoadingIndicator())
         : SecondayButtonGreen(
             btnColor: priceBoxColor,
             onpress: () async {
-              // print every field field of harvest model
-              print('name -> ${widget.harvestModel.name}');
-              print('image -> ${widget.harvestModel.image}');
-              print('note -> ${widget.harvestModel.note}');
-              print('price -> ${widget.harvestModel.price}');
-              print('quantity -> ${widget.harvestModel.quantity}');
-              print('unit -> ${widget.harvestModel.unit}');
-              print('crop -> ${widget.harvestModel.crop}');
-              print('location -> ${widget.harvestModel.location}');
-              print('jatt -> ${widget.harvestModel.jatt}');
+              // debugPrint every field field of harvest model
+              debugPrint('name -> ${widget.harvestModel.name}');
+              debugPrint('image -> ${widget.harvestModel.image}');
+              debugPrint('note -> ${widget.harvestModel.note}');
+              debugPrint('price -> ${widget.harvestModel.price}');
+              debugPrint('quantity -> ${widget.harvestModel.quantity}');
+              debugPrint('unit -> ${widget.harvestModel.unit}');
+              debugPrint('crop -> ${widget.harvestModel.crop}');
+              debugPrint('location -> ${widget.harvestModel.location}');
+              debugPrint('jatt -> ${widget.harvestModel.jatt}');
 
               // show snack bar if any field is empty
               if (widget.harvestModel.name.isEmpty ||

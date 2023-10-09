@@ -28,12 +28,12 @@ class SelectFarmerMethodsForHarvests extends StatelessWidget {
       builder:
           (BuildContext context, AsyncSnapshot<AllFarmerListResp?> snapshot) {
         if (snapshot.hasData) {
-          print('yesh farmer has data!!');
+          debugPrint('yesh farmer has data!!');
           if (snapshot.data == null) {
-            print('got null from farmer list');
+            debugPrint('got null from farmer list');
             return const SizedBox.shrink();
           } else {
-            print('asdfhoasdifqwe aqweraaa');
+            debugPrint('asdfhoasdifqwe aqweraaa');
             return Padding(
               padding: const EdgeInsets.all(8),
               child: Column(
@@ -135,7 +135,7 @@ class SelectFarmerMethodsForHarvests extends StatelessWidget {
             );
           }
         }
-        print('got nothing from farmer list');
+        debugPrint('got nothing from farmer list');
         return const SizedBox.shrink();
       },
     );
@@ -185,7 +185,7 @@ class SelectFarmerMethodsForHarvests extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is MyFarmerSuccess) {
-          // print(
+          // debugPrint(
           //   '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${state.allFarmerListResp.farmers.first.image}',
           // );
 

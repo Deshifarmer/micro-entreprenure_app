@@ -164,14 +164,14 @@ class CreateGroupForm extends StatelessWidget {
                     //   ),
                     // ),
                     onpress: () {
-                      print('clikcing button');
+                      debugPrint('clikcing button');
                       final loginState = context.read<LoginBloc>().state;
                       if (loginState is LoginSuccess &&
                           state is AddGroupInitial) {
-                        print(
+                        debugPrint(
                           'token -> ${loginState.successLoginEntity.token}',
                         );
-                        print(
+                        debugPrint(
                           'Group NAME -> ${state.groupNameController.text}',
                         );
                         if (state.groupNameController.text.isEmpty) {
@@ -184,7 +184,7 @@ class CreateGroupForm extends StatelessWidget {
                           );
                           return;
                         }
-                        print('Leader ID -> ${state.leaderID}');
+                        debugPrint('Leader ID -> ${state.leaderID}');
                         if (state.leaderID == null) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(

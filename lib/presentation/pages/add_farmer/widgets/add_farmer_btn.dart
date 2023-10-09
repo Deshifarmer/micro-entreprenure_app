@@ -101,11 +101,13 @@ class AddFarmerButton extends StatelessWidget {
                                     formState.dobController.text))
                                 .inDays <
                             6570) {
-                          print(DateTime.now()
+                          debugPrint(
+                            (DateTime.now()
                                   .difference(DateTime.parse(
                                       formState.dobController.text))
                                   .inDays <
-                              (17 * 365));
+                              (17 * 365)).toString()
+                              );
 
                           /// 17 years in days
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -177,7 +179,7 @@ class AddFarmerButton extends StatelessWidget {
                           //     errorSnackBar('আপনার বয়স ১৮ বছরের কম হতে পারে না'),
                           //   );
                           // }
-                          // print(formState.);
+                          // debugPrint(formState.);
                           final farmerModel = AddFarmerModel(
                             govtFarmerID: formState.farmerGovtIDController.text,
                             nid: formState.farmerNIDController.text,
@@ -233,7 +235,7 @@ class AddFarmerButton extends StatelessWidget {
                             farmerType: '',
                           );
 
-                          // print(DateFormat.yM(farmerModel.dateOfBirth));
+                          // debugPrint(DateFormat.yM(farmerModel.dateOfBirth));
                           // TODO(nice): Uncomment this to add farmer
                           if (loginState is LoginSuccess) {
                             context.read<AddFarmerApiBloc>().add(
@@ -284,9 +286,9 @@ class AddFarmerButton extends StatelessWidget {
                             // 'farm_id': farmerModel.farmId.toString(),
                             'year_of_stay_in': farmerModel.yearOfStayIn,
                           };
-                          // print(testD);
+                          // debugPrint(testD);
                           testD.forEach((key, value) {
-                            print('$key : $value');
+                            debugPrint('$key : $value');
                           });
                         }
                       } catch (e) {
@@ -294,10 +296,10 @@ class AddFarmerButton extends StatelessWidget {
                             .showSnackBar(errorSnackBar(e.toString()));
                       }
 
-                      // debugPrint(testD.toString());
+                      // debugdebugPrint(testD.toString());
                       // if (state.farmerChildrenController.text.isEmpty) {}
 
-                      // print(farmerModel);
+                      // debugPrint(farmerModel);
                     }
                   },
                   title: 'কৃষক যোগ',

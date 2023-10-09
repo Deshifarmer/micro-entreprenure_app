@@ -188,7 +188,7 @@ class App extends StatelessWidget {
           future: SharedPrefDBServices().getLoginToken(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              print('usr alrady loggen in -> ${snapshot.data}');
+              debugPrint('usr alrady loggen in -> ${snapshot.data}');
               if (snapshot.data != null) {
                 /// a login success event
                 context

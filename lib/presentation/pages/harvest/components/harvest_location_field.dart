@@ -5,7 +5,7 @@ import 'package:deshifarmer/data/models/location_model.dart';
 import 'package:flutter/material.dart';
 
 class FarmerVillageAddressForHarvest extends StatefulWidget {
-  const FarmerVillageAddressForHarvest({super.key, required this.farmerDivisionController,});
+  const FarmerVillageAddressForHarvest({required this.farmerDivisionController, super.key,});
   final TextEditingController farmerDivisionController;
 
   @override
@@ -86,7 +86,7 @@ class _FarmerVillageAddressForHarvestState
                 selectedDist = filteredDist.first;
               });
 
-              print(
+              debugPrint(
                 'division: ${selectedDivision.id} dist: ${filteredDist.length}',
               );
               // context.read<DropdownCubit>().changeDropdownValue(val ?? '');
@@ -160,7 +160,7 @@ class _FarmerVillageAddressForHarvestState
                   selectedUpazilla = filteredUpazilla.first;
                 });
 
-                print(
+                debugPrint(
                   'dist: ${selectedDist.id} upazilla: ${filteredUpazilla.length}',
                 );
                 // context.read<DropdownCubit>().changeDropdownValue(val ?? '');
@@ -217,7 +217,7 @@ class _FarmerVillageAddressForHarvestState
                 setState(() {
                   selectedUpazilla = val ?? upzillaDatabase.first;
                 });
-                print('upazilla: ${selectedUpazilla.id} ');
+                debugPrint('upazilla: ${selectedUpazilla.id} ');
               },
             ),
           ),

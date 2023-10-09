@@ -4,6 +4,7 @@ import 'dart:isolate';
 import 'package:deshifarmer/core/params/api_database_params.dart';
 import 'package:deshifarmer/domain/entities/attendance/att_history.dart';
 import 'package:deshifarmer/domain/entities/attendance/todays_resp_entity.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class AttendanceAPI {
@@ -42,20 +43,20 @@ class AttendanceAPI {
           imageFile,
         ),
       );
-      print('check out api called -> $url $id $token');
+      debugPrint('check out api called -> $url $id $token');
       request.headers.addAll(auth);
       final response = await request.send();
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print('successfully checed out ');
+        debugPrint('successfully checed out ');
         return (true, '');
       } else {
-        print(
+        debugPrint(
           'error occured cut -> ${response.statusCode} ${await response.stream.bytesToString()}}',
         );
         return (false, '');
       }
     } catch (e) {
-      print('error occured no checkout -> $e');
+      debugPrint('error occured no checkout -> $e');
       return (false, '');
     }
   }
@@ -68,7 +69,7 @@ class AttendanceAPI {
     final url = Uri.parse(
       ApiDatabaseParams.todaysAttendanceAPI,
     );
-    print('get todays attendance -> $url');
+    debugPrint('get todays attendance -> $url');
     try {
       _headers.addAll(auth);
       final response = await http.get(
@@ -76,18 +77,18 @@ class AttendanceAPI {
         headers: _headers,
       );
       if (response.statusCode == 200) {
-        print('todays att response -> ${response.body}');
+        debugPrint('todays att response -> ${response.body}');
         final result = await Isolate.run(() => json.decode(response.body))
             as Map<String, dynamic>;
         return TodaysAttendance.fromJson(result);
       } else {
-        print(
+        debugPrint(
           'error occured on getting todays attendance -> ${response.statusCode} ${response.body}',
         );
         return null;
       }
     } catch (e) {
-      print('error occured on getting todays attendance -> $e');
+      debugPrint('error occured on getting todays attendance -> $e');
       return null;
     }
   }
@@ -102,7 +103,7 @@ class AttendanceAPI {
     final url = Uri.parse(
       ApiDatabaseParams.attendanceHistory,
     );
-    print('url -> $url $token');
+    debugPrint('url -> $url $token');
     try {
       _headers.addAll(auth);
       final response = await http.get(
@@ -119,13 +120,13 @@ class AttendanceAPI {
             .toList();
         return (list, true);
       } else {
-        print(
+        debugPrint(
           'error occured on getting attendance history -> ${response.statusCode} ${response.body}',
         );
         return (<AttendaceHistoryEntity>[], false);
       }
     } catch (e) {
-      print('error occured on getting attendance history -> $e');
+      debugPrint('error occured on getting attendance history -> $e');
       return (<AttendaceHistoryEntity>[], false);
     }
   }
@@ -144,7 +145,7 @@ class AttendanceAPI {
     final url = Uri.parse(
       ApiDatabaseParams.checkinAPI,
     );
-    print('check in api called -> $url $token');
+    debugPrint('check in api called -> $url $token');
     try {
       _headers.addAll(auth);
       final request = http.MultipartRequest('POST', url);
@@ -162,18 +163,18 @@ class AttendanceAPI {
       request.headers.addAll(auth);
       final response = await request.send();
       if (response.statusCode == 201) {
-        /// print the response body
-        print('successfully checed in ${response.statusCode}');
-        print('check in response -> ${await response.stream.bytesToString()}');
+        /// debugPrint the response body
+        debugPrint('successfully checed in ${response.statusCode}');
+        debugPrint('check in response -> ${await response.stream.bytesToString()}');
         return (true, true);
       } else {
-        print(
+        debugPrint(
           'check in failed -> ${response.statusCode} ${await response.stream.bytesToString()} }',
         );
         return (false, false);
       }
     } catch (e) {
-      print('check in error occured -> $e');
+      debugPrint('check in error occured -> $e');
       return (false, false);
     }
   }

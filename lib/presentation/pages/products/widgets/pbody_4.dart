@@ -164,7 +164,7 @@ class _ProductsBody3State extends State<ProductsBody3> {
                 //         padding: EdgeInsets.zero,
                 //         // surfaceTintColor: primaryColor,
                 //         onSelected: (CategoryEntity value) {
-                //           // print('cat -> ${value.title} ${value.id}');
+                //           // debugPrint('cat -> ${value.title} ${value.id}');
                 //           // _updateCat(value.id.toString());
                 //         },
                 //         enableFeedback: true,
@@ -264,10 +264,10 @@ class _ProductsBody3State extends State<ProductsBody3> {
                             final currentCompany =
                                 allCompany.allCompany.elementAt(index);
                             // final companyState = context.read<ProductsBloc>().state;
-                            // print('${Strings.domain}/storage${currentCompany.photo}');
+                            // debugPrint('${Strings.domain}/storage${currentCompany.photo}');
                             return BlocConsumer<ProductsBloc, ProductsState>(
                               listener: (context, companyState) {
-                                print('company states -> $companyState');
+                                debugPrint('company states -> $companyState');
                               },
                               builder: (context, companyState) {
                                 return InkWell(
