@@ -11,7 +11,7 @@ class SelectCropOptional extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    // print('multi values from state -> $_cropsList');
+    // debugPrint('multi values from state -> $_cropsList');
     // final state = context.read<AddFarmerBloc>().state;
     return BlocConsumer<RecordSowingBloc, RecordSowingState>(
       listener: (context, state) {},
@@ -22,7 +22,7 @@ class SelectCropOptional extends StatelessWidget {
               .replaceAll('}', '')
               .split(',');
 
-          print('new f ${newF.length} ${newF.first}');
+          debugPrint('new f ${newF.length} ${newF.first}');
           final vls = newF.map(
             (val) {
               return ValueItem(label: val);
@@ -47,10 +47,10 @@ class SelectCropOptional extends StatelessWidget {
               options:
                   cropsDatabase.map((e) => ValueItem(label: e.name)).toList(),
               onOptionSelected: (selectedOptions) {
-                // print(
+                // debugPrint(
                 //     'multi select controller -> ${_multiSelectController.selectedOptions}');
                 final values = [];
-                // print(selectedOptions);
+                // debugPrint(selectedOptions);
                 for (final vi in selectedOptions) {
                   values.add(vi.label);
                 }

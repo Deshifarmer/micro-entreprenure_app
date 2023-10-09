@@ -204,7 +204,7 @@ class ViewAllComapnies extends StatelessWidget {
                             final token = loginState is LoginSuccess
                                 ? loginState.successLoginEntity.token
                                 : '';
-                            print(
+                            debugPrint(
                                 'current company from allcompanygridview -> ${currentCompany.full_name}');
                             // context.read<ProductsBBloc>().add(
                             //       ProductSearchEvent(

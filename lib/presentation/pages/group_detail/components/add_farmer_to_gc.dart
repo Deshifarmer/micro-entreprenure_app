@@ -77,7 +77,7 @@ class AddFarmerToTheAGroup extends StatelessWidget {
                   context
                       .read<AddFarmerToGroupCubit>()
                       .addFarmer(val?.farmer_id ?? '');
-                  print('farmer id -> ${val?.farmer_id}');
+                  debugPrint('farmer id -> ${val?.farmer_id}');
                 }
               },
             ),

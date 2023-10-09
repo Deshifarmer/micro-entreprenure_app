@@ -28,10 +28,10 @@ class CampanyCircularListView extends StatelessWidget {
               itemBuilder: (context, index) {
                 final currentCompany = allCompany.allCompany.elementAt(index);
                 // final companyState = context.read<ProductsBloc>().state;
-                // print('${Strings.domain}/storage${currentCompany.photo}');
+                // debugPrint('${Strings.domain}/storage${currentCompany.photo}');
                 return BlocConsumer<ProductsBloc, ProductsState>(
                   listener: (context, companyState) {
-                    print('company states -> $companyState');
+                    debugPrint('company states -> $companyState');
                   },
                   builder: (context, companyState) {
                     return InkWell(

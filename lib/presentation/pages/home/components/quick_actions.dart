@@ -60,7 +60,7 @@ class QuickActions extends StatelessWidget {
                         final token = loginState is LoginSuccess
                             ? loginState.successLoginEntity.token
                             : '';
-                        print('tapped on $index');
+                        debugPrint('tapped on $index');
                         switch (currentIcon.title) {
                           case 'কৃষি ইন্সুরেন্স':
                             // CropInsurancePage.route();
@@ -206,7 +206,7 @@ class QuickActions extends StatelessWidget {
                             launchUrl(url);
                           default:
                         }
-                        // print('tapped on $index');
+                        // debugPrint('tapped on $index');
                       },
                       child: HomePageIconWidget(
                         title: currentIcon.title,

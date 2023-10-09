@@ -16,26 +16,26 @@ class FarmListDropDown extends StatelessWidget {
         debugPrint('getting farm state  -> $state');
         if (state is FarmerFetchFarmSuccess) {
           // add a dummy farm id to avoid null error
-          state.allFarmListo.allCompany.insert(
-              0,
-              FarmEntity(
-                address: '',
-                created_at: '',
-                farm_id: 'x',
-                current_crop: '',
-                farm_area: '',
-                farm_name: '',
-                farmer_id: '',
-                farm_reg_no: '',
-                gallery: [],
-                lat: 0,
-                long: 0,
-                mouaza: '',
-                soil_type: '',
-                starting_date: '',
-                union: '',
-                updated_at: '',
-              ));
+          // state.allFarmListo.allCompany.insert(
+          //     0,
+          //     FarmEntity(
+          //       address: '',
+          //       created_at: '',
+          //       farm_id: 'x',
+          //       current_crop: '',
+          //       farm_area: '',
+          //       farm_name: '',
+          //       farmer_id: '',
+          //       farm_reg_no: '',
+          //       gallery: [],
+          //       lat: 0,
+          //       long: 0,
+          //       mouaza: '',
+          //       soil_type: '',
+          //       starting_date: '',
+          //       union: '',
+          //       updated_at: '',
+          //     ));
         }
       },
       builder: (context, FarmerFetchFarmState state) {
@@ -47,6 +47,7 @@ class FarmListDropDown extends StatelessWidget {
             isDense: false,
             borderRadius: const BorderRadius.all(Radius.circular(15)),
             isExpanded: true,
+            hint: const Text('Select Farm'),
             decoration: const InputDecoration(
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 10,
@@ -69,9 +70,9 @@ class FarmListDropDown extends StatelessWidget {
             // decoration: ShapeDecoration(),
             // itemHeight: 300,
             elevation: 16,
-            value: state.allFarmListo.allCompany.isNotEmpty
-                ? state.allFarmListo.allCompany.first
-                : null,
+            // value: state.allFarmListo.allCompany.isNotEmpty
+            //     ? state.allFarmListo.allCompany.first
+            //     : null,
             items: state.allFarmListo.allCompany
                 .map<DropdownMenuItem<FarmEntity>>((value) {
               return DropdownMenuItem<FarmEntity>(

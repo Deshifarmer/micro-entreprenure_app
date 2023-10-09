@@ -22,7 +22,7 @@ class FarmaddFormBloc extends Bloc<FarmaddFormEvent, FarmaddFormState> {
   ) async {
     emit(FarmAddLoading());
     final getCurrentPosition = await determinePosition();
-    print(
+    debugPrint(
         'lat -> ${getCurrentPosition.latitude} ${getCurrentPosition.longitude}',);
     final result = await deshiFarmerAPI.addFarm(
       event.farmModel,
@@ -30,7 +30,7 @@ class FarmaddFormBloc extends Bloc<FarmaddFormEvent, FarmaddFormState> {
       getCurrentPosition.latitude.toString(),
       getCurrentPosition.longitude.toString(),
     );
-    print('final result -> $result');
+    debugPrint('final result -> $result');
     if (result is Success) {
       emit(FarmAddingSuccess());
       emit(FarmaddFormInitial());

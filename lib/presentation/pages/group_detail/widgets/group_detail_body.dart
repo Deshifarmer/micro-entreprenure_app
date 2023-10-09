@@ -36,7 +36,7 @@ class GroupDetailBody extends StatelessWidget {
           );
         }
         if (state is GroupDetailFetchSuccessFull) {
-          print('succes detail :)');
+          debugPrint('succes detail :)');
           return Padding(
             padding: const EdgeInsets.all(10),
             child: ListView(
@@ -300,7 +300,7 @@ class GroupDetailBody extends StatelessWidget {
                 //   onpress: () async {
                 //     final currentFarmer =
                 //         context.read<AddFarmerToGroupCubit>().state;
-                //     print('current farmer -> $currentFarmer');
+                //     debugPrint('current farmer -> $currentFarmer');
                 //     final loginState = context.read<LoginBloc>().state;
                 //     if (loginState is LoginSuccess) {
                 //       if (state.groupDetailEntity.farmer_group_id != null) {
@@ -415,7 +415,7 @@ class GroupDetailBody extends StatelessWidget {
                 //           context
                 //               .read<UpdateLeaderToGroupCubit>()
                 //               .updateLeader(val?.farmer_id ?? '');
-                //           print('farmer id -> ${val?.farmer_id}');
+                //           debugPrint('farmer id -> ${val?.farmer_id}');
                 //         }
                 //         //   addGroupState.leaderID = val!.farmer_id;
                 //         // }
@@ -428,7 +428,7 @@ class GroupDetailBody extends StatelessWidget {
                 //     onpress: () async {
                 //       final updateLeader =
                 //           context.read<UpdateLeaderToGroupCubit>().state;
-                //       print('leader id -> $updateLeader');
+                //       debugPrint('leader id -> $updateLeader');
 
                 //       final loginState = context.read<LoginBloc>().state;
                 //       if (loginState is LoginSuccess) {
@@ -531,7 +531,7 @@ class GroupDetailBody extends StatelessWidget {
                     //     ],
                     //   ),
                     // );
-                    print(
+                    debugPrint(
                       'index -> $index || ${state.groupDetailEntity.farmer_list.length} ${state.groupDetailEntity.farmer_list.length == index}',
                     );
                     if (index == state.groupDetailEntity.farmer_list.length) {

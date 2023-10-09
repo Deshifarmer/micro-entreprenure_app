@@ -19,44 +19,44 @@ class FarmerListDropDown extends StatelessWidget {
       listener: (context, state) {
         if (state is MyFarmerSuccess) {
           // insert a dummy farmer id to avoid null error
-          state.allFarmerListResp.farmers.insert(
-            0,
-            const FarmerEntity(
-              farmer_id: 'x',
-              full_name: '------------',
-              phone: '',
-              image: '',
-              address: '',
-              farmer_type: '',
-              onboard_by: '',
-              usaid_id: '',
-              first_name: '',
-              last_name: '',
-              fathers_name: '',
-              is_married: '',
-              gender: '',
-              date_of_birth: '',
-              village: '',
-              upazila: '',
-              district: '',
-              division: '',
-              union: '',
-              credit_score: '',
-              residentType: '',
-              land_status: '',
-              year_of_stay_in: '',
-              group_id: '',
-              bank_details: '',
-              mfs_account: '',
-              current_producing_crop: '',
-              focused_crop: '',
-              cropping_intensity: '',
-              cultivation_practice: '',
-              farmer_role: '',
-              farm_id: '',
-              order_list: [],
-            ),
-          );
+          // state.allFarmerListResp.farmers.insert(
+          //   0,
+          //   const FarmerEntity(
+          //     farmer_id: 'x',
+          //     full_name: '------------',
+          //     phone: '',
+          //     image: '',
+          //     address: '',
+          //     farmer_type: '',
+          //     onboard_by: '',
+          //     usaid_id: '',
+          //     first_name: '',
+          //     last_name: '',
+          //     fathers_name: '',
+          //     is_married: '',
+          //     gender: '',
+          //     date_of_birth: '',
+          //     village: '',
+          //     upazila: '',
+          //     district: '',
+          //     division: '',
+          //     union: '',
+          //     credit_score: '',
+          //     residentType: '',
+          //     land_status: '',
+          //     year_of_stay_in: '',
+          //     group_id: '',
+          //     bank_details: '',
+          //     mfs_account: '',
+          //     current_producing_crop: '',
+          //     focused_crop: '',
+          //     cropping_intensity: '',
+          //     cultivation_practice: '',
+          //     farmer_role: '',
+          //     farm_id: '',
+          //     order_list: [],
+          //   ),
+          // );
         }
       },
       builder: (context, state) {
@@ -102,12 +102,13 @@ class FarmerListDropDown extends StatelessWidget {
                 ),
                 filled: true,
               ),
+              hint: Text('Select Farmer'),
               // decoration: ShapeDecoration(),
               // itemHeight: 300,
               elevation: 16,
-              value: state.allFarmerListResp.farmers.isNotEmpty
-                  ? state.allFarmerListResp.farmers.first
-                  : null,
+              // value: state.allFarmerListResp.farmers.isNotEmpty
+              //     ? state.allFarmerListResp.farmers.first
+              //     : null,
               items: state.allFarmerListResp.farmers
                   .map<DropdownMenuItem<FarmerEntity>>((value) {
                 return DropdownMenuItem<FarmerEntity>(
@@ -139,12 +140,12 @@ class FarmerListDropDown extends StatelessWidget {
               }).toList(),
 
               onChanged: (FarmerEntity? val) {
-                print('on pressed called');
+                debugPrint('on pressed called');
                 if (activityState is ActivityInitial) {
-                  print('is activity called');
+                  debugPrint('is activity called');
                   if (val != null) {
                     if (loginState is LoginSuccess) {
-                      print('log in state good. Calling FarmEvent');
+                      debugPrint('log in state good. Calling FarmEvent');
                       context.read<FarmerFetchFarmBloc>().add(
                             FramFetchEvent(
                               token: loginState.successLoginEntity.token,

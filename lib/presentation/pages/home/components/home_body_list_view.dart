@@ -98,11 +98,11 @@ class HomeBodyListView extends StatelessWidget {
           itemCount: HomePageParams.categories.length,
           itemBuilder: (c, i) => InkWell(
             onTap: () async {
-              print('$i ${HomePageParams.categories.elementAt(i)}');
+              debugPrint('$i ${HomePageParams.categories.elementAt(i)}');
               final logINState = context.read<LoginBloc>().state;
 
               if (logINState is LoginSuccess) {
-                print(logINState.successLoginEntity.token);
+                debugPrint(logINState.successLoginEntity.token);
 
                 if (i == 4) {
                   await context.read<GetGroupCubit>().addAllGroupFields(

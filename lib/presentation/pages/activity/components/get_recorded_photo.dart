@@ -35,9 +35,9 @@ class _RecordActivityPicUploadState extends State<RecordActivityPicUpload> {
       // images = img;
       images.addAll(img);
     });
-    print('images length -> ${images.length}');
+    debugPrint('images length -> ${images.length}');
     // if (images  != null) {
-    //   // print('image size state -> ${await images.length()}');
+    //   // debugPrint('image size state -> ${await images.length()}');
     // }
   }
 
@@ -55,7 +55,7 @@ class _RecordActivityPicUploadState extends State<RecordActivityPicUpload> {
               itemBuilder: (context, index) {
                 final recordSowingState =
                     context.read<RecordSowingBloc>().state;
-                print('current image index -> $index');
+                debugPrint('current image index -> $index');
                 final currentImage = images.elementAt(index);
                 if (recordSowingState is RecordSowingInitial) {
                   recordSowingState.images.addAll(images.toSet().toList());
