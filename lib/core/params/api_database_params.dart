@@ -111,4 +111,8 @@ class ApiDatabaseParams {
   //! post a harvest
   static String harvestPostAPI =
       '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/sourcing'; //*POST
+
+  //! post a harvest
+  static String harvestGetAPI =
+      '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/my_sourcing'; //*POST
 }

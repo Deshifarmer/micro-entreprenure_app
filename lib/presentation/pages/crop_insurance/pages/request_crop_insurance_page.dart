@@ -96,7 +96,7 @@ class RequestCropInsurance extends StatelessWidget {
                   if (cropInsuranceState is CropInsuranceInitial) {
                     // if (val != null) {
                     //   if (loginState is LoginSuccess) {
-                    //     print('log in state good. Calling FarmEvent');
+                    //     debugPrint('log in state good. Calling FarmEvent');
                     //     // context.read<FarmerFetchFarmBloc>().add(
                     //     //       FramFetchEvent(
                     //     //         token: loginState.successLoginEntity.token,
@@ -175,14 +175,14 @@ class RequestCropInsurance extends StatelessWidget {
             const SizedBox(height: 20),
             SecondayButtonGreen(
                 onpress: () {
-                  print('request crop called .............\n');
+                  debugPrint('request crop called .............\n');
                   if (cropInsuranceState is CropInsuranceInitial) {
-                    print({
+                    debugPrint({
                       'farmerid': cropInsuranceState.farmerID.text,
                       'harvest period': cropInsuranceState.harvestPeriod.text,
                       'phone': cropInsuranceState.phoneNumber.text,
                       'notes': cropInsuranceState.notes.text,
-                    });
+                    }.toString());
                   }
                 },
                 title: 'সাবমিট করুন ',),

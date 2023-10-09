@@ -33,7 +33,7 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
       image = img;
     });
     if (image != null) {
-      print('image size state -> ${await image!.length()}');
+      debugPrint('image size state -> ${await image!.length()}');
     }
   }
 
@@ -123,7 +123,7 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
 
   @override
   Widget build(BuildContext context) {
-    print('this is image path -> ${image?.path} from Build Widget');
+    debugPrint('this is image path -> ${image?.path} from Build Widget');
     final state = context.read<AddFarmerBloc>().state;
     if (image != null && state is AddFarmerInitial) {
       state.farmerImageController.text = image!.path;

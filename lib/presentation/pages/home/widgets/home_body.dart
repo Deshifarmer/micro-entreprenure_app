@@ -49,16 +49,16 @@ class HomeBody extends StatelessWidget {
               TotalFarmerTotalOrders(usrProfile: usrProfile),
 
               ///! Weather Card
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (_, int index) {
-                    return FarmerWeatherCard(
-                      usrProfile: usrProfile,
-                    );
-                  },
-                  childCount: 1,
-                ),
-              ),
+              // SliverList(
+              //   delegate: SliverChildBuilderDelegate(
+              //     (_, int index) {
+              //       return FarmerWeatherCard(
+              //         usrProfile: usrProfile,
+              //       );
+              //     },
+              //     childCount: 1,
+              //   ),
+              // ),
 
               ///! Quick Actions
               const QuickActions(),
@@ -120,7 +120,7 @@ class HomeBody extends StatelessWidget {
                               final today = await AttendanceAPI()
                                   .getTodaysAttendance(token);
                               if (today != null) {
-                                // print('today is not null');
+                                // debugPrint('today is not null');
                                 context
                                     .read<AttendanceBloc>()
                                     .add(CheckInFromFuture(today));
@@ -130,7 +130,7 @@ class HomeBody extends StatelessWidget {
                                   ),
                                 );
                               } else {
-                                // print('today is nULLLL');
+                                // debugPrint('today is nULLLL');
                                 await showDialog(
                                   context: context,
                                   builder: (BuildContext context) =>
@@ -198,7 +198,7 @@ class HomeBody extends StatelessWidget {
                 delegate: SliverChildBuilderDelegate(
                   (_, int index) {
                     return SizedBox(
-                      height: getProportionateScreenHeight(35),
+                      height: getProportionateScreenHeight(95),
                     );
                   },
                   childCount: 1,
@@ -210,7 +210,7 @@ class HomeBody extends StatelessWidget {
         if (state is UserProfileFetchFailed) {
           return RefreshIndicator(
             onRefresh: () async {
-              print('refreshing');
+              debugPrint('refreshing');
               final loginState = context.read<LoginBloc>().state;
               final token = loginState is LoginSuccess
                   ? loginState.successLoginEntity.token

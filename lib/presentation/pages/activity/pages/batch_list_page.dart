@@ -34,6 +34,9 @@ class _BatchListPageState extends State<BatchListPage> {
   @override
   Widget build(BuildContext context) {
     final loginState = context.read<LoginBloc>().state;
+    final token = loginState is LoginSuccess
+        ? loginState.successLoginEntity.token
+        : '';
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(),
@@ -53,7 +56,10 @@ class _BatchListPageState extends State<BatchListPage> {
             padding: EdgeInsets.only(
               bottom: getProportionateScreenHeight(40),
             ),
-            child: const FolonBatchData(),
+            child:  FolonBatchData(
+              token: token,
+              farmID: widget.farmID,
+            ),
 
             // child: Wrap(
             //   alignment: WrapAlignment.center,
@@ -139,7 +145,7 @@ class _BatchListPageState extends State<BatchListPage> {
                   setState(() {
                     _season = val;
                   });
-                  print('new season -> $_season');
+                  debugPrint('new season -> $_season');
                 }
                 // if (state is RecordSowingInitial) {
                 //   state.quantity.text = val.toString();
@@ -236,8 +242,8 @@ class _BatchListPageState extends State<BatchListPage> {
               //           ScaffoldMessenger.of(context).showSnackBar(
               //               errorSnackBar('Select Farm for this Farmer'));
               //         } else {
-              //           // print('get the farmer id -> ${activityState.farmerID.text}');
-              //           // print('get the farm id -> ${activityState.farmID.text}');
+              //           // debugPrint('get the farmer id -> ${activityState.farmerID.text}');
+              //           // debugPrint('get the farm id -> ${activityState.farmID.text}');
               //           Navigator.push(
               //             context,
               //             MaterialPageRoute<ActivityTypeSelection>(
@@ -285,8 +291,8 @@ class _BatchListPageState extends State<BatchListPage> {
               //             ScaffoldMessenger.of(context).showSnackBar(
               //                 errorSnackBar('Select Farm for this Farmer'));
               //           } else {
-              //             // print('get the farmer id -> ${activityState.farmerID.text}');
-              //             // print('get the farm id -> ${activityState.farmID.text}');
+              //             // debugPrint('get the farmer id -> ${activityState.farmerID.text}');
+              //             // debugPrint('get the farm id -> ${activityState.farmID.text}');
               //             Navigator.push(
               //               context,
               //               MaterialPageRoute<ActivityTypeSelection>(
@@ -379,8 +385,8 @@ class _BatchButtonSuccessState extends State<BatchButtonSuccess> {
                       ScaffoldMessenger.of(context).showSnackBar(
                           errorSnackBar('Select Farm for this Farmer'));
                     } else {
-                      // print('get the farmer id -> ${activityState.farmerID.text}');
-                      // print('get the farm id -> ${activityState.farmID.text}');
+                      // debugPrint('get the farmer id -> ${activityState.farmerID.text}');
+                      // debugPrint('get the farm id -> ${activityState.farmID.text}');
                       Navigator.push(
                         context,
                         MaterialPageRoute<ActivityTypeSelection>(

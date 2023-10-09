@@ -89,7 +89,7 @@ class _FarmerVillageAddressState extends State<FarmerVillageAddress> {
                 selectedDist = filteredDist.first;
               });
 
-              print(
+              debugPrint(
                 'division: ${selectedDivision.id} dist: ${filteredDist.length}',
               );
               // context.read<DropdownCubit>().changeDropdownValue(val ?? '');
@@ -165,7 +165,7 @@ class _FarmerVillageAddressState extends State<FarmerVillageAddress> {
                   selectedUpazilla = filteredUpazilla.first;
                 });
 
-                print(
+                debugPrint(
                   'dist: ${selectedDist.id} upazilla: ${filteredUpazilla.length}',
                 );
                 // context.read<DropdownCubit>().changeDropdownValue(val ?? '');
@@ -222,7 +222,7 @@ class _FarmerVillageAddressState extends State<FarmerVillageAddress> {
                 setState(() {
                   selectedUpazilla = val ?? upzillaDatabase.first;
                 });
-                print('upazilla: ${selectedUpazilla.id} ');
+                debugPrint('upazilla: ${selectedUpazilla.id} ');
               },
             ),
           ),

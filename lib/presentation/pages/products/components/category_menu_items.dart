@@ -58,7 +58,7 @@ class CategoryMenuItems extends StatelessWidget {
           padding: EdgeInsets.zero,
           // surfaceTintColor: primaryColor,
           onSelected: (CategoryEntity value) {
-            // print('cat -> ${value.title} ${value.id}');
+            // debugPrint('cat -> ${value.title} ${value.id}');
             if (productState is ProductComanySelect) {
               // context.read<ProductsBloc>().add(
               //       SelectCompanysEvent(
@@ -68,7 +68,7 @@ class CategoryMenuItems extends StatelessWidget {
               //       ),
               //     );
               ///! PERF: check if any company is selected
-              print(
+              debugPrint(
                 'is any company selected: -> ${productState.companyID}',
               );
               final loginState = context.read<LoginBloc>().state;
@@ -99,9 +99,9 @@ class CategoryMenuItems extends StatelessWidget {
                 }
               }
 
-              // print('category -> ${productState.category}');
-              // print('query -> ${productState.query}');
-              // print('company -> ${productState.companyID}');
+              // debugPrint('category -> ${productState.category}');
+              // debugPrint('query -> ${productState.query}');
+              // debugPrint('company -> ${productState.companyID}');
             } else {
               ///! TODO: uncomment this
               // context.read<ProductsBloc>().add(

@@ -109,8 +109,8 @@ class ActivityAddFarm extends StatelessWidget {
               ScaffoldMessenger.of(context)
                   .showSnackBar(errorSnackBar('Select Farm for this Farmer'));
             } else {
-              print('get the farmer id -> ${activityState.farmerID.text}');
-              print('get the farm id -> ${activityState.farmID.text}');
+              // print('get the farmer id -> ${activityState.farmerID.text}');
+              // print('get the farm id -> ${activityState.farmID.text}');
 
               Navigator.push(
                 context,

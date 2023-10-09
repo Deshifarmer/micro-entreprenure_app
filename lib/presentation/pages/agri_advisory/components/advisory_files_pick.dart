@@ -34,9 +34,9 @@ class _AdvisoryFileUploadFieldState extends State<AdvisoryFileUploadField> {
       // images = img;
       images.addAll(img);
     });
-    print('images length -> ${images.length}');
+    debugPrint('images length -> ${images.length}');
     // if (images  != null) {
-    //   // print('image size state -> ${await images.length()}');
+    //   // debugPrint('image size state -> ${await images.length()}');
     // }
   }
 
@@ -53,7 +53,7 @@ class _AdvisoryFileUploadFieldState extends State<AdvisoryFileUploadField> {
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 final agriAdvisory = context.read<AgriAdvisoryBloc>().state;
-                // print('current image index -> $index');
+                // debugPrint('current image index -> $index');
                 final currentImage = images.elementAt(index);
                 if (agriAdvisory is AgriAdvisoryInitial) {
                   agriAdvisory.images.addAll(images.toSet().toList());

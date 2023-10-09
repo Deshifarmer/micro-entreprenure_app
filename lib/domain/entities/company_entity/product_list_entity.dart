@@ -17,7 +17,7 @@ class ProductListEntity {
   /// factory.
   factory ProductListEntity.fromJson(Map<String, dynamic> json) =>
       _$ProductListEntityFromJson(json);
-  // ignore: avoid_multiple_declarations_per_line, non_constant_identifier_names
+
   final String? product_id,
       product_name,
       image,

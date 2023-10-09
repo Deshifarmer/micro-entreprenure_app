@@ -104,11 +104,11 @@ class _ProductsBody3State extends State<ProductsBody3> {
             () {
               // check if the scroll controller reached the end
               if (customController.position.atEdge) {
-                print(
+                debugPrint(
                     'CS: reached the end of list -> ${customController.position.pixels}');
                 if (customController.position.pixels ==
                     customController.position.maxScrollExtent) {
-                  print('CS: reached at the bottom of list');
+                  debugPrint('CS: reached at the bottom of list');
                   // now let's make the CS false
                   setState(() {
                     isTheEnd = false;
@@ -116,7 +116,7 @@ class _ProductsBody3State extends State<ProductsBody3> {
                 }
               }
               // if (customController.position.atEdge) {
-              //   // print(
+              //   // debugPrint(
               //   //     'scroll controller -> ${customController.position.pixels}');
               //   if (customController.position.pixels != 0) {
               //     setState(() {
@@ -207,7 +207,7 @@ class _ProductsBody3State extends State<ProductsBody3> {
                               padding: EdgeInsets.zero,
                               // surfaceTintColor: primaryColor,
                               onSelected: (CategoryEntity value) {
-                                // print('cat -> ${value.title} ${value.id}');
+                                // debugPrint('cat -> ${value.title} ${value.id}');
                                 // _updateCat(value.id.toString());
                                 // if select the same category then unselect
                                 if (_cat == value.id.toString()) {
@@ -353,7 +353,7 @@ class _ProductsBody3State extends State<ProductsBody3> {
                             builder: (context, state) {
                               if (state is CompanySuccess) {
                                 final allCompany = state.allCompanyListResp;
-                                // print(
+                                // debugPrint(
                                 //   'company length -> ${allCompany.allCompany.length}',
                                 // );
                                 return ListView.builder(
@@ -364,13 +364,13 @@ class _ProductsBody3State extends State<ProductsBody3> {
                                   itemBuilder: (context, index) {
                                     final currentCompany =
                                         allCompany.allCompany.elementAt(index);
-                                    // print('$index ${currentCompany.full_name}');
+                                    // debugPrint('$index ${currentCompany.full_name}');
                                     // final companyState = context.read<ProductsBloc>().state;
-                                    // print('${Strings.domain}/storage${currentCompany.photo}');
+                                    // debugPrint('${Strings.domain}/storage${currentCompany.photo}');
                                     return BlocConsumer<ProductsBloc,
                                         ProductsState>(
                                       listener: (context, companyState) {
-                                        // print(
+                                        // debugPrint(
                                         //   'company states -> $companyState',
                                         // );
                                       },
@@ -563,7 +563,7 @@ class _ProductsBody3State extends State<ProductsBody3> {
                         ..addListener(() {
                           // check if the scroll controller reached the beginning
                           if (pagingController.position.atEdge) {
-                            // print(
+                            // debugPrint(
                             //     'PS: reached the end of list -> ${pagingController.position.pixels}');
                             if (pagingController.position.pixels ==
                                 pagingController.position.minScrollExtent) {
@@ -574,10 +574,10 @@ class _ProductsBody3State extends State<ProductsBody3> {
                             }
                           }
                           // if (pagingController.position.atEdge) {
-                          //   print('reached the end of list');
+                          //   debugPrint('reached the end of list');
 
                           //   //   if (pagingController.position.pixels != 0) {
-                          //   //     print('reached the first of list');
+                          //   //     debugPrint('reached the first of list');
                           //   setState(() {
                           //     isTheEnd = true;
                           //   });
@@ -594,7 +594,7 @@ class _ProductsBody3State extends State<ProductsBody3> {
                           //   // if the scroll controller reached the start then the end is false
                           //   // if (pagingController.position.atEdge) {
                           //   //   if (pagingController.position.pixels != 0) {
-                          //   //     print('reached the first of list');
+                          //   //     debugPrint('reached the first of list');
                           //   //     setState(() {
                           //   //       isTheEnd = true;
                           //   //     });
