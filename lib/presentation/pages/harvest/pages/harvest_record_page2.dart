@@ -190,7 +190,7 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
                       hintText: '',
                       filled: true,
                     ),
-                    hint: Text('কৃষক নির্বাচন করুন'),
+                    hint: const Text('কৃষক নির্বাচন করুন'),
                     elevation: 16,
                     // value: snapshot.data?.farmers.first,
                     items: widget.allFarmerListResp?.farmers
