@@ -102,19 +102,19 @@ class _ProductsBody3State extends State<ProductsBody3> {
         controller: customController
           ..addListener(
             () {
-              // check if the scroll controller reached the end
-              if (customController.position.atEdge) {
+              if (customController.position.pixels ==
+                  customController.position.maxScrollExtent) {
                 debugPrint(
                     'CS: reached the end of list -> ${customController.position.pixels}');
-                if (customController.position.pixels ==
-                    customController.position.maxScrollExtent) {
-                  debugPrint('CS: reached at the bottom of list');
-                  // now let's make the CS false
-                  setState(() {
-                    isTheEnd = false;
-                  });
-                }
+                debugPrint('CS: reached at the bottom of list');
+                // now let's make the CS false
+                setState(() {
+                  isTheEnd = false;
+                });
               }
+              // do not let the user to scroll down
+
+              // do not let the user scroll down if user already scrolled down
             },
           ),
         slivers: [
@@ -542,26 +542,37 @@ class _ProductsBody3State extends State<ProductsBody3> {
                   ),
                   Expanded(
                     child: PagedGridView<int, ProductData>(
-                      scrollController: customController
+                      scrollController: pagingController
                         ..addListener(
                           () {
-                            // check if the scroll controller reached the beginning
-                            // if (pagingController.position.atEdge) {
-                            //   // debugPrint(
-                            //   //     'PS: reached the end of list -> ${pagingController.position.pixels}');
-                            //   if (pagingController.position.pixels ==
-                            //       pagingController.position.minScrollExtent) {
-                            //     // making it true
-                            //     setState(() {
-                            //       isTheEnd = true;
-                            //     });
-                            //   }
+                            if (pagingController.position.pixels ==
+                                pagingController.position.minScrollExtent) {
+                              debugPrint(
+                                  'PS: reached the beginning of list -> ${pagingController.position.pixels}');
+                              customController.jumpTo(
+                                  customController.position.minScrollExtent);
+                              // making it true
+                              setState(() {
+                                isTheEnd = true;
+                              });
+                            }
+
+                            // if custom controller reached the end then run paging controller else do not
+                            // if (customController.position.pixels ==
+                            //     customController.position.maxScrollExtent) {
+                            //   // debugPrint('PS: reached at the bottom of list');
+                            //   // now let's make the CS false
+                            //   setState(() {
+                            //     isTheEnd = false;
+                            //   });
                             // }
+
+                            // if custom controller reached the end then run paging controller and stop the custom controller
                           },
                         ),
                       physics: isTheEnd
                           ? const NeverScrollableScrollPhysics()
-                          : const BouncingScrollPhysics(),
+                          : const ClampingScrollPhysics(),
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,

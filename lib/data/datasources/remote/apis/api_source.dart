@@ -1113,10 +1113,7 @@ class DeshiFarmerAPI {
       _headers.addAll(headers);
       var request = http.MultipartRequest('POST', url);
       request.fields.addAll(body);
-
-      int checkLoop = 0;
       for (final img in farmModel.images.toSet().toList()) {
-        checkLoop++;
         request.files.add(
           await http.MultipartFile.fromPath(
             'gallery[]',

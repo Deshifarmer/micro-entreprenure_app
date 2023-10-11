@@ -58,7 +58,7 @@ class CardOfDashboard extends StatelessWidget {
                           width: MediaQuery.of(context).size.width / 1.4,
                           child: LinearProgressIndicator(
                             backgroundColor: const Color(0xffF0F0F0),
-                            minHeight: 10,
+                            minHeight: getProportionateScreenHeight(10),
                             value: current / target,
                             color: tertiaryColor,
                           ),
