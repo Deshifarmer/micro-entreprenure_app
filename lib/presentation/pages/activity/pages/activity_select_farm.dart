@@ -1,3 +1,4 @@
+import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
 import 'package:deshifarmer/presentation/pages/activity/activity.dart';
 import 'package:deshifarmer/presentation/pages/activity/components/farm_list_dropdown.dart';
 import 'package:deshifarmer/presentation/pages/activity/components/farmer_list_dropdown.dart';
@@ -8,9 +9,11 @@ import 'package:deshifarmer/presentation/widgets/snackbar_custom.dart';
 import 'package:flutter/material.dart';
 
 class ActivityAddFarm extends StatelessWidget {
-  const ActivityAddFarm({
+  ActivityAddFarm({
+    required this.allFarmers,
     super.key,
   });
+  List<FarmerEntity> allFarmers;
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +91,9 @@ class ActivityAddFarm extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            const FarmerListDropDown(),
+            FarmerListDropDown(
+              allFarmers: allFarmers,
+            ),
             //! A dropdown of all farmers which has created by the USER
             const FarmListDropDown(),
           ],

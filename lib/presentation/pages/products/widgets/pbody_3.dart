@@ -96,7 +96,7 @@ class _ProductsBody3State extends State<ProductsBody3> {
         cacheExtent: 100,
         shrinkWrap: true,
         physics: isTheEnd // if true then the scroll is enabled
-            ? const BouncingScrollPhysics()
+            ? const ClampingScrollPhysics()
             : const NeverScrollableScrollPhysics(),
         // if scrollcontroller reached then the end is true
         controller: customController
@@ -115,23 +115,6 @@ class _ProductsBody3State extends State<ProductsBody3> {
                   });
                 }
               }
-              // if (customController.position.atEdge) {
-              //   // debugPrint(
-              //   //     'scroll controller -> ${customController.position.pixels}');
-              //   if (customController.position.pixels != 0) {
-              //     setState(() {
-              //       isTheEnd = true;
-              //     });
-              //   } else {
-              //     setState(() {
-              //       isTheEnd = false;
-              //     });
-              //   }
-              // } else {
-              //   setState(() {
-              //     isTheEnd = false;
-              //   });
-              // }
             },
           ),
         slivers: [
@@ -559,56 +542,23 @@ class _ProductsBody3State extends State<ProductsBody3> {
                   ),
                   Expanded(
                     child: PagedGridView<int, ProductData>(
-                      scrollController: pagingController
-                        ..addListener(() {
-                          // check if the scroll controller reached the beginning
-                          if (pagingController.position.atEdge) {
-                            // debugPrint(
-                            //     'PS: reached the end of list -> ${pagingController.position.pixels}');
-                            if (pagingController.position.pixels ==
-                                pagingController.position.minScrollExtent) {
-                              // making it true
-                              setState(() {
-                                isTheEnd = true;
-                              });
-                            }
-                          }
-                          // if (pagingController.position.atEdge) {
-                          //   debugPrint('reached the end of list');
-
-                          //   //   if (pagingController.position.pixels != 0) {
-                          //   //     debugPrint('reached the first of list');
-                          //   setState(() {
-                          //     isTheEnd = true;
-                          //   });
-                          //   //   } else {
-                          //   //     setState(() {
-                          //   //       isTheEnd = false;
-                          //   //     });
-                          //   //   }
-                          //   // } else {
-                          //   //   setState(() {
-                          //   //     isTheEnd = false;
-                          //   //   });
-                          //   // }
-                          //   // if the scroll controller reached the start then the end is false
-                          //   // if (pagingController.position.atEdge) {
-                          //   //   if (pagingController.position.pixels != 0) {
-                          //   //     debugPrint('reached the first of list');
-                          //   //     setState(() {
-                          //   //       isTheEnd = true;
-                          //   //     });
-                          //   //   } else {
-                          //   //     setState(() {
-                          //   //       isTheEnd = false;
-                          //   //     });
-                          //   //   }
-                          //   // } else {
-                          //   //   setState(() {
-                          //   //     isTheEnd = false;
-                          //   //   });
-                          // }
-                        }),
+                      scrollController: customController
+                        ..addListener(
+                          () {
+                            // check if the scroll controller reached the beginning
+                            // if (pagingController.position.atEdge) {
+                            //   // debugPrint(
+                            //   //     'PS: reached the end of list -> ${pagingController.position.pixels}');
+                            //   if (pagingController.position.pixels ==
+                            //       pagingController.position.minScrollExtent) {
+                            //     // making it true
+                            //     setState(() {
+                            //       isTheEnd = true;
+                            //     });
+                            //   }
+                            // }
+                          },
+                        ),
                       physics: isTheEnd
                           ? const NeverScrollableScrollPhysics()
                           : const BouncingScrollPhysics(),
