@@ -61,35 +61,7 @@ class _BatchListPageState extends State<BatchListPage> {
               farmID: widget.farmID,
             ),
 
-            // child: Wrap(
-            //   alignment: WrapAlignment.center,
-            //   spacing: 10,
-            //   children: [
-            //     for (final s in listOfActivities)
-            //       FilterChip(
-            //         side: const BorderSide(
-            //           color: Colors.transparent,
-            //         ),
-            //         // selectedColor: Colors.red,
-            //         // selectedShadowColor: Colors.pink,
-            //         // surfaceTintColor: Colors.green,
-            //         // backgroundColor: Colors.cyan,
-            //         // shadowColor: Colors.indigo,
-            //         // disabledColor: Colors.brown,
-            //         color: const MaterialStatePropertyAll(Colors.white),
-            //         label: Text(s),
-            //         onSelected: (bool isSelected) {
-            //           // if (isSelected) {
-            //           //   _activityTypes.add(s);
-            //           // } else {
-            //           //   _activityTypes.remove(s);
-            //           // }
-            //           // setState(() {});
-            //         },
-            //         // selected: _activityTypes.contains(s),
-            //       ),
-            //   ],
-            // ),
+         
           ),
           Container(
             alignment: Alignment.center,
@@ -266,50 +238,6 @@ class _BatchListPageState extends State<BatchListPage> {
                   crop: _crop.text,
                   jatt: _jatt.text,
                 )
-              //         FutureBuilder<BatchEnity?>(
-              //   future: DeshiFarmerAPI().batchCreationAPI(
-              //     _seasonController.text,
-              //     _crop.text,
-              //     widget.farmID,
-              //     loginState.successLoginEntity.token,
-              //   ),
-              //   builder: (context, snapshot) {
-              //     if (snapshot.hasData && snapshot.connectionState == ConnectionState.done){
-
-              //     }
-              //     return SecondayButtonGreen(
-              //       btnColor: priceBoxColor,
-              //       onpress: () async {
-              //         final activityState =
-              //             context.read<ActivityBloc>().state;
-              //         if (activityState is ActivityInitial) {
-              //           if (activityState.farmerID.text.isEmpty) {
-              //             // errorSnackBar('Select a farmer');
-              //             ScaffoldMessenger.of(context)
-              //                 .showSnackBar(errorSnackBar('Select a farmer'));
-              //           } else if (activityState.farmID.text.isEmpty) {
-              //             ScaffoldMessenger.of(context).showSnackBar(
-              //                 errorSnackBar('Select Farm for this Farmer'));
-              //           } else {
-              //             // debugPrint('get the farmer id -> ${activityState.farmerID.text}');
-              //             // debugPrint('get the farm id -> ${activityState.farmID.text}');
-              //             Navigator.push(
-              //               context,
-              //               MaterialPageRoute<ActivityTypeSelection>(
-              //                 builder: (context) => ActivityTypeSelection(
-              //                   farmID: activityState.farmID.text,
-              //                   farmerID: activityState.farmerID.text,
-              //                 ),
-              //               ),
-              //             );
-              //           }
-              //         }
-              //       },
-              //       title: 'পরবর্তী ',
-              //       // title: 'continue',
-              //     );
-              //   },
-              // )
               : null
           : null,
     );
@@ -342,7 +270,6 @@ class _BatchButtonSuccessState extends State<BatchButtonSuccess> {
     super.dispose();
   }
 
-  @override
   bool isLoadin = false;
   @override
   Widget build(BuildContext context) {
@@ -391,8 +318,6 @@ class _BatchButtonSuccessState extends State<BatchButtonSuccess> {
                         context,
                         MaterialPageRoute<ActivityTypeSelection>(
                           builder: (context) => ActivityTypeSelection(
-                            // farmID: activityState.farmID.text,
-                            // farmerID: activityState.farmerID.text,
                             batchID: result.batch_id,
                           ),
                         ),
