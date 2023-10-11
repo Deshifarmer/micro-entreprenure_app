@@ -2,9 +2,12 @@ import 'dart:convert';
 import 'dart:isolate';
 
 import 'package:deshifarmer/core/params/api_database_params.dart';
+import 'package:deshifarmer/data/models/record_activity_model.dart';
 import 'package:deshifarmer/domain/entities/crop_entity/single_crop_entity.dart';
+import 'package:deshifarmer/domain/entities/krishibebsa_pro/prod_entity.dart';
 import 'package:deshifarmer/domain/entities/source_entity/source_entity.dart';
 import 'package:deshifarmer/presentation/pages/harvest/model/harvest_model.dart';
+import 'package:deshifarmer/presentation/utils/activity_types_paramas.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
@@ -141,6 +144,150 @@ class HarvestAPI {
           }
         }
         return harvestList;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<bool?> recordActivity(RecordActivityModel ram) async {
+    final TOKEN = '71|4rDZ5q0oexf746syIB7pfzYWQ1012ULjc2MRatpj';
+    final BATCH_ID = 'B-0ca4-b8233';
+
+    ///! POST HEADER
+    final headers = <String, String>{
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${TOKEN.isNotEmpty ? TOKEN : ram.token}',
+    };
+    print('thi sis runne dsdfa');
+    if (ram.whatType == ActivityTypeEnums.landpref) {
+      //* LAND PREP
+      final body = {
+        'batch_id': ram.batchID,
+        'land_preparation_date': ram.landPepData,
+        'details': ram.details,
+      };
+      final url = Uri.parse(
+        ApiDatabaseParams.harvestLandPrepPost,
+      );
+      debugPrint('url -> $url ${ram.token}');
+      try {
+        _headers.addAll(headers);
+        final request = http.MultipartRequest('POST', url);
+        request.fields.addAll(body);
+        for (final img in ram.images.toSet().toList()) {
+          request.files.add(
+            await http.MultipartFile.fromPath(
+              'images[]',
+              img.path,
+            ),
+          );
+        }
+        request.headers.addAll(headers);
+        final response = await request.send();
+        debugPrint('status code -> ${response.statusCode}');
+        if (response.statusCode == 201) {
+          return true;
+        } else {
+          debugPrint('body -> $body');
+          debugPrint(
+              'error -> ${response.statusCode} ${response.reasonPhrase} ${await response.stream.bytesToString()}');
+          return false;
+        }
+      } catch (e) {
+        debugPrint('Exception -> $e');
+        return false;
+      }
+    } else if (ram.whatType == ActivityTypeEnums.sowing) {
+      //* SOWING
+      debugPrint(
+          'Sowing -> ${ram.sowingCrop} ${ram.sowingNameWithCompany} ${ram.sowingSeedQuantity} ${ram.batchID}');
+      _headers.addAll(headers);
+      final body = {
+        'batch_id': BATCH_ID.isNotEmpty ? BATCH_ID : ram.batchID,
+        'seed_name': ram.sowingCrop,
+        'seed_company': ram.sowingNameWithCompany,
+        'seed_quantity': ram.sowingSeedQuantity,
+        'seed_price': '0 :)',
+        'seed_unit': '(: kg',
+        'details': ram.details,
+      };
+      final url = Uri.parse(
+        ApiDatabaseParams.harvestSowingPost,
+      );
+      debugPrint('url -> $url ${ram.token}');
+      try {
+        final response = await http.post(
+          url,
+          headers: _headers,
+          body: json.encode(body),
+        );
+        debugPrint('status code -> ${response.statusCode}');
+        if (response.statusCode == 201) {
+          return true;
+        } else {
+          debugPrint('Lets see -> ${response.body}');
+          return false;
+        }
+      } catch (e) {
+        return false;
+      }
+    } else if (ram.whatType == ActivityTypeEnums.fertilizer) {
+      final url = Uri.parse(
+        ApiDatabaseParams.harvestSowingPost,
+      );
+    } else if (ram.whatType == ActivityTypeEnums.pesticide) {
+      final url = Uri.parse(
+        ApiDatabaseParams.harvestSowingPost,
+      );
+    } else if (ram.whatType == ActivityTypeEnums.irrigation) {
+      final url = Uri.parse(
+        ApiDatabaseParams.harvestSowingPost,
+      );
+    } else if (ram.whatType == ActivityTypeEnums.reportProblem) {
+      final url = Uri.parse(
+        ApiDatabaseParams.harvestSowingPost,
+      );
+    }
+    return null;
+  }
+
+  //* get list of KrishibebshaProd
+  Future<List<KrishibebshaProd>?> getKrishProd() async {
+    final url = Uri.parse(
+      'https://server.krishibebsha.com/api/v1/product',
+    );
+    debugPrint('url -> $url');
+
+    try {
+      final response = await http.get(
+        url,
+      );
+      debugPrint('status code -> ${response.statusCode}');
+      if (response.statusCode == 200) {
+        final result = await Isolate.run(() => json.decode(response.body))
+            as List<dynamic>;
+        debugPrint(
+          'successfuly got the batch LISTO -> ${result.runtimeType} ${result.length}',
+        );
+        final prodList = <KrishibebshaProd>[];
+        for (var i = 0; i < result.length; i++) {
+          final element = result[i] as Map<String, dynamic>;
+          // debugPrint('element runtime -> ${element.runtimeType}');
+          try {
+            prodList.add(
+              KrishibebshaProd.fromJson(element),
+            );
+          } catch (e) {
+            debugPrint(
+              'error comverting data BatchEnity ->  ${element.runtimeType}, $e \n',
+            );
+          }
+        }
+        return prodList;
       } else {
         return null;
       }
