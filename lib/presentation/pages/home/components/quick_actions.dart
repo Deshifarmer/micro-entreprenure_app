@@ -33,7 +33,7 @@ class QuickActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: SizedBox(
-        height: getProportionateScreenHeight(280),
+        height: getProportionateScreenHeight(230),
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: getProportionateScreenWidth(
@@ -46,12 +46,12 @@ class QuickActions extends StatelessWidget {
               if (lindex == 0) {
                 return GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4,
-                    mainAxisExtent: getProportionateScreenHeight(120),
+                    // mainAxisExtent: getProportionateScreenHeight(100),
                   ),
                   itemCount: 8,
-                  itemBuilder: (context, index) {
+                  itemBuilder: (context, int index) {
                     final currentIcon =
                         HomePageParams.homePageIconDatas1st.elementAt(index);
                     return GestureDetector(
@@ -60,7 +60,7 @@ class QuickActions extends StatelessWidget {
                         final token = loginState is LoginSuccess
                             ? loginState.successLoginEntity.token
                             : '';
-                        print('tapped on $index');
+                        debugPrint('tapped on $index');
                         switch (currentIcon.title) {
                           case 'কৃষি ইন্সুরেন্স':
                             // CropInsurancePage.route();
@@ -149,9 +149,11 @@ class QuickActions extends StatelessWidget {
               } else {
                 return GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4,
-                    mainAxisExtent: getProportionateScreenHeight(120),
+                    // crossAxisSpacing: 0,
+                    // mainAxisSpacing: 0,
+                    // mainAxisExtent: getProportionateScreenHeight(120),
                   ),
                   itemCount: 8,
                   itemBuilder: (context, index) {
@@ -204,7 +206,7 @@ class QuickActions extends StatelessWidget {
                             launchUrl(url);
                           default:
                         }
-                        // print('tapped on $index');
+                        // debugPrint('tapped on $index');
                       },
                       child: HomePageIconWidget(
                         title: currentIcon.title,

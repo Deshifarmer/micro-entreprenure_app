@@ -25,11 +25,11 @@ class CheckInHistory extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData &&
             ConnectionState.done == snapshot.connectionState) {
-          print('successully got the data -> ${snapshot.data}');
-          // print('datatype atthis -> ${snapshot.data.$2}')
+          debugPrint('successully got the data -> ${snapshot.data}');
+          // debugPrint('datatype atthis -> ${snapshot.data.$2}')
 
           final data = snapshot.data!.$1;
-          print('data -> ${data.length}');
+          debugPrint('data -> ${data.length}');
 
           return ListView.builder(
             shrinkWrap: true,
@@ -39,7 +39,7 @@ class CheckInHistory extends StatelessWidget {
 
               final h = int.parse(currentHistry.work_hour);
               // return Text('hola');
-              print('history -> $currentHistry');
+              debugPrint('history -> $currentHistry');
               return Padding(
                 padding: const EdgeInsets.all(8),
                 child: Row(

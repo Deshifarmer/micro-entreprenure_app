@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:deshifarmer/domain/entities/products_entity/product_data_entity.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/rendering.dart';
 
 part 'cart_event.dart';
 part 'cart_state.dart';
@@ -21,7 +22,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     //! check if the key exists
     if (_carts.containsKey(event.productData.product_id)) {
       var currentQ = _carts[event.productData.product_id]!.$2;
-      print(
+      debugPrint(
         'key already exists -> $currentQ : ${_carts[event.productData.product_id]?.$1.name}',
       );
       _carts.update(
@@ -31,9 +32,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
       ///* emitting the states
       await emit(CartAddingState(_carts));
-      print('q updated -> $currentQ');
+      debugPrint('q updated -> $currentQ');
     } else {
-      print('${event.productData.name} not exists. adding.............');
+      debugPrint('${event.productData.name} not exists. adding.............');
       _carts[event.productData.product_id ?? ''] = (event.productData, 1);
       await emit(CartAddingState(_carts));
     }
@@ -45,7 +46,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     //! check if the key exists
     if (_carts.containsKey(event.productData.product_id)) {
       var currentQ = _carts[event.productData.product_id]!.$2;
-      print('product exists -> $currentQ');
+      debugPrint('product exists -> $currentQ');
       // currentQ--;
 
       //! if quantity is being 01 then remove the element
@@ -53,7 +54,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         _carts.remove(event.productData.product_id);
 
         ///* emitting the states
-        print('less then zero item goin to DIE');
+        debugPrint('less then zero item goin to DIE');
         emit(CartAddingState(_carts));
       } else {
         //! if exists then remove it's quantity
@@ -61,7 +62,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           event.productData.product_id ?? '',
           (value) => (event.productData, --currentQ),
         );
-        print('removing its q -> $currentQ');
+        debugPrint('removing its q -> $currentQ');
 
         ///* emitting the states
         emit(CartAddingState(_carts));

@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:deshifarmer/core/params/home_page_params.dart';
 import 'package:deshifarmer/data/datasources/remote/apis/attendance_api.dart';
 import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
@@ -48,16 +49,16 @@ class HomeBody extends StatelessWidget {
               TotalFarmerTotalOrders(usrProfile: usrProfile),
 
               ///! Weather Card
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (_, int index) {
-                    return FarmerWeatherCard(
-                      usrProfile: usrProfile,
-                    );
-                  },
-                  childCount: 1,
-                ),
-              ),
+              // SliverList(
+              //   delegate: SliverChildBuilderDelegate(
+              //     (_, int index) {
+              //       return FarmerWeatherCard(
+              //         usrProfile: usrProfile,
+              //       );
+              //     },
+              //     childCount: 1,
+              //   ),
+              // ),
 
               ///! Quick Actions
               const QuickActions(),
@@ -119,7 +120,7 @@ class HomeBody extends StatelessWidget {
                               final today = await AttendanceAPI()
                                   .getTodaysAttendance(token);
                               if (today != null) {
-                                print('today is not null');
+                                // debugPrint('today is not null');
                                 context
                                     .read<AttendanceBloc>()
                                     .add(CheckInFromFuture(today));
@@ -129,7 +130,7 @@ class HomeBody extends StatelessWidget {
                                   ),
                                 );
                               } else {
-                                print('today is nULLLL');
+                                // debugPrint('today is nULLLL');
                                 await showDialog(
                                   context: context,
                                   builder: (BuildContext context) =>
@@ -197,7 +198,7 @@ class HomeBody extends StatelessWidget {
                 delegate: SliverChildBuilderDelegate(
                   (_, int index) {
                     return SizedBox(
-                      height: getProportionateScreenHeight(35),
+                      height: getProportionateScreenHeight(95),
                     );
                   },
                   childCount: 1,
@@ -209,7 +210,7 @@ class HomeBody extends StatelessWidget {
         if (state is UserProfileFetchFailed) {
           return RefreshIndicator(
             onRefresh: () async {
-              print('refreshing');
+              debugPrint('refreshing');
               final loginState = context.read<LoginBloc>().state;
               final token = loginState is LoginSuccess
                   ? loginState.successLoginEntity.token
@@ -228,19 +229,46 @@ class HomeBody extends StatelessWidget {
                     .read<UserProfileBloc>()
                     .add(GetUserProfileEvent(token: token));
               },
-              child: Center(
-                child: Column(
-                  children: [
-                    LottieBuilder.asset('assets/animations/failed.json'),
-                    const Text('কিছু ভুল হয়েছে'),
+              child: FutureBuilder<ConnectivityResult>(
+                future: Connectivity().checkConnectivity(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData &&
+                      snapshot.data == ConnectivityResult.none) {
+                    return Center(
+                      child: Column(
+                        children: [
+                          LottieBuilder.asset(
+                              'assets/animations/no_internet.json'),
+                          const Text('ইন্টারনেট সংযোগ নেই'),
 
-                    /// a button to restart the app
-                    const SecondayButtonGreen(
-                      onpress: Restart.restartApp,
-                      title: 'পুনরায় চেষ্টা করুন',
+                          /// a button to restart the app
+                          SecondayButtonGreen(
+                            onpress: () async {
+                              await Restart.restartApp();
+                            },
+                            title: 'পুনরায় চেষ্টা করুন',
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                  return Center(
+                    child: Column(
+                      children: [
+                        LottieBuilder.asset('assets/animations/failed.json'),
+                        const Text('কিছু ভুল হয়েছে'),
+
+                        /// a button to restart the app
+                        SecondayButtonGreen(
+                          onpress: () async {
+                            await Restart.restartApp();
+                          },
+                          title: 'পুনরায় চেষ্টা করুন',
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  );
+                },
               ),
             ),
           );

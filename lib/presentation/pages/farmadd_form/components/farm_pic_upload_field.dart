@@ -35,9 +35,9 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
       // images = img;
       images.addAll(img);
     });
-    print('images length -> ${images.length}');
+    debugPrint('images length -> ${images.length}');
     // if (images  != null) {
-    //   // print('image size state -> ${await images.length()}');
+    //   // debugPrint('image size state -> ${await images.length()}');
     // }
   }
 
@@ -54,7 +54,7 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 final farmAddState = context.read<FarmaddFormBloc>().state;
-                print('current image index -> $index');
+                debugPrint('current image index -> $index');
                 final currentImage = images.elementAt(index);
                 if (farmAddState is FarmaddFormInitial) {
                   farmAddState.images.addAll(images.toSet().toList());

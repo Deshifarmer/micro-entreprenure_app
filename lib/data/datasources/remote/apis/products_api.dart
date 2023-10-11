@@ -3,6 +3,7 @@ import 'dart:isolate';
 
 import 'package:deshifarmer/domain/entities/products_entity/product_entity.dart';
 import 'package:deshifarmer/presentation/utils/get_product_url_utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class ProductFetchAPI {
@@ -26,14 +27,14 @@ class ProductFetchAPI {
       company,
       category,
     );
-    print('search url -> $url');
+    debugPrint('search url -> $url');
     try {
       _headers.addAll(auth);
       final response = await http.get(
         url,
         headers: _headers,
       );
-      print('search response -> ${response.statusCode}');
+      debugPrint('search response -> ${response.statusCode}');
       if (response.statusCode == 200) {
         final result = await Isolate.run(() => json.decode(response.body))
             as Map<String, dynamic>;
@@ -42,7 +43,7 @@ class ProductFetchAPI {
           // return Success<ProductEntity, Exception>(successResonse);
           return successResonse;
         } catch (e) {
-          print('error -> $e');
+          debugPrint('error -> $e');
           result.forEach((key, value) {});
         }
         // return ServerFailor<ProductEntity, Exception>(

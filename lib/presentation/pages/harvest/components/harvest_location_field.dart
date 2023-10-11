@@ -2,18 +2,19 @@ import 'package:deshifarmer/data/datasources/local/location_db/dist_db.dart';
 import 'package:deshifarmer/data/datasources/local/location_db/division_db.dart';
 import 'package:deshifarmer/data/datasources/local/location_db/upozilla_db.dart';
 import 'package:deshifarmer/data/models/location_model.dart';
-import 'package:deshifarmer/presentation/pages/add_farmer/bloc/add_farmer_bloc.dart';
-import 'package:deshifarmer/presentation/pages/attendance/attendance.dart';
 import 'package:flutter/material.dart';
 
-class FarmerVillageAddress extends StatefulWidget {
-  const FarmerVillageAddress({super.key});
+class FarmerVillageAddressForHarvest extends StatefulWidget {
+  const FarmerVillageAddressForHarvest({required this.farmerDivisionController, super.key,});
+  final TextEditingController farmerDivisionController;
 
   @override
-  State<FarmerVillageAddress> createState() => _FarmerVillageAddressState();
+  State<FarmerVillageAddressForHarvest> createState() =>
+      _FarmerVillageAddressForHarvestState();
 }
 
-class _FarmerVillageAddressState extends State<FarmerVillageAddress> {
+class _FarmerVillageAddressForHarvestState
+    extends State<FarmerVillageAddressForHarvest> {
   /// all filtered items will be stored here
   List<DistModel> filteredDist = [];
   List<UpozillaModel> filteredUpazilla = [];
@@ -25,7 +26,6 @@ class _FarmerVillageAddressState extends State<FarmerVillageAddress> {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.read<AddFarmerBloc>().state;
     return Column(
       children: [
         ///* division model
@@ -58,15 +58,12 @@ class _FarmerVillageAddressState extends State<FarmerVillageAddress> {
             items: divisionDatabase
                 .map<DropdownMenuItem<DivisionModel>>((DivisionModel value) {
               return DropdownMenuItem<DivisionModel>(
-                // alignment: Alignment.center,
                 value: value,
                 child: Text(value.bnName),
               );
             }).toList(),
             onChanged: (DivisionModel? val) {
-              if (val != null && state is AddFarmerInitial) {
-                state.farmerDivisionController.text = val.id;
-              }
+             
               setState(() {
                 /// remove all items from the list
                 filteredDist
@@ -141,9 +138,7 @@ class _FarmerVillageAddressState extends State<FarmerVillageAddress> {
                 );
               }).toList(),
               onChanged: (DistModel? val) {
-                if (val != null && state is AddFarmerInitial) {
-                  state.farmerDistController.text = val.id;
-                }
+              
                 setState(() {
                   /// remove all items from the list
                   filteredUpazilla
@@ -216,8 +211,8 @@ class _FarmerVillageAddressState extends State<FarmerVillageAddress> {
               onChanged: (UpozillaModel? val) {
                 // context.read<DropdownCubit>().changeDropdownValue(val ?? '');
 
-                if (val != null && state is AddFarmerInitial) {
-                  state.farmerUpozillaController.text = val.id;
+                if (val != null ) {
+                  widget.farmerDivisionController.text = val.id;
                 }
                 setState(() {
                   selectedUpazilla = val ?? upzillaDatabase.first;

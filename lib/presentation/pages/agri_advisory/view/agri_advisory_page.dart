@@ -46,12 +46,12 @@ class AgriAdvisoryPage extends StatelessWidget {
             onpress: () async {
               final agriAdvisory = context.read<AgriAdvisoryBloc>().state;
               if (agriAdvisory is AgriAdvisoryInitial) {
-                print('Photos -> ${agriAdvisory.images}');
-                print('subject -> ${agriAdvisory.subjects.text}');
-                print('timeslot -> ${agriAdvisory.timeslots.text}');
-                print('groupid -> ${agriAdvisory.groupID.text}');
-                print('notes -> ${agriAdvisory.notes.text}');
-                print('members -> ${agriAdvisory.members.toSet().toList()}');
+                debugPrint('Photos -> ${agriAdvisory.images}');
+                debugPrint('subject -> ${agriAdvisory.subjects.text}');
+                debugPrint('timeslot -> ${agriAdvisory.timeslots.text}');
+                debugPrint('groupid -> ${agriAdvisory.groupID.text}');
+                debugPrint('notes -> ${agriAdvisory.notes.text}');
+                debugPrint('members -> ${agriAdvisory.members.toSet().toList()}');
 
                 final loginState = context.read<LoginBloc>().state;
                 if (loginState is LoginSuccess) {

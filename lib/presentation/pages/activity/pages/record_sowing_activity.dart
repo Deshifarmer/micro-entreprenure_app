@@ -60,15 +60,17 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
 
   /// Date
   DateTime? _irrigationDate = DateTime.now();
-  final TextEditingController _irrigationDateController = TextEditingController();
+  final TextEditingController _irrigationDateController =
+      TextEditingController();
 
   /// Date
   DateTime? _weedingDate = DateTime.now();
   final TextEditingController _weedingDateController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    print(
-        'name -> ${widget.recordName} ${activityRecordValues[widget.recordName] == ActivityTypeEnums.landpref}',);
+    debugPrint(
+      'name -> ${widget.recordName} ${activityRecordValues[widget.recordName] == ActivityTypeEnums.landpref}',
+    );
 
     // final recordSowingState = context.read<RecordSowingBloc>().state;
     return Scaffold(
@@ -97,12 +99,14 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Center(
-                    child: Text('রেকর্ড ${widget.recordName}',
-                        // child: Text('Record Sowing',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),),
+                    child: Text(
+                      'রেকর্ড ${widget.recordName}',
+                      // child: Text('Record Sowing',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                   const Padding(
                     padding: EdgeInsets.all(8),
@@ -939,7 +943,7 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
       //   listener: (context, state) {},
       //   builder: (context, state) {
       //     if (state is RecordSowingInitial) {
-      //       print('Record intit');
+      //       debugPrint('Record intit');
       //       return SecondayButtonGreen(
       //         onpress: () async {
       //           final loginState = context.read<LoginBloc>().state;
@@ -970,10 +974,10 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
       //       );
       //     }
       //     if (state is RecordSowingLoading) {
-      //       print('laoding state from Record sowing');
+      //       debugPrint('laoding state from Record sowing');
       //       return const Center(child: PrimaryLoadingIndicator());
       //     }
-      //     print('No state in record');
+      //     debugPrint('No state in record');
       //     return const SizedBox.shrink();
       //   },
       // ),
@@ -1056,12 +1060,12 @@ class _BottomButtonLoadingState extends State<BottomButtonLoading> {
     return BlocConsumer<RecordSowingBloc, RecordSowingState>(
       listener: (context, state) {
         if (state is RecordSowingSuccess || state is RecordSowingFailed) {
-          print('failed or success');
+          debugPrint('failed or success');
           setState(() {
             isLoading = false;
           });
           if (state is RecordSowingLoading) {
-            print('loading');
+            debugPrint('loading');
             setState(() {
               isLoading = true;
             });
@@ -1082,7 +1086,7 @@ class _BottomButtonLoadingState extends State<BottomButtonLoading> {
                       final userProfile = context.read<UserProfileBloc>().state;
                       if (loginState is LoginSuccess &&
                           userProfile is UserProfileFetchSuccess) {
-                        // print({
+                        // debugPrint({
                         //   "crop": state.crop.text,
                         //   "details": state.details.text,
                         //   "images": state.images,

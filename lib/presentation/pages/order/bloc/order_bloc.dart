@@ -25,7 +25,9 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     if (value is AllOrdersEntity) {
       emit(OrderSuccess(value));
     } else {
-      emit(OrderFetchFailed());
+      emit(OrderFetchFailed(
+        message: value.toString(),
+      ));
     }
   }
 }

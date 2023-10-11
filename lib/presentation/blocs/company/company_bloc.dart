@@ -5,6 +5,7 @@ import 'package:deshifarmer/core/error/exceptions.dart';
 import 'package:deshifarmer/data/repositories/company_repo_impl.dart';
 import 'package:deshifarmer/domain/entities/company_entity/all_company_entity.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 
 part 'company_event.dart';
 part 'company_state.dart';
@@ -22,10 +23,10 @@ class CompanyBloc extends Bloc<CompanyEvent, CompanyState> {
       ServerFailor(error: final err) => err,
     };
     if (value is AllCompanyListResp) {
-      print('company success !');
+      debugPrint('company success !');
       emit(CompanySuccess(value));
     } else {
-      print('company failor !');
+      debugPrint('company failor !');
 
       emit(CompanyFailed());
     }

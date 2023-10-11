@@ -1,21 +1,26 @@
 import 'dart:io';
 
-import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class FarmerProfilePicUpload extends StatefulWidget {
-  const FarmerProfilePicUpload({
+class GetImageForHarvest extends StatefulWidget {
+  const GetImageForHarvest({
+    required this.selectIMGController,
     super.key,
   });
 
+  final TextEditingController? selectIMGController;
+
   @override
-  State<FarmerProfilePicUpload> createState() => _FarmerProfilePicUploadState();
+  State<GetImageForHarvest> createState() => _GetImageForHarvestState();
 }
 
-class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
+class _GetImageForHarvestState extends State<GetImageForHarvest> {
+  ///* upload picture
+
   XFile? image;
 
   final ImagePicker picker = ImagePicker();
@@ -33,7 +38,11 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
       image = img;
     });
     if (image != null) {
-      debugPrint('image size state -> ${await image!.length()}');
+      debugPrint(
+          'image size is -> ${await image!.length()} and path -> ${image!.path}');
+      widget.selectIMGController?.text = image!.path;
+      debugPrint(
+          'image path from controller -> ${widget.selectIMGController?.text}');
     }
   }
 
@@ -121,50 +130,51 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
     );
   }
 
+  ///* Upload picture GONE
   @override
   Widget build(BuildContext context) {
-    debugPrint('this is image path -> ${image?.path} from Build Widget');
-    final state = context.read<AddFarmerBloc>().state;
-    if (image != null && state is AddFarmerInitial) {
-      state.farmerImageController.text = image!.path;
-    }
-    return Center(
-      child: InkWell(
-        onTap: myAlert,
-        child: SizedBox(
-          height: getProportionateScreenHeight(250),
-          width: getProportionateScreenWidth(200),
-          child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 10),
-            alignment: Alignment.center,
-            // padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              // color: Colors.green,
+    return GestureDetector(
+      onTap: () async {
+        await getImage(ImageSource.gallery);
+      },
+      child: image != null
+          ? ClipRRect(
               borderRadius: BorderRadius.circular(20),
+              child: Image.file(
+                File(
+                  image!.path,
+                ),
+                fit: BoxFit.cover,
+                height: 250,
+              ),
+            )
+          : DottedBorder(
+              radius: const Radius.circular(15),
+              borderType: BorderType.RRect,
+              borderPadding: const EdgeInsets.all(10),
+              child: const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.camera_alt_outlined,
+                      color: Colors.black,
+                      size: 30,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'ছবি আপলোড করুন',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            child: state is AddFarmerInitial
-                ? image != null || state.farmerImageController.text.isNotEmpty
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Image.file(
-                          File(image?.path ?? state.farmerImageController.text),
-                          fit: BoxFit.cover,
-                          height: 250,
-                        ),
-                      )
-                    : const Icon(
-                        Icons.person,
-                        color: Colors.white,
-                        size: 200,
-                      )
-                : const Icon(
-                    Icons.person,
-                    color: Colors.white,
-                    size: 200,
-                  ),
-          ),
-        ),
-      ),
     );
   }
 }
