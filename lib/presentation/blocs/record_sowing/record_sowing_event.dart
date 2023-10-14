@@ -11,3 +11,5 @@ class RecordSowingPostEvent extends RecordSowingEvent {
   const RecordSowingPostEvent(this.ram);
   final RecordActivityModel ram;
 }
+
+class RecordSowingLoadingStopEvent extends RecordSowingEvent {}

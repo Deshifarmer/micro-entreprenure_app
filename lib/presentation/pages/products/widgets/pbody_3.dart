@@ -34,6 +34,8 @@ class ProductsBody3 extends StatefulWidget {
 }
 
 class _ProductsBody3State extends State<ProductsBody3> {
+  final ScrollController customController = ScrollController();
+  final ScrollController pagingController = ScrollController();
   final PagingController<int, ProductData> _pagingController =
       PagingController(firstPageKey: 1);
   String? _searchTerm;
@@ -42,7 +44,22 @@ class _ProductsBody3State extends State<ProductsBody3> {
   @override
   void initState() {
     _pagingController.addPageRequestListener(_fetchPage);
+
     super.initState();
+
+    // firstController.addListener(() {
+    //   if (firstController.position.pixels == firstController.position.maxScrollExtent) {
+    //     secondController.animateTo(secondController.position.minScrollExtent,
+    //         duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+    //   }
+    // });
+
+    // secondController.addListener(() {
+    //   if (secondController.position.pixels == secondController.position.minScrollExtent) {
+    //     firstController.animateTo(firstController.position.minScrollExtent,
+    //         duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+    //   }
+    // });
   }
 
   String companySelect = '';
@@ -80,8 +97,6 @@ class _ProductsBody3State extends State<ProductsBody3> {
     _pagingController.refresh();
   }
 
-  final ScrollController customController = ScrollController();
-  final ScrollController pagingController = ScrollController();
   final TextEditingController productSearchController = TextEditingController();
   bool isTheEnd = true;
   @override
@@ -102,18 +117,42 @@ class _ProductsBody3State extends State<ProductsBody3> {
         controller: customController
           ..addListener(
             () {
-              // check if the scroll controller reached the end
-              if (customController.position.atEdge) {
-                debugPrint(
-                    'CS: reached the end of list -> ${customController.position.pixels}');
+              // if (customController.position.pixels ==
+              //     customController.position.maxScrollExtent) {
+              //   debugPrint(
+              //       'CS: reached the end of list -> ${customController.position.pixels}');
+              //   debugPrint('CS: reached at the bottom of list');
+              //   // now let's make the CS false
+              //   setState(() {
+              //     isTheEnd = false;
+              //   });
+              // }
+
+              // debugPrint('CS: ${customController.position}');
+              if (customController.position.pixels ==
+                  customController.position.maxScrollExtent) {
+                debugPrint('CS: reached at the bottom of list');
+                // animate paging controller to bottom a few
                 if (customController.position.pixels ==
-                    customController.position.maxScrollExtent) {
-                  debugPrint('CS: reached at the bottom of list');
-                  // now let's make the CS false
+                        customController.position.maxScrollExtent &&
+                    pagingController.position.pixels ==
+                        pagingController.position.maxScrollExtent) {
+                } else {
+                  pagingController.animateTo(
+                    // pagingController.position.maxScrollExtent - 100,
+                    pagingController.position.pixels + 10,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                  );
                   setState(() {
                     isTheEnd = false;
                   });
                 }
+                // pagingController.animateTo(
+                //   pagingController.position.minScrollExtent,
+                //   duration: const Duration(milliseconds: 500),
+                //   curve: Curves.easeInOut,
+                // );
               }
             },
           ),
@@ -249,7 +288,7 @@ class _ProductsBody3State extends State<ProductsBody3> {
                                         : Colors.grey,
                                   ),
                                 ),
-                                child: Icon(
+                                child: const Icon(
                                   Icons.menu,
                                   color: Colors.black,
                                 ),
@@ -431,7 +470,8 @@ class _ProductsBody3State extends State<ProductsBody3> {
                                                   .withOpacity(0.4),
                                               borderRadius:
                                                   const BorderRadius.all(
-                                                      Radius.circular(10)),
+                                                Radius.circular(10),
+                                              ),
                                             ),
                                             child: Container(
                                               margin: const EdgeInsets.all(5),
@@ -446,11 +486,12 @@ class _ProductsBody3State extends State<ProductsBody3> {
                                                     : null,
                                                 borderRadius:
                                                     const BorderRadius.all(
-                                                        Radius.circular(10)),
+                                                  Radius.circular(10),
+                                                ),
                                               ),
                                               child: CompanyCardView(
-                                                  currentCompany:
-                                                      currentCompany),
+                                                currentCompany: currentCompany,
+                                              ),
                                             ),
                                           ),
                                         );
@@ -542,26 +583,63 @@ class _ProductsBody3State extends State<ProductsBody3> {
                   ),
                   Expanded(
                     child: PagedGridView<int, ProductData>(
-                      scrollController: customController
+                      scrollController: pagingController
                         ..addListener(
                           () {
-                            // check if the scroll controller reached the beginning
-                            // if (pagingController.position.atEdge) {
-                            //   // debugPrint(
-                            //   //     'PS: reached the end of list -> ${pagingController.position.pixels}');
-                            //   if (pagingController.position.pixels ==
-                            //       pagingController.position.minScrollExtent) {
-                            //     // making it true
-                            //     setState(() {
-                            //       isTheEnd = true;
-                            //     });
-                            //   }
+                            // debugPrint('PS: ${pagingController.position}');
+                            // if (pagingController.position.pixels ==
+                            //     pagingController.position.minScrollExtent) {
+                            //   debugPrint(
+                            //       'PS: reached the beginning of list -> ${pagingController.position.pixels}');
+                            //   customController.jumpTo(
+                            //       customController.position.minScrollExtent);
+                            //   // making it true
+                            //   setState(() {
+                            //     isTheEnd = true;
+                            //   });
                             // }
+
+                            // if custom controller reached the end then run paging controller else do not
+                            // if (customController.position.pixels ==
+                            //     customController.position.maxScrollExtent) {
+                            //   // debugPrint('PS: reached at the bottom of list');
+                            //   // now let's make the CS false
+                            //   setState(() {
+                            //     isTheEnd = false;
+                            //   });
+                            // }
+
+                            // if custom controller reached the end then run paging controller and stop the custom controller
+                            // if (customController.position.maxScrollExtent ==
+                            //         customController.position.pixels &&
+                            //     pagingController.position.minScrollExtent ==
+                            //         pagingController.position.pixels) {
+                            //   debugPrint('CS in bottom and PS is up');
+                            //   // now let's make the CS false
+                            //   setState(() {
+                            //     isTheEnd = false;
+                            //   });
+                            //   return;
+                            // }
+
+                            if (pagingController.position.pixels ==
+                                pagingController.position.minScrollExtent) {
+                              debugPrint('PS: reached at the bottom of list');
+
+                              customController.animateTo(
+                                customController.position.minScrollExtent + 100,
+                                duration: const Duration(milliseconds: 500),
+                                curve: Curves.easeInOut,
+                              );
+                              setState(() {
+                                isTheEnd = true;
+                              });
+                            }
                           },
                         ),
                       physics: isTheEnd
                           ? const NeverScrollableScrollPhysics()
-                          : const BouncingScrollPhysics(),
+                          : const ClampingScrollPhysics(),
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,

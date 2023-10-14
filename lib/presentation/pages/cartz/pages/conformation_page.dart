@@ -7,8 +7,8 @@ import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.da
 import 'package:deshifarmer/presentation/cubit/dropdown/dropdown_cubit.dart';
 import 'package:deshifarmer/presentation/pages/cartz/widgets/card_cart3.dart';
 import 'package:deshifarmer/presentation/pages/home/home.dart';
-import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/login.dart';
+import 'package:deshifarmer/presentation/pages/order/bloc/order_bloc.dart';
 import 'package:deshifarmer/presentation/shapes/my_farmers_shape.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
@@ -653,16 +653,28 @@ ${cartItems.getTotalPrices() + cartItems.getTotalPrices()}''',
                           padding: const EdgeInsets.all(8),
                           child: ElevatedButton(
                             onPressed: () {
+                              final loginState =
+                                  context.read<LoginBloc>().state;
+                              final token = loginState is LoginSuccess
+                                  ? loginState.successLoginEntity.token
+                                  : null;
                               // goto the order page
-
+                              // context
+                              //     .read<OrderBloc>()
+                              //     .add(InitOrders(token ?? ''));
+                              /// get user profile
+                              context
+                                  .read<UserProfileBloc>()
+                                  .add(GetUserProfileEvent(token: token!));
                               Navigator.pushAndRemoveUntil(
                                 context,
-                                LoginPage.route(),
+                                HomePage.route(),
                                 (route) => false,
                               );
-                              context
-                                  .read<HomeBloc>()
-                                  .add(const ChangePageEvent(2));
+
+                              // context
+                              //     .read<HomeBloc>()
+                              //     .add(const ChangePageEvent(2));
                             },
                             style: ButtonStyle(
                               backgroundColor:

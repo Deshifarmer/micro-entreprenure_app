@@ -1,5 +1,11 @@
+import 'package:deshifarmer/data/datasources/remote/apis/harvest_api.dart';
+import 'package:deshifarmer/domain/entities/source_entity/source_entity.dart';
+import 'package:deshifarmer/presentation/pages/activity/activity.dart';
+import 'package:deshifarmer/presentation/pages/group_detail/components/harvest_card.dart';
+import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
+import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:flutter/material.dart';
 
 /// {@template harvest_body}
@@ -13,11 +19,14 @@ class HarvestBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loginState = context.read<LoginBloc>().state;
+    final token =
+        loginState is LoginSuccess ? loginState.successLoginEntity.token : '';
     return Padding(
       padding: const EdgeInsets.all(15),
       child: ListView(
-        children: const [
-          Padding(
+        children: [
+          const Padding(
             padding: EdgeInsets.all(10),
             child: Text(
               'উৎপাদনের তালিকা ',
@@ -28,104 +37,45 @@ class HarvestBody extends StatelessWidget {
               ),
             ),
           ),
-
-          Padding(
-            padding: EdgeInsets.all(8),
-            child: Center(child: Text('কিছুই পাওয়া যায়নি')),
+          FutureBuilder<List<SourcingEntity>?>(
+            future: HarvestAPI().getHarvests(token),
+            builder: (
+              BuildContext context,
+              AsyncSnapshot<List<SourcingEntity>?> snapshot,
+            ) {
+              return snapshot.hasData
+                  ? snapshot.data!.isEmpty
+                      ? const Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Center(child: Text('কিছুই পাওয়া যায়নি')),
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final currentFarmer = snapshot.data![index];
+                            return Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: HarvestCard(
+                                farmerID: currentFarmer.which_farmer,
+                                farmerName: currentFarmer.farmer_name,
+                                name: currentFarmer.product_name,
+                                image: currentFarmer.product_images.firstOrNull
+                                    .toString(),
+                                qt: currentFarmer.quantity.toString(),
+                                unit: currentFarmer.unit,
+                                date: currentFarmer.created_at,
+                                soldPrice: currentFarmer.sell_price,
+                              ),
+                            );
+                          },
+                        )
+                  : const Center(
+                      child: PrimaryLoadingIndicator(),
+                    );
+            },
           ),
-
-          ///TODO: item
-          /* Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    height: 90,
-                    width: 90,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Potato',
-                            style: TextStyle(
-                              fontSize: titleFontLarge,
-                              fontWeight: FontWeight.w600,
-                            )),
-                        Text(
-                          'Farmer name, id',
-                          style: TextStyle(
-                            fontSize: smallFont,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8),
-                          child: Text(
-                            '26 Oct, 2023',
-                            style: TextStyle(
-                              fontSize: smallFont,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Text(
-                      '500 kg',
-                      style: TextStyle(
-                        fontSize: titleFont,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                    ),
-                    decoration: BoxDecoration(
-                      color: priceBoxColor,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.playlist_add_check,
-                          color: Colors.white,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 8,
-                          ),
-                          child: Text(
-                            'বিক্রিত ',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ), */
         ],
       ),
     );

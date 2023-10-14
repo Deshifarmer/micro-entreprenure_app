@@ -16,6 +16,7 @@ class MyKPI extends StatelessWidget {
         (_, int index) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
                 padding: const EdgeInsets.only(

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/domain/entities/company_entity/company_response_entity.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 
 class CompanyCardView extends StatelessWidget {
@@ -18,7 +19,7 @@ class CompanyCardView extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          height: 42,
+          height: getProportionateScreenHeight(42),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: CachedNetworkImage(
@@ -36,7 +37,7 @@ class CompanyCardView extends StatelessWidget {
         //       ),
         // ),
         Padding(
-          padding: const EdgeInsets.only(top: 8.0),
+          padding: const EdgeInsets.only(top: 8),
           child: Text(
             '${currentCompany.full_name?.substring(0, 7)}...',
             // currentCompany.full_name ?? '',

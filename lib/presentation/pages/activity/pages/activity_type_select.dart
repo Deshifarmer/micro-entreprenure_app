@@ -1,7 +1,9 @@
+import 'package:deshifarmer/data/datasources/remote/apis/harvest_api.dart';
 import 'package:deshifarmer/presentation/animations/page_animations.dart';
 import 'package:deshifarmer/presentation/pages/activity/pages/record_sowing_activity.dart';
 import 'package:deshifarmer/presentation/utils/activity_types_paramas.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
+import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:flutter/material.dart';
 
@@ -57,11 +59,6 @@ class _ActivityTypeSelectionState extends State<ActivityTypeSelection> {
                     ),
                   ),
                   onSelected: (bool isSelected) {
-                    // if (isSelected) {
-                    //   _activityTypes.add(s);
-                    // } else {
-                    //   _activityTypes.remove(s);
-                    // }
                     _activityTypes = s;
                     setState(() {});
                   },
@@ -73,38 +70,83 @@ class _ActivityTypeSelectionState extends State<ActivityTypeSelection> {
         ],
       ),
       bottomNavigationBar: _activityTypes.isNotEmpty
-          ? SecondayButtonGreen(
-              btnColor: priceBoxColor,
-              onpress: () {
-                debugPrint('list of types -> $_activityTypes');
-// RecordSowingActivity
-                Navigator.push(
-                  context,
-                  PageAnimationWrapper.sharedAxisTransitionPageWrapper(
-                    RecordSowingActivity(
-                      // activityTypes: _activityTypes,
-                      recordName: _activityTypes,
-                      batchID: widget.batchID,
-                      // farmerID: widget.farmerID,
-                      // farmID: widget.farmID,
-                    ),
-                  ),
-                );
-              },
-              title: 'চালিয়ে যান',
-              // title: 'continue',
+          ? LoadDiffDataButton(
+              activityTypes: _activityTypes,
+              bactchID: widget.batchID,
             )
           : null,
     );
   }
 }
 
-// List<String> listOfActivities = [
-//   'sowing',
-//   'using chemials',
-//   'irrigation',
-//   'hervest',
-//   'regular advisory',
-//   'report problem',
-//   'little problem',
-// ];
+class LoadDiffDataButton extends StatefulWidget {
+  const LoadDiffDataButton({
+    required this.bactchID,
+    required this.activityTypes,
+    super.key,
+  });
+  final String bactchID;
+  final String activityTypes;
+
+  @override
+  State<LoadDiffDataButton> createState() => _LoadDiffDataButtonState();
+}
+
+class _LoadDiffDataButtonState extends State<LoadDiffDataButton> {
+  bool isLoading = false;
+  @override
+  Widget build(BuildContext context) {
+    return isLoading
+        ? Container(
+            alignment: Alignment.center,
+            height: 50,
+            child: const PrimaryLoadingIndicator(),
+          )
+        : SecondayButtonGreen(
+            btnColor: priceBoxColor,
+            onpress: () async {
+              setState(() {
+                isLoading = true;
+              });
+              if (activityRecordValues[widget.activityTypes]! ==
+                  ActivityTypeEnums.sowing) {
+                debugPrint('sowin activity');
+                final harvAPI = HarvestAPI();
+                final prods = await harvAPI.getKrishProd();
+
+                debugPrint('products L -> ${prods?.length}');
+                // RecordSowingActivity
+                await Navigator.push(
+                  context,
+                  PageAnimationWrapper.sharedAxisTransitionPageWrapper(
+                    RecordSowingActivity(
+                      krishibebshaProd: prods,
+                      recordName: widget.activityTypes,
+                      batchID: widget.bactchID,
+                    ),
+                  ),
+                );
+                setState(() {
+                  isLoading = false;
+                });
+                return;
+              }
+              await Navigator.push(
+                context,
+                PageAnimationWrapper.sharedAxisTransitionPageWrapper(
+                  RecordSowingActivity(
+                    krishibebshaProd: null,
+                    recordName: widget.activityTypes,
+                    batchID: widget.bactchID,
+                  ),
+                ),
+              );
+              setState(() {
+                isLoading = false;
+              });
+            },
+            title: 'চালিয়ে যান',
+            // title: 'continue',
+          );
+  }
+}
