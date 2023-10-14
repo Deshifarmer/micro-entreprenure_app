@@ -14,7 +14,6 @@ import 'package:deshifarmer/domain/entities/category_entity/all_categorys.dart';
 import 'package:deshifarmer/domain/entities/category_entity/category_entity.dart';
 import 'package:deshifarmer/domain/entities/company_entity/all_company_entity.dart';
 import 'package:deshifarmer/domain/entities/company_entity/company_response_entity.dart';
-import 'package:deshifarmer/domain/entities/crop_entity/single_crop_entity.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/all_farmer_entity.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity_again.dart';
@@ -25,7 +24,6 @@ import 'package:deshifarmer/domain/entities/login_entity/login_response_entity.d
 import 'package:deshifarmer/domain/entities/orders_entity/all_orders.dart';
 import 'package:deshifarmer/domain/entities/orders_entity/order_response_entity.dart';
 import 'package:deshifarmer/domain/entities/user_entity/user_profile_entity.dart';
-import 'package:deshifarmer/presentation/pages/harvest/model/harvest_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -138,7 +136,6 @@ class DeshiFarmerAPI {
             // debugPrint('entity added successfully -> $i');
           } catch (e) {
             // debugPrint('exception occurd on OrderEntity $e');
-            final result2 = element as Map<String, dynamic>;
             // result2.forEach((key, value) {});
           }
         }
@@ -262,7 +259,6 @@ class DeshiFarmerAPI {
             );
           } catch (e) {
             debugPrint('exception occurd on Company $e');
-            final e2 = element as Map<String, dynamic>;
             // e2.forEach((key, value) {
             //   if (value.runtimeType != String) {
             //     debugPrint('${value.runtimeType} $key $value');
@@ -313,8 +309,8 @@ class DeshiFarmerAPI {
               CategoryEntity.fromJson(element as Map<String, dynamic>),
             );
           } catch (e) {
-            final e2 = element as Map<String, dynamic>;
-            e2.forEach((key, value) {});
+            // final e2 = element as Map<String, dynamic>;
+            // e2.forEach((key, value) {});
           }
         }
         AllCategoryListResp successResonse = AllCategoryListResp(companyE);
@@ -1117,10 +1113,7 @@ class DeshiFarmerAPI {
       _headers.addAll(headers);
       var request = http.MultipartRequest('POST', url);
       request.fields.addAll(body);
-
-      int checkLoop = 0;
       for (final img in farmModel.images.toSet().toList()) {
-        checkLoop++;
         request.files.add(
           await http.MultipartFile.fromPath(
             'gallery[]',
@@ -1314,95 +1307,7 @@ class DeshiFarmerAPI {
     }
   }
 
-  //! get CROP from different API
-  Future<List<SingleCropEntity>> getCropFromAnotherAPI() async {
-    final Uri url = Uri.parse(
-      'https://server.krishibebsha.com/api/v1/product',
-    );
-    debugPrint('crop url -> $url');
 
-    List<SingleCropEntity> cropList = [];
-
-    try {
-      final http.Response response = await http.get(
-        url,
-      );
-      debugPrint('status code -> ${response.statusCode}');
-      if (response.statusCode == 200) {
-        final result = await Isolate.run(() => json.decode(response.body))
-            as List<dynamic>;
-        debugPrint(
-          'successfuly got the batch LISTO -> ${result.runtimeType} ${result.length}',
-        );
-
-        for (int i = 0; i < result.length; i++) {
-          final element = result[i] as Map<String, dynamic>;
-          // debugPrint('element runtime -> ${element.runtimeType}');
-          try {
-            cropList.add(
-              SingleCropEntity.fromJson(element),
-            );
-          } catch (e) {
-            debugPrint(
-              'error comverting data BatchEnity ->  ${element.runtimeType}, $e \n',
-            );
-          }
-        }
-        return cropList;
-      } else {
-        return [];
-      }
-    } catch (e) {
-      return [];
-    }
-  }
-
-  // harvest post
-  Future<bool> postHarvest(
-      {required HarvestModel hm, required String token}) async {
-    final Uri url = Uri.parse(
-      ApiDatabaseParams.harvestPostAPI,
-    );
-
-    ///! POST HEADER
-    Map<String, String> headers = <String, String>{
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-    var body = {
-      'product_name': hm.crop,
-      'variety': hm.jatt,
-      'buy_price': hm.price,
-      'quantity': hm.quantity,
-      'unit': hm.unit,
-      'description': hm.note,
-      'source_location': hm.location,
-      'which_farmer': hm.name,
-    };
-    debugPrint('harvest url -> $url');
-    try {
-      _headers.addAll(headers);
-      var request = http.MultipartRequest('POST', url);
-      request.fields.addAll(body);
-      request.files
-          .add(await http.MultipartFile.fromPath('product_images[]', hm.image));
-      request.headers.addAll(headers);
-      http.StreamedResponse response = await request.send();
-      debugPrint('status code -> ${response.statusCode}');
-      if (response.statusCode == 201) {
-        return true;
-      } else {
-        debugPrint('body -> $body');
-        debugPrint(
-            'error -> ${response.statusCode} ${response.reasonPhrase} ${await response.stream.bytesToString()}');
-        return false;
-      }
-    } catch (e) {
-      debugPrint('Exception -> $e');
-      return false;
-    }
-  }
 
   /// get farmers without any shit
   ///* Get the Farmer LIST

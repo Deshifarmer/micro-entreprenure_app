@@ -112,7 +112,14 @@ class ApiDatabaseParams {
   static String harvestPostAPI =
       '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/sourcing'; //*POST
 
-  //! post a harvest
+  //! get all harvest
   static String harvestGetAPI =
-      '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/my_sourcing'; //*POST
+      '${Strings.getServerOrLocal(ServerOrLocal.local)}/api/v1/me/my_sourcing'; //*GET
+
+  ///* get landprep
+  static String harvestLandPrepPost =
+      '${Strings.getServerOrLocal(ServerOrLocal.local)}/api/v1/me/land_preparations'; //*POST
+  ///* get sowing
+  static String harvestSowingPost =
+      '${Strings.getServerOrLocal(ServerOrLocal.local)}/api/v1/me/sowing'; //*POST
 }

@@ -295,6 +295,9 @@ class ProfileBody extends StatelessWidget {
 
                         /// remove the token from shared pref
                         await SharedPrefDBServices().removeLoginToken();
+                        // Navigator.of(context).popUntil(
+                        //   (route) => route.isFirst,
+                        // );
                         Navigator.pushAndRemoveUntil(
                           context,
                           // LoginPage.route(),

@@ -45,9 +45,9 @@ class App extends StatelessWidget {
           create: (BuildContext context) => LoginBloc(),
         ),
         //? HomeBloc
-        BlocProvider<HomeBloc>(
-          create: (BuildContext context) => HomeBloc(),
-        ),
+        // BlocProvider<HomeBloc>(
+        //   create: (BuildContext context) => HomeBloc(),
+        // ),
         //? HomeBloc
         BlocProvider<UserProfileBloc>(
           create: (BuildContext context) => UserProfileBloc(),

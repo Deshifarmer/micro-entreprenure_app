@@ -1,8 +1,5 @@
-import 'package:deshifarmer/presentation/blocs/cart/cart_bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
-import 'package:deshifarmer/presentation/pages/pdetail/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/components/cart_btn_components.dart';
-import 'package:deshifarmer/presentation/pages/products/widgets/pbody_2.dart';
 import 'package:deshifarmer/presentation/pages/products/widgets/pbody_3.dart';
 import 'package:flutter/material.dart';
 
