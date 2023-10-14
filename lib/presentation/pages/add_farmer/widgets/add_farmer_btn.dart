@@ -1,5 +1,6 @@
 import 'package:deshifarmer/data/models/add_farmer_model.dart';
 import 'package:deshifarmer/presentation/blocs/farmer_api/add_farmer_api_bloc.dart';
+import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/bloc/add_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
@@ -97,17 +98,24 @@ class AddFarmerButton extends StatelessWidget {
                             errorSnackBar('জন্ম তারিখ প্রদান করুন'),
                           );
                         } else if (DateTime.now()
-                                .difference(DateTime.parse(
-                                    formState.dobController.text))
+                                .difference(
+                                  DateTime.parse(
+                                    formState.dobController.text,
+                                  ),
+                                )
                                 .inDays <
                             6570) {
                           debugPrint(
                             (DateTime.now()
-                                  .difference(DateTime.parse(
-                                      formState.dobController.text))
-                                  .inDays <
-                              (17 * 365)).toString()
-                              );
+                                        .difference(
+                                          DateTime.parse(
+                                            formState.dobController.text,
+                                          ),
+                                        )
+                                        .inDays <
+                                    (17 * 365))
+                                .toString(),
+                          );
 
                           /// 17 years in days
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -236,11 +244,15 @@ class AddFarmerButton extends StatelessWidget {
                           );
 
                           // debugPrint(DateFormat.yM(farmerModel.dateOfBirth));
-                          // TODO(nice): Uncomment this to add farmer
                           if (loginState is LoginSuccess) {
                             context.read<AddFarmerApiBloc>().add(
                                   AddFarmerBtnPressEvent(
                                     farmerModel: farmerModel,
+                                    token: loginState.successLoginEntity.token,
+                                  ),
+                                );
+                            context.read<UserProfileBloc>().add(
+                                  GetUserProfileEvent(
                                     token: loginState.successLoginEntity.token,
                                   ),
                                 );

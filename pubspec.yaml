@@ -1,13 +1,13 @@
 name: deshifarmer
 description: A agro flutter based project
-version: 3.2.1+18
+version: 3.2.1+19
 publish_to: none
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
-  animated_bottom_navigation_bar: ^1.2.0
+  # animated_bottom_navigation_bar: ^1.2.0
   animations: ^2.0.7
   bloc: ^8.1.2
   cached_network_image: ^3.3.0

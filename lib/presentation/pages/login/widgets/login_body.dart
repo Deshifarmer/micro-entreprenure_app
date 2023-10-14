@@ -2,6 +2,7 @@ import 'package:deshifarmer/data/datasources/local/shared_prefs/local_database_s
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/pages/home/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
+import 'package:deshifarmer/presentation/pages/login/components/password_field.dart';
 import 'package:deshifarmer/presentation/pages/order/bloc/order_bloc.dart';
 import 'package:deshifarmer/presentation/shapes/deshifarmer_logo.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
@@ -158,7 +159,7 @@ class LoginBody extends StatelessWidget {
                     ),
                   ),
 
-                  /// password
+                  ///! password
                   Padding(
                     padding: EdgeInsets.symmetric(
                       vertical: getProportionateScreenHeight(10),
@@ -232,80 +233,6 @@ class LoginBody extends StatelessWidget {
           ],
         );
       },
-    );
-  }
-}
-
-class PasswordTextField extends StatefulWidget {
-  const PasswordTextField({
-    required TextEditingController password,
-    super.key,
-  }) : _password = password;
-
-  final TextEditingController _password;
-
-  @override
-  State<PasswordTextField> createState() => _PasswordTextFieldState();
-}
-
-class _PasswordTextFieldState extends State<PasswordTextField> {
-  bool _obscureText = true;
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      obscureText: _obscureText,
-      style: const TextStyle(
-        color: Colors.white,
-      ),
-      controller: widget._password,
-      //     state is RecordSowingInitial ? state.unit : null,
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        // fillColor: tertiaryColor,
-        focusedBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          borderSide: BorderSide(
-            color: Color(0xffe9edde),
-          ),
-        ),
-        // suffixIcon: Icon(
-        //   Icons.remove_red_eye,
-        //   color: Colors.white,
-        // ),
-        /// suffix icon to toggle password visibility
-        suffixIcon: IconButton(
-          onPressed: () {
-            setState(() {
-              _obscureText = !_obscureText;
-            });
-          },
-          icon: Icon(
-            _obscureText ? Icons.visibility : Icons.visibility_off,
-            color: Colors.white,
-          ),
-        ),
-        hintText: 'পাসওয়ার্ড',
-        hintStyle: const TextStyle(
-          color: Color(0xff787878),
-        ),
-        enabledBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          borderSide: BorderSide(
-            color: Color(0xffe9edde),
-          ),
-        ),
-        border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-          borderSide: BorderSide(
-            color: Color(0xffe9edde),
-          ),
-        ),
-        contentPadding: const EdgeInsets.symmetric(
-          // vertical: 20,
-          horizontal: 15,
-        ),
-        // filled: true,
-      ),
     );
   }
 }
