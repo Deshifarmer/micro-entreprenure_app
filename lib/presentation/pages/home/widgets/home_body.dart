@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:deshifarmer/app/view/app.dart';
 import 'package:deshifarmer/core/params/home_page_params.dart';
 import 'package:deshifarmer/data/datasources/remote/apis/attendance_api.dart';
 import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
@@ -22,7 +23,6 @@ import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:restart_app/restart_app.dart';
 
 /// {@template home_body}
 /// Body of the HomePage.
@@ -48,7 +48,7 @@ class HomeBody extends StatelessWidget {
               ///! total farmers/orders card
               TotalFarmerTotalOrders(usrProfile: usrProfile),
 
-              ///! Weather Card
+              ///! TODO: Weather Card
               // SliverList(
               //   delegate: SliverChildBuilderDelegate(
               //     (_, int index) {
@@ -236,15 +236,26 @@ class HomeBody extends StatelessWidget {
                       snapshot.data == ConnectivityResult.none) {
                     return Center(
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           LottieBuilder.asset(
-                              'assets/animations/no_internet.json'),
+                            'assets/animations/no_internet.json',
+                            repeat: false,
+                          ),
                           const Text('ইন্টারনেট সংযোগ নেই'),
 
                           /// a button to restart the app
                           SecondayButtonGreen(
                             onpress: () async {
-                              await Restart.restartApp();
+                              // await Restart.restartApp();
+                              await Navigator.pushAndRemoveUntil(
+                                context,
+                                // LoginPage.route(),
+                                MaterialPageRoute(
+                                    builder: (context) => const App()),
+                                (route) => false,
+                              );
+                              // Navigate to the beginning of the app
                             },
                             title: 'পুনরায় চেষ্টা করুন',
                           ),
@@ -254,14 +265,21 @@ class HomeBody extends StatelessWidget {
                   }
                   return Center(
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        LottieBuilder.asset('assets/animations/failed.json'),
+                        // LottieBuilder.asset('assets/animations/failed.json'),
                         const Text('কিছু ভুল হয়েছে'),
 
                         /// a button to restart the app
                         SecondayButtonGreen(
                           onpress: () async {
-                            await Restart.restartApp();
+                            await Navigator.pushAndRemoveUntil(
+                              context,
+                              // LoginPage.route(),
+                              MaterialPageRoute(
+                                  builder: (context) => const App()),
+                              (route) => false,
+                            );
                           },
                           title: 'পুনরায় চেষ্টা করুন',
                         ),

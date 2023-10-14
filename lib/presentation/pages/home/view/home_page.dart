@@ -7,6 +7,7 @@ import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/pages/order/bloc/order_bloc.dart';
 import 'package:deshifarmer/presentation/pages/order/view/order_page.dart';
 import 'package:deshifarmer/presentation/pages/profile/view/profile_page.dart';
+import 'package:deshifarmer/presentation/shapes/my_farmers_shape.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
@@ -158,9 +159,11 @@ class _HomePageState extends State<HomePage> {
                         _currentIndex = 1;
                       });
                     },
-                    icon: Icon(
-                      Icons.cake_outlined,
-                      color: _currentIndex == 1 ? Colors.white : Colors.grey,
+                    icon: CustomPaint(
+                      painter: MyFarmersShape(
+                        colorF: _currentIndex == 1 ? Colors.white : Colors.grey,
+                      ),
+                      size: const Size(20, 20),
                     ),
                   ),
                   Text(
