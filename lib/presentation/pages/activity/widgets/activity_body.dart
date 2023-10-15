@@ -1,8 +1,10 @@
 // import 'package:deshifarmer/core/app_strings.dart';
 // import 'package:deshifarmer/core/error/exceptions.dart';
 // import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
+// import 'package:deshifarmer/data/datasources/remote/apis/harvest_api.dart';
 // import 'package:deshifarmer/domain/entities/activity_entity/activity_famer_detail.dart';
 // import 'package:deshifarmer/domain/entities/activity_entity/all_activity_entity.dart';
+// import 'package:deshifarmer/domain/entities/batch/batch_entity.dart';
 // import 'package:deshifarmer/presentation/pages/activity/bloc/bloc.dart';
 // import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 // import 'package:deshifarmer/presentation/widgets/constraints.dart';
@@ -21,8 +23,10 @@
 //   @override
 //   Widget build(BuildContext context) {
 //     final loginState = context.read<LoginBloc>().state;
-//     return BlocBuilder<ActivityBloc, ActivityState>(
-//       builder: (context, state) {
+//     final token =
+//         loginState is LoginSuccess ? loginState.successLoginEntity.token : '';
+//     return FutureBuilder<List<BatchEnity>?>(
+//       builder: (context, snapshot) {
 //         return Padding(
 //           padding: const EdgeInsets.all(25),
 //           child: SingleChildScrollView(
@@ -34,7 +38,7 @@
 //                 if (loginState is LoginSuccess)
 //                   FutureBuilder(
 //                     future: DeshiFarmerAPI()
-//                         .getAllActivities(loginState.successLoginEntity.token),
+//                         .getFarmBatches(loginState.successLoginEntity.token),
 //                     builder: (context, snapshot) {
 //                       if (snapshot.hasData &&
 //                           snapshot.connectionState == ConnectionState.done) {
@@ -184,101 +188,12 @@
 //                       return const SizedBox.shrink();
 //                     },
 //                   ),
-//                 // ListView.builder(
-//                 //   shrinkWrap: true,
-//                 //   physics: const NeverScrollableScrollPhysics(),
-//                 //   itemCount: 10,
-//                 //   itemBuilder: (context, index) {
-//                 //     return Padding(
-//                 //       padding: const EdgeInsets.symmetric(
-//                 //         vertical: 10,
-//                 //       ),
-//                 //       child: Row(
-//                 //         children: [
-//                 //           SizedBox(
-//                 //             width: 88,
-//                 //             child: AspectRatio(
-//                 //               aspectRatio: 0.88,
-//                 //               child: Container(
-//                 //                 padding: EdgeInsets.all(
-//                 //                     getProportionateScreenWidth(10)),
-//                 //                 decoration: BoxDecoration(
-//                 //                   color: const Color(0xFFF5F6F9),
-//                 //                   borderRadius: BorderRadius.circular(15),
-//                 //                 ),
-//                 //                 child: Image.network(
-//                 //                   checkDomain(Strings.getServerOrLocal(ServerOrLocal.server))
-//                 //                       ? dummyImage
-//                 //                       : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage',
-//                 //                   errorBuilder: (context, error, stackTrace) {
-//                 //                     return Center(
-//                 //                       child: Text(
-//                 //                         'Image Error',
-//                 //                         style: Theme.of(context)
-//                 //                             .textTheme
-//                 //                             .titleSmall!
-//                 //                             .copyWith(
-//                 //                               color: Colors.redAccent,
-//                 //                               fontStyle: FontStyle.italic,
-//                 //                             ),
-//                 //                       ),
-//                 //                     );
-//                 //                   },
-//                 //                 ),
-//                 //               ),
-//                 //             ),
-//                 //           ),
-//                 //           const SizedBox(width: 20),
-//                 //           Column(
-//                 //             crossAxisAlignment: CrossAxisAlignment.start,
-//                 //             children: [
-//                 //               SizedBox(
-//                 //                 width: MediaQuery.sizeOf(context).width / 1.8,
-//                 //                 child: const Text(
-//                 //                   'Recorded Crop Hervest',
-//                 //                   style: TextStyle(
-//                 //                     color: Colors.black,
-//                 //                     fontSize: 16,
-//                 //                     fontWeight: FontWeight.bold,
-//                 //                     height: 1,
-//                 //                   ),
-//                 //                   softWrap: true,
-//                 //                   maxLines: 2,
-//                 //                   overflow: TextOverflow.fade,
-//                 //                 ),
-//                 //               ),
-//                 //               const SizedBox(height: 10),
-//                 //               const Text(
-//                 //                 'Farmer: Ramiz uddin',
-//                 //                 style: TextStyle(
-//                 //                   color: Colors.black,
-//                 //                   fontSize: 14,
-//                 //                   fontWeight: FontWeight.w400,
-//                 //                 ),
-//                 //                 maxLines: 2,
-//                 //               ),
-//                 //               const SizedBox(height: 10),
-//                 //               const Text(
-//                 //                 'Crop: rice',
-//                 //                 style: TextStyle(
-//                 //                   color: Colors.black,
-//                 //                   fontSize: 14,
-//                 //                   fontWeight: FontWeight.w400,
-//                 //                 ),
-//                 //                 maxLines: 2,
-//                 //               ),
-//                 //             ],
-//                 //           ),
-//                 //         ],
-//                 //       ),
-//                 //     );
-//                 //   },
-//                 // ),
 //               ],
 //             ),
 //           ),
 //         );
 //       },
+//       future: HarvestAPI().getLatestBatches(token: token),
 //     );
 //   }
 // }

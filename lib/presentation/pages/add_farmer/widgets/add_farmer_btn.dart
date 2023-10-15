@@ -35,6 +35,17 @@ class AddFarmerButton extends StatelessWidget {
               content: const Text('Successfully farmer Added'),
             ),
           );
+
+          final loginState = context.read<LoginBloc>().state;
+          final token = loginState is LoginSuccess
+              ? loginState.successLoginEntity.token
+              : '';
+          debugPrint('calling user profile:(');
+          context.read<UserProfileBloc>().add(
+                GetUserProfileEvent(
+                  token: token,
+                ),
+              );
           Future.delayed(1.seconds, () => Navigator.pop(context));
         }
       },
@@ -104,7 +115,13 @@ class AddFarmerButton extends StatelessWidget {
                                   ),
                                 )
                                 .inDays <
-                            6570) {
+                            (17 * 365)) {
+                          debugPrint('Current -> ${DateTime.now().difference(
+                                DateTime.parse(
+                                  formState.dobController.text,
+                                ),
+                              ).inDays}');
+                          debugPrint('17 in dayes -> ${17 * 365}');
                           debugPrint(
                             (DateTime.now()
                                         .difference(
@@ -248,11 +265,6 @@ class AddFarmerButton extends StatelessWidget {
                             context.read<AddFarmerApiBloc>().add(
                                   AddFarmerBtnPressEvent(
                                     farmerModel: farmerModel,
-                                    token: loginState.successLoginEntity.token,
-                                  ),
-                                );
-                            context.read<UserProfileBloc>().add(
-                                  GetUserProfileEvent(
                                     token: loginState.successLoginEntity.token,
                                   ),
                                 );

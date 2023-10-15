@@ -43,10 +43,10 @@ class _ActivityPageState extends State<ActivityPage> {
           horizontal: 15,
         ),
         child: isLoading
-            ? SizedBox(
+            ? const SizedBox(
                 height: 50,
                 width: 50,
-                child: const Center(
+                child: Center(
                   child: PrimaryLoadingIndicator(),
                 ),
               )
