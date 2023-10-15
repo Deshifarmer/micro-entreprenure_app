@@ -16,6 +16,8 @@ final class RecordSowingInitial extends RecordSowingState {
   final TextEditingController sowingCrop = TextEditingController();
   final TextEditingController sowingNameWithCompany = TextEditingController();
   final TextEditingController sowingSeedQuantity = TextEditingController();
+  final TextEditingController sowingSeedUnit = TextEditingController();
+  final TextEditingController sowingSeedPrice = TextEditingController();
   //* জমি তৈরী
   final TextEditingController landPhoto = TextEditingController();
   final TextEditingController landPepDate = TextEditingController();
@@ -43,6 +45,8 @@ final class RecordSowingInitial extends RecordSowingState {
     sowingCrop.clear();
     sowingNameWithCompany.clear();
     sowingSeedQuantity.clear();
+    sowingSeedPrice.clear();
+    sowingSeedUnit.clear();
     landPhoto.clear();
     landPepDate.clear();
     irrigationWateringHours.clear();
