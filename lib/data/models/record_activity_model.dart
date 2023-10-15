@@ -16,6 +16,8 @@ class RecordActivityModel {
     required this.pesticideType,
     required this.sowingNameWithCompany,
     required this.sowingSeedQuantity,
+    required this.sowingSeedUnit,
+    required this.sowingSeedPrice,
     required this.token,
     required this.batchID,
     required this.landPepData,
@@ -25,6 +27,8 @@ class RecordActivityModel {
   final String sowingCrop;
   final String sowingNameWithCompany;
   final String sowingSeedQuantity;
+  final String sowingSeedUnit;
+  final String sowingSeedPrice;
   //* জমি তৈরী
   final String landPepData;
   //* সেচ রেকর্ড
