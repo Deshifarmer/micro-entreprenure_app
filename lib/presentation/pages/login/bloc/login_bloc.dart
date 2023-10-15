@@ -36,12 +36,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           emit(LoginSuccess(succ)),
 
           /// hit the user profile api
-          UserProfileBloc().add(GetUserProfileEvent(token: succ.token)),
-          await Navigator.pushAndRemoveUntil(
-            event.context as BuildContext,
-            HomePage.route(),
-            (route) => false,
-          ),
         },
       ServerFailor(error: final _) => emit(LoginFailed()),
     };
