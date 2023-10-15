@@ -3,10 +3,8 @@ import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/domain/entities/crop_entity/single_crop_entity.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/all_farmer_entity.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
-import 'package:deshifarmer/presentation/pages/harvest/components/crop_lsit_view_harvest.dart';
 import 'package:deshifarmer/presentation/pages/harvest/components/get_image_for_harvest.dart';
 import 'package:deshifarmer/presentation/pages/harvest/components/harvest_location_field.dart';
-import 'package:deshifarmer/presentation/pages/harvest/components/select_farmer_with_exceptionh.dart';
 import 'package:deshifarmer/presentation/pages/harvest/model/harvest_model.dart';
 import 'package:deshifarmer/presentation/pages/harvest/pages/submit_button.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
@@ -200,7 +198,7 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
                         value: value,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 5),
+                              horizontal: 8, vertical: 5,),
                           child: Row(
                             // mainAxisAlignment: MainAxisAlignment.center,
                             children: [
