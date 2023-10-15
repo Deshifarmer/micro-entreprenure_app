@@ -33,6 +33,10 @@ class _HarvestBottomButtonLoadingState
       listener: (context, state) {
         if (state is RecordSowingSuccess || state is RecordSowingFailed) {
           debugPrint('failed or success');
+          // clear all the data
+          // context.read<RecordSowingBloc>().add(
+          //       RecordSowingClearEvent(),
+          //     );
           setState(() {
             isLoading = false;
           });
@@ -78,17 +82,23 @@ class _HarvestBottomButtonLoadingState
                         details: state.details.text,
                         images: state.images,
                         whatType: widget.whatType,
-                        sowingSeedQuantity: state.sowingSeedQuantity.text,
                         fertilizerAmount: state.fertilizerAmount.text,
                         fertilizerName: state.fertilizerName.text,
                         fertilizerType: state.fertilizerType.text,
                         irrigationWateringHours:
-                            state.irrigationWateringHours.text,
+                            state.irrigationWateringHours.text.isEmpty
+                                ? '0'
+                                : state.irrigationWateringHours.text,
                         pesticideAmount: state.pesticideAmount.text,
                         pesticideName: state.pesticideName.text,
                         pesticideType: state.pesticideType.text,
                         sowingCrop: state.sowingCrop.text,
                         sowingNameWithCompany: state.sowingNameWithCompany.text,
+                        sowingSeedUnit: state.sowingSeedUnit.text.isEmpty
+                            ? 'KG'
+                            : state.sowingSeedUnit.text,
+                        sowingSeedPrice: state.sowingSeedPrice.text,
+                        sowingSeedQuantity: state.sowingSeedQuantity.text,
                       );
                       // now print all these values
                       debugPrint('details: ${ram.details}');
@@ -114,6 +124,7 @@ class _HarvestBottomButtonLoadingState
                       context.read<RecordSowingBloc>().add(
                             RecordSowingPostEvent(ram),
                           );
+                      state.clearAll();
                     },
                     title: 'সেভ করুন',
                   )

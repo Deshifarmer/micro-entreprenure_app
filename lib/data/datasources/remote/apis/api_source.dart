@@ -41,6 +41,7 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       '${ApiDatabaseParams.loginApi}?email=$mail&password=$pass',
     );
+    debugPrint('$url');
     try {
       final http.Response response = await http.post(url);
       // debugdebugPrint('login response -> ${response.statusCode}');
@@ -1306,8 +1307,6 @@ class DeshiFarmerAPI {
       return null;
     }
   }
-
-
 
   /// get farmers without any shit
   ///* Get the Farmer LIST
