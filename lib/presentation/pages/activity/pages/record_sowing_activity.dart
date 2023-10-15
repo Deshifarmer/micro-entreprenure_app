@@ -3,10 +3,24 @@ import 'package:deshifarmer/presentation/blocs/record_sowing/record_sowing_bloc.
 import 'package:deshifarmer/presentation/pages/activity/activity.dart';
 import 'package:deshifarmer/presentation/pages/activity/components/get_recorded_photo.dart';
 import 'package:deshifarmer/presentation/pages/activity/pages/components/harvest_post_api.dart';
+import 'package:deshifarmer/presentation/pages/harvest/pages/harvest_record_page2.dart';
 import 'package:deshifarmer/presentation/utils/activity_types_paramas.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/snackbar_custom.dart';
 import 'package:flutter/material.dart';
+
+const fertilizerType = <String>[
+  'Nitrogen Fertilizers',
+  'Phosphorus Fertilizers',
+  'Potassium Fertilizers',
+  'Compound Fertilizers',
+  'Manure',
+  'Compost (organic)',
+  'Fish Emulsion (organic)',
+  'Bone Meal (organic)',
+  'Biofertilizers (natural)',
+  'Green Manure (natural)',
+];
 
 class RecordSowingActivity extends StatefulWidget {
   const RecordSowingActivity({
@@ -275,15 +289,15 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                       const Padding(
                         padding: EdgeInsets.all(8),
                         // child: Text('Unit'),
-                        child: Text('Quantity in gm'),
+                        child: Text('Seed Price'),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8),
                         child: TextFormField(
                           controller: state is RecordSowingInitial
-                              ? state.sowingSeedQuantity
+                              ? state.sowingSeedPrice
                               : null,
-                          keyboardType: TextInputType.text,
+                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             fillColor: backgroundColor2,
                             focusedBorder: OutlineInputBorder(
@@ -314,6 +328,164 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                             filled: true,
                           ),
                         ),
+                      ),
+                      //! quantity KG
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child: Column(
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                  ),
+                                  child: Text('পরিমান '),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: TextField(
+                                    controller: state is RecordSowingInitial
+                                        ? state.sowingSeedQuantity
+                                        : null,
+                                    // onTap: () async {},
+                                    keyboardType: TextInputType.number,
+                                    decoration: InputDecoration(
+                                      // suffixIcon: const Icon(Icons.keyboard_arrow_down_outlined),
+                                      fillColor: backgroundColor2,
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(10),
+                                        ),
+                                        borderSide: BorderSide(
+                                          color: Colors.black.withOpacity(0.2),
+                                        ),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(10),
+                                        ),
+                                        borderSide: BorderSide(
+                                          color: Colors.black.withOpacity(0.2),
+                                        ),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(15),
+                                        ),
+                                        borderSide: BorderSide(
+                                          color: Colors.black.withOpacity(0.2),
+                                        ),
+                                      ),
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                        // vertical: 20,
+                                        horizontal: 15,
+                                      ),
+                                      labelStyle: const TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                      hintText: '',
+                                      filled: true,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          /// another column for the type
+                          Expanded(
+                            flex: 2,
+                            child: Column(
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                  ),
+                                  child: Text('পরিমানের ধরণ'),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  // child:  ,
+                                  // a dropdown of units
+                                  child: DropdownButtonFormField<String>(
+                                    isDense: false,
+                                    // menuMaxHeight:
+                                    // getProportionateScreenHeight(40),
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(15),
+                                    ),
+                                    isExpanded: true,
+                                    decoration: InputDecoration(
+                                      fillColor: backgroundColor2,
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(10),
+                                        ),
+                                        borderSide: BorderSide(
+                                          color: Colors.black.withOpacity(0.2),
+                                        ),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(10),
+                                        ),
+                                        borderSide: BorderSide(
+                                          color: Colors.black.withOpacity(0.2),
+                                        ),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(15),
+                                        ),
+                                        borderSide: BorderSide(
+                                          color: Colors.black.withOpacity(0.2),
+                                        ),
+                                      ),
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                        // vertical: 5,
+                                        horizontal: 3,
+                                      ),
+                                      labelStyle: const TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                      hintText: '',
+                                      filled: true,
+                                    ),
+                                    // decoration: ShapeDecoration(),
+                                    // itemHeight: 300,
+                                    elevation: 16,
+                                    value: units.first,
+                                    icon: const Icon(
+                                      Icons.keyboard_arrow_down_outlined,
+                                    ),
+                                    items: units
+                                        .map<DropdownMenuItem<String>>((value) {
+                                      return DropdownMenuItem<String>(
+                                        alignment: Alignment.center,
+                                        value: value,
+                                        child: ListTile(
+                                          title: Text(value),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    onChanged: (String? val) {
+                                      // print('on pressed called');
+                                      if (val != null) {
+                                        if (state is RecordSowingInitial) {
+                                          state.sowingSeedUnit.text = val;
+                                        }
+                                        // unitController.text = val;
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ] else if (activityRecordValues[widget.recordName] ==
                         ActivityTypeEnums.fertilizer) ...[
@@ -359,7 +531,7 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                           // decoration: ShapeDecoration(),
                           elevation: 16,
                           hint: const Text('ফসল নির্বাচন করুন'),
-                          items: ['Deshifarmer Ltd.', 'Outside']
+                          items: fertilizerType
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               // alignment: Alignment.center,
@@ -432,7 +604,7 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                           controller: state is RecordSowingInitial
                               ? state.fertilizerAmount
                               : null,
-                          keyboardType: TextInputType.text,
+                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             fillColor: backgroundColor2,
                             focusedBorder: OutlineInputBorder(
@@ -508,7 +680,7 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                           // decoration: ShapeDecoration(),
                           elevation: 16,
                           hint: const Text('ফসল নির্বাচন করুন'),
-                          items: ['Deshifarmer Ltd.', 'Outside']
+                          items: fertilizerType
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               // alignment: Alignment.center,
@@ -579,9 +751,9 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                         padding: const EdgeInsets.all(8),
                         child: TextFormField(
                           controller: state is RecordSowingInitial
-                              ? state.pesticideType
+                              ? state.pesticideAmount
                               : null,
-                          keyboardType: TextInputType.text,
+                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             fillColor: backgroundColor2,
                             focusedBorder: OutlineInputBorder(
@@ -661,38 +833,112 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8),
-                        child: TextFormField(
-                          controller: state is RecordSowingInitial
-                              ? state.irrigationWateringHours
-                              : null,
-                          keyboardType: TextInputType.multiline,
+                        // child is a dropdown field of number [1-24]
+                        child: DropdownButtonFormField<String>(
+                          isDense: false,
+                          // menuMaxHeight:
+                          // getProportionateScreenHeight(40),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                          isExpanded: true,
                           decoration: InputDecoration(
                             fillColor: backgroundColor2,
-                            border: const OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15)),
-                            ),
-                            contentPadding: const EdgeInsets.symmetric(
-                              // vertical: 20,
-                              horizontal: 15,
-                            ),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10)),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(10),
+                              ),
                               borderSide: BorderSide(
                                 color: Colors.black.withOpacity(0.2),
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10)),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(10),
+                              ),
                               borderSide: BorderSide(
                                 color: Colors.black.withOpacity(0.2),
                               ),
                             ),
+                            border: OutlineInputBorder(
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(15),
+                              ),
+                              borderSide: BorderSide(
+                                color: Colors.black.withOpacity(0.2),
+                              ),
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                              // vertical: 5,
+                              horizontal: 3,
+                            ),
+                            labelStyle: const TextStyle(
+                              color: Colors.black,
+                            ),
+                            hintText: '',
                             filled: true,
                           ),
+                          // decoration: ShapeDecoration(),
+                          // itemHeight: 300,
+                          elevation: 16,
+                          // value: hours.first,
+                          icon: const Icon(
+                            Icons.keyboard_arrow_down_outlined,
+                          ),
+                          items: List.generate(24, (index) => index)
+                              .map<DropdownMenuItem<String>>((value) {
+                            return DropdownMenuItem<String>(
+                              alignment: Alignment.center,
+                              value: value.toString(),
+                              child: ListTile(
+                                title: Text(value.toString()),
+                              ),
+                            );
+                          }).toList(),
+                          hint: const Text('Select hours'),
+
+                          onChanged: (String? val) {
+                            // print('on pressed called');
+                            if (val != null) {
+                              if (state is RecordSowingInitial) {
+                                state.irrigationWateringHours.text = val;
+                              }
+                              // unitController.text = val;
+                            }
+                          },
                         ),
+                        // child: TextFormField(
+                        //   controller: state is RecordSowingInitial
+                        //       ? state.irrigationWateringHours
+                        //       : null,
+                        //   keyboardType: TextInputType.multiline,
+                        //   decoration: InputDecoration(
+                        //     fillColor: backgroundColor2,
+                        //     border: const OutlineInputBorder(
+                        //       borderRadius:
+                        //           BorderRadius.all(Radius.circular(15)),
+                        //     ),
+                        //     contentPadding: const EdgeInsets.symmetric(
+                        //       // vertical: 20,
+                        //       horizontal: 15,
+                        //     ),
+                        //     focusedBorder: OutlineInputBorder(
+                        //       borderRadius:
+                        //           const BorderRadius.all(Radius.circular(10)),
+                        //       borderSide: BorderSide(
+                        //         color: Colors.black.withOpacity(0.2),
+                        //       ),
+                        //     ),
+                        //     enabledBorder: OutlineInputBorder(
+                        //       borderRadius:
+                        //           const BorderRadius.all(Radius.circular(10)),
+                        //       borderSide: BorderSide(
+                        //         color: Colors.black.withOpacity(0.2),
+                        //       ),
+                        //     ),
+                        //     filled: true,
+                        //   ),
+                        // ),
                       ),
                     ],
                     // TextButton(

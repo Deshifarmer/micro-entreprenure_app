@@ -315,14 +315,14 @@ class ProfileBody extends StatelessWidget {
                   title: const Text(
                     'লগ আউট',
                     style: TextStyle(
-                        // color: Colors.white,
-                        ),
+                      color: Colors.white,
+                    ),
                   ),
-                  tileColor: Colors.redAccent,
-                  trailing: const Icon(
-                    Icons.settings_power,
-                    // color: Colors.white,
-                  ),
+                  tileColor: Color(0xffec664d),
+                  // trailing: const Icon(
+                  //   Icons.settings_power,
+                  //   // color: Colors.white,
+                  // ),
                 ),
               ],
               height10,

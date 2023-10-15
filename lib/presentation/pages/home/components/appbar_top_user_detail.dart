@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/domain/entities/user_entity/user_profile_entity.dart';
+import 'package:deshifarmer/presentation/pages/notifications/view/notifications_page.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -94,7 +96,12 @@ class AppBarTopUserDetail extends StatelessWidget {
                 backgroundColor: MaterialStatePropertyAll(Color(0xff93EE93)),
               ),
               color: Colors.green,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(builder: (c) => const NotificationsPage()),
+                );
+              },
               icon: const Icon(Icons.notifications_none),
             ),
           ],

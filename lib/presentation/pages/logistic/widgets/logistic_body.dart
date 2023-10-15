@@ -73,7 +73,7 @@ class LogisticBody extends StatelessWidget {
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(
                 // fillColor: backgroundColor2,
-                hintText: 'থেকে',
+                hintText: 'শুরুর স্থান',
                 // hintText: 'from',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(
@@ -95,7 +95,7 @@ class LogisticBody extends StatelessWidget {
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(
                 // fillColor: backgroundColor2,
-                hintText: 'প্রতি',
+                hintText: 'গন্তব্য স্থান',
                 // hintText: 'to',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(

@@ -46,7 +46,9 @@ class HomeBody extends StatelessWidget {
               MyCustomAppBar(usrProfile: usrProfile),
 
               ///! total farmers/orders card
-              TotalFarmerTotalOrders(usrProfile: usrProfile),
+              TotalFarmerTotalOrders(
+                  // usrProfile: usrProfile,
+                  ),
 
               ///! TODO: Weather Card
               // SliverList(

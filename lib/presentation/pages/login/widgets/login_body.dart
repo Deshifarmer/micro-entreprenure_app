@@ -1,6 +1,7 @@
 import 'package:deshifarmer/data/datasources/local/shared_prefs/local_database_sf.dart';
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/pages/home/bloc/bloc.dart';
+import 'package:deshifarmer/presentation/pages/home/view/home_page.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/components/password_field.dart';
 import 'package:deshifarmer/presentation/pages/order/bloc/order_bloc.dart';
@@ -49,6 +50,14 @@ class LoginBody extends StatelessWidget {
               backgroundColor: primaryColor,
               content: Text('Successfully Logged In'),
             ),
+          );
+
+          UserProfileBloc()
+              .add(GetUserProfileEvent(token: state.successLoginEntity.token));
+          Navigator.pushAndRemoveUntil(
+            context,
+            HomePage.route(),
+            (route) => false,
           );
         }
         if (state is LoginFailed) {
