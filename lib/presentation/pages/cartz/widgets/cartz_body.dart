@@ -27,6 +27,7 @@ class CartzBody extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             children: [
               ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: itemToList.length,
                 itemBuilder: (context, index) {

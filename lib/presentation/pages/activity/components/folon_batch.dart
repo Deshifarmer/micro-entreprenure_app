@@ -22,7 +22,7 @@ class FolonBatchData extends StatelessWidget {
               alignment: WrapAlignment.center,
               spacing: 10,
               children: [
-                for (final s in snapshot.data! as List<BatchEnity>)
+                for (final s in snapshot.data!)
                   FilterChip(
                     backgroundColor: Colors.white,
                     side: const BorderSide(

@@ -2,6 +2,7 @@ import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
 import 'package:deshifarmer/presentation/animations/page_animations.dart';
 import 'package:deshifarmer/presentation/pages/activity/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/activity/pages/activity_select_farm.dart';
+import 'package:deshifarmer/presentation/pages/activity/widgets/activity_body.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
@@ -96,9 +97,8 @@ class ActivityView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // /! TODO: uncomment this
-    // return const ActivityBody();
-    return Container();
+    return const ActivityBody();
+    // return Container();
   }
 }
 
