@@ -7,6 +7,7 @@ import 'package:deshifarmer/domain/entities/batch/batch_entity.dart';
 import 'package:deshifarmer/domain/entities/crop_entity/single_crop_entity.dart';
 import 'package:deshifarmer/domain/entities/krishibebsa_pro/prod_entity.dart';
 import 'package:deshifarmer/domain/entities/source_entity/source_entity.dart';
+import 'package:deshifarmer/presentation/pages/activity/models/batch_reponse_entity.dart';
 import 'package:deshifarmer/presentation/pages/harvest/model/harvest_model.dart';
 import 'package:deshifarmer/presentation/utils/activity_types_paramas.dart';
 import 'package:flutter/foundation.dart';
@@ -154,8 +155,8 @@ class HarvestAPI {
   }
 
   Future<bool?> recordActivity(RecordActivityModel ram) async {
-    final TOKEN = '';
-    final BATCH_ID = '';
+    const TOKEN = '';
+    const batchId = '';
 
     ///! POST HEADER
     final headers = <String, String>{
@@ -163,13 +164,14 @@ class HarvestAPI {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${TOKEN.isNotEmpty ? TOKEN : ram.token}',
     };
-    // print('thi sis runne dsdfa');
     if (ram.whatType == ActivityTypeEnums.landpref) {
+      debugPrint('Chekcing images -> ${ram.images.length}');
       //* LAND PREP
       final body = {
         'batch_id': ram.batchID,
         'land_preparation_date': ram.landPepData,
         'details': ram.details,
+        'img len': ram.images.length.toString(),
       };
       final url = Uri.parse(
         ApiDatabaseParams.harvestLandPrepPost,
@@ -208,7 +210,7 @@ class HarvestAPI {
           'Sowing -> ${ram.sowingCrop} ${ram.sowingNameWithCompany} ${ram.sowingSeedQuantity} ${ram.batchID}');
       _headers.addAll(headers);
       final body = {
-        'batch_id': BATCH_ID.isNotEmpty ? BATCH_ID : ram.batchID,
+        'batch_id': batchId.isNotEmpty ? batchId : ram.batchID,
         'seed_name': ram.sowingCrop,
         'seed_company': ram.sowingNameWithCompany,
         'seed_quantity': ram.sowingSeedQuantity,
@@ -243,7 +245,7 @@ class HarvestAPI {
 
       _headers.addAll(headers);
       final body = {
-        'batch_id': BATCH_ID.isNotEmpty ? BATCH_ID : ram.batchID,
+        'batch_id': batchId.isNotEmpty ? batchId : ram.batchID,
         'fertilizer_type': ram.fertilizerType,
         'fertilizer_name': ram.fertilizerName,
         'amount': ram.fertilizerAmount,
@@ -273,7 +275,7 @@ class HarvestAPI {
 
       _headers.addAll(headers);
       final body = {
-        'batch_id': BATCH_ID.isNotEmpty ? BATCH_ID : ram.batchID,
+        'batch_id': batchId.isNotEmpty ? batchId : ram.batchID,
         'pesticide_type': ram.pesticideType,
         'pesticide_name': ram.pesticideName,
         'amount': ram.pesticideAmount,
@@ -300,7 +302,7 @@ class HarvestAPI {
       //! WATering
       _headers.addAll(headers);
       final body = {
-        'batch_id': BATCH_ID.isNotEmpty ? BATCH_ID : ram.batchID,
+        'batch_id': batchId.isNotEmpty ? batchId : ram.batchID,
         'hours': ram.irrigationWateringHours,
         'details': ram.details,
       };
@@ -377,16 +379,16 @@ class HarvestAPI {
 
   //! batch getting api
   Future<List<BatchEnity>?> getLatestBatches({required String token}) async {
-    Map<String, String> auth = <String, String>{
+    final auth = <String, String>{
       'Authorization': 'Bearer $token',
     };
     final url = Uri.parse(
-      ApiDatabaseParams.batchListAPI,
+      ApiDatabaseParams.latestbatchListAPI,
     );
     debugPrint('batch get url -> $url $token');
     try {
       _headers.addAll(auth);
-      final http.Response response = await http.get(
+      final response = await http.get(
         url,
         headers: _headers,
       );
@@ -397,8 +399,8 @@ class HarvestAPI {
         debugPrint(
           'successfuly got the batch LISTO -> ${result.runtimeType} ${result.length}',
         );
-        List<BatchEnity> companyE = [];
-        for (int i = 0; i < result.length; i++) {
+        final companyE = <BatchEnity>[];
+        for (var i = 0; i < result.length; i++) {
           final element = result[i] as Map<String, dynamic>;
           // debugPrint('element runtime -> ${element.runtimeType}');
           try {
@@ -412,6 +414,46 @@ class HarvestAPI {
           }
         }
         return companyE;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  //! get batch response
+  Future<BatchResponseEntity?> getBatchData(
+      {required String token, required String bID}) async {
+    final headers = <String, String>{
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    final url = Uri.parse(
+      '${ApiDatabaseParams.getBatchInfo}/$bID',
+    );
+    debugPrint('batch get url -> $url $token');
+    try {
+      _headers.addAll(headers);
+      final response = await http.get(
+        url,
+        headers: _headers,
+      );
+      debugPrint('status code -> ${response.statusCode}');
+      if (response.statusCode == 200) {
+        final result = await Isolate.run(() => json.decode(response.body))
+            as Map<String, dynamic>;
+        debugPrint(
+          'successfuly got the batch LISTO -> ${result.runtimeType} ${result.length}',
+        );
+        try {
+          return BatchResponseEntity.fromJson(result);
+        } catch (e) {
+          debugPrint(
+            'error comverting data BatchEnity ->  ${result.runtimeType}, $e \n',
+          );
+          return null;
+        }
       } else {
         return null;
       }
