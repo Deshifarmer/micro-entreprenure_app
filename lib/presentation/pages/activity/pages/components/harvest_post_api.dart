@@ -106,25 +106,27 @@ class _HarvestBottomButtonLoadingState
                       debugPrint('date: ${ram.landPepData}');
                       debugPrint('whatType: ${ram.whatType}');
                       debugPrint(
-                          'sowingSeedQuantity: ${ram.sowingSeedQuantity}');
+                        'sowingSeedQuantity: ${ram.sowingSeedQuantity}',
+                      );
                       debugPrint('fertilizerAmount: ${ram.fertilizerAmount}');
                       debugPrint('fertilizerName: ${ram.fertilizerName}');
                       debugPrint('fertilizerType: ${ram.fertilizerType}');
                       debugPrint(
-                          'irrigationWateringHours: ${ram.irrigationWateringHours}');
+                        'irrigationWateringHours: ${ram.irrigationWateringHours}',
+                      );
                       debugPrint('pesticideAmount: ${ram.pesticideAmount}');
                       debugPrint('pesticideName: ${ram.pesticideName}');
                       debugPrint('pesticideType: ${ram.pesticideType}');
                       debugPrint('sowingCrop: ${ram.sowingCrop}');
                       debugPrint(
-                          'sowingNameWithCompany: ${ram.sowingNameWithCompany}');
+                        'sowingNameWithCompany: ${ram.sowingNameWithCompany}',
+                      );
                       debugPrint('token: $token');
                       debugPrint('batchID: ${widget.batchID}');
                       debugPrint('whatType: ${widget.whatType}');
                       context.read<RecordSowingBloc>().add(
                             RecordSowingPostEvent(ram),
                           );
-                      state.clearAll();
                     },
                     title: 'সেভ করুন',
                   )

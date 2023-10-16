@@ -1,6 +1,6 @@
-import 'package:deshifarmer/data/datasources/remote/apis/harvest_api.dart';
 import 'package:deshifarmer/domain/entities/source_entity/source_entity.dart';
 import 'package:deshifarmer/presentation/pages/activity/activity.dart';
+import 'package:deshifarmer/presentation/pages/activity/api/harvest_api.dart';
 import 'package:deshifarmer/presentation/pages/group_detail/components/harvest_card.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
