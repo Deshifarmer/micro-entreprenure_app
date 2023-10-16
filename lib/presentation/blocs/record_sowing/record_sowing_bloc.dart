@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:deshifarmer/data/datasources/remote/apis/harvest_api.dart';
 import 'package:deshifarmer/data/models/record_activity_model.dart';
+import 'package:deshifarmer/presentation/pages/activity/api/harvest_api.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
