@@ -193,3 +193,9 @@ lib/domain/entities/products_entity/product_links_entity.g.dart
 lib/domain/entities/user_entity/user_profile_entity.g.dart
 lib/domain/entities/source_entity/source_entity.g.dart
 lib/domain/entities/krishibebsa_pro/prod_entity.g.dart
+lib/presentation/pages/activity/models/batch_reponse_entity.g.dart
+lib/presentation/pages/activity/models/fertilization_entity.g.dart
+lib/presentation/pages/activity/models/land_prep_entity.g.dart
+lib/presentation/pages/activity/models/pesticide_entity.g.dart
+lib/presentation/pages/activity/models/sowing_entity.g.dart
+lib/presentation/pages/activity/models/watering_entity.g.dart
