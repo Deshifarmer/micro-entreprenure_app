@@ -35,9 +35,12 @@ class SourcingEntity {
   final String farmer_name;
   // final String source_by;
   final String? transportation_id;
-  final double? sell_price;
-  final int quantity;
-  final double buy_price;
+  final String? sell_price;
+  // final double? sell_price;
+  final String quantity;
+  // final int quantity; //!LOCAL
+  final String buy_price;
+  // final double buy_price;
   final List<String> product_images;
   final String created_at;
 }
