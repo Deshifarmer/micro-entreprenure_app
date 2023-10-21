@@ -1,9 +1,9 @@
 import 'package:deshifarmer/presentation/pages/activity/activity.dart';
-import 'package:deshifarmer/presentation/pages/harvest/pages/harvest_record_page2.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/pages/logistic/api/logistic_api.dart';
 import 'package:deshifarmer/presentation/pages/logistic/model/logistic_model.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
+import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
@@ -167,14 +167,14 @@ class _LogisticBodyState extends State<LogisticBody> {
               decoration: InputDecoration(
                 // a dropdown in suffix
                 suffixIcon: PopupMenuButton(
-                  itemBuilder: (context) => units
+                  itemBuilder: (context) => localUnits
                       .map(
                         (e) => PopupMenuItem(
                           value: e,
-                          child: Text(e),
+                          child: Text(e.unit),
                           onTap: () {
                             setState(() {
-                              selectedUnit = e;
+                              selectedUnit = e.unit;
                             });
                           },
                         ),
@@ -207,7 +207,6 @@ class _LogisticBodyState extends State<LogisticBody> {
               ),
             ),
           ),
-
           SecondayButtonGreen(
             onpress: () async {
               // none of the field can be empty
