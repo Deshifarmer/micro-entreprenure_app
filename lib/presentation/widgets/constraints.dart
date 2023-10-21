@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:deshifarmer/presentation/pages/activity/api/entity/unit_entity.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 
@@ -10,13 +11,13 @@ bool checkDomain(String domain) {
   return domain.contains('192');
 }
 
-const List<String> units = <String>[
-  'KG',
-  'Ton',
-  'Mon',
-  'PSC',
-  'Ati',
-  'Palla',
+const List<UnitEntity> localUnits = <UnitEntity>[
+  UnitEntity(unit: 'KG'),
+  UnitEntity(unit: 'Ton'),
+  UnitEntity(unit: 'Mon'),
+  UnitEntity(unit: 'PSC'),
+  UnitEntity(unit: 'Ati'),
+  UnitEntity(unit: 'Palla'),
 ];
 SizedBox widgetHeight(double h) =>
     SizedBox(height: getProportionateScreenHeight(h));
@@ -57,11 +58,11 @@ enum ServerOrLocal {
 
 /// get random color
 Color getRandomColor() {
-  final _random = Random();
+  final random = Random();
   return Color.fromARGB(
     255,
-    _random.nextInt(256),
-    _random.nextInt(256),
-    _random.nextInt(256),
+    random.nextInt(256),
+    random.nextInt(256),
+    random.nextInt(256),
   );
 }
