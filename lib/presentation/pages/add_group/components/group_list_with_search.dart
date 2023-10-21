@@ -115,9 +115,9 @@ class _GroupListsGridState extends State<GroupListsGrid> {
                           groupID: currentFarmer.farmer_group_id,
                         ),
                       );
-                  Navigator.push(
+                  await Navigator.push(
                     context,
-                    CupertinoPageRoute(builder: (_) => GroupDetailPage()),
+                    CupertinoPageRoute(builder: (_) => const GroupDetailPage()),
                   );
                 },
                 child: Card(
@@ -154,7 +154,7 @@ class _GroupListsGridState extends State<GroupListsGrid> {
                                       ),
                                     )
                                         ? dummyImage
-                                        : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${img}',
+                                        : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/$img',
                                   ),
                                 ),
                             ],
@@ -250,9 +250,9 @@ class _GroupListsGridState extends State<GroupListsGrid> {
                           groupID: currentFarmer.farmer_group_id,
                         ),
                       );
-                  Navigator.push(
+                  await Navigator.push(
                     context,
-                    CupertinoPageRoute(builder: (_) => GroupDetailPage()),
+                    CupertinoPageRoute(builder: (_) => const GroupDetailPage()),
                   );
                 },
                 child: Card(
@@ -289,7 +289,7 @@ class _GroupListsGridState extends State<GroupListsGrid> {
                                       ),
                                     )
                                         ? dummyImage
-                                        : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${img}',
+                                        : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/$img',
                                   ),
                                 ),
                             ],
