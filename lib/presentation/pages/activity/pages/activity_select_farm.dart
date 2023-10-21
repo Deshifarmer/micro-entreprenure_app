@@ -40,48 +40,6 @@ class ActivityAddFarm extends StatelessWidget {
             //       height: 100,
             //     ),
             //     duration: 3.seconds),
-            /* Stack(
-              alignment: Alignment.topLeft,
-              children: [
-                Image.asset(
-                  'assets/logo/activity_farm_1.png',
-                  width: 100,
-                  height: 100,
-                )
-                    .animate()
-                    .move(
-                      duration: 800.milliseconds,
-                      begin: const Offset(65, -1),
-                      // end: Offset(65, -1),
-                      end: const Offset(-65, 65),
-                    )
-                    .hide(),
-                Image.asset(
-                  'assets/logo/activity_farm_1.png',
-                  width: 100,
-                  height: 100,
-                )
-                    .animate(delay: 1.seconds)
-                    .show()
-                    .move(
-                      duration: 1.seconds,
-                      begin: const Offset(-65, 65),
-                      // end: Offset(65, -1),
-                      end: const Offset(65, 65 * 2),
-                    )
-                    .hide(),
-                Image.asset(
-                  'assets/logo/activity_farm_2.png',
-                  width: 100,
-                  height: 100,
-                ).animate(delay: 2.seconds).move(
-                    duration: 1.seconds,
-                    begin: const Offset(65, 65 * 2),
-                    end: const Offset(-65 * 2, 65 * 3)),
-              ],
-            ), */
-
-            // const Spacer(),
 
             const Text(
               'ফার্ম সিলেক্ট করুন ',
