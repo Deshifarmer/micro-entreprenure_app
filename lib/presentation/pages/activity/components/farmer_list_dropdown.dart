@@ -7,7 +7,7 @@ import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:flutter/material.dart';
 
 class FarmerListDropDown extends StatelessWidget {
-  FarmerListDropDown({super.key, required this.allFarmers});
+  FarmerListDropDown({required this.allFarmers, super.key});
   List<FarmerEntity> allFarmers;
   @override
   Widget build(BuildContext context) {
