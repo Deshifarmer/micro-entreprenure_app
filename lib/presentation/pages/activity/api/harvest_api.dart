@@ -91,24 +91,44 @@ class HarvestAPI {
     debugPrint('harvest url -> $url');
     try {
       _headers.addAll(headers);
-      final request = http.MultipartRequest('POST', url);
-      request.fields.addAll(body);
-      request.files
-          .add(await http.MultipartFile.fromPath('product_images[]', hm.image));
-      request.headers.addAll(headers);
-      final response = await request.send();
-      debugPrint('status code -> ${response.statusCode}');
-      if (response.statusCode == 201) {
-        return (true, '');
+      if (hm.image.isEmpty) {
+        debugPrint('image is empty doing by normal post');
+        final response = await http.post(
+          url,
+          headers: _headers,
+          body: json.encode(body),
+        );
+        debugPrint('status code -> ${response.statusCode}');
+        if (response.statusCode == 201) {
+          return (true, '');
+        } else {
+          debugPrint('body -> $body');
+          debugPrint(
+            'error -> ${response.statusCode} ${response.reasonPhrase} ${response.body}',
+          );
+          return (false, '${response.statusCode} ${response.body}');
+        }
       } else {
-        debugPrint('body -> $body');
-        debugPrint(
-          'error -> ${response.statusCode} ${response.reasonPhrase} ${await response.stream.bytesToString()}',
-        );
-        return (
-          false,
-          "${response.statusCode} ${await response.stream.bytesToString()}"
-        );
+        debugPrint('image is not empty doing by multipart post');
+        final request = http.MultipartRequest('POST', url);
+        request.fields.addAll(body);
+        request.files.add(
+            await http.MultipartFile.fromPath('product_images[]', hm.image));
+        request.headers.addAll(headers);
+        final response = await request.send();
+        debugPrint('status code -> ${response.statusCode}');
+        if (response.statusCode == 201) {
+          return (true, '');
+        } else {
+          debugPrint('body -> $body');
+          debugPrint(
+            'error -> ${response.statusCode} ${response.reasonPhrase} ${await response.stream.bytesToString()}',
+          );
+          return (
+            false,
+            '${response.statusCode} ${await response.stream.bytesToString()}'
+          );
+        }
       }
     } catch (e) {
       debugPrint('Exception -> $e');
