@@ -106,7 +106,7 @@ class _SelectFarmerListState extends State<SelectFarmerList> {
                   borderRadius: BorderRadius.circular(10),
                   child: CachedNetworkImage(
                     imageUrl: checkDomain(
-                            Strings.getServerOrLocal(ServerOrLocal.server))
+                            Strings.getServerOrLocal(ServerOrLocal.server),)
                         ? dummyImage
                         : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${currentFarmer?.image}',
                     progressIndicatorBuilder:
@@ -117,7 +117,7 @@ class _SelectFarmerListState extends State<SelectFarmerList> {
                                                   color: Colors.green[600],
                                                 ),
                             ),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
                   ),
                 ),
                 side: BorderSide.none,

@@ -159,7 +159,7 @@ class _SelectableGroupOrFarmerState extends State<SelectableGroupOrFarmer> {
                               };
 
                               if (value2 is GroupDetailEntity) {
-                                return SelectFarmerList(
+                                return const SelectFarmerList(
                                   ///! TODO: uncomment this
                                   // farmers: value2.farmer_list,
                                   farmers: [],

@@ -298,10 +298,10 @@ class ProfileBody extends StatelessWidget {
                         // Navigator.of(context).popUntil(
                         //   (route) => route.isFirst,
                         // );
-                        Navigator.pushAndRemoveUntil(
+                        await Navigator.pushAndRemoveUntil(
                           context,
                           // LoginPage.route(),
-                          MaterialPageRoute(builder: (context) => App()),
+                          MaterialPageRoute(builder: (context) => const App()),
                           (route) => false,
                         );
                       } else {
@@ -318,7 +318,7 @@ class ProfileBody extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  tileColor: Color(0xffec664d),
+                  tileColor: const Color(0xffec664d),
                   // trailing: const Icon(
                   //   Icons.settings_power,
                   //   // color: Colors.white,

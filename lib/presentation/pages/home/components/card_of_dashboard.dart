@@ -55,7 +55,7 @@ class CardOfDashboard extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(15),
                         child: SizedBox(
-                          width: MediaQuery.of(context).size.width / 1.4,
+                          width: MediaQuery.of(context).size.width / 1.5,
                           child: LinearProgressIndicator(
                             backgroundColor: const Color(0xffF0F0F0),
                             minHeight: getProportionateScreenHeight(10),

@@ -3,6 +3,7 @@ import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/group_farmer_entity.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 
 class SingleFarmerCard extends StatefulWidget {
@@ -198,41 +199,47 @@ class _SingleFarmerCardState extends State<SingleFarmerCard> {
     );
   }
 
-  Column newMethod() {
+  SizedBox newMethod() {
     final textTheme = Theme.of(context).textTheme;
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8),
-          child: CircleAvatar(
-            backgroundColor: Colors.transparent,
-            radius: 25,
-            backgroundImage: NetworkImage(
-              checkDomain(
-                Strings.getServerOrLocal(
-                  ServerOrLocal.server,
-                ),
-              )
-                  ? dummyImage
-                  : widget.image,
+    return SizedBox(
+      height: getProportionateScreenHeight(200),
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: getProportionateScreenWidth(8),
+              vertical: getProportionateScreenHeight(5),
+            ),
+            child: CircleAvatar(
+              backgroundColor: Colors.transparent,
+              radius: 25,
+              backgroundImage: NetworkImage(
+                checkDomain(
+                  Strings.getServerOrLocal(
+                    ServerOrLocal.server,
+                  ),
+                )
+                    ? dummyImage
+                    : widget.image,
+              ),
             ),
           ),
-        ),
-        Text(
-          widget.gfe?.full_name ?? '',
-          textAlign: TextAlign.center,
-          style: textTheme.titleSmall,
-          overflow: TextOverflow.ellipsis,
-        ),
-        Text(
-          widget.gfe?.phone ?? '',
-          textAlign: TextAlign.center,
-          style: textTheme.labelSmall!.copyWith(
-            color: const Color(0xff3e3e3e),
+          Text(
+            widget.gfe?.full_name ?? '',
+            textAlign: TextAlign.center,
+            style: textTheme.titleSmall,
+            overflow: TextOverflow.ellipsis,
           ),
-          overflow: TextOverflow.ellipsis,
-        ),
-      ],
+          Text(
+            widget.gfe?.phone ?? '',
+            textAlign: TextAlign.center,
+            style: textTheme.labelSmall!.copyWith(
+              color: const Color(0xff3e3e3e),
+            ),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
     );
   }
 }
