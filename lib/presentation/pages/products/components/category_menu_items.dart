@@ -158,6 +158,6 @@ class CategoryMenuItems extends StatelessWidget {
         );
       }
       return const SizedBox.shrink();
-    });
+    },);
   }
 }

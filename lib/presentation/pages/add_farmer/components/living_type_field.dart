@@ -40,7 +40,7 @@ class LivingTypeFormField extends StatelessWidget {
         items: <String>[
           '----------',
           'Own (নিজের বাড়ি)',
-          'Rented (ভাড়া বাড়ি)'
+          'Rented (ভাড়া বাড়ি)',
         ].map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             // alignment: Alignment.center,

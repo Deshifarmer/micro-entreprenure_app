@@ -1,9 +1,9 @@
 import 'package:deshifarmer/domain/entities/krishibebsa_pro/prod_entity.dart';
 import 'package:deshifarmer/presentation/blocs/record_sowing/record_sowing_bloc.dart';
 import 'package:deshifarmer/presentation/pages/activity/activity.dart';
+import 'package:deshifarmer/presentation/pages/activity/api/entity/unit_entity.dart';
 import 'package:deshifarmer/presentation/pages/activity/components/get_recorded_photo.dart';
 import 'package:deshifarmer/presentation/pages/activity/pages/components/harvest_post_api.dart';
-import 'package:deshifarmer/presentation/pages/harvest/pages/harvest_record_page2.dart';
 import 'package:deshifarmer/presentation/utils/activity_types_paramas.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/snackbar_custom.dart';
@@ -27,12 +27,14 @@ class RecordSowingActivity extends StatefulWidget {
     required this.recordName,
     required this.batchID,
     required this.krishibebshaProd,
+    required this.units,
     super.key,
   });
 
   final String recordName;
   final String batchID;
   final List<KrishibebshaProd>? krishibebshaProd;
+  final List<UnitEntity> units;
 
   @override
   State<RecordSowingActivity> createState() => _RecordSowingActivityState();
@@ -409,7 +411,7 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                                   padding: const EdgeInsets.all(8),
                                   // child:  ,
                                   // a dropdown of units
-                                  child: DropdownButtonFormField<String>(
+                                  child: DropdownButtonFormField<UnitEntity>(
                                     isDense: false,
                                     // menuMaxHeight:
                                     // getProportionateScreenHeight(40),
@@ -457,25 +459,26 @@ class _RecordSowingActivityState extends State<RecordSowingActivity> {
                                     // decoration: ShapeDecoration(),
                                     // itemHeight: 300,
                                     elevation: 16,
-                                    value: units.first,
+                                    value: widget.units.first,
                                     icon: const Icon(
                                       Icons.keyboard_arrow_down_outlined,
                                     ),
-                                    items: units
-                                        .map<DropdownMenuItem<String>>((value) {
-                                      return DropdownMenuItem<String>(
+                                    items: widget.units
+                                        .map<DropdownMenuItem<UnitEntity>>(
+                                            (value) {
+                                      return DropdownMenuItem<UnitEntity>(
                                         alignment: Alignment.center,
                                         value: value,
                                         child: ListTile(
-                                          title: Text(value),
+                                          title: Text(value.unit),
                                         ),
                                       );
                                     }).toList(),
-                                    onChanged: (String? val) {
+                                    onChanged: (UnitEntity? val) {
                                       // print('on pressed called');
                                       if (val != null) {
                                         if (state is RecordSowingInitial) {
-                                          state.sowingSeedUnit.text = val;
+                                          state.sowingSeedUnit.text = val.unit;
                                         }
                                         // unitController.text = val;
                                       }

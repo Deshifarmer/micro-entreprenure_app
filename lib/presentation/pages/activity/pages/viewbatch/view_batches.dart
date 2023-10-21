@@ -134,11 +134,11 @@ class ViewBatchData extends StatelessWidget {
                                     itemCount: snapshot
                                         .data!.land_preparation!.images.length,
                                     itemBuilder: (context, index) => Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.all(8),
                                       child: CachedNetworkImage(
                                         imageUrl: checkDomain(
                                                 Strings.getServerOrLocal(
-                                                    ServerOrLocal.server))
+                                                    ServerOrLocal.server,),)
                                             ? dummyImage
                                             : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${snapshot.data!.land_preparation!.images[index]}',
                                         // placeholder: (context, url) =>
@@ -473,7 +473,7 @@ class ViewBatchData extends StatelessWidget {
                                   children: [
                                     const Text('Hours: '),
                                     Text(
-                                      snapshot.data!.watering!.hours.toString(),
+                                      snapshot.data!.watering!.hours,
                                     ),
                                   ],
                                 ),
@@ -584,9 +584,9 @@ class _AddNewActivityFromDialogState extends State<AddNewActivityFromDialog> {
   @override
   Widget build(BuildContext context) {
     return isLoading
-        ? SizedBox(
+        ? const SizedBox(
             height: 100,
-            child: const Center(
+            child: Center(
               child: PrimaryLoadingIndicator(),
             ),
           )
@@ -627,24 +627,26 @@ class _AddNewActivityFromDialogState extends State<AddNewActivityFromDialog> {
                           final harvAPI = HarvestAPI();
                           final prods = await harvAPI.getKrishProd();
                           // RecordSowingActivity
-                          Navigator.push(
+                          await Navigator.push(
                             context,
                             CupertinoPageRoute(
                               builder: (_) => RecordSowingActivity(
                                 recordName: s,
                                 krishibebshaProd: prods,
                                 batchID: widget.batchID,
+                                units: localUnits ,
                               ),
                             ),
                           );
                         } else {
-                          Navigator.push(
+                          await Navigator.push(
                             context,
                             CupertinoPageRoute(
                               builder: (_) => RecordSowingActivity(
                                 recordName: s,
-                                krishibebshaProd: [],
+                                krishibebshaProd: const [],
                                 batchID: widget.batchID,
+                                units: const [],
                               ),
                             ),
                           );

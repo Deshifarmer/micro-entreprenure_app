@@ -8,7 +8,6 @@ import 'package:deshifarmer/presentation/cubit/dropdown/dropdown_cubit.dart';
 import 'package:deshifarmer/presentation/pages/cartz/widgets/card_cart3.dart';
 import 'package:deshifarmer/presentation/pages/home/home.dart';
 import 'package:deshifarmer/presentation/pages/login/login.dart';
-import 'package:deshifarmer/presentation/pages/order/bloc/order_bloc.dart';
 import 'package:deshifarmer/presentation/shapes/my_farmers_shape.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
@@ -27,7 +26,7 @@ class OrderConformationPage extends StatefulWidget {
 class _OrderConformationPageState extends State<OrderConformationPage> {
   @override
   Widget build(BuildContext context) {
-    bool isOrdered = false;
+    const isOrdered = false;
     final userProfile = context.read<UserProfileBloc>().state;
 
     /// power

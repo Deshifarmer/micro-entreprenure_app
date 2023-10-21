@@ -23,7 +23,8 @@ class WateringEntity {
   factory WateringEntity.fromJson(Map<String, dynamic> json) =>
       _$WateringEntityFromJson(json);
   final String details;
-  final int hours;
+  final String hours;
+  // final int hours;
   final String created_at;
   final String updated_at;
 }

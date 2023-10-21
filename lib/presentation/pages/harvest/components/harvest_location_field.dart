@@ -2,10 +2,14 @@ import 'package:deshifarmer/data/datasources/local/location_db/dist_db.dart';
 import 'package:deshifarmer/data/datasources/local/location_db/division_db.dart';
 import 'package:deshifarmer/data/datasources/local/location_db/upozilla_db.dart';
 import 'package:deshifarmer/data/models/location_model.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:flutter/material.dart';
 
 class FarmerVillageAddressForHarvest extends StatefulWidget {
-  const FarmerVillageAddressForHarvest({required this.farmerDivisionController, super.key,});
+  const FarmerVillageAddressForHarvest({
+    required this.farmerDivisionController,
+    super.key,
+  });
   final TextEditingController farmerDivisionController;
 
   @override
@@ -34,21 +38,32 @@ class _FarmerVillageAddressForHarvestState
           child: DropdownButtonFormField<DivisionModel>(
             borderRadius: const BorderRadius.all(Radius.circular(15)),
             isExpanded: true,
-            decoration: const InputDecoration(
-              label: Text('বিভাগ নির্বাচন করুন'),
+            decoration: InputDecoration(
+              label: const Text('বিভাগ নির্বাচন করুন'),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                borderSide: BorderSide.none,
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                // borderSide: BorderSide.none,
+
+                borderSide: BorderSide(
+                  color: Colors.black.withOpacity(0.2),
+                ),
               ),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15)),
-                borderSide: BorderSide.none,
+                borderRadius: const BorderRadius.all(Radius.circular(15)),
+                borderSide: BorderSide(
+                  color: Colors.black.withOpacity(0.2),
+                ),
+                // borderSide: BorderSide.none,
               ),
-              contentPadding: EdgeInsets.all(10),
+              contentPadding: const EdgeInsets.all(10),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                borderSide: BorderSide.none,
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                // borderSide: BorderSide.none,
+                borderSide: BorderSide(
+                  color: Colors.black.withOpacity(0.2),
+                ),
               ),
+              fillColor: backgroundColor2,
               filled: true,
               // fillColor: Colors.greenAccent,
               // contentPadding: EdgeInsets.all(10),
@@ -63,7 +78,6 @@ class _FarmerVillageAddressForHarvestState
               );
             }).toList(),
             onChanged: (DivisionModel? val) {
-             
               setState(() {
                 /// remove all items from the list
                 filteredDist
@@ -106,21 +120,28 @@ class _FarmerVillageAddressForHarvestState
             child: DropdownButtonFormField<DistModel>(
               borderRadius: const BorderRadius.all(Radius.circular(15)),
               isExpanded: true,
-              decoration: const InputDecoration(
-                label: Text('জেলা নির্বাচন করুন'),
+              decoration: InputDecoration(
+                label: const Text('জেলা নির্বাচন করুন'),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide.none,
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  borderSide: BorderSide(
+                    color: Colors.black.withOpacity(0.2),
+                  ),
                 ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                  borderSide: BorderSide.none,
+                  borderRadius: const BorderRadius.all(Radius.circular(15)),
+                  borderSide: BorderSide(
+                    color: Colors.black.withOpacity(0.2),
+                  ),
                 ),
-                contentPadding: EdgeInsets.all(10),
+                contentPadding: const EdgeInsets.all(10),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide.none,
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  borderSide: BorderSide(
+                    color: Colors.black.withOpacity(0.2),
+                  ),
                 ),
+                fillColor: backgroundColor2,
                 filled: true,
               ),
               // decoration: ShapeDecoration(),
@@ -138,7 +159,6 @@ class _FarmerVillageAddressForHarvestState
                 );
               }).toList(),
               onChanged: (DistModel? val) {
-              
                 setState(() {
                   /// remove all items from the list
                   filteredUpazilla
@@ -175,21 +195,28 @@ class _FarmerVillageAddressForHarvestState
             child: DropdownButtonFormField<UpozillaModel>(
               borderRadius: const BorderRadius.all(Radius.circular(15)),
               isExpanded: true,
-              decoration: const InputDecoration(
-                label: Text('উপজেলা নির্বাচন করুন'),
+              decoration: InputDecoration(
+                label: const Text('উপজেলা নির্বাচন করুন'),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide.none,
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  borderSide: BorderSide(
+                    color: Colors.black.withOpacity(0.2),
+                  ),
                 ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                  borderSide: BorderSide.none,
+                  borderRadius: const BorderRadius.all(Radius.circular(15)),
+                  borderSide: BorderSide(
+                    color: Colors.black.withOpacity(0.2),
+                  ),
                 ),
-                contentPadding: EdgeInsets.all(10),
+                contentPadding: const EdgeInsets.all(10),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide.none,
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  borderSide: BorderSide(
+                    color: Colors.black.withOpacity(0.2),
+                  ),
                 ),
+                fillColor: backgroundColor2,
                 filled: true,
                 // fillColor: Colors.greenAccent,
                 // contentPadding: EdgeInsets.all(10),
@@ -211,7 +238,7 @@ class _FarmerVillageAddressForHarvestState
               onChanged: (UpozillaModel? val) {
                 // context.read<DropdownCubit>().changeDropdownValue(val ?? '');
 
-                if (val != null ) {
+                if (val != null) {
                   widget.farmerDivisionController.text = val.id;
                 }
                 setState(() {

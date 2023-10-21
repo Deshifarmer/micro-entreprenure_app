@@ -30,171 +30,184 @@ class _BatchListPageState extends State<BatchListPage> {
   final TextEditingController _crop = TextEditingController();
 
   final TextEditingController _jatt = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     final loginState = context.read<LoginBloc>().state;
-    final token = loginState is LoginSuccess
-        ? loginState.successLoginEntity.token
-        : '';
+    final token =
+        loginState is LoginSuccess ? loginState.successLoginEntity.token : '';
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(),
-      body: ListView(
-        // mainAxisAlignment: MainAxisAlignment.center,
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(8),
-            child: Text(
-              'ফলন ব্যাচ ',
-              style: Theme.of(context).textTheme.titleSmall,
+      body: Padding(
+        padding: const EdgeInsets.only(
+          top: 10,
+          left: 10,
+          right: 10,
+          bottom: 20,
+        ),
+        child: ListView(
+          controller: _scrollController,
+          // mainAxisAlignment: MainAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(8),
+              child: Text(
+                'ফলন ব্যাচ ',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              bottom: getProportionateScreenHeight(40),
+            Padding(
+              padding: EdgeInsets.only(
+                bottom: getProportionateScreenHeight(40),
+              ),
+              child: FolonBatchData(
+                token: token,
+                farmID: widget.farmID,
+              ),
             ),
-            child:  FolonBatchData(
-              token: token,
-              farmID: widget.farmID,
+            Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(8),
+              child: Text(
+                'অথবা নতুন ব্যাচ তৈরী করুন ',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: DropdownButtonFormField<String>(
+                borderRadius: const BorderRadius.all(Radius.circular(15)),
+                focusColor: backgroundColor2,
+                dropdownColor: backgroundColor2,
+                isExpanded: true,
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 5,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    borderSide: BorderSide(
+                      color: Colors.black.withOpacity(0.2),
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    borderSide: BorderSide(
+                      color: Colors.black.withOpacity(0.2),
+                    ),
+                  ),
+                  filled: true,
+                  fillColor: backgroundColor2,
+                  // contentPadding: EdgeInsets.all(10),
+                ),
+                // decoration: ShapeDecoration(),
 
-         
-          ),
-          Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(8),
-            child: Text(
-              'অথবা নতুন ব্যাচ তৈরী করুন ',
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: DropdownButtonFormField<String>(
-              borderRadius: const BorderRadius.all(Radius.circular(15)),
-              focusColor: backgroundColor2,
-              dropdownColor: backgroundColor2,
-              isExpanded: true,
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 5,
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide(
-                    color: Colors.black.withOpacity(0.2),
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide(
-                    color: Colors.black.withOpacity(0.2),
-                  ),
-                ),
-                filled: true,
-                fillColor: backgroundColor2,
-                // contentPadding: EdgeInsets.all(10),
-              ),
-              // decoration: ShapeDecoration(),
-
-              elevation: 16,
-              value: BatchParams.seasons.first,
-              items: BatchParams.seasons
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  // alignment: Alignment.center,
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (String? val) {
-                if (val != null) {
-                  // _seasonController.text = val;
-                  setState(() {
-                    _season = val;
-                  });
-                  debugPrint('new season -> $_season');
-                }
-                // if (state is RecordSowingInitial) {
-                //   state.quantity.text = val.toString();
-                // }
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: TextField(
-              controller: _crop,
-              //     state is RecordSowingInitial ? state.unit : null,
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                fillColor: backgroundColor2,
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide(
-                    color: Colors.black.withOpacity(0.2),
-                  ),
-                ),
-                hintText: 'ফসল ',
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide(
-                    color: Colors.black.withOpacity(0.2),
-                  ),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(15)),
-                  borderSide: BorderSide(
-                    color: Colors.black.withOpacity(0.2),
-                  ),
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  // vertical: 20,
-                  horizontal: 15,
-                ),
-                filled: true,
+                elevation: 16,
+                value: BatchParams.seasons.first,
+                items: BatchParams.seasons
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    // alignment: Alignment.center,
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (String? val) {
+                  if (val != null) {
+                    // _seasonController.text = val;
+                    setState(() {
+                      _season = val;
+                    });
+                    debugPrint('new season -> $_season');
+                  }
+                  // if (state is RecordSowingInitial) {
+                  //   state.quantity.text = val.toString();
+                  // }
+                },
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: TextField(
-              controller: _jatt,
-              //     state is RecordSowingInitial ? state.unit : null,
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                fillColor: backgroundColor2,
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide(
-                    color: Colors.black.withOpacity(0.2),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: TextField(
+                controller: _crop,
+                //     state is RecordSowingInitial ? state.unit : null,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  fillColor: backgroundColor2,
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    borderSide: BorderSide(
+                      color: Colors.black.withOpacity(0.2),
+                    ),
                   ),
-                ),
-                hintText: 'জাত ',
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide(
-                    color: Colors.black.withOpacity(0.2),
+                  hintText: 'ফসল ',
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    borderSide: BorderSide(
+                      color: Colors.black.withOpacity(0.2),
+                    ),
                   ),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(15)),
-                  borderSide: BorderSide(
-                    color: Colors.black.withOpacity(0.2),
+                  border: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
+                    borderSide: BorderSide(
+                      color: Colors.black.withOpacity(0.2),
+                    ),
                   ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    // vertical: 20,
+                    horizontal: 15,
+                  ),
+                  filled: true,
                 ),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                ),
-                filled: true,
               ),
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: TextField(
+                controller: _jatt,
+                //     state is RecordSowingInitial ? state.unit : null,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  fillColor: backgroundColor2,
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    borderSide: BorderSide(
+                      color: Colors.black.withOpacity(0.2),
+                    ),
+                  ),
+                  hintText: 'জাত ',
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    borderSide: BorderSide(
+                      color: Colors.black.withOpacity(0.2),
+                    ),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
+                    borderSide: BorderSide(
+                      color: Colors.black.withOpacity(0.2),
+                    ),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 15,
+                  ),
+                  filled: true,
+                ),
+              ),
+            ),
+            // if usr scrolls 70% of the screen then add a sized box height of 100
+            // if (_scrollController.offset >
+            //     MediaQuery.of(context).size.height * 0.7)
+            //   const SizedBox(
+            //     height: 100,
+            //   ),
+          ],
+        ),
       ),
       bottomNavigationBar: loginState is LoginSuccess
           ? _jatt.text.isNotEmpty &&
@@ -310,11 +323,11 @@ class _BatchButtonSuccessState extends State<BatchButtonSuccess> {
                           .showSnackBar(errorSnackBar('Select a farmer'));
                     } else if (activityState.farmID.text.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                          errorSnackBar('Select Farm for this Farmer'));
+                          errorSnackBar('Select Farm for this Farmer'),);
                     } else {
                       // debugPrint('get the farmer id -> ${activityState.farmerID.text}');
                       // debugPrint('get the farm id -> ${activityState.farmID.text}');
-                      Navigator.push(
+                      await Navigator.push(
                         context,
                         MaterialPageRoute<ActivityTypeSelection>(
                           builder: (context) => ActivityTypeSelection(
@@ -329,7 +342,7 @@ class _BatchButtonSuccessState extends State<BatchButtonSuccess> {
                     isLoadin = false;
                   });
                   ScaffoldMessenger.of(context).showSnackBar(
-                      errorSnackBar('ব্যাচ সৃষ্টি ব্যর্থ হয়েছে'));
+                      errorSnackBar('ব্যাচ সৃষ্টি ব্যর্থ হয়েছে'),);
                 }
               }
             },

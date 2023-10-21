@@ -56,17 +56,20 @@ class _HarvestPageState extends State<HarvestPage> {
                 final token = loginState is LoginSuccess
                     ? loginState.successLoginEntity.token
                     : '';
-                final allFarmerListResp =
-                    await DeshiFarmerAPI().getFarmers2(token);
+                final allFarmerListResp = await DeshiFarmerAPI().getFarmers2(
+                  token,
+                );
 
                 final cropList = await HarvestAPI().getCropFromAnotherAPI();
+                final units = await HarvestAPI().getUnitFromAnotherAPI();
 
-                Navigator.push(
+                await Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (_) => HarvestRecordPage2(
                       crops: cropList,
                       allFarmerListResp: allFarmerListResp,
+                      units: units,
                     ),
                   ),
                 );

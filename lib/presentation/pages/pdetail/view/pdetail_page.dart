@@ -158,7 +158,7 @@ class _PdetailPageState extends State<PdetailPage> {
                 if (_itemBag == 0) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('পণ্য যোগ করা হয়নি'),
+                      content: const Text('পণ্য যোগ করা হয়নি'),
                       backgroundColor: Colors.red[500],
                     ),
                   );

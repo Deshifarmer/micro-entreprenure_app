@@ -74,7 +74,7 @@ class QuickActions extends StatelessWidget {
                             if (loginState is LoginSuccess) {
                               context.read<MyFarmerBloc>().add(
                                   MyFarmerFetchEvent(
-                                      loginState.successLoginEntity.token));
+                                      loginState.successLoginEntity.token,),);
                             }
                             Navigator.push(
                               context,

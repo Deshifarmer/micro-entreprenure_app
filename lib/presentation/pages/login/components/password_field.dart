@@ -1,4 +1,3 @@
-import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:flutter/material.dart';
 
 class PasswordTextField extends StatefulWidget {

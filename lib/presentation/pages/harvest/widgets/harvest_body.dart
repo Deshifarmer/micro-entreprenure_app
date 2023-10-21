@@ -55,20 +55,37 @@ class HarvestBody extends StatelessWidget {
                           itemCount: snapshot.data!.length,
                           itemBuilder: (BuildContext context, int index) {
                             final currentFarmer = snapshot.data![index];
-                            return Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: HarvestCard(
-                                farmerID: currentFarmer.which_farmer,
-                                farmerName: currentFarmer.farmer_name,
-                                name: currentFarmer.product_name,
-                                image: currentFarmer.product_images.firstOrNull
-                                    .toString(),
-                                qt: currentFarmer.quantity.toString(),
-                                unit: currentFarmer.unit,
-                                date: currentFarmer.created_at,
-                                soldPrice: currentFarmer.sell_price,
-                              ),
-                            );
+                            if (currentFarmer.product_images != null) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: HarvestCard(
+                                  farmerID: currentFarmer.which_farmer,
+                                  farmerName: currentFarmer.farmer_name,
+                                  name: currentFarmer.product_name,
+                                  image: currentFarmer
+                                      .product_images?.firstOrNull
+                                      .toString(),
+                                  qt: currentFarmer.quantity,
+                                  unit: currentFarmer.unit,
+                                  date: currentFarmer.created_at,
+                                  soldPrice: currentFarmer.sell_price,
+                                ),
+                              );
+                            } else {
+                              return Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: HarvestCard(
+                                  farmerID: currentFarmer.which_farmer,
+                                  farmerName: currentFarmer.farmer_name,
+                                  name: currentFarmer.product_name,
+                                  image: '',
+                                  qt: currentFarmer.quantity,
+                                  unit: currentFarmer.unit,
+                                  date: currentFarmer.created_at,
+                                  soldPrice: currentFarmer.sell_price,
+                                ),
+                              );
+                            }
                           },
                         )
                   : const Center(

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:deshifarmer/core/error/exceptions.dart';
 import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';

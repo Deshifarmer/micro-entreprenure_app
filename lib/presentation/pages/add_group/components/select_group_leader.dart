@@ -17,12 +17,12 @@ class SelectGroupLeader extends StatefulWidget {
 }
 
 class _SelectGroupLeaderState extends State<SelectGroupLeader> {
-  List<FarmerEntity> _farmerList = [];
+  final List<FarmerEntity> _farmerList = [];
   @override
   void initState() {
     super.initState();
     // insert an empty farmer entity to the list
-    _farmerList.add(FarmerEntity(
+    _farmerList.add(const FarmerEntity(
       farmer_id: 'x',
       full_name: '------------',
       phone: '',
@@ -56,7 +56,7 @@ class _SelectGroupLeaderState extends State<SelectGroupLeader> {
       farmer_role: '',
       farm_id: '',
       order_list: [],
-    ));
+    ),);
   }
 
   @override
@@ -157,7 +157,7 @@ class _SelectGroupLeaderState extends State<SelectGroupLeader> {
                               ),
                             ),
                           SizedBox(width: getProportionateScreenWidth(15)),
-                          Text(value.full_name ?? '')
+                          Text(value.full_name ?? ''),
                         ],
                       ),
                     );

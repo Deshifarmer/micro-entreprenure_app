@@ -12,7 +12,7 @@ class NotificationsPage extends StatelessWidget {
   /// The static route for NotificationsPage
   static Route<dynamic> route() {
     return MaterialPageRoute<dynamic>(
-        builder: (_) => const NotificationsPage());
+        builder: (_) => const NotificationsPage(),);
   }
 
   @override
