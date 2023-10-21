@@ -29,7 +29,7 @@ class SourcingEntity {
   final String source_id;
   final String product_name;
   final String unit;
-  final String description;
+  final String? description;
   final String? category;
   final String which_farmer;
   final String farmer_name;
@@ -39,8 +39,8 @@ class SourcingEntity {
   // final double? sell_price;
   final String quantity;
   // final int quantity; //!LOCAL
-  final String buy_price;
+  final String? buy_price;
   // final double buy_price;
-  final List<String> product_images;
+  final List<String>? product_images;
   final String created_at;
 }
