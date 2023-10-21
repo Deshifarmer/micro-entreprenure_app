@@ -38,7 +38,7 @@ class HarvestAPI {
         final result = await Isolate.run(() => json.decode(response.body))
             as List<dynamic>;
         debugPrint(
-          'successfuly got the batch LISTO -> ${result.runtimeType} ${result.length}',
+          'successfuly got the singlecropentity LISTO -> ${result.runtimeType} ${result.length}',
         );
 
         for (var i = 0; i < result.length; i++) {
@@ -50,7 +50,7 @@ class HarvestAPI {
             );
           } catch (e) {
             debugPrint(
-              'error comverting data BatchEnity ->  ${element.runtimeType}, $e \n',
+              'error comverting data single crop entity ->  ${element.runtimeType}, $e \n',
             );
           }
         }
@@ -64,7 +64,7 @@ class HarvestAPI {
   }
 
   // harvest post
-  Future<bool> postHarvest({
+  Future<(bool, String)> postHarvest({
     required HarvestModel hm,
     required String token,
   }) async {
@@ -99,17 +99,20 @@ class HarvestAPI {
       final response = await request.send();
       debugPrint('status code -> ${response.statusCode}');
       if (response.statusCode == 201) {
-        return true;
+        return (true, '');
       } else {
         debugPrint('body -> $body');
         debugPrint(
           'error -> ${response.statusCode} ${response.reasonPhrase} ${await response.stream.bytesToString()}',
         );
-        return false;
+        return (
+          false,
+          "${response.statusCode} ${await response.stream.bytesToString()}"
+        );
       }
     } catch (e) {
       debugPrint('Exception -> $e');
-      return false;
+      return (false, e.toString());
     }
   }
 
@@ -490,7 +493,7 @@ class HarvestAPI {
         final result = await Isolate.run(() => json.decode(response.body))
             as List<dynamic>;
         debugPrint(
-          'successfuly got the batch LISTO -> ${result.runtimeType} ${result.length}',
+          'successfuly got the unit LISTO -> ${result.runtimeType} ${result.length}',
         );
 
         for (var i = 0; i < result.length; i++) {
@@ -502,7 +505,7 @@ class HarvestAPI {
             );
           } catch (e) {
             debugPrint(
-              'error comverting data BatchEnity ->  ${element.runtimeType}, $e \n',
+              'error comverting data unit ->  ${element.runtimeType}, $e \n',
             );
           }
         }
