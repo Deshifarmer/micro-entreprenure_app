@@ -66,7 +66,7 @@ class _ActivityPageState extends State<ActivityPage> {
                   final allFarmerListResp =
                       await DeshiFarmerAPI().getFarmers2(token);
 
-                  Navigator.push(
+                  await Navigator.push(
                     context,
                     PageAnimationWrapper.fadeThroughTransitionPageWrapper(
                       ActivityAddFarm(
@@ -133,7 +133,7 @@ class _ShowLoadingOnButtonActivityState
               final allFarmerListResp =
                   await DeshiFarmerAPI().getFarmers2(token);
 
-              Navigator.push(
+              await Navigator.push(
                 context,
                 PageAnimationWrapper.fadeThroughTransitionPageWrapper(
                   ActivityAddFarm(
