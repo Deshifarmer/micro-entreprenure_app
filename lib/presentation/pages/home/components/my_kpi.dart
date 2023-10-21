@@ -1,6 +1,7 @@
 import 'package:deshifarmer/domain/entities/user_entity/user_profile_entity.dart';
 import 'package:deshifarmer/presentation/pages/home/components/card_of_dashboard.dart';
 import 'package:deshifarmer/presentation/shapes/my_farmers_shape.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 
 class MyKPI extends StatelessWidget {
@@ -19,9 +20,9 @@ class MyKPI extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: const EdgeInsets.only(
-                  top: 20,
-                  left: 30,
+                padding: EdgeInsets.only(
+                  top: getProportionateScreenWidth(20),
+                  left: getProportionateScreenWidth(30),
                 ),
                 child: Text(
                   'টার্গেট',

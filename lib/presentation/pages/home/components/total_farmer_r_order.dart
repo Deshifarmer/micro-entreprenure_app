@@ -30,7 +30,7 @@ class TotalFarmerTotalOrders extends StatelessWidget {
         if (current is UserProfileFetchSuccess &&
             previous is UserProfileFetchSuccess) {
           debugPrint(
-              'BUILDWHEN: ${previous.userProfile.total_farmer} ${current.userProfile.total_farmer}');
+              'BUILDWHEN: ${previous.userProfile.total_farmer} ${current.userProfile.total_farmer}',);
           return previous.userProfile.total_farmer !=
                   current.userProfile.total_farmer ||
               previous.userProfile.total_sale != current.userProfile.total_sale;
@@ -42,7 +42,7 @@ class TotalFarmerTotalOrders extends StatelessWidget {
         if (current is UserProfileFetchSuccess &&
             previous is UserProfileFetchSuccess) {
           debugPrint(
-              'BUILDWHEN: ${previous.userProfile.total_farmer} ${current.userProfile.total_farmer}');
+              'BUILDWHEN: ${previous.userProfile.total_farmer} ${current.userProfile.total_farmer}',);
           return previous.userProfile.total_farmer !=
                   current.userProfile.total_farmer ||
               previous.userProfile.total_sale != current.userProfile.total_sale;
@@ -51,7 +51,7 @@ class TotalFarmerTotalOrders extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is UserProfileInitial) {
-          return Center(
+          return const Center(
             child: PrimaryLoadingIndicator(),
           );
         }
@@ -64,7 +64,7 @@ class TotalFarmerTotalOrders extends StatelessWidget {
                     onTap: () {
                       if (loginState is LoginSuccess) {
                         context.read<MyFarmerBloc>().add(MyFarmerFetchEvent(
-                            loginState.successLoginEntity.token));
+                            loginState.successLoginEntity.token,),);
                       }
                       Navigator.push(
                         context,

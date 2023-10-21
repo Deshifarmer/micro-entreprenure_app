@@ -3,7 +3,6 @@ import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/all_farmer_entity.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
-import 'package:deshifarmer/presentation/cubit/dropdown/dropdown_cubit.dart';
 import 'package:deshifarmer/presentation/pages/cartz/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
@@ -80,7 +79,7 @@ class SelectFarmerMethodsForHarvests extends StatelessWidget {
                       hintText: '',
                       filled: true,
                     ),
-                    hint: Text('কৃষক নির্বাচন করুন'),
+                    hint: const Text('কৃষক নির্বাচন করুন'),
                     elevation: 16,
                     // value: snapshot.data?.farmers.first,
                     items: snapshot.data?.farmers
@@ -90,7 +89,7 @@ class SelectFarmerMethodsForHarvests extends StatelessWidget {
                         value: value,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 5),
+                              horizontal: 8, vertical: 5,),
                           child: Row(
                             // mainAxisAlignment: MainAxisAlignment.center,
                             children: [

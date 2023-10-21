@@ -3,6 +3,7 @@ import 'package:deshifarmer/domain/entities/products_entity/product_data_entity.
 import 'package:deshifarmer/presentation/pages/pdetail/view/pdetail_page.dart';
 import 'package:deshifarmer/presentation/pages/products/components/product_image.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 // import 'package:flutter_html/flutter_html.dart';
@@ -36,7 +37,7 @@ class ProductCard extends StatelessWidget {
                   tag: product.product_id ?? '',
                   child: Container(
                     margin: const EdgeInsets.all(10),
-                    height: 150,
+                    height: getProportionateScreenHeight(150),
                     // color: Colors.greenAccent,
                     // ignore: unnecessary_null_comparison
                     child: product.image != null

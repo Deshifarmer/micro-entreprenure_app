@@ -36,7 +36,7 @@ class ProfileSettingsPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               child: CachedNetworkImage(
                 imageUrl: checkDomain(
-                        Strings.getServerOrLocal(ServerOrLocal.server))
+                        Strings.getServerOrLocal(ServerOrLocal.server),)
                     ? dummyImage
                     : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/$farmerPhoto',
                 fit: BoxFit.cover,

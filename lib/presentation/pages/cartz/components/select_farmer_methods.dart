@@ -115,7 +115,7 @@ class SelectFarmerMethods extends StatelessWidget {
                       // ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 5),
+                            horizontal: 8, vertical: 5,),
                         child: Row(
                           // mainAxisAlignment: MainAxisAlignment.center,
                           children: [
