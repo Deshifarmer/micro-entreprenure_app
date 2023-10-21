@@ -160,12 +160,12 @@ class _ProductsBody3State extends State<ProductsBody3> {
           ///! Search, Companies and Banner
           SliverAppBar(
             automaticallyImplyLeading: false,
-            expandedHeight: getProportionateScreenHeight(200),
+            // expandedHeight: getProportionateScreenHeight(200),
             toolbarHeight: 0,
             bottom: PreferredSize(
               preferredSize: Size(
                 MediaQuery.of(context).size.width / 1,
-                getProportionateScreenHeight(310),
+                getProportionateScreenHeight((160 * 2) + 45),
               ),
               child: Column(
                 // mainAxisAlignment: MainAxisAlignment.start,
@@ -313,15 +313,14 @@ class _ProductsBody3State extends State<ProductsBody3> {
                         color: Colors.grey,
                       ),
                     ),
-                    margin: const EdgeInsets.only(
-                      bottom: 10,
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(
+                      bottom: getProportionateScreenHeight(10),
                     ),
-                    // elevation: 1,
-                    // margin: const EdgeInsets.only(
-                    //   bottom: 20,
-                    // ),
-                    height: 140,
+
+                    height: getProportionateScreenHeight(175),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(
@@ -375,9 +374,6 @@ class _ProductsBody3State extends State<ProductsBody3> {
                             builder: (context, state) {
                               if (state is CompanySuccess) {
                                 final allCompany = state.allCompanyListResp;
-                                // debugPrint(
-                                //   'company length -> ${allCompany.allCompany.length}',
-                                // );
                                 return ListView.builder(
                                   shrinkWrap: true,
                                   // reverse: true,
@@ -386,27 +382,12 @@ class _ProductsBody3State extends State<ProductsBody3> {
                                   itemBuilder: (context, index) {
                                     final currentCompany =
                                         allCompany.allCompany.elementAt(index);
-                                    // debugPrint('$index ${currentCompany.full_name}');
-                                    // final companyState = context.read<ProductsBloc>().state;
-                                    // debugPrint('${Strings.domain}/storage${currentCompany.photo}');
                                     return BlocConsumer<ProductsBloc,
                                         ProductsState>(
-                                      listener: (context, companyState) {
-                                        // debugPrint(
-                                        //   'company states -> $companyState',
-                                        // );
-                                      },
+                                      listener: (context, companyState) {},
                                       builder: (context, companyState) {
                                         return InkWell(
                                           onTap: () {
-                                            final loginState =
-                                                context.read<LoginBloc>().state;
-                                            final token =
-                                                loginState is LoginSuccess
-                                                    ? loginState
-                                                        .successLoginEntity
-                                                        .token
-                                                    : '';
                                             if (companySelect ==
                                                 currentCompany.df_id) {
                                               setState(() {
@@ -428,39 +409,6 @@ class _ProductsBody3State extends State<ProductsBody3> {
                                                 currentCompany.df_id ?? '',
                                               );
                                             }
-                                            // if (companyState
-                                            //     is ProductComanySelect) {
-                                            //   if (currentCompany.df_id ==
-                                            //       companyState.companyID) {
-                                            //     _updateSearchParams(
-                                            //       _searchTerm ?? '',
-                                            //       _cat ?? '',
-                                            //       '',
-                                            //     );
-                                            //     context.read<ProductsBloc>().add(
-                                            //         const UnSelectCompanyEvent());
-                                            //   } else {
-                                            //     _updateSearchParams(
-                                            //       _searchTerm ?? '',
-                                            //       _cat ?? '',
-                                            //       currentCompany.df_id ?? '',
-                                            //     );
-                                            //     context
-                                            //         .read<ProductsBloc>()
-                                            //         .add(
-                                            //           SelectCompanysEvent(
-                                            //             currentCompany.df_id ??
-                                            //                 '',
-                                            //           ),
-                                            //         );
-                                            //   }
-                                            // } else {
-                                            //   context.read<ProductsBloc>().add(
-                                            //         SelectCompanysEvent(
-                                            //             currentCompany.df_id ??
-                                            //                 ''),
-                                            //       );
-                                            // }
                                           },
                                           child: Tooltip(
                                             message:
@@ -474,6 +422,7 @@ class _ProductsBody3State extends State<ProductsBody3> {
                                               ),
                                             ),
                                             child: Container(
+                                              alignment: Alignment.center,
                                               margin: const EdgeInsets.all(5),
                                               padding: const EdgeInsets.all(10),
                                               decoration: BoxDecoration(
@@ -514,10 +463,7 @@ class _ProductsBody3State extends State<ProductsBody3> {
 
                   ///! BANNer
                   Container(
-                    // margin: const EdgeInsets.symmetric(
-                    //   horizontal: 10,
-                    // ),
-                    height: 80,
+                    height: getProportionateScreenHeight(80),
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(uiBorderRadius),
@@ -586,42 +532,6 @@ class _ProductsBody3State extends State<ProductsBody3> {
                       scrollController: pagingController
                         ..addListener(
                           () {
-                            // debugPrint('PS: ${pagingController.position}');
-                            // if (pagingController.position.pixels ==
-                            //     pagingController.position.minScrollExtent) {
-                            //   debugPrint(
-                            //       'PS: reached the beginning of list -> ${pagingController.position.pixels}');
-                            //   customController.jumpTo(
-                            //       customController.position.minScrollExtent);
-                            //   // making it true
-                            //   setState(() {
-                            //     isTheEnd = true;
-                            //   });
-                            // }
-
-                            // if custom controller reached the end then run paging controller else do not
-                            // if (customController.position.pixels ==
-                            //     customController.position.maxScrollExtent) {
-                            //   // debugPrint('PS: reached at the bottom of list');
-                            //   // now let's make the CS false
-                            //   setState(() {
-                            //     isTheEnd = false;
-                            //   });
-                            // }
-
-                            // if custom controller reached the end then run paging controller and stop the custom controller
-                            // if (customController.position.maxScrollExtent ==
-                            //         customController.position.pixels &&
-                            //     pagingController.position.minScrollExtent ==
-                            //         pagingController.position.pixels) {
-                            //   debugPrint('CS in bottom and PS is up');
-                            //   // now let's make the CS false
-                            //   setState(() {
-                            //     isTheEnd = false;
-                            //   });
-                            //   return;
-                            // }
-
                             if (pagingController.position.pixels ==
                                 pagingController.position.minScrollExtent) {
                               debugPrint('PS: reached at the bottom of list');
