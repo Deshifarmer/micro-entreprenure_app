@@ -312,7 +312,7 @@ class ViewMyKPIPage extends StatelessWidget {
       ),
       bottomNavigationBar: SecondayButtonGreen(
         onpress: () {},
-        title: 'Add a new Request',
+        title: 'একটি নতুন অনুরোধ যুক্ত করুন',
       ),
     );
   }

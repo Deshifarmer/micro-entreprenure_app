@@ -7,6 +7,7 @@ import 'package:deshifarmer/domain/entities/batch/batch_entity.dart';
 import 'package:deshifarmer/domain/entities/crop_entity/single_crop_entity.dart';
 import 'package:deshifarmer/domain/entities/krishibebsa_pro/prod_entity.dart';
 import 'package:deshifarmer/domain/entities/source_entity/source_entity.dart';
+import 'package:deshifarmer/presentation/pages/activity/api/entity/unit_entity.dart';
 import 'package:deshifarmer/presentation/pages/activity/models/batch_reponse_entity.dart';
 import 'package:deshifarmer/presentation/pages/harvest/model/harvest_model.dart';
 import 'package:deshifarmer/presentation/utils/activity_types_paramas.dart';
@@ -37,7 +38,7 @@ class HarvestAPI {
         final result = await Isolate.run(() => json.decode(response.body))
             as List<dynamic>;
         debugPrint(
-          'successfuly got the batch LISTO -> ${result.runtimeType} ${result.length}',
+          'successfuly got the singlecropentity LISTO -> ${result.runtimeType} ${result.length}',
         );
 
         for (var i = 0; i < result.length; i++) {
@@ -49,7 +50,7 @@ class HarvestAPI {
             );
           } catch (e) {
             debugPrint(
-              'error comverting data BatchEnity ->  ${element.runtimeType}, $e \n',
+              'error comverting data single crop entity ->  ${element.runtimeType}, $e \n',
             );
           }
         }
@@ -63,8 +64,10 @@ class HarvestAPI {
   }
 
   // harvest post
-  Future<bool> postHarvest(
-      {required HarvestModel hm, required String token}) async {
+  Future<(bool, String)> postHarvest({
+    required HarvestModel hm,
+    required String token,
+  }) async {
     final url = Uri.parse(
       ApiDatabaseParams.harvestPostAPI,
     );
@@ -96,22 +99,26 @@ class HarvestAPI {
       final response = await request.send();
       debugPrint('status code -> ${response.statusCode}');
       if (response.statusCode == 201) {
-        return true;
+        return (true, '');
       } else {
         debugPrint('body -> $body');
         debugPrint(
-            'error -> ${response.statusCode} ${response.reasonPhrase} ${await response.stream.bytesToString()}');
-        return false;
+          'error -> ${response.statusCode} ${response.reasonPhrase} ${await response.stream.bytesToString()}',
+        );
+        return (
+          false,
+          "${response.statusCode} ${await response.stream.bytesToString()}"
+        );
       }
     } catch (e) {
       debugPrint('Exception -> $e');
-      return false;
+      return (false, e.toString());
     }
   }
 
   // get harvest
   Future<List<SourcingEntity>?> getHarvests(String token) async {
-    const localToken = '55|9062I8GhTHqaQWFrfOu5HzcRG3df73axEgL5rBUK';
+    const localToken = '';
     final auth = <String, String>{
       'Authorization': 'Bearer ${localToken.isNotEmpty ? localToken : token}',
     };
@@ -147,9 +154,11 @@ class HarvestAPI {
         }
         return harvestList;
       } else {
+        debugPrint('error -> ${response.statusCode} ${response.body}');
         return null;
       }
     } catch (e) {
+      debugPrint('Exception -> $e');
       return null;
     }
   }
@@ -197,7 +206,8 @@ class HarvestAPI {
         } else {
           debugPrint('body -> $body');
           debugPrint(
-              'error -> ${response.statusCode} ${response.reasonPhrase} ${await response.stream.bytesToString()}');
+            'error -> ${response.statusCode} ${response.reasonPhrase} ${await response.stream.bytesToString()}',
+          );
           return false;
         }
       } catch (e) {
@@ -207,7 +217,8 @@ class HarvestAPI {
     } else if (ram.whatType == ActivityTypeEnums.sowing) {
       //* SOWING
       debugPrint(
-          'Sowing -> ${ram.sowingCrop} ${ram.sowingNameWithCompany} ${ram.sowingSeedQuantity} ${ram.batchID}');
+        'Sowing -> ${ram.sowingCrop} ${ram.sowingNameWithCompany} ${ram.sowingSeedQuantity} ${ram.batchID}',
+      );
       _headers.addAll(headers);
       final body = {
         'batch_id': batchId.isNotEmpty ? batchId : ram.batchID,
@@ -423,8 +434,10 @@ class HarvestAPI {
   }
 
   //! get batch response
-  Future<BatchResponseEntity?> getBatchData(
-      {required String token, required String bID}) async {
+  Future<BatchResponseEntity?> getBatchData({
+    required String token,
+    required String bID,
+  }) async {
     final headers = <String, String>{
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
@@ -459,6 +472,49 @@ class HarvestAPI {
       }
     } catch (e) {
       return null;
+    }
+  }
+  //! get units
+
+  Future<List<UnitEntity>> getUnitFromAnotherAPI() async {
+    final url = Uri.parse(
+      'https://server.krishibebsha.com/api/v1/unit',
+    );
+    debugPrint('unit url -> $url');
+
+    final cropList = <UnitEntity>[];
+
+    try {
+      final response = await http.get(
+        url,
+      );
+      debugPrint('status code -> ${response.statusCode}');
+      if (response.statusCode == 200) {
+        final result = await Isolate.run(() => json.decode(response.body))
+            as List<dynamic>;
+        debugPrint(
+          'successfuly got the unit LISTO -> ${result.runtimeType} ${result.length}',
+        );
+
+        for (var i = 0; i < result.length; i++) {
+          final element = result[i] as Map<String, dynamic>;
+          // debugPrint('element runtime -> ${element.runtimeType}');
+          try {
+            cropList.add(
+              UnitEntity.fromJson(element),
+            );
+          } catch (e) {
+            debugPrint(
+              'error comverting data unit ->  ${element.runtimeType}, $e \n',
+            );
+          }
+        }
+        return cropList;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      return [];
     }
   }
 }

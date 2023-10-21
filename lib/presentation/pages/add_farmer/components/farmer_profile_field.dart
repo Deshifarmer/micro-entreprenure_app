@@ -47,7 +47,7 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           title: const Text('একটি পদ্ধতি নির্বাচন করুন'),
           content: SizedBox(
-            height: MediaQuery.of(context).size.height / 6,
+            height: MediaQuery.of(context).size.height / 5.5,
             width: MediaQuery.of(context).size.width / 2,
             child: Column(
               children: [

@@ -1264,7 +1264,7 @@ class DeshiFarmerAPI {
 
   //! batch getting api
   Future<List<BatchEnity>?> getFarmBatches(
-      {required String token, required String farmID}) async {
+      {required String token, required String farmID,}) async {
     Map<String, String> auth = <String, String>{
       'Authorization': 'Bearer $token',
     };
@@ -1344,12 +1344,12 @@ class DeshiFarmerAPI {
         return successResonse;
       } else {
         debugPrint(
-            'farmer list getting error -> ${response.statusCode} ${response.body}');
+            'farmer list getting error -> ${response.statusCode} ${response.body}',);
         return null;
       }
     } catch (e) {
       debugPrint(
-          'FArmer getting EXC#EPTION -> ${e.toString().split(':').firstOrNull}');
+          'FArmer getting EXCEPTION -> ${e.toString().split(':').firstOrNull}',);
       return null;
     }
   }

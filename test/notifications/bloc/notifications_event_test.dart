@@ -17,7 +17,7 @@ void main() {
       test('can be instantiated', () {
         expect(
           const CustomNotificationsEvent(),
-          isNotNull
+          isNotNull,
         );
       });
     });

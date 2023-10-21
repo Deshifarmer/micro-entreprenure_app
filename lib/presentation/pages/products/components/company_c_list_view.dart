@@ -1,6 +1,5 @@
 import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
 import 'package:deshifarmer/presentation/pages/commision/bloc/bloc.dart';
-import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/bloc/products_bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/components/company_card_view.dart';
 import 'package:flutter/material.dart';
@@ -36,10 +35,10 @@ class CampanyCircularListView extends StatelessWidget {
                   builder: (context, companyState) {
                     return InkWell(
                       onTap: () {
-                        final loginState = context.read<LoginBloc>().state;
-                        final token = loginState is LoginSuccess
-                            ? loginState.successLoginEntity.token
-                            : '';
+                        // final loginState = context.read<LoginBloc>().state;
+                        // final token = loginState is LoginSuccess
+                        //     ? loginState.successLoginEntity.token
+                        //     : '';
                         if (companyState is ProductComanySelect) {
                           if (currentCompany.df_id == companyState.companyID) {
                             context

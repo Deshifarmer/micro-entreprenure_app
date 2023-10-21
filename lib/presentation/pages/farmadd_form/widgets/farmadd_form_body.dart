@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deshifarmer/core/app_strings.dart';
@@ -84,46 +83,46 @@ class FarmaddFormBody extends StatelessWidget {
                       );
                     } else if (state is MyFarmerSuccess) {
                       // a dummy farmer to the first index of the list
-                      state.allFarmerListResp.farmers.insert(
-                        0,
-                        const FarmerEntity(
-                          farmer_id: 'x',
-                          full_name: '------------',
-                          phone: '',
-                          image: '',
-                          address: '',
-                          farmer_type: '',
-                          onboard_by: '',
-                          usaid_id: '',
-                          first_name: '',
-                          last_name: '',
-                          fathers_name: '',
-                          is_married: '',
-                          gender: '',
-                          date_of_birth: '',
-                          village: '',
-                          upazila: '',
-                          district: '',
-                          division: '',
-                          union: '',
-                          credit_score: '',
-                          residentType: '',
-                          land_status: '',
-                          year_of_stay_in: '',
-                          group_id: '',
-                          bank_details: '',
-                          mfs_account: '',
-                          current_producing_crop: '',
-                          focused_crop: '',
-                          cropping_intensity: '',
-                          cultivation_practice: '',
-                          farmer_role: '',
-                          farm_id: '',
-                          order_list: [],
-                        ),
-                      );
-                      farmAddState.farmerID.text =
-                          state.allFarmerListResp.farmers.first.farmer_id!;
+                      // state.allFarmerListResp.farmers.insert(
+                      //   0,
+                      //   const FarmerEntity(
+                      //     farmer_id: 'x',
+                      //     full_name: '------------',
+                      //     phone: '',
+                      //     image: '',
+                      //     address: '',
+                      //     farmer_type: '',
+                      //     onboard_by: '',
+                      //     usaid_id: '',
+                      //     first_name: '',
+                      //     last_name: '',
+                      //     fathers_name: '',
+                      //     is_married: '',
+                      //     gender: '',
+                      //     date_of_birth: '',
+                      //     village: '',
+                      //     upazila: '',
+                      //     district: '',
+                      //     division: '',
+                      //     union: '',
+                      //     credit_score: '',
+                      //     residentType: '',
+                      //     land_status: '',
+                      //     year_of_stay_in: '',
+                      //     group_id: '',
+                      //     bank_details: '',
+                      //     mfs_account: '',
+                      //     current_producing_crop: '',
+                      //     focused_crop: '',
+                      //     cropping_intensity: '',
+                      //     cultivation_practice: '',
+                      //     farmer_role: '',
+                      //     farm_id: '',
+                      //     order_list: [],
+                      //   ),
+                      // );
+                      // farmAddState.farmerID.text =
+                      //     state.allFarmerListResp.farmers.first.farmer_id!;
 
                       return Padding(
                         padding: const EdgeInsets.symmetric(
@@ -156,10 +155,12 @@ class FarmaddFormBody extends StatelessWidget {
                           // decoration: ShapeDecoration(),
                           // itemHeight: 300,
                           elevation: 16,
-                          value: state.allFarmerListResp.farmers.isNotEmpty
-                              ? state.allFarmerListResp.farmers.first
-                              : null,
+                          // value: state.allFarmerListResp.farmers.isNotEmpty
+                          //     ? state.allFarmerListResp.farmers.first
+                          //     : null,
                           items: state.allFarmerListResp.farmers
+                              .toSet()
+                              .toList()
                               .map<DropdownMenuItem<FarmerEntity>>((value) {
                             return DropdownMenuItem<FarmerEntity>(
                               alignment: Alignment.center,
@@ -180,7 +181,7 @@ class FarmaddFormBody extends StatelessWidget {
                                           height: 50,
                                           width: 50,
                                           progressIndicatorBuilder: (context,
-                                                  url, downloadProgress) =>
+                                                  url, downloadProgress,) =>
                                               Center(
                                             child: CircularProgressIndicator(
                                               value: downloadProgress.progress,
@@ -198,10 +199,8 @@ class FarmaddFormBody extends StatelessWidget {
                           }).toList(),
 
                           onChanged: (FarmerEntity? val) {
-                            if (farmAddState is FarmaddFormInitial) {
-                              if (val != null) {
-                                farmAddState.farmerID.text = val.farmer_id!;
-                              }
+                            if (val != null) {
+                              farmAddState.farmerID.text = val.farmer_id!;
                             }
                           },
                         ),
@@ -216,6 +215,7 @@ class FarmaddFormBody extends StatelessWidget {
                         color: primaryColor,
                       ),
                 ),
+                //! farm name
                 Padding(
                   padding: const EdgeInsets.all(8),
                   child: TextFormField(
@@ -237,6 +237,7 @@ class FarmaddFormBody extends StatelessWidget {
                     ),
                   ),
                 ),
+                //! farm addr
                 Padding(
                   padding: const EdgeInsets.all(8),
                   child: TextFormField(
@@ -260,6 +261,7 @@ class FarmaddFormBody extends StatelessWidget {
                     ),
                   ),
                 ),
+                //! union
                 Padding(
                   padding: const EdgeInsets.all(8),
                   child: TextFormField(
@@ -281,6 +283,7 @@ class FarmaddFormBody extends StatelessWidget {
                     ),
                   ),
                 ),
+                //! muza
                 Padding(
                   padding: const EdgeInsets.all(8),
                   child: TextFormField(
@@ -302,6 +305,7 @@ class FarmaddFormBody extends StatelessWidget {
                     ),
                   ),
                 ),
+                //! land size
                 Padding(
                   padding: const EdgeInsets.all(8),
                   child: TextFormField(
@@ -325,9 +329,10 @@ class FarmaddFormBody extends StatelessWidget {
                     ),
                   ),
                 ),
+                //! farm creation date
                 const FarmCreationDate(),
 
-                //farm reg no
+                //! farm area
 
                 Padding(
                   padding: const EdgeInsets.all(8),
@@ -351,7 +356,7 @@ class FarmaddFormBody extends StatelessWidget {
                   ),
                 ),
 
-                /// dropdown of SOIL type
+                //! soil type
                 Padding(
                   padding: const EdgeInsets.all(8),
                   child: DropdownButtonFormField<String>(
@@ -397,7 +402,7 @@ class FarmaddFormBody extends StatelessWidget {
                   ),
                 ),
 
-                /// focused corp
+                //! focused corp
                 Padding(
                   padding: const EdgeInsets.all(8),
                   child: MultiSelectDropDown(
@@ -431,7 +436,7 @@ class FarmaddFormBody extends StatelessWidget {
                   ),
                 ),
 
-                /// farmer profile picccc upload
+                //! farmer profile picccc upload
                 const FarmerProfilePicUpload(),
               ] else
                 Column(
@@ -459,10 +464,9 @@ class FarmaddFormBody extends StatelessWidget {
                   onpress: () async {
                     if (farmAddState is FarmaddFormInitial) {
                       debugPrint('farmer id -> ${farmAddState.farmerID.text}');
-                      if (farmAddState.farmerID.text.isEmpty ||
-                          farmAddState.farmerID.text == 'x') {
+                      if (farmAddState.farmerID.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          errorSnackBar('Farmer ID cannot be empty'),
+                          errorSnackBar('Select a farmer first'),
                         );
                       }
                       if (farmAddState.farmName.text.isEmpty) {

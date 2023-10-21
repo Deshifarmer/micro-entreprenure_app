@@ -182,7 +182,7 @@ class RequestCropInsurance extends StatelessWidget {
                       'harvest period': cropInsuranceState.harvestPeriod.text,
                       'phone': cropInsuranceState.phoneNumber.text,
                       'notes': cropInsuranceState.notes.text,
-                    }.toString());
+                    }.toString(),);
                   }
                 },
                 title: 'সাবমিট করুন ',),

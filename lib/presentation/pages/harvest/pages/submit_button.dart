@@ -41,19 +41,59 @@ class _SumbitButtonForHervestState extends State<SumbitButtonForHervest> {
               debugPrint('location -> ${widget.harvestModel.location}');
               debugPrint('jatt -> ${widget.harvestModel.jatt}');
 
-              // show snack bar if any field is empty
-              if (widget.harvestModel.name.isEmpty ||
-                  widget.harvestModel.image.isEmpty ||
-                  widget.harvestModel.note.isEmpty ||
-                  widget.harvestModel.price.isEmpty ||
-                  widget.harvestModel.quantity.isEmpty ||
-                  widget.harvestModel.unit.isEmpty ||
-                  widget.harvestModel.crop.isEmpty ||
-                  widget.harvestModel.location.isEmpty ||
-                  widget.harvestModel.jatt.isEmpty) {
+              if (widget.harvestModel.name.isEmpty) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text('সব ঘর পূরণ করুন'),
+                    content: Text('কৃষক নির্বাচন করুন'),
+                  ),
+                );
+                return;
+              } else if (widget.harvestModel.image.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('ছবি আপলোড করুন'),
+                  ),
+                );
+                return;
+              } else if (widget.harvestModel.note.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('নোট লিখুন'),
+                  ),
+                );
+                return;
+              } else if (widget.harvestModel.price.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('ক্রয় মূল্য লিখুন'),
+                  ),
+                );
+                return;
+              } else if (widget.harvestModel.quantity.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('পরিমাণ লিখুন'),
+                  ),
+                );
+                return;
+              } else if (widget.harvestModel.crop.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('ফসল নির্বাচন করুন'),
+                  ),
+                );
+                return;
+              } else if (widget.harvestModel.location.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('উপজেলা নির্বাচন করুন'),
+                  ),
+                );
+                return;
+              } else if (widget.harvestModel.jatt.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('জাত নির্বাচন করুন'),
                   ),
                 );
                 return;
@@ -69,7 +109,7 @@ class _SumbitButtonForHervestState extends State<SumbitButtonForHervest> {
               final isCreated =
                   await api.postHarvest(hm: widget.harvestModel, token: token);
 
-              if (isCreated) {
+              if (isCreated.$1) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text('সফলভাবে সাবমিট হয়েছে'),
@@ -79,8 +119,8 @@ class _SumbitButtonForHervestState extends State<SumbitButtonForHervest> {
                 // clear all the fields and pop
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('সাবমিট হয়নি'),
+                  SnackBar(
+                    content: Text('সাবমিট হয়নি ${isCreated.$2}'),
                   ),
                 );
               }

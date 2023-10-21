@@ -1,11 +1,12 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_order_entity.dart';
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'farmer_entity.g.dart';
 
 @JsonSerializable()
-class FarmerEntity {
+class FarmerEntity extends Equatable {
   const FarmerEntity({
     required this.farmer_id,
     required this.image,
@@ -97,6 +98,13 @@ class FarmerEntity {
   // // final String? is_active;
   // final String? onboard_date;
   final List<FarmerOrderEntity> order_list;
+
+  @override
+  List<Object?> get props => [
+        farmer_id,
+        phone,
+        usaid_id,
+      ];
   // farm_list
   // final List<FarmEntity>? farm_list;
 }

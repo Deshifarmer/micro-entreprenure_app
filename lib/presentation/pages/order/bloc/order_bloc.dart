@@ -27,7 +27,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     } else {
       emit(OrderFetchFailed(
         message: value.toString(),
-      ));
+      ),);
     }
   }
 }

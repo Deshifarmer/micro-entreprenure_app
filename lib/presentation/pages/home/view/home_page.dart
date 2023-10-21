@@ -65,18 +65,7 @@ class _HomePageState extends State<HomePage> {
         },
         child: _pages[_currentIndex],
       ),
-      // body: BlocConsumer<HomeBloc, HomeState>(
-      //   listener: (context, state) {},
-      //   builder: (context, state) {
-      //     return state is HomeInitial
-      //         ? const HomeView()
-      //         : state is MyOrderPageState
-      //             ? const FarmerListoPage()
-      //             : state is CommisionPageState
-      //                 ? const OrderPage()
-      //                 : const ProfilePage();
-      //   },
-      // ),
+
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: OpenContainer(
         closedBuilder: (context, action) {
@@ -106,7 +95,7 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomAppBar(
         color: tertiaryColor,
         shape: const CircularNotchedRectangle(),
-        height: getProportionateScreenHeight(70),
+        height: getProportionateScreenHeight(90),
         padding: const EdgeInsets.all(0),
         // notchMargin: 10,
         // clipBehavior: Clip.antiAlias,
@@ -115,6 +104,8 @@ class _HomePageState extends State<HomePage> {
           children: [
             Expanded(
               child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
                     onPressed: () {
@@ -145,6 +136,8 @@ class _HomePageState extends State<HomePage> {
             ),
             Expanded(
               child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
                     onPressed: () {
@@ -219,6 +212,8 @@ class _HomePageState extends State<HomePage> {
             ),
             Expanded(
               child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
                     onPressed: () {
@@ -244,80 +239,12 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      // bottomNavigationBar: AnimatedBottomNavigationBar.builder(
-      //   height: getProportionateScreenHeight(70),
-      //   // activeIndex: state is HomeInitial
-      //   //     ? 0
-      //   //     : state is MyOrderPageState
-      //   //         ? 1
-      //   //         : state is CommisionPageState
-      //   //             ? 2
-      //   //             : 3,
-      //   activeIndex: _currentIndex,
-      //   gapLocation: GapLocation.center,
-      //   elevation: 0,
-      //   itemCount: 4,
-      //   tabBuilder: (index, isActive) {
-      //     return Column(
-      //       mainAxisSize: MainAxisSize.min,
-      //       mainAxisAlignment: MainAxisAlignment.center,
-      //       children: [
-      //         if (index == 1)
-      //           CustomPaint(
-      //             painter: MyFarmersShape(
-      //               colorF: isActive ? Colors.white : Colors.grey,
-      //             ),
-      //             size: const Size(20, 20),
-      //           )
-      //         else
-      //           Icon(
-      //             icons[index],
-      //             // size: 24,
-      //             color: isActive ? Colors.white : Colors.grey,
-      //           ),
-      //         const SizedBox(height: 4),
-      //         Text(
-      //           index == 0
-      //               ? 'হোম'
-      //               : index == 1
-      //                   ? 'কৃষক তালিকা'
-      //                   : index == 2
-      //                       ? 'অর্ডার তালিকা'
-      //                       : 'প্রোফাইল',
-      //           style: Theme.of(context).textTheme.labelSmall!.copyWith(
-      //                 color: isActive ? Colors.white : Colors.grey,
-      //                 // fontWeight: FontWeight.w600,
-      //               ),
-      //         ),
-      //       ],
-      //     );
-      //   },
-      //   onTap: (int x) {
-      //     final loginState = context.read<LoginBloc>().state;
-      //     final token = loginState is LoginSuccess
-      //         ? loginState.successLoginEntity.token
-      //         : null;
-      //     if (x == 2 || x == 0) {
-      //       context.read<OrderBloc>().add(InitOrders(token ?? ''));
-      //     }
-      //     if (x == 1) {
-      //       context.read<MyFarmerBloc>().add(
-      //             MyFarmerFetchEvent(token ?? ''),
-      //           );
-      //     }
-      //     setState(() {
-      //       _currentIndex = x;
-      //     });
-
-      //     // context.read<HomeBloc>().add(ChangePageEvent(x));
-      //   },
-      //   backgroundColor: tertiaryColor,
-      // ),
     );
   }
 }
 
 /// {@template home_view}
+///
 /// Displays the Body of HomeView
 /// {@endtemplate}
 class HomeView extends StatelessWidget {

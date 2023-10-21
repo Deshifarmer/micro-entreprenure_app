@@ -17,7 +17,7 @@ class LogisticAPI {
 
   // harvest post
   Future<bool> postLogistic(
-      {required LogisticModel lm, required String token}) async {
+      {required LogisticModel lm, required String token,}) async {
     final url = Uri.parse(
       ApiDatabaseParams.postLogisticAPI,
     );
