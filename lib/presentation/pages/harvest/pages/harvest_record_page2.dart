@@ -595,23 +595,23 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
             SizedBox(
               height: getProportionateScreenHeight(80),
             ),
-            IconButton(
-              onPressed: () {
-                // debugPrint every field field of harvest model
-                debugPrint('name -> ${selectFarmerController.text}');
-                debugPrint('image -> ${imageFieldController.text}');
-                debugPrint('note -> ${noteController.text}');
-                debugPrint('price -> ${sellPriceController.text}');
-                debugPrint('quantity -> ${selectQuantityController.text}');
-                debugPrint(
-                  'unit -> ${unitController.text.isEmpty ? widget.units.first.unit : unitController.text}',
-                );
-                debugPrint('crop -> ${selectCropController.text}');
-                debugPrint('location -> ${sellLocationController.text}');
-                debugPrint('jatt -> ${jatController.text}');
-              },
-              icon: const Icon(Icons.ad_units),
-            ),
+            // IconButton(
+            //   onPressed: () {
+            //     // debugPrint every field field of harvest model
+            //     debugPrint('name -> ${selectFarmerController.text}');
+            //     debugPrint('image -> ${imageFieldController.text}');
+            //     debugPrint('note -> ${noteController.text}');
+            //     debugPrint('price -> ${sellPriceController.text}');
+            //     debugPrint('quantity -> ${selectQuantityController.text}');
+            //     debugPrint(
+            //       'unit -> ${unitController.text.isEmpty ? widget.units.first.unit : unitController.text}',
+            //     );
+            //     debugPrint('crop -> ${selectCropController.text}');
+            //     debugPrint('location -> ${sellLocationController.text}');
+            //     debugPrint('jatt -> ${jatController.text}');
+            //   },
+            //   icon: const Icon(Icons.ad_units),
+            // ),
           ],
         ),
       ),
@@ -655,14 +655,16 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
                     ),
                   );
                   return;
-                } else if (imageFieldController.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('ছবি আপলোড করুন'),
-                    ),
-                  );
-                  return;
-                } else if (noteController.text.isEmpty) {
+                }
+                // else if (imageFieldController.text.isEmpty) {
+                //   ScaffoldMessenger.of(context).showSnackBar(
+                //     const SnackBar(
+                //       content: Text('ছবি আপলোড করুন'),
+                //     ),
+                //   );
+                //   return;
+                // }
+                else if (noteController.text.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('নোট লিখুন'),
