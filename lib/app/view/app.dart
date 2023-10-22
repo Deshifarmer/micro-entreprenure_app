@@ -173,7 +173,7 @@ class App extends StatelessWidget {
           // appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
           useMaterial3: true,
           colorScheme: ColorScheme.fromSwatch(
-            accentColor: Colors.green,
+            accentColor: primaryColor,
             backgroundColor: Colors.white,
           ),
           scaffoldBackgroundColor: backgroundColor2,

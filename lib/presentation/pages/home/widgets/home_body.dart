@@ -253,7 +253,8 @@ class HomeBody extends StatelessWidget {
                                 context,
                                 // LoginPage.route(),
                                 MaterialPageRoute(
-                                    builder: (context) => const App(),),
+                                  builder: (context) => const App(),
+                                ),
                                 (route) => false,
                               );
                               // Navigate to the beginning of the app
@@ -278,7 +279,8 @@ class HomeBody extends StatelessWidget {
                               context,
                               // LoginPage.route(),
                               MaterialPageRoute(
-                                  builder: (context) => const App(),),
+                                builder: (context) => const App(),
+                              ),
                               (route) => false,
                             );
                           },
