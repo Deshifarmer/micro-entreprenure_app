@@ -63,6 +63,123 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
 
   String sowingSeedsource = '';
 
+  Future<void> _postHarvest() async {
+    // debugPrint every field field of harvest model
+    debugPrint('name -> ${selectFarmerController.text}');
+    debugPrint('image -> ${imageFieldController.text}');
+    debugPrint('note -> ${noteController.text}');
+    debugPrint('price -> ${sellPriceController.text}');
+    debugPrint('quantity -> ${selectQuantityController.text}');
+    debugPrint(
+      'unit -> ${unitController.text.isEmpty ? widget.units.first.unit : unitController.text}',
+    );
+    debugPrint('crop -> ${selectCropController.text}');
+    debugPrint('location -> ${sellLocationController.text}');
+    debugPrint('jatt -> ${jatController.text}');
+
+    if (selectFarmerController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('কৃষক নির্বাচন করুন'),
+        ),
+      );
+      return;
+    }
+    // else if (imageFieldController.text.isEmpty) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(
+    //       content: Text('ছবি আপলোড করুন'),
+    //     ),
+    //   );
+    //   return;
+    // }
+    else if (noteController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('নোট লিখুন'),
+        ),
+      );
+      return;
+    } else if (sellPriceController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('ক্রয় মূল্য লিখুন'),
+        ),
+      );
+      return;
+    } else if (selectQuantityController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('পরিমাণ লিখুন'),
+        ),
+      );
+      return;
+    } else if (selectCropController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('ফসল নির্বাচন করুন'),
+        ),
+      );
+      return;
+    } else if (sellLocationController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('উপজেলা নির্বাচন করুন'),
+        ),
+      );
+      return;
+    } else if (jatController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('জাত নির্বাচন করুন'),
+        ),
+      );
+      return;
+    }
+    setState(() {
+      isLoading = true;
+    });
+    final harvestModel = HarvestModel(
+      jatt: jatController.text,
+      name: selectFarmerController.text,
+      image: imageFieldController.text,
+      note: noteController.text,
+      price: sellPriceController.text,
+      quantity: selectQuantityController.text,
+      unit: unitController.text.isEmpty
+          ? widget.units.first.unit
+          : unitController.text,
+      crop: selectCropController.text,
+      location: sellLocationController.text,
+    );
+    final api = HarvestAPI();
+    final loginState = context.read<LoginBloc>().state;
+    final token =
+        loginState is LoginSuccess ? loginState.successLoginEntity.token : '';
+
+    final isCreated = await api.postHarvest(hm: harvestModel, token: token);
+    // wait for the api to return
+    await Future<void>.delayed(const Duration(seconds: 1));
+    if (isCreated.$1) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('সফলভাবে সাবমিট হয়েছে'),
+        ),
+      );
+      Navigator.pop(context);
+      // clear all the fields and pop
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('সাবমিট হয়নি  ${isCreated.$2}}'),
+        ),
+      );
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -634,122 +751,7 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
           ? const Center(child: PrimaryLoadingIndicator())
           : SecondayButtonGreen(
               btnColor: priceBoxColor,
-              onpress: () async {
-                // debugPrint every field field of harvest model
-                debugPrint('name -> ${selectFarmerController.text}');
-                debugPrint('image -> ${imageFieldController.text}');
-                debugPrint('note -> ${noteController.text}');
-                debugPrint('price -> ${sellPriceController.text}');
-                debugPrint('quantity -> ${selectQuantityController.text}');
-                debugPrint(
-                  'unit -> ${unitController.text.isEmpty ? widget.units.first.unit : unitController.text}',
-                );
-                debugPrint('crop -> ${selectCropController.text}');
-                debugPrint('location -> ${sellLocationController.text}');
-                debugPrint('jatt -> ${jatController.text}');
-
-                if (selectFarmerController.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('কৃষক নির্বাচন করুন'),
-                    ),
-                  );
-                  return;
-                }
-                // else if (imageFieldController.text.isEmpty) {
-                //   ScaffoldMessenger.of(context).showSnackBar(
-                //     const SnackBar(
-                //       content: Text('ছবি আপলোড করুন'),
-                //     ),
-                //   );
-                //   return;
-                // }
-                else if (noteController.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('নোট লিখুন'),
-                    ),
-                  );
-                  return;
-                } else if (sellPriceController.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('ক্রয় মূল্য লিখুন'),
-                    ),
-                  );
-                  return;
-                } else if (selectQuantityController.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('পরিমাণ লিখুন'),
-                    ),
-                  );
-                  return;
-                } else if (selectCropController.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('ফসল নির্বাচন করুন'),
-                    ),
-                  );
-                  return;
-                } else if (sellLocationController.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('উপজেলা নির্বাচন করুন'),
-                    ),
-                  );
-                  return;
-                } else if (jatController.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('জাত নির্বাচন করুন'),
-                    ),
-                  );
-                  return;
-                }
-                setState(() {
-                  isLoading = true;
-                });
-                final harvestModel = HarvestModel(
-                  jatt: jatController.text,
-                  name: selectFarmerController.text,
-                  image: imageFieldController.text,
-                  note: noteController.text,
-                  price: sellPriceController.text,
-                  quantity: selectQuantityController.text,
-                  unit: unitController.text.isEmpty
-                      ? widget.units.first.unit
-                      : unitController.text,
-                  crop: selectCropController.text,
-                  location: sellLocationController.text,
-                );
-                final api = HarvestAPI();
-                final loginState = context.read<LoginBloc>().state;
-                final token = loginState is LoginSuccess
-                    ? loginState.successLoginEntity.token
-                    : '';
-                final isCreated =
-                    await api.postHarvest(hm: harvestModel, token: token);
-
-                if (isCreated.$1) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('সফলভাবে সাবমিট হয়েছে'),
-                    ),
-                  );
-                  Navigator.pop(context);
-                  // clear all the fields and pop
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('সাবমিট হয়নি  ${isCreated.$2}}'),
-                    ),
-                  );
-                }
-                setState(() {
-                  isLoading = false;
-                });
-              },
+              onpress: _postHarvest,
               title: 'সাবমিট করুন ',
             ),
     );
