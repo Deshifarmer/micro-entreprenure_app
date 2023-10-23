@@ -14,6 +14,8 @@ import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:deshifarmer/presentation/widgets/snackbar_custom.dart';
 import 'package:flutter/material.dart';
+import 'package:restart_app/restart_app.dart';
+import 'package:shorebird_code_push/shorebird_code_push.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Body of the ProfilePage.
@@ -274,6 +276,8 @@ class ProfileBody extends StatelessWidget {
                   title: const Text('হেল্প'),
                   trailing: const Icon(Icons.navigate_next),
                 ),
+                //! check for update
+                const CheckForUpdate(),
 
                 /// log out
                 ListTile(
@@ -332,6 +336,134 @@ class ProfileBody extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class CheckForUpdate extends StatefulWidget {
+  const CheckForUpdate({
+    super.key,
+  });
+
+  @override
+  State<CheckForUpdate> createState() => _CheckForUpdateState();
+}
+
+// Create an instance of the ShorebirdCodePush class
+final shorebirdCodePush = ShorebirdCodePush();
+
+class _CheckForUpdateState extends State<CheckForUpdate> {
+  @override
+  void initState() {
+    super.initState();
+
+    // Get the current patch number and print it to the console. It will be
+    // null if no patches are installed.
+    shorebirdCodePush
+        .currentPatchNumber()
+        .then((value) => print('current patch number is $value'));
+  }
+
+  // Future<bool> _checkForUpdates() async {
+  //   debugPrint('checking for updates');
+  //   // Check whether a patch is available to install.
+  //   final isUpdateAvailable =
+  //       await shorebirdCodePush.isNewPatchAvailableForDownload();
+  //   debugPrint('is update available: $isUpdateAvailable');
+  //   if (isUpdateAvailable) {
+  //     // Download the new patch if it's available.
+  //     await shorebirdCodePush.downloadUpdateIfAvailable();
+  //   }
+
+  // }
+  void _showRestartBanner() {
+    ScaffoldMessenger.of(context).showMaterialBanner(
+      const MaterialBanner(
+        content: Text('A new patch is ready!'),
+        actions: [
+          TextButton(
+            onPressed: Restart.restartApp,
+            child: Text('Restart app'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  bool isLoading = false;
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: () async {
+        debugPrint('checking for updates');
+        // Check whether a patch is available to install.
+        final isUpdateAvailable =
+            await shorebirdCodePush.isNewPatchAvailableForDownload();
+        debugPrint('is update available: $isUpdateAvailable');
+
+        // Call the _checkForUpdates method when the user taps the button.
+        // bool isUpdateAvailable = await _checkForUpdates();
+        // an aleart dialog to show the user that the app is updating
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          useSafeArea: true,
+          builder: (context) => AlertDialog(
+            title: isUpdateAvailable
+                ? const Text('আপডেট প্রযোজ্য')
+                : const Text('আপডেট'),
+            // content: isUpdateAvailable
+            //     ? const Text('Do you want to update the app?')
+            //     : const Text('No Update Available'),
+            content: isLoading
+                ? const SizedBox(
+                    height: 50,
+                    width: 50,
+                    child: Center(child: CircularProgressIndicator()),
+                  )
+                : isUpdateAvailable
+                    ? const Text('আপনি কি অ্যাপটি আপডেট করতে চান?')
+                    : const Text('কোন আপডেট নেই'),
+            actions: isLoading
+                ? null
+                : [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: isUpdateAvailable
+                          ? const Text('Cancel')
+                          : const Text('Ok'),
+                    ),
+                    if (isUpdateAvailable)
+                      TextButton(
+                        onPressed: () async {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          await Future.wait([
+                            shorebirdCodePush.downloadUpdateIfAvailable(),
+                            Future<void>.delayed(
+                              const Duration(milliseconds: 250),
+                            ),
+                          ]);
+
+                          Navigator.pop(context);
+                          setState(() {
+                            isLoading = false;
+                          });
+                          _showRestartBanner();
+                        },
+                        child: const Text('Update'),
+                      )
+                    else
+                      const SizedBox.shrink(),
+                  ],
+          ),
+        );
+      },
+      title: const Text('আপডেট চেক করুন'),
+      trailing: const Icon(Icons.navigate_next),
     );
   }
 }
