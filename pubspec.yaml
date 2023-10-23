@@ -1,6 +1,6 @@
 name: deshifarmer
 description: A agro flutter based project
-version: 3.2.1+22
+version: 3.2.1+23
 publish_to: none
 
 environment:
@@ -39,6 +39,7 @@ dependencies:
   path_provider: ^2.0.15
   restart_app: ^1.2.1
   shared_preferences: ^2.2.0
+  shorebird_code_push: ^1.1.3
   url_launcher: ^6.1.14
 
 dev_dependencies:
@@ -88,3 +89,4 @@ flutter:
     - assets/logo/
     - assets/banner/
     - assets/animations/
+    - shorebird.yaml
