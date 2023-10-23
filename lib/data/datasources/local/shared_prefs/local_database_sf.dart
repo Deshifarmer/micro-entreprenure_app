@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefDBServices {
@@ -40,12 +41,15 @@ class SharedPrefDBServices {
   Future<bool> setNotificationEnabled() async {
     final prefs = await SharedPreferences.getInstance();
     // get value
+    debugPrint('setting notification enabled to TRUE');
     return prefs.setBool('isNotificationEnabled', true);
   }
+
   //* unset NOTIFICATION ENABLED
   Future<bool> unsetNotificationEnabled() async {
     final prefs = await SharedPreferences.getInstance();
     // get value
+    debugPrint('setting notification enabled to FALSE');
     return prefs.setBool('isNotificationEnabled', false);
   }
 
@@ -63,6 +67,7 @@ class SharedPrefDBServices {
     // get value
     return prefs.setBool('isEmailEnabled', true);
   }
+
   //* unset EMAIL ENABLED
   Future<bool> unsetEmailEnabled() async {
     final prefs = await SharedPreferences.getInstance();
@@ -76,13 +81,13 @@ class SharedPrefDBServices {
     // get value
     return prefs.getBool('isWeatherEnabled');
   }
-  
 
   //* set WEAHTER ENABLED
   Future<bool> setWeatherEnabled() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.setBool('isWeatherEnabled', true);
   }
+
   //* unset WEAHTER ENABLED
   Future<bool> unsetWeatherEnabled() async {
     final prefs = await SharedPreferences.getInstance();
@@ -102,7 +107,8 @@ class SharedPrefDBServices {
     // get value
     return prefs.setBool('isPromotionalsEnabled', true);
   }
-    //* unset PROMOTIONALS ENABLED
+
+  //* unset PROMOTIONALS ENABLED
   Future<bool> unsetPromotionalsEnabled() async {
     final prefs = await SharedPreferences.getInstance();
     // get value
