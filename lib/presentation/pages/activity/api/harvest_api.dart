@@ -98,6 +98,8 @@ class HarvestAPI {
           headers: _headers,
           body: json.encode(body),
         );
+        // wait for 1 sec
+        await Future<void>.delayed(const Duration(seconds: 1));
         debugPrint('status code -> ${response.statusCode}');
         if (response.statusCode == 201) {
           return (true, '');
@@ -106,7 +108,7 @@ class HarvestAPI {
           debugPrint(
             'error -> ${response.statusCode} ${response.reasonPhrase} ${response.body}',
           );
-          return (false, '${response.statusCode} ${response.body}');
+          return (false, '${response.statusCode} Error Occured');
         }
       } else {
         debugPrint('image is not empty doing by multipart post');
@@ -124,10 +126,7 @@ class HarvestAPI {
           debugPrint(
             'error -> ${response.statusCode} ${response.reasonPhrase} ${await response.stream.bytesToString()}',
           );
-          return (
-            false,
-            '${response.statusCode} ${await response.stream.bytesToString()}'
-          );
+          return (false, '${response.statusCode} Error Occured');
         }
       }
     } catch (e) {
