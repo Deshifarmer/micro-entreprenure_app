@@ -80,14 +80,20 @@ class HarvestAPI {
     };
     final body = {
       'product_name': hm.crop,
-      'variety': hm.jatt,
+      // 'variety': hm.jatt,
       'buy_price': hm.price,
       'quantity': hm.quantity,
       'unit': hm.unit,
-      'description': hm.note,
+      // 'description': hm.note,
       'source_location': hm.location,
       'which_farmer': hm.name,
     };
+    if (hm.jatt.isNotEmpty) {
+      body.addAll({'variety': hm.jatt});
+    }
+    if (hm.note.isNotEmpty) {
+      body.addAll({'description': hm.note});
+    }
     debugPrint('harvest url -> $url');
     try {
       _headers.addAll(headers);
