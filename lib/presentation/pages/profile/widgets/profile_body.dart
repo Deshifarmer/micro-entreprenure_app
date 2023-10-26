@@ -9,11 +9,13 @@ import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/pages/profile/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/profile/pages/details_update.dart';
 import 'package:deshifarmer/presentation/pages/profile/pages/settings_update.dart';
+import 'package:deshifarmer/presentation/pages/profile/pages/update_page.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:deshifarmer/presentation/widgets/snackbar_custom.dart';
 import 'package:flutter/material.dart';
+import 'package:shorebird_code_push/shorebird_code_push.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Body of the ProfilePage.
@@ -274,6 +276,8 @@ class ProfileBody extends StatelessWidget {
                   title: const Text('হেল্প'),
                   trailing: const Icon(Icons.navigate_next),
                 ),
+                //! check for update
+                CheckForUpdate(),
 
                 /// log out
                 ListTile(
@@ -332,6 +336,81 @@ class ProfileBody extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+// Create an instance of the ShorebirdCodePush class
+final shorebirdCodePush = ShorebirdCodePush();
+
+class CheckForUpdate extends StatelessWidget {
+  CheckForUpdate({
+    super.key,
+  });
+
+  bool isLoading = false;
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      // tileColor: Colors.cyanAccent,
+      onTap: () async {
+        debugPrint('checking for updates');
+        // Check whether a patch is available to install.
+        final isUpdateAvailable =
+            await shorebirdCodePush.isNewPatchAvailableForDownload();
+        debugPrint('is update available: $isUpdateAvailable');
+
+        // Call the _checkForUpdates method when the user taps the button.
+        // bool isUpdateAvailable = await _checkForUpdates();
+        // an aleart dialog to show the user that the app is updating
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          useSafeArea: true,
+          builder: (context) => AlertDialog(
+            title: isUpdateAvailable
+                ? const Text('আপডেট প্রযোজ্য')
+                : const Text('আপডেট'),
+            content: isLoading
+                ? const SizedBox(
+                    height: 50,
+                    width: 50,
+                    child: Center(child: CircularProgressIndicator()),
+                  )
+                : isUpdateAvailable
+                    ? const Text('আপনি কি অ্যাপটি আপডেট করতে চান?')
+                    : const Text('কোন আপডেট নেই'),
+            actions: isLoading
+                ? null
+                : [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: isUpdateAvailable
+                          ? const Text('Cancel')
+                          : const Text('Ok'),
+                    ),
+                    if (isUpdateAvailable)
+                      TextButton(
+                        onPressed: () async {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => UpdatingPage(),
+                            ),
+                          );
+                        },
+                        child: const Text('Update'),
+                      )
+                    else
+                      const SizedBox.shrink(),
+                  ],
+          ),
+        );
+      },
+      title: const Text('আপডেট চেক করুন'),
+      trailing: const Icon(Icons.navigate_next),
     );
   }
 }

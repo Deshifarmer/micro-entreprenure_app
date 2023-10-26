@@ -80,35 +80,64 @@ class HarvestAPI {
     };
     final body = {
       'product_name': hm.crop,
-      'variety': hm.jatt,
+      // 'variety': hm.jatt,
       'buy_price': hm.price,
       'quantity': hm.quantity,
       'unit': hm.unit,
-      'description': hm.note,
+      // 'description': hm.note,
       'source_location': hm.location,
       'which_farmer': hm.name,
     };
+    if (hm.jatt.isNotEmpty) {
+      body.addAll({'variety': hm.jatt});
+    } else {
+      debugPrint('Jatt is empty');
+    }
+    if (hm.note.isNotEmpty) {
+      body.addAll({'description': hm.note});
+    } else {
+      debugPrint('NOTE is empty');
+    }
     debugPrint('harvest url -> $url');
     try {
       _headers.addAll(headers);
-      final request = http.MultipartRequest('POST', url);
-      request.fields.addAll(body);
-      request.files
-          .add(await http.MultipartFile.fromPath('product_images[]', hm.image));
-      request.headers.addAll(headers);
-      final response = await request.send();
-      debugPrint('status code -> ${response.statusCode}');
-      if (response.statusCode == 201) {
-        return (true, '');
+      if (hm.image.isEmpty) {
+        debugPrint('image is empty doing by normal post');
+        final response = await http.post(
+          url,
+          headers: _headers,
+          body: json.encode(body),
+        );
+        // wait for 1 sec
+        await Future<void>.delayed(const Duration(seconds: 1));
+        debugPrint('status code -> ${response.statusCode}');
+        if (response.statusCode == 201) {
+          return (true, '');
+        } else {
+          debugPrint('body -> $body');
+          debugPrint(
+            'error -> ${response.statusCode} ${response.reasonPhrase} ${response.body}',
+          );
+          return (false, '${response.statusCode} Error Occured');
+        }
       } else {
-        debugPrint('body -> $body');
-        debugPrint(
-          'error -> ${response.statusCode} ${response.reasonPhrase} ${await response.stream.bytesToString()}',
-        );
-        return (
-          false,
-          "${response.statusCode} ${await response.stream.bytesToString()}"
-        );
+        debugPrint('image is not empty doing by multipart post');
+        final request = http.MultipartRequest('POST', url);
+        request.fields.addAll(body);
+        request.files.add(
+            await http.MultipartFile.fromPath('product_images[]', hm.image));
+        request.headers.addAll(headers);
+        final response = await request.send();
+        debugPrint('status code -> ${response.statusCode}');
+        if (response.statusCode == 201) {
+          return (true, '');
+        } else {
+          debugPrint('body -> $body');
+          debugPrint(
+            'error -> ${response.statusCode} ${response.reasonPhrase} ${await response.stream.bytesToString()}',
+          );
+          return (false, '${response.statusCode} Error Occured');
+        }
       }
     } catch (e) {
       debugPrint('Exception -> $e');

@@ -41,10 +41,10 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       '${ApiDatabaseParams.loginApi}?email=$mail&password=$pass',
     );
-    debugPrint('$url');
+    debugPrint('URL $url');
     try {
       final http.Response response = await http.post(url);
-      // debugdebugPrint('login response -> ${response.statusCode}');
+      debugPrint('login response -> ${response.statusCode} ${response.body}');
       if (response.statusCode == 200) {
         final result = await Isolate.run(() => json.decode(response.body));
         try {
@@ -68,6 +68,7 @@ class DeshiFarmerAPI {
         );
       }
     } catch (e) {
+      debugPrint('exception on login -> $e');
       return ServerFailor<SuccessLoginEntity, Exception>(
         Exception('Server failor'),
       );
@@ -1263,8 +1264,10 @@ class DeshiFarmerAPI {
   }
 
   //! batch getting api
-  Future<List<BatchEnity>?> getFarmBatches(
-      {required String token, required String farmID,}) async {
+  Future<List<BatchEnity>?> getFarmBatches({
+    required String token,
+    required String farmID,
+  }) async {
     Map<String, String> auth = <String, String>{
       'Authorization': 'Bearer $token',
     };
@@ -1344,12 +1347,14 @@ class DeshiFarmerAPI {
         return successResonse;
       } else {
         debugPrint(
-            'farmer list getting error -> ${response.statusCode} ${response.body}',);
+          'farmer list getting error -> ${response.statusCode} ${response.body}',
+        );
         return null;
       }
     } catch (e) {
       debugPrint(
-          'FArmer getting EXCEPTION -> ${e.toString().split(':').firstOrNull}',);
+        'FArmer getting EXCEPTION -> ${e.toString().split(':').firstOrNull}',
+      );
       return null;
     }
   }

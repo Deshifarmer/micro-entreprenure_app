@@ -8,20 +8,20 @@ class BottomInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           'v1.11',
-          style: TextStyle(
-            color: iconBackgroundColor,
-          ),
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                color: iconBackgroundColor,
+              ),
         ),
         Text(
           'প্লাটফর্ম পলিসি',
-          style: TextStyle(
-            color: iconBackgroundColor,
-          ),
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                color: iconBackgroundColor,
+              ),
         ),
       ],
     );

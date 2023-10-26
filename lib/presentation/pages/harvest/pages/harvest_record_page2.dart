@@ -14,6 +14,7 @@ import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
 class HarvestRecordPage2 extends StatefulWidget {
@@ -62,6 +63,145 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
   final TextEditingController imageFieldController = TextEditingController();
 
   String sowingSeedsource = '';
+
+  Future<void> _postHarvest() async {
+    // debugPrint every field field of harvest model
+    debugPrint('name -> ${selectFarmerController.text}');
+    debugPrint('image -> ${imageFieldController.text}');
+    // debugPrint('note -> ${noteController.text}');
+    debugPrint('price -> ${sellPriceController.text}');
+    debugPrint('quantity -> ${selectQuantityController.text}');
+    debugPrint(
+      'unit -> ${unitController.text.isEmpty ? widget.units.first.unit : unitController.text}',
+    );
+    debugPrint('crop -> ${selectCropController.text}');
+    debugPrint('location -> ${sellLocationController.text}');
+    // debugPrint('jatt -> ${jatController.text}');
+
+    if (selectFarmerController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('কৃষক নির্বাচন করুন'),
+        ),
+      );
+      return;
+    }
+    // else if (imageFieldController.text.isEmpty) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(
+    //       content: Text('ছবি আপলোড করুন'),
+    //     ),
+    //   );
+    //   return;
+    // }
+    // else if (noteController.text.isEmpty) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(
+    //       content: Text('নোট লিখুন'),
+    //     ),
+    //   );
+    //   return;
+    // }
+    else if (sellPriceController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('ক্রয় মূল্য লিখুন'),
+        ),
+      );
+      return;
+    } else if (selectQuantityController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('পরিমাণ লিখুন'),
+        ),
+      );
+      return;
+    } else if (selectCropController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('ফসল নির্বাচন করুন'),
+        ),
+      );
+      return;
+    } else if (sellLocationController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('উপজেলা নির্বাচন করুন'),
+        ),
+      );
+      return;
+    }
+    // else if (jatController.text.isEmpty) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(
+    //       content: Text('জাত নির্বাচন করুন'),
+    //     ),
+    //   );
+    //   return;
+    // }
+    setState(() {
+      isLoading = true;
+    });
+    final harvestModel = HarvestModel(
+      jatt: jatController.text.isEmpty ? '' : jatController.text,
+      name: selectFarmerController.text,
+      image: imageFieldController.text,
+      note: noteController.text.isEmpty ? '' : noteController.text,
+      price: sellPriceController.text,
+      quantity: selectQuantityController.text,
+      unit: unitController.text.isEmpty
+          ? widget.units.first.unit
+          : unitController.text,
+      crop: selectCropController.text,
+      location: sellLocationController.text,
+    );
+    final api = HarvestAPI();
+    final loginState = context.read<LoginBloc>().state;
+    final token =
+        loginState is LoginSuccess ? loginState.successLoginEntity.token : '';
+
+    await api.postHarvest(hm: harvestModel, token: token).then((value) {
+      if (value.$1) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('সফলভাবে সাবমিট হয়েছে'),
+          ),
+        );
+        Navigator.pop(context);
+        setState(() {
+          isLoading = false;
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('সাবমিট হয়নি  ${value.$2}}'),
+          ),
+        );
+        setState(() {
+          isLoading = false;
+        });
+      }
+    });
+  }
+
+  FarmerEntity? searchedValue;
+  final TextEditingController searchTextController = TextEditingController();
+
+  @override
+  void dispose() {
+    searchTextController.dispose();
+    selectFarmerController.dispose();
+    selectCropController.dispose();
+    selectQuantityController.dispose();
+    unitController.dispose();
+    jatController.dispose();
+    sellPriceController.dispose();
+    sellLocationController.dispose();
+    noteController.dispose();
+    imageFieldController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -134,6 +274,7 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
             // SelectFarmerMethodsForHarvests(
             //   selectFarmerController: selectFarmerController,
             // ),
+
             Padding(
               padding: const EdgeInsets.all(8),
               child: Column(
@@ -142,95 +283,133 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
                   const Text(
                     'কৃষক নির্বাচন করুন',
                   ),
-                  DropdownButtonFormField<FarmerEntity>(
-                    isExpanded: true,
-                    // itemHeight: 300,
-                    // menuMaxHeight: 200,
-
-                    decoration: InputDecoration(
-                      fillColor: backgroundColor2,
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        borderSide: BorderSide(
-                          color: Colors.black.withOpacity(0.2),
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        borderSide: BorderSide(
-                          color: Colors.black.withOpacity(0.2),
-                        ),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(15)),
-                        borderSide: BorderSide(
-                          color: Colors.black.withOpacity(0.2),
-                        ),
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        // vertical: 20,
-                        horizontal: 15,
-                      ),
-                      labelStyle: const TextStyle(
-                        color: Colors.black,
-                      ),
-                      hintText: '',
-                      filled: true,
-                    ),
-                    hint: const Text('কৃষক নির্বাচন করুন'),
-                    elevation: 16,
-                    // value: snapshot.data?.farmers.first,
-                    items: widget.allFarmerListResp?.farmers
-                        .map<DropdownMenuItem<FarmerEntity>>((value) {
-                      return DropdownMenuItem<FarmerEntity>(
-                        alignment: Alignment.center,
-                        value: value,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 5,
+                  //* select farmer
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton2<FarmerEntity>(
+                      buttonStyleData: ButtonStyleData(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: backgroundColor2,
+                          border: Border.all(
+                            color: Colors.black.withOpacity(0.2),
                           ),
-                          child: Row(
-                            // mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: CachedNetworkImage(
-                                  imageUrl:
-                                      '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
-                                  errorWidget: (context, url, error) =>
-                                      const Icon(Icons.error),
-                                  height: 50,
-                                  width: 50,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                value.full_name ?? '',
-                                style: Theme.of(context).textTheme.labelSmall,
-                              ),
-                              if (value.phone != null)
-                                if (value.phone!.isNotEmpty)
-                                  Text(
-                                    ' (${value.phone})',
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ),
+                      isExpanded: true,
+                      hint: Text(
+                        'কৃষক নির্বাচন করুন',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Theme.of(context).hintColor,
+                        ),
+                      ),
+                      items: widget.allFarmerListResp?.farmers
+                          .map((item) => DropdownMenuItem(
+                                value: item,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 5,
                                   ),
-                            ],
+                                  child: Row(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: CachedNetworkImage(
+                                          imageUrl:
+                                              '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${item.image}',
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
+                                          height: 50,
+                                          width: 50,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        item.full_name ?? '',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall,
+                                      ),
+                                      if (item.phone != null)
+                                        if (item.phone!.isNotEmpty)
+                                          Text(
+                                            ' (${item.phone})',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall,
+                                          ),
+                                    ],
+                                  ),
+                                ),
+                              ))
+                          .toList(),
+                      value: searchedValue,
+                      onChanged: (value) {
+                        setState(() {
+                          searchedValue = value;
+                        });
+                        selectFarmerController.text = value?.farmer_id ?? '';
+                      },
+                      dropdownSearchData: DropdownSearchData(
+                        searchController: searchTextController,
+                        searchInnerWidgetHeight:
+                            getProportionateScreenHeight(50),
+                        searchInnerWidget: Container(
+                          height: getProportionateScreenHeight(50),
+                          padding: const EdgeInsets.only(
+                            top: 8,
+                            bottom: 4,
+                            right: 8,
+                            left: 8,
+                          ),
+                          child: TextFormField(
+                            expands: true,
+                            maxLines: null,
+                            controller: searchTextController,
+                            decoration: InputDecoration(
+                              isDense: true,
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 8,
+                              ),
+                              hintText: 'কৃষক অনুসন্ধান করুন....',
+                              hintStyle: const TextStyle(fontSize: 12),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
                           ),
                         ),
-                      );
-                    }).toList(),
-                    onChanged: (FarmerEntity? val) {
-                      if (val != null) {
-                        selectFarmerController.text = val.farmer_id ?? '';
-                      }
-                    },
+                        searchMatchFn: (item, searchValue) {
+                          // return item.value. .toString().contains(searchValue);
+                          return item.value!.full_name
+                                  .toString()
+                                  .toLowerCase()
+                                  .contains(searchValue) ||
+                              item.value!.phone
+                                  .toString()
+                                  .toLowerCase()
+                                  .contains(searchValue) ||
+                              item.value!.farmer_id
+                                  .toString()
+                                  .toLowerCase()
+                                  .contains(searchValue) ||
+                              item.value!.usaid_id
+                                  .toString()
+                                  .toLowerCase()
+                                  .contains(searchValue);
+                        },
+                      ),
+                      //This to clear the search value when you close the menu
+                      onMenuStateChange: (isOpen) {
+                        if (!isOpen) {
+                          searchTextController.clear();
+                        }
+                      },
+                    ),
                   ),
                 ],
               ),
@@ -595,23 +774,23 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
             SizedBox(
               height: getProportionateScreenHeight(80),
             ),
-            IconButton(
-              onPressed: () {
-                // debugPrint every field field of harvest model
-                debugPrint('name -> ${selectFarmerController.text}');
-                debugPrint('image -> ${imageFieldController.text}');
-                debugPrint('note -> ${noteController.text}');
-                debugPrint('price -> ${sellPriceController.text}');
-                debugPrint('quantity -> ${selectQuantityController.text}');
-                debugPrint(
-                  'unit -> ${unitController.text.isEmpty ? widget.units.first.unit : unitController.text}',
-                );
-                debugPrint('crop -> ${selectCropController.text}');
-                debugPrint('location -> ${sellLocationController.text}');
-                debugPrint('jatt -> ${jatController.text}');
-              },
-              icon: const Icon(Icons.ad_units),
-            ),
+            // IconButton(
+            //   onPressed: () {
+            //     // debugPrint every field field of harvest model
+            //     debugPrint('name -> ${selectFarmerController.text}');
+            //     debugPrint('image -> ${imageFieldController.text}');
+            //     debugPrint('note -> ${noteController.text}');
+            //     debugPrint('price -> ${sellPriceController.text}');
+            //     debugPrint('quantity -> ${selectQuantityController.text}');
+            //     debugPrint(
+            //       'unit -> ${unitController.text.isEmpty ? widget.units.first.unit : unitController.text}',
+            //     );
+            //     debugPrint('crop -> ${selectCropController.text}');
+            //     debugPrint('location -> ${sellLocationController.text}');
+            //     debugPrint('jatt -> ${jatController.text}');
+            //   },
+            //   icon: const Icon(Icons.ad_units),
+            // ),
           ],
         ),
       ),
@@ -634,120 +813,10 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
           ? const Center(child: PrimaryLoadingIndicator())
           : SecondayButtonGreen(
               btnColor: priceBoxColor,
-              onpress: () async {
-                // debugPrint every field field of harvest model
-                debugPrint('name -> ${selectFarmerController.text}');
-                debugPrint('image -> ${imageFieldController.text}');
-                debugPrint('note -> ${noteController.text}');
-                debugPrint('price -> ${sellPriceController.text}');
-                debugPrint('quantity -> ${selectQuantityController.text}');
-                debugPrint(
-                  'unit -> ${unitController.text.isEmpty ? widget.units.first.unit : unitController.text}',
-                );
-                debugPrint('crop -> ${selectCropController.text}');
-                debugPrint('location -> ${sellLocationController.text}');
-                debugPrint('jatt -> ${jatController.text}');
-
-                if (selectFarmerController.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('কৃষক নির্বাচন করুন'),
-                    ),
-                  );
-                  return;
-                } else if (imageFieldController.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('ছবি আপলোড করুন'),
-                    ),
-                  );
-                  return;
-                } else if (noteController.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('নোট লিখুন'),
-                    ),
-                  );
-                  return;
-                } else if (sellPriceController.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('ক্রয় মূল্য লিখুন'),
-                    ),
-                  );
-                  return;
-                } else if (selectQuantityController.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('পরিমাণ লিখুন'),
-                    ),
-                  );
-                  return;
-                } else if (selectCropController.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('ফসল নির্বাচন করুন'),
-                    ),
-                  );
-                  return;
-                } else if (sellLocationController.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('উপজেলা নির্বাচন করুন'),
-                    ),
-                  );
-                  return;
-                } else if (jatController.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('জাত নির্বাচন করুন'),
-                    ),
-                  );
-                  return;
-                }
-                setState(() {
-                  isLoading = true;
-                });
-                final harvestModel = HarvestModel(
-                  jatt: jatController.text,
-                  name: selectFarmerController.text,
-                  image: imageFieldController.text,
-                  note: noteController.text,
-                  price: sellPriceController.text,
-                  quantity: selectQuantityController.text,
-                  unit: unitController.text.isEmpty
-                      ? widget.units.first.unit
-                      : unitController.text,
-                  crop: selectCropController.text,
-                  location: sellLocationController.text,
-                );
-                final api = HarvestAPI();
-                final loginState = context.read<LoginBloc>().state;
-                final token = loginState is LoginSuccess
-                    ? loginState.successLoginEntity.token
-                    : '';
-                final isCreated =
-                    await api.postHarvest(hm: harvestModel, token: token);
-
-                if (isCreated.$1) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('সফলভাবে সাবমিট হয়েছে'),
-                    ),
-                  );
-                  Navigator.pop(context);
-                  // clear all the fields and pop
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('সাবমিট হয়নি  ${isCreated.$2}}'),
-                    ),
-                  );
-                }
-                setState(() {
-                  isLoading = false;
-                });
-              },
+              onpress: _postHarvest,
+              // onpress: () {
+              //   debugPrint('name -> ${selectFarmerController.text}');
+              // },
               title: 'সাবমিট করুন ',
             ),
     );
