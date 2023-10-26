@@ -22,41 +22,41 @@ class _SelectGroupLeaderState extends State<SelectGroupLeader> {
   void initState() {
     super.initState();
     // insert an empty farmer entity to the list
-    _farmerList.add(const FarmerEntity(
-      farmer_id: 'x',
-      full_name: '------------',
-      phone: '',
-      image: '',
-      address: '',
-      farmer_type: '',
-      onboard_by: '',
-      usaid_id: '',
-      first_name: '',
-      last_name: '',
-      fathers_name: '',
-      is_married: '',
-      gender: '',
-      date_of_birth: '',
-      village: '',
-      upazila: '',
-      district: '',
-      division: '',
-      union: '',
-      credit_score: '',
-      residentType: '',
-      land_status: '',
-      year_of_stay_in: '',
-      group_id: '',
-      bank_details: '',
-      mfs_account: '',
-      current_producing_crop: '',
-      focused_crop: '',
-      cropping_intensity: '',
-      cultivation_practice: '',
-      farmer_role: '',
-      farm_id: '',
-      order_list: [],
-    ),);
+    // _farmerList.add(const FarmerEntity(
+    //   farmer_id: 'x',
+    //   full_name: '------------',
+    //   phone: '',
+    //   image: '',
+    //   address: '',
+    //   farmer_type: '',
+    //   onboard_by: '',
+    //   usaid_id: '',
+    //   first_name: '',
+    //   last_name: '',
+    //   fathers_name: '',
+    //   is_married: '',
+    //   gender: '',
+    //   date_of_birth: '',
+    //   village: '',
+    //   upazila: '',
+    //   district: '',
+    //   division: '',
+    //   union: '',
+    //   credit_score: '',
+    //   residentType: '',
+    //   land_status: '',
+    //   year_of_stay_in: '',
+    //   group_id: '',
+    //   bank_details: '',
+    //   mfs_account: '',
+    //   current_producing_crop: '',
+    //   focused_crop: '',
+    //   cropping_intensity: '',
+    //   cultivation_practice: '',
+    //   farmer_role: '',
+    //   farm_id: '',
+    //   order_list: [],
+    // ),);
   }
 
   @override
@@ -108,30 +108,12 @@ class _SelectGroupLeaderState extends State<SelectGroupLeader> {
                   // value: state.allFarmerListResp.farmers.isNotEmpty
                   //     ? state.allFarmerListResp.farmers.first
                   //     : null,
-                  value: _farmerList.isNotEmpty ? _farmerList.first : null,
+                  // value: _farmerList.isNotEmpty ? _farmerList.first : null,
                   items:
                       _farmerList.map<DropdownMenuItem<FarmerEntity>>((value) {
                     return DropdownMenuItem<FarmerEntity>(
                       alignment: Alignment.center,
                       value: value,
-                      // child: ListTile(
-                      //   leading: ClipRRect(
-                      //     borderRadius: BorderRadius.circular(10),
-                      //     child: Image.network(
-                      //       checkDomain(
-                      //         Strings.getServerOrLocal(
-                      //           ServerOrLocal.server,
-                      //         ),
-                      //       )
-                      //           ? dummyImage
-                      //           : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
-                      //       height: 50,
-                      //       width: 50,
-                      //     ),
-                      //   ),
-                      //   title: Text(value.full_name ?? ''),
-                      //   // subtitle: Text(value.phone ?? ''),
-                      // ),
                       child: Row(
                         children: [
                           if (value.image?.isNotEmpty ?? false)
