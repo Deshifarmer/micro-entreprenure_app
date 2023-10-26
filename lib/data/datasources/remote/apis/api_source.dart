@@ -116,7 +116,7 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.orderApi,
     );
-    // debugPrint('url $url $token');
+    debugPrint('url $url $token');
     try {
       _headers.addAll(auth);
       final http.Response response = await http.get(

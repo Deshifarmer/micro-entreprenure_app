@@ -1,9 +1,9 @@
+// import 'package:deshifarmer/main_production.dart';
 import 'dart:async';
 
 //! TODO: Remove this file after testing
-// import 'package:deshifarmer/main_production.dart';
-// import 'package:deshifarmer/main_development.dart';
-import 'package:deshifarmer/main.dart';
+// import 'package:deshifarmer/main.dart';
+import 'package:deshifarmer/main_development.dart';
 import 'package:deshifarmer/presentation/widgets/no_internet_wid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

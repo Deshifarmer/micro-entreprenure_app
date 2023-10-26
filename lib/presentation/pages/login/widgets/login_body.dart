@@ -136,6 +136,7 @@ class LoginBody extends StatelessWidget {
                       ),
                       controller: _mobile,
                       keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.next,
                       decoration: const InputDecoration(
                         fillColor: tertiaryColor,
                         focusedBorder: OutlineInputBorder(
@@ -173,7 +174,10 @@ class LoginBody extends StatelessWidget {
                     padding: EdgeInsets.symmetric(
                       vertical: getProportionateScreenHeight(10),
                     ),
-                    child: PasswordTextField(password: _password),
+                    child: PasswordTextField(
+                      password: _password,
+                      mobile: _mobile,
+                    ),
                   ),
 
                   /// a row where a text button 'forget password' and anotehr button to sign in
