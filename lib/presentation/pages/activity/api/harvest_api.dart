@@ -98,7 +98,7 @@ class HarvestAPI {
     } else {
       debugPrint('NOTE is empty');
     }
-    debugPrint('harvest url -> $url');
+    debugPrint('harvest url -> \n$url \n$token \n$body');
     try {
       _headers.addAll(headers);
       if (hm.image.isEmpty) {
@@ -108,8 +108,8 @@ class HarvestAPI {
           headers: _headers,
           body: json.encode(body),
         );
-        // wait for 1 sec
-        await Future<void>.delayed(const Duration(seconds: 1));
+        // // wait for 1 sec
+        // await Future<void>.delayed(const Duration(seconds: 1));
         debugPrint('status code -> ${response.statusCode}');
         if (response.statusCode == 201) {
           return (true, '');

@@ -1,6 +1,9 @@
 import 'package:animations/animations.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:deshifarmer/data/datasources/local/shared_prefs/local_database_sf.dart';
+import 'package:deshifarmer/presentation/animations/page_animations.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
+import 'package:deshifarmer/presentation/pages/login/view/login_page.dart';
 import 'package:deshifarmer/presentation/pages/order/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/order/components/last_stage_orderlist.dart';
 import 'package:deshifarmer/presentation/pages/order/components/unfullfilledorder_card.dart';
@@ -121,31 +124,24 @@ class OrderBody extends StatelessWidget {
           );
         }
         if (state is OrderFetchFailed) {
-          final connectivityResult = Connectivity().checkConnectivity();
-          return FutureBuilder<ConnectivityResult>(
-            future: connectivityResult,
-            builder: (context, snapshot) {
-              if (snapshot.hasData &&
-                  snapshot.data == ConnectivityResult.none) {
-                return Column(
-                  children: [
-                    LottieBuilder.asset('assets/animations/no_internet.json'),
-                    const Text('ইন্টারনেট সংযোগ নেই'),
-                  ],
-                );
-              }
-              return Column(
-                children: [
-                  LottieBuilder.asset('assets/animations/failed.json'),
-                  // const Text('কোন অর্ডার নেই'),
-                  /// failed to fetch order message in Bangla
-                  Text(
-                    state.message,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ],
-              );
-            },
+          if (state.message.contains('401') &&
+              state.message.contains('Unauthenticated.')) {
+            SharedPrefDBServices().removeLoginToken();
+            // send the user to login page
+            Navigator.of(context).popUntil((route) => route.isFirst);
+            context.read<LoginBloc>().add(const ResetLoginEvent());
+          }
+
+          return Column(
+            children: [
+              LottieBuilder.asset('assets/animations/failed.json'),
+              // const Text('কোন অর্ডার নেই'),
+              /// failed to fetch order message in Bangla
+              Text(
+                state.message,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ],
           );
         }
         return const Center(child: PrimaryLoadingIndicator());

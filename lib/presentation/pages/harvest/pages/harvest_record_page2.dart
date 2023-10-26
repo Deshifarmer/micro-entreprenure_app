@@ -199,7 +199,6 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
     sellLocationController.dispose();
     noteController.dispose();
     imageFieldController.dispose();
-
     super.dispose();
   }
 
