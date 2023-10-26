@@ -90,9 +90,13 @@ class HarvestAPI {
     };
     if (hm.jatt.isNotEmpty) {
       body.addAll({'variety': hm.jatt});
+    } else {
+      debugPrint('Jatt is empty');
     }
     if (hm.note.isNotEmpty) {
       body.addAll({'description': hm.note});
+    } else {
+      debugPrint('NOTE is empty');
     }
     debugPrint('harvest url -> $url');
     try {
