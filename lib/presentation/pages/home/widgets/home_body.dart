@@ -9,6 +9,7 @@ import 'package:deshifarmer/presentation/pages/attendance/attendance.dart';
 import 'package:deshifarmer/presentation/pages/commision/commision.dart';
 import 'package:deshifarmer/presentation/pages/farmadd_form/view/farmadd_form_page.dart';
 import 'package:deshifarmer/presentation/pages/home/components/customapp_bar.dart';
+import 'package:deshifarmer/presentation/pages/home/components/farmer_weather_card.dart';
 import 'package:deshifarmer/presentation/pages/home/components/home_page_orders.dart';
 import 'package:deshifarmer/presentation/pages/home/components/my_kpi.dart';
 import 'package:deshifarmer/presentation/pages/home/components/quick_actions.dart';
@@ -50,16 +51,16 @@ class HomeBody extends StatelessWidget {
                   ),
 
               ///! TODO: Weather Card
-              // SliverList(
-              //   delegate: SliverChildBuilderDelegate(
-              //     (_, int index) {
-              //       return FarmerWeatherCard(
-              //         usrProfile: usrProfile,
-              //       );
-              //     },
-              //     childCount: 1,
-              //   ),
-              // ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (_, int index) {
+                    return FarmerWeatherCard(
+                      usrProfile: usrProfile,
+                    );
+                  },
+                  childCount: 1,
+                ),
+              ),
 
               ///! Quick Actions
               const QuickActions(),
@@ -253,7 +254,8 @@ class HomeBody extends StatelessWidget {
                                 context,
                                 // LoginPage.route(),
                                 MaterialPageRoute(
-                                    builder: (context) => const App(),),
+                                  builder: (context) => const App(),
+                                ),
                                 (route) => false,
                               );
                               // Navigate to the beginning of the app
@@ -278,7 +280,8 @@ class HomeBody extends StatelessWidget {
                               context,
                               // LoginPage.route(),
                               MaterialPageRoute(
-                                  builder: (context) => const App(),),
+                                builder: (context) => const App(),
+                              ),
                               (route) => false,
                             );
                           },
