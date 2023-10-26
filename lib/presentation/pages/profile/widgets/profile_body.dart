@@ -9,12 +9,12 @@ import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/pages/profile/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/profile/pages/details_update.dart';
 import 'package:deshifarmer/presentation/pages/profile/pages/settings_update.dart';
+import 'package:deshifarmer/presentation/pages/profile/pages/update_page.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:deshifarmer/presentation/widgets/snackbar_custom.dart';
 import 'package:flutter/material.dart';
-import 'package:restart_app/restart_app.dart';
 import 'package:shorebird_code_push/shorebird_code_push.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -277,7 +277,7 @@ class ProfileBody extends StatelessWidget {
                   trailing: const Icon(Icons.navigate_next),
                 ),
                 //! check for update
-                const CheckForUpdate(),
+                CheckForUpdate(),
 
                 /// log out
                 ListTile(
@@ -340,60 +340,19 @@ class ProfileBody extends StatelessWidget {
   }
 }
 
-class CheckForUpdate extends StatefulWidget {
-  const CheckForUpdate({
-    super.key,
-  });
-
-  @override
-  State<CheckForUpdate> createState() => _CheckForUpdateState();
-}
-
 // Create an instance of the ShorebirdCodePush class
 final shorebirdCodePush = ShorebirdCodePush();
 
-class _CheckForUpdateState extends State<CheckForUpdate> {
-  @override
-  void initState() {
-    super.initState();
-
-    // Get the current patch number and print it to the console. It will be
-    // null if no patches are installed.
-    shorebirdCodePush
-        .currentPatchNumber()
-        .then((value) => print('current patch number is $value'));
-  }
-
-  // Future<bool> _checkForUpdates() async {
-  //   debugPrint('checking for updates');
-  //   // Check whether a patch is available to install.
-  //   final isUpdateAvailable =
-  //       await shorebirdCodePush.isNewPatchAvailableForDownload();
-  //   debugPrint('is update available: $isUpdateAvailable');
-  //   if (isUpdateAvailable) {
-  //     // Download the new patch if it's available.
-  //     await shorebirdCodePush.downloadUpdateIfAvailable();
-  //   }
-
-  // }
-  void _showRestartBanner() {
-    ScaffoldMessenger.of(context).showMaterialBanner(
-      const MaterialBanner(
-        content: Text('A new patch is ready!'),
-        actions: [
-          TextButton(
-            onPressed: Restart.restartApp,
-            child: Text('Restart app'),
-          ),
-        ],
-      ),
-    );
-  }
+class CheckForUpdate extends StatelessWidget {
+  CheckForUpdate({
+    super.key,
+  });
 
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      // tileColor: Colors.cyanAccent,
       onTap: () async {
         debugPrint('checking for updates');
         // Check whether a patch is available to install.
@@ -412,9 +371,6 @@ class _CheckForUpdateState extends State<CheckForUpdate> {
             title: isUpdateAvailable
                 ? const Text('আপডেট প্রযোজ্য')
                 : const Text('আপডেট'),
-            // content: isUpdateAvailable
-            //     ? const Text('Do you want to update the app?')
-            //     : const Text('No Update Available'),
             content: isLoading
                 ? const SizedBox(
                     height: 50,
@@ -438,21 +394,12 @@ class _CheckForUpdateState extends State<CheckForUpdate> {
                     if (isUpdateAvailable)
                       TextButton(
                         onPressed: () async {
-                          setState(() {
-                            isLoading = true;
-                          });
-                          await Future.wait([
-                            shorebirdCodePush.downloadUpdateIfAvailable(),
-                            Future<void>.delayed(
-                              const Duration(milliseconds: 250),
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => UpdatingPage(),
                             ),
-                          ]);
-
-                          Navigator.pop(context);
-                          setState(() {
-                            isLoading = false;
-                          });
-                          _showRestartBanner();
+                          );
                         },
                         child: const Text('Update'),
                       )
