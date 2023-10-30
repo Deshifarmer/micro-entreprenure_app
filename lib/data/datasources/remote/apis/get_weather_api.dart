@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:isolate';
 
+import 'package:deshifarmer/core/analytics/firebase_analytics_custom.dart';
 import 'package:deshifarmer/core/params/api_database_params.dart';
 import 'package:deshifarmer/core/usecase/location_current.dart';
 import 'package:deshifarmer/domain/entities/weather/weather_entity.dart';
@@ -31,13 +32,35 @@ Future<WeatherEntity?> getCurrentWeather() async {
         final successResonse = WeatherEntity.fromJson(result);
         return successResonse;
       } catch (e) {
-        result.forEach((key, value) {});
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'weather_error',
+          parameters: {
+            'error': e.toString(),
+            'url': url.toString(),
+            'body': response.body,
+          },
+        );
       }
       return null;
     } else {
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'weather_error',
+        parameters: {
+          'error': response.statusCode,
+          'url': url.toString(),
+          'body': response.body,
+        },
+      );
       return null;
     }
   } catch (e) {
+    FirebaseAnalyticsCustom.customLogEvent(
+      name: 'weather_error',
+      parameters: {
+        'error': e.toString(),
+        'url': url.toString(),
+      },
+    );
     return null;
   }
 }
