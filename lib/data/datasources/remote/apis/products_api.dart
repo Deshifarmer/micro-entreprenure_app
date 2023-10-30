@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:isolate';
 
+import 'package:deshifarmer/core/analytics/firebase_analytics_custom.dart';
 import 'package:deshifarmer/domain/entities/products_entity/product_entity.dart';
 import 'package:deshifarmer/presentation/utils/get_product_url_utils.dart';
 import 'package:flutter/foundation.dart';
@@ -44,7 +45,14 @@ class ProductFetchAPI {
           return successResonse;
         } catch (e) {
           debugPrint('error -> $e');
-          result.forEach((key, value) {});
+          // result.forEach((key, value) {});
+          FirebaseAnalyticsCustom.customLogEvent(
+              name: 'product_search_error',
+              parameters: {
+                'error': e.toString(),
+                'url': url.toString(),
+                'body': response.body,
+              });
         }
         // return ServerFailor<ProductEntity, Exception>(
         //   Exception('Server failor'),
@@ -54,12 +62,27 @@ class ProductFetchAPI {
         // return ServerFailor<ProductEntity, Exception>(
         //   Exception('Server failor'),
         // );
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'product_search_error',
+          parameters: {
+            'error': response.statusCode,
+            'url': url.toString(),
+            'body': response.body,
+          },
+        );
         return null;
       }
     } catch (e) {
       // return ServerFailor<ProductEntity, Exception>(
       //   Exception('Server failor -> $e'),
       // );
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'product_search_error',
+        parameters: {
+          'error': e.toString(),
+          'url': url.toString(),
+        },
+      );
       return null;
     }
   }
