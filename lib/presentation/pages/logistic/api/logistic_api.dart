@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:isolate';
 
+import 'package:deshifarmer/core/analytics/firebase_analytics_custom.dart';
 import 'package:deshifarmer/core/params/api_database_params.dart';
 import 'package:deshifarmer/domain/entities/source_entity/source_entity.dart';
 import 'package:deshifarmer/presentation/pages/logistic/model/logistic_model.dart';
@@ -16,8 +17,10 @@ class LogisticAPI {
   //! get CROP from different API
 
   // harvest post
-  Future<bool> postLogistic(
-      {required LogisticModel lm, required String token,}) async {
+  Future<bool> postLogistic({
+    required LogisticModel lm,
+    required String token,
+  }) async {
     final url = Uri.parse(
       ApiDatabaseParams.postLogisticAPI,
     );
@@ -47,9 +50,25 @@ class LogisticAPI {
         return true;
       } else {
         debugPrint('Lets see -> ${response.body}');
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'harvest_error',
+          parameters: {
+            'error': response.statusCode,
+            'url': url.toString(),
+            'body': body.toString(),
+          },
+        );
         return false;
       }
     } catch (e) {
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'harvest_error',
+        parameters: {
+          'error': e.toString(),
+          'url': url.toString(),
+          'body': body.toString(),
+        },
+      );
       return false;
     }
   }
@@ -88,13 +107,36 @@ class LogisticAPI {
             debugPrint(
               'error comverting data BatchEnity ->  ${element.runtimeType}, $e \n',
             );
+            FirebaseAnalyticsCustom.customLogEvent(
+              name: 'batch_error',
+              parameters: {
+                'error': e.toString(),
+                'url': url.toString(),
+                'body': response.body,
+              },
+            );
           }
         }
         return harvestList;
       } else {
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'batch_error',
+          parameters: {
+            'error': response.statusCode,
+            'url': url.toString(),
+            'body': response.body,
+          },
+        );
         return null;
       }
     } catch (e) {
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'batch_error',
+        parameters: {
+          'error': e.toString(),
+          'url': url.toString(),
+        },
+      );
       return null;
     }
   }

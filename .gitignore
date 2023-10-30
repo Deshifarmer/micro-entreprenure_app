@@ -200,3 +200,6 @@ lib/presentation/pages/activity/models/pesticide_entity.g.dart
 lib/presentation/pages/activity/models/sowing_entity.g.dart
 lib/presentation/pages/activity/models/watering_entity.g.dart
 lib/presentation/pages/activity/api/entity/unit_entity.g.dart
+android/app/google-services.json
+ios/firebase_app_id_file.json
+macos/firebase_app_id_file.json

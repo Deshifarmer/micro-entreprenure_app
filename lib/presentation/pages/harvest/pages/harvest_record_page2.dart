@@ -199,7 +199,6 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
     sellLocationController.dispose();
     noteController.dispose();
     imageFieldController.dispose();
-
     super.dispose();
   }
 
@@ -217,8 +216,6 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
         padding: const EdgeInsets.all(10),
         child: ListView(
           cacheExtent: 999999,
-          // mainAxisAlignment: MainAxisAlignment.start,
-          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
               child: Text(
@@ -384,7 +381,6 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
                           ),
                         ),
                         searchMatchFn: (item, searchValue) {
-                          // return item.value. .toString().contains(searchValue);
                           return item.value!.full_name
                                   .toString()
                                   .toLowerCase()
@@ -774,41 +770,11 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
             SizedBox(
               height: getProportionateScreenHeight(80),
             ),
-            // IconButton(
-            //   onPressed: () {
-            //     // debugPrint every field field of harvest model
-            //     debugPrint('name -> ${selectFarmerController.text}');
-            //     debugPrint('image -> ${imageFieldController.text}');
-            //     debugPrint('note -> ${noteController.text}');
-            //     debugPrint('price -> ${sellPriceController.text}');
-            //     debugPrint('quantity -> ${selectQuantityController.text}');
-            //     debugPrint(
-            //       'unit -> ${unitController.text.isEmpty ? widget.units.first.unit : unitController.text}',
-            //     );
-            //     debugPrint('crop -> ${selectCropController.text}');
-            //     debugPrint('location -> ${sellLocationController.text}');
-            //     debugPrint('jatt -> ${jatController.text}');
-            //   },
-            //   icon: const Icon(Icons.ad_units),
-            // ),
+
           ],
         ),
       ),
-      // bottomNavigationBar: SumbitButtonForHervest(
-      //   harvestModel: HarvestModel(
-      //     jatt: jatController.text,
-      //     name: selectFarmerController.text,
-      //     image: imageFieldController.text,
-      //     note: noteController.text,
-      //     price: sellPriceController.text,
-      //     quantity: selectQuantityController.text,
-      // unit: unitController.text.isEmpty
-      //     ? widget.units.first.unit
-      //     : unitController.text,
-      //     crop: selectCropController.text,
-      //     location: sellLocationController.text,
-      //   ),
-      // ),
+
       bottomNavigationBar: isLoading
           ? const Center(child: PrimaryLoadingIndicator())
           : SecondayButtonGreen(

@@ -56,20 +56,7 @@ class OrderPage extends StatelessWidget {
                 )
               : null,
         ),
-        body: RefreshIndicator(
-          backgroundColor: priceBoxColor,
-          color: Colors.white,
-          onRefresh: () async {
-            final loginState = context.read<LoginBloc>().state;
-            final token = loginState is LoginSuccess
-                ? loginState.successLoginEntity.token
-                : '';
-            if (token.isNotEmpty) {
-              context.read<OrderBloc>().add(InitOrders(token));
-            }
-          },
-          child: const OrderView(),
-        ),
+        body: const OrderView(),
       ),
     );
   }
