@@ -1,4 +1,3 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:deshifarmer/app/view/app.dart';
 import 'package:deshifarmer/core/params/home_page_params.dart';
 import 'package:deshifarmer/data/datasources/remote/apis/attendance_api.dart';
@@ -9,7 +8,6 @@ import 'package:deshifarmer/presentation/pages/attendance/attendance.dart';
 import 'package:deshifarmer/presentation/pages/commision/commision.dart';
 import 'package:deshifarmer/presentation/pages/farmadd_form/view/farmadd_form_page.dart';
 import 'package:deshifarmer/presentation/pages/home/components/customapp_bar.dart';
-import 'package:deshifarmer/presentation/pages/home/components/farmer_weather_card.dart';
 import 'package:deshifarmer/presentation/pages/home/components/home_page_orders.dart';
 import 'package:deshifarmer/presentation/pages/home/components/my_kpi.dart';
 import 'package:deshifarmer/presentation/pages/home/components/quick_actions.dart';
@@ -22,7 +20,6 @@ import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
 /// {@template home_body}
 /// Body of the HomePage.
@@ -231,48 +228,12 @@ class HomeBody extends StatelessWidget {
                     .read<UserProfileBloc>()
                     .add(GetUserProfileEvent(token: token));
               },
-              child: FutureBuilder<ConnectivityResult>(
-                future: Connectivity().checkConnectivity(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData &&
-                      snapshot.data == ConnectivityResult.none) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          LottieBuilder.asset(
-                            'assets/animations/no_internet.json',
-                            repeat: false,
-                          ),
-                          const Text('ইন্টারনেট সংযোগ নেই'),
-
-                          /// a button to restart the app
-                          SecondayButtonGreen(
-                            onpress: () async {
-                              // await Restart.restartApp();
-                              await Navigator.pushAndRemoveUntil(
-                                context,
-                                // LoginPage.route(),
-                                MaterialPageRoute(
-                                  builder: (context) => const App(),
-                                ),
-                                (route) => false,
-                              );
-                              // Navigate to the beginning of the app
-                            },
-                            title: 'পুনরায় চেষ্টা করুন',
-                          ),
-                        ],
-                      ),
-                    );
-                  }
-                  return Center(
+              child: Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         // LottieBuilder.asset('assets/animations/failed.json'),
                         const Text('কিছু ভুল হয়েছে'),
-
                         /// a button to restart the app
                         SecondayButtonGreen(
                           onpress: () async {
@@ -289,9 +250,8 @@ class HomeBody extends StatelessWidget {
                         ),
                       ],
                     ),
-                  );
-                },
-              ),
+                  )
+              
             ),
           );
         }
