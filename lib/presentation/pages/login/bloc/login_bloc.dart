@@ -33,6 +33,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     final value = switch (result) {
       Success(data: final SuccessLoginEntity succ) => {
           emit(LoginSuccess(succ)),
+          
 
           /// hit the user profile api
         },

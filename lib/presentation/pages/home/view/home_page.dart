@@ -104,6 +104,7 @@ class _HomePageState extends State<HomePage>
           color: tertiaryColor,
           shape: const CircularNotchedRectangle(),
           // height: getProportionateScreenHeight(90),
+          // ignore: use_named_constants
           padding: const EdgeInsets.all(0),
           // notchMargin: 10,
           // clipBehavior: Clip.antiAlias,
