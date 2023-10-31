@@ -109,6 +109,7 @@ class HarvestAPI {
       'buy_price': hm.price,
       'quantity': hm.quantity,
       'unit': hm.unit,
+      'market_name': hm.marketName,
       // 'description': hm.note,
       'source_location': hm.location,
       'which_farmer': hm.name,
