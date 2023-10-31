@@ -8,11 +8,13 @@ class HarvestModel {
     required this.unit,
     required this.crop,
     required this.location,
+    required this.marketName,
     required this.jatt,
   });
   final String name;
   final String image;
   final String crop;
+  final String marketName;
   final String jatt;
   final String quantity;
   final String unit;

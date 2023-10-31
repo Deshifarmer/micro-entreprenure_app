@@ -10,7 +10,6 @@ import 'package:deshifarmer/presentation/pages/order/view/order_page.dart';
 import 'package:deshifarmer/presentation/pages/profile/view/profile_page.dart';
 import 'package:deshifarmer/presentation/shapes/my_farmers_shape.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
-import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 
 /// {@template home_page}
@@ -104,7 +103,8 @@ class _HomePageState extends State<HomePage>
         bottomNavigationBar: BottomAppBar(
           color: tertiaryColor,
           shape: const CircularNotchedRectangle(),
-          height: getProportionateScreenHeight(90),
+          // height: getProportionateScreenHeight(90),
+          // ignore: use_named_constants
           padding: const EdgeInsets.all(0),
           // notchMargin: 10,
           // clipBehavior: Clip.antiAlias,

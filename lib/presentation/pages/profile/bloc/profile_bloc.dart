@@ -13,7 +13,5 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   FutureOr<void> _onCustomProfileEvent(
     CustomProfileEvent event,
     Emitter<ProfileState> emit,
-  ) {
-    // TODO: Add Logic
-  }
+  ) {}
 }

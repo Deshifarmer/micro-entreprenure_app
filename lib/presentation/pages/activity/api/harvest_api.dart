@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:isolate';
-
+import 'package:deshifarmer/core/analytics/firebase_analytics_custom.dart';
 import 'package:deshifarmer/core/params/api_database_params.dart';
 import 'package:deshifarmer/data/models/record_activity_model.dart';
 import 'package:deshifarmer/domain/entities/batch/batch_entity.dart';
@@ -49,16 +49,41 @@ class HarvestAPI {
               SingleCropEntity.fromJson(element),
             );
           } catch (e) {
-            debugPrint(
-              'error comverting data single crop entity ->  ${element.runtimeType}, $e \n',
+            // debugPrint(
+            //   'error comverting data single crop entity ->  ${element.runtimeType}, $e \n',
+            // );
+            FirebaseAnalyticsCustom.customLogEvent(
+              name: 'crop_error',
+              parameters: {
+                'error': e.toString(),
+                'url': url.toString(),
+                // 'body': response.body,
+              },
             );
           }
         }
         return cropList;
       } else {
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'crop_error',
+          parameters: {
+            'error': response.statusCode,
+            'url': url.toString(),
+            'body': response.body,
+          },
+        );
+
         return [];
       }
     } catch (e) {
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'crop_error',
+        parameters: {
+          'error': e.toString(),
+          'url': url.toString(),
+          // 'body': response.body,
+        },
+      );
       return [];
     }
   }
@@ -84,6 +109,7 @@ class HarvestAPI {
       'buy_price': hm.price,
       'quantity': hm.quantity,
       'unit': hm.unit,
+      'market_name': hm.marketName,
       // 'description': hm.note,
       'source_location': hm.location,
       'which_farmer': hm.name,
@@ -98,7 +124,7 @@ class HarvestAPI {
     } else {
       debugPrint('NOTE is empty');
     }
-    debugPrint('harvest url -> $url');
+    debugPrint('harvest url -> \n$url \n$token \n$body');
     try {
       _headers.addAll(headers);
       if (hm.image.isEmpty) {
@@ -108,8 +134,8 @@ class HarvestAPI {
           headers: _headers,
           body: json.encode(body),
         );
-        // wait for 1 sec
-        await Future<void>.delayed(const Duration(seconds: 1));
+        // // wait for 1 sec
+        // await Future<void>.delayed(const Duration(seconds: 1));
         debugPrint('status code -> ${response.statusCode}');
         if (response.statusCode == 201) {
           return (true, '');
@@ -118,10 +144,20 @@ class HarvestAPI {
           debugPrint(
             'error -> ${response.statusCode} ${response.reasonPhrase} ${response.body}',
           );
+          FirebaseAnalyticsCustom.customLogEvent(
+            name: 'harvest_post_error',
+            parameters: {
+              'error': response.statusCode,
+              'body': response.body,
+              'url': url.toString(),
+              'token': token,
+            },
+          );
           return (false, '${response.statusCode} Error Occured');
         }
       } else {
         debugPrint('image is not empty doing by multipart post');
+
         final request = http.MultipartRequest('POST', url);
         request.fields.addAll(body);
         request.files.add(
@@ -136,11 +172,29 @@ class HarvestAPI {
           debugPrint(
             'error -> ${response.statusCode} ${response.reasonPhrase} ${await response.stream.bytesToString()}',
           );
+
+          FirebaseAnalyticsCustom.customLogEvent(
+            name: 'harvest_post_error',
+            parameters: {
+              'error': response.statusCode,
+              'body': await response.stream.bytesToString(),
+              'url': url.toString(),
+              'token': token,
+            },
+          );
           return (false, '${response.statusCode} Error Occured');
         }
       }
     } catch (e) {
       debugPrint('Exception -> $e');
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'harvest_post_error',
+        parameters: {
+          'error': e.toString(),
+          'url': url.toString(),
+          'token': token,
+        },
+      );
       return (false, e.toString());
     }
   }
@@ -179,15 +233,40 @@ class HarvestAPI {
             debugPrint(
               'error comverting data BatchEnity ->  ${element.runtimeType}, $e \n',
             );
+            FirebaseAnalyticsCustom.customLogEvent(
+              name: 'harvest_get_error',
+              parameters: {
+                'error': e.toString(),
+                'url': url.toString(),
+                'token': token,
+              },
+            );
           }
         }
         return harvestList;
       } else {
         debugPrint('error -> ${response.statusCode} ${response.body}');
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'harvest_get_error',
+          parameters: {
+            'error': response.statusCode,
+            'body': response.body,
+            'url': url.toString(),
+            'token': token,
+          },
+        );
         return null;
       }
     } catch (e) {
       debugPrint('Exception -> $e');
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'harvest_get_error',
+        parameters: {
+          'error': e.toString(),
+          'url': url.toString(),
+          'token': token,
+        },
+      );
       return null;
     }
   }
@@ -237,10 +316,27 @@ class HarvestAPI {
           debugPrint(
             'error -> ${response.statusCode} ${response.reasonPhrase} ${await response.stream.bytesToString()}',
           );
+          FirebaseAnalyticsCustom.customLogEvent(
+            name: 'land_prep_post_error',
+            parameters: {
+              'error': response.statusCode,
+              'body': await response.stream.bytesToString(),
+              'url': url.toString(),
+              'token': ram.token,
+            },
+          );
           return false;
         }
       } catch (e) {
         debugPrint('Exception -> $e');
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'land_prep_post_error',
+          parameters: {
+            'error': e.toString(),
+            'url': url.toString(),
+            'token': ram.token,
+          },
+        );
         return false;
       }
     } else if (ram.whatType == ActivityTypeEnums.sowing) {
@@ -273,9 +369,26 @@ class HarvestAPI {
           return true;
         } else {
           debugPrint('Lets see -> ${response.body}');
+          FirebaseAnalyticsCustom.customLogEvent(
+            name: 'sowing_post_error',
+            parameters: {
+              'error': response.statusCode,
+              'body': response.body,
+              'url': url.toString(),
+              'token': ram.token,
+            },
+          );
           return false;
         }
       } catch (e) {
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'sowing_post_error',
+          parameters: {
+            'error': e.toString(),
+            'url': url.toString(),
+            'token': ram.token,
+          },
+        );
         return false;
       }
     } else if (ram.whatType == ActivityTypeEnums.fertilizer) {
@@ -303,9 +416,25 @@ class HarvestAPI {
           return true;
         } else {
           debugPrint('Lets see -> ${response.body}');
+          FirebaseAnalyticsCustom.customLogEvent(
+            name: 'fertilizer_post_error',
+            parameters: {
+              'error': response.statusCode,
+              'body': response.body,
+              'url': url.toString(),
+              'token': ram.token,
+            },
+          );
           return false;
         }
       } catch (e) {
+        FirebaseAnalyticsCustom.customLogEvent(
+            name: 'fertilizer_post_error',
+            parameters: {
+              'error': e.toString(),
+              'url': url.toString(),
+              'token': ram.token,
+            });
         return false;
       }
     } else if (ram.whatType == ActivityTypeEnums.pesticide) {
@@ -333,9 +462,25 @@ class HarvestAPI {
           return true;
         } else {
           debugPrint('Lets see -> ${response.body}');
+          FirebaseAnalyticsCustom.customLogEvent(
+            name: 'pesticide_post_error',
+            parameters: {
+              'error': response.statusCode,
+              'body': response.body,
+              'url': url.toString(),
+              'token': ram.token,
+            },
+          );
           return false;
         }
       } catch (e) {
+        FirebaseAnalyticsCustom.customLogEvent(
+            name: 'pesticide_post_error',
+            parameters: {
+              'error': e.toString(),
+              'url': url.toString(),
+              'token': ram.token,
+            });
         return false;
       }
     } else if (ram.whatType == ActivityTypeEnums.irrigation) {
@@ -361,9 +506,25 @@ class HarvestAPI {
           return true;
         } else {
           debugPrint('Lets see -> ${response.body}');
+          FirebaseAnalyticsCustom.customLogEvent(
+            name: 'irrigation_post_error',
+            parameters: {
+              'error': response.statusCode,
+              'body': response.body,
+              'url': url.toString(),
+              'token': ram.token,
+            },
+          );
           return false;
         }
       } catch (e) {
+        FirebaseAnalyticsCustom.customLogEvent(
+            name: 'irrigation_post_error',
+            parameters: {
+              'error': e.toString(),
+              'url': url.toString(),
+              'token': ram.token,
+            });
         return false;
       }
     } else if (ram.whatType == ActivityTypeEnums.reportProblem) {
@@ -401,6 +562,14 @@ class HarvestAPI {
               KrishibebshaProd.fromJson(element),
             );
           } catch (e) {
+            FirebaseAnalyticsCustom.customLogEvent(
+              name: 'krishibebsha_prod_error',
+              parameters: {
+                'error': e.toString(),
+                'url': url.toString(),
+                // 'body': response.body,
+              },
+            );
             debugPrint(
               'error comverting data BatchEnity ->  ${element.runtimeType}, $e \n',
             );
@@ -408,9 +577,25 @@ class HarvestAPI {
         }
         return prodList;
       } else {
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'krishibebsha_prod_error',
+          parameters: {
+            'error': response.statusCode,
+            'url': url.toString(),
+            'body': response.body,
+          },
+        );
         return null;
       }
     } catch (e) {
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'krishibebsha_prod_error',
+        parameters: {
+          'error': e.toString(),
+          'url': url.toString(),
+          // 'body': response.body,
+        },
+      );
       return null;
     }
   }
@@ -448,6 +633,14 @@ class HarvestAPI {
               BatchEnity.fromJson(element),
             );
           } catch (e) {
+            FirebaseAnalyticsCustom.customLogEvent(
+              name: 'batch_get_error',
+              parameters: {
+                'error': e.toString(),
+                'url': url.toString(),
+                // 'body': response.body,
+              },
+            );
             debugPrint(
               'error comverting data BatchEnity ->  ${element.runtimeType}, $e \n',
             );
@@ -455,9 +648,25 @@ class HarvestAPI {
         }
         return companyE;
       } else {
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'batch_get_error',
+          parameters: {
+            'error': response.statusCode,
+            'url': url.toString(),
+            'body': response.body,
+          },
+        );
         return null;
       }
     } catch (e) {
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'batch_get_error',
+        parameters: {
+          'error': e.toString(),
+          'url': url.toString(),
+          // 'body': response.body,
+        },
+      );
       return null;
     }
   }
@@ -491,15 +700,39 @@ class HarvestAPI {
         try {
           return BatchResponseEntity.fromJson(result);
         } catch (e) {
+          FirebaseAnalyticsCustom.customLogEvent(
+            name: 'batch_get_error',
+            parameters: {
+              'error': e.toString(),
+              'url': url.toString(),
+              // 'body': response.body,
+            },
+          );
           debugPrint(
             'error comverting data BatchEnity ->  ${result.runtimeType}, $e \n',
           );
           return null;
         }
       } else {
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'batch_get_error',
+          parameters: {
+            'error': response.statusCode,
+            'url': url.toString(),
+            'body': response.body,
+          },
+        );
         return null;
       }
     } catch (e) {
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'batch_get_error',
+        parameters: {
+          'error': e.toString(),
+          'url': url.toString(),
+          // 'body': response.body,
+        },
+      );
       return null;
     }
   }
@@ -533,6 +766,14 @@ class HarvestAPI {
               UnitEntity.fromJson(element),
             );
           } catch (e) {
+            FirebaseAnalyticsCustom.customLogEvent(
+              name: 'unit_error',
+              parameters: {
+                'error': e.toString(),
+                'url': url.toString(),
+                // 'body': response.body,
+              },
+            );
             debugPrint(
               'error comverting data unit ->  ${element.runtimeType}, $e \n',
             );
@@ -540,9 +781,25 @@ class HarvestAPI {
         }
         return cropList;
       } else {
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'unit_error',
+          parameters: {
+            'error': response.statusCode,
+            'url': url.toString(),
+            'body': response.body,
+          },
+        );
         return [];
       }
     } catch (e) {
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'unit_error',
+        parameters: {
+          'error': e.toString(),
+          'url': url.toString(),
+          // 'body': response.body,
+        },
+      );
       return [];
     }
   }

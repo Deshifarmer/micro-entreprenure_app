@@ -1,7 +1,6 @@
 import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
-import 'package:deshifarmer/presentation/pages/order/bloc/order_bloc.dart';
-import 'package:deshifarmer/presentation/pages/order/widgets/order_body.dart';
+import 'package:deshifarmer/presentation/pages/order/widgets/order_body2.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -32,12 +31,12 @@ class OrderPage extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
+          title: Text(
             'আমার অর্ডার  সমূহ',
-            style: TextStyle(
-              color: priceBoxColor,
-              fontWeight: FontWeight.w500,
-            ),
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  color: primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
           ),
           // centerTitle: true,
           leading: isBack == true
@@ -51,25 +50,13 @@ class OrderPage extends StatelessWidget {
                     context
                         .read<UserProfileBloc>()
                         .add(GetUserProfileEvent(token: token));
+                    debugPrint('GetUserProfileEvent in OrderPage');
                     Navigator.of(context).pop();
                   },
                 )
               : null,
         ),
-        body: RefreshIndicator(
-          backgroundColor: priceBoxColor,
-          color: Colors.white,
-          onRefresh: () async {
-            final loginState = context.read<LoginBloc>().state;
-            final token = loginState is LoginSuccess
-                ? loginState.successLoginEntity.token
-                : '';
-            if (token.isNotEmpty) {
-              context.read<OrderBloc>().add(InitOrders(token));
-            }
-          },
-          child: const OrderView(),
-        ),
+        body: const OrderView(),
       ),
     );
   }
@@ -84,6 +71,12 @@ class OrderView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const OrderBody();
+    final loginState = context.watch<LoginBloc>().state;
+    final token =
+        loginState is LoginSuccess ? loginState.successLoginEntity.token : '';
+    // return const OrderBody();
+    return OrderBody2(
+      token: token,
+    );
   }
 }

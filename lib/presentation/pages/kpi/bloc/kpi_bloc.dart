@@ -13,7 +13,5 @@ class KpiBloc extends Bloc<KpiEvent, KpiState> {
   FutureOr<void> _onCustomKpiEvent(
     CustomKpiEvent event,
     Emitter<KpiState> emit,
-  ) {
-    // TODO: Add Logic
-  }
+  ) {}
 }

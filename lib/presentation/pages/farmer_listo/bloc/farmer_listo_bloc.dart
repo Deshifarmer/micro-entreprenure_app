@@ -14,6 +14,6 @@ class FarmerListoBloc extends Bloc<FarmerListoEvent, FarmerListoState> {
     CustomFarmerListoEvent event,
     Emitter<FarmerListoState> emit,
   ) {
-    // TODO: Add Logic
+    
   }
 }

@@ -73,7 +73,7 @@ class ProfileBody extends StatelessWidget {
 
                 /// code
                 Text(
-                  '#${userProfile.userProfile.df_id ?? ''}}',
+                  '#${userProfile.userProfile.df_id ?? ''}',
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

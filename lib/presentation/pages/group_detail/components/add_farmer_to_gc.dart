@@ -7,8 +7,7 @@ import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:flutter/material.dart';
 
-/// TODO: Assigned Farmes in the Group api
-/// TODO: Group leader Select API
+
 
 class AddFarmerToTheAGroup extends StatelessWidget {
   const AddFarmerToTheAGroup({super.key});
@@ -17,7 +16,7 @@ class AddFarmerToTheAGroup extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<MyUnassignFamersBloc, MyUnassignFamersState>(
       listener: (context, state) {
-        // TODO: implement listener
+        
       },
       builder: (context, state) {
         if (state is MyUnassignFarmerReqSuccess) {

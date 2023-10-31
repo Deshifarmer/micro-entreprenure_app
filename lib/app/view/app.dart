@@ -31,6 +31,7 @@ import 'package:deshifarmer/presentation/pages/profile/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -38,6 +39,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+
     return MultiBlocProvider(
       providers: [
         //? LoginBloc
@@ -184,33 +186,60 @@ class App extends StatelessWidget {
         ),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: FutureBuilder<String?>(
-          future: SharedPrefDBServices().getLoginToken(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              debugPrint('usr alrady loggen in -> ${snapshot.data}');
-              if (snapshot.data != null) {
-                /// a login success event
-                context
-                    .read<LoginBloc>()
-                    .add(LoginSuccessEvent(token: snapshot.data!));
-
-                /// get user profile
-                context
-                    .read<UserProfileBloc>()
-                    .add(GetUserProfileEvent(token: snapshot.data!));
-
-                /// get my orders
-                context.read<OrderBloc>().add(InitOrders(snapshot.data!));
-                // UserProfileBloc()
-                //     .add(GetUserProfileEvent(token: snapshot.data!));
-                return const HomePage();
-              }
-            }
-            return const LoginPage();
-          },
-        ),
+        home: const MyHomePagu(),
       ),
+    );
+  }
+}
+
+class MyHomePagu extends StatefulWidget {
+  const MyHomePagu({
+    super.key,
+  });
+
+  @override
+  State<MyHomePagu> createState() => _MyHomePaguState();
+}
+
+class _MyHomePaguState extends State<MyHomePagu> {
+  late Future<String?> getLoginTokenFromDB;
+  @override
+  void initState() {
+    debugPrint('how many times the app gets called APP->MyHomePage->initState');
+    getLoginTokenFromDB = SharedPrefDBServices().getLoginToken();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    debugPrint('how many times the app gets called APP->MyHomePage');
+    return FutureBuilder<String?>(
+      future: getLoginTokenFromDB,
+      builder: (context, snapshot) {
+        debugPrint('how many times the app gets called APP->MyHomePage->FB');
+        if (snapshot.hasData) {
+          debugPrint('usr alrady loggen in -> ${snapshot.data}');
+          if (snapshot.data != null) {
+            /// a login success event
+            context
+                .read<LoginBloc>()
+                .add(LoginSuccessEvent(token: snapshot.data!));
+
+            /// get user profile
+            context
+                .read<UserProfileBloc>()
+                .add(GetUserProfileEvent(token: snapshot.data!));
+            debugPrint('GetUserProfileEvent in APP');
+
+            /// get my orders
+            context.read<OrderBloc>().add(InitOrders(snapshot.data!));
+            // UserProfileBloc()
+            //     .add(GetUserProfileEvent(token: snapshot.data!));
+            return const HomePage();
+          }
+        }
+        return const LoginPage();
+      },
     );
   }
 }

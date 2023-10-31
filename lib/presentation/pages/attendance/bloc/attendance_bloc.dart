@@ -49,7 +49,7 @@ class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
   FutureOr<void> _onCheckInEvent(CheckInEvent event, emit) async {
     emit(AttendanceLoading());
 
-    ///! TODO: uncomment this
+    
     final todaysAtten = await deshiFarmerAPI.getTodaysAttendance(event.token);
 
     if (todaysAtten != null) {

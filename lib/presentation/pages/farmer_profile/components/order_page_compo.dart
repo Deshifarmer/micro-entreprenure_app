@@ -137,7 +137,7 @@ class FarmerOrderCard extends StatelessWidget {
                                   ),
                         ),
 
-                        ///! TODO: uncomment this
+                        
                         // Text(
                         //   currentOrder.farmer_details?.farmer_address ?? '',
                         //   style:
@@ -166,7 +166,7 @@ class FarmerOrderCard extends StatelessWidget {
                           ///! recevie api
 
                           if (loginState is LoginSuccess) {
-                            ///! TODO: uncomment this
+                            
                             // final received = await deshiFarmerAPI.receiveOrder(
                             //   loginState.successLoginEntity.token,
                             //   currentOrder.order_id ?? '',
