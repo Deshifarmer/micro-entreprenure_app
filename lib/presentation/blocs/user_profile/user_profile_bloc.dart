@@ -36,7 +36,7 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
       emit(UserProfileFetchSuccess(value));
     } else {
       debugPrint('user profile error: $value');
-      emit(UserProfileFetchFailed());
+      emit(const UserProfileFetchFailed(message: 'User Profile Error'));
     }
   }
 }

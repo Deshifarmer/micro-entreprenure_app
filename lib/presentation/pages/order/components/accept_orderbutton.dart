@@ -1,5 +1,4 @@
-
-import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
+import 'package:deshifarmer/data/datasources/remote/apis/order_api.dart';
 import 'package:deshifarmer/presentation/pages/activity/activity.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/pages/order/bloc/order_bloc.dart';
@@ -35,7 +34,7 @@ class _AcceptOrderButtonState extends State<AcceptOrderButton> {
         setState(() {
           isLoading = true;
         });
-        final dfAPI = DeshiFarmerAPI();
+        final dfAPI = OrderAPI();
         final isSuccess =
             await dfAPI.collectOrder(widget.orderID, widget.token);
         if (isSuccess) {
@@ -90,4 +89,3 @@ class _AcceptOrderButtonState extends State<AcceptOrderButton> {
     );
   }
 }
-
