@@ -13,7 +13,5 @@ class PdetailBloc extends Bloc<PdetailEvent, PdetailState> {
   FutureOr<void> _onCustomPdetailEvent(
     CustomPdetailEvent event,
     Emitter<PdetailState> emit,
-  ) {
-    // TODO: Add Logic
-  }
+  ) {}
 }

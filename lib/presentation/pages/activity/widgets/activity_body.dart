@@ -124,4 +124,3 @@ class ActivityBody extends StatelessWidget {
     );
   }
 }
-    // /! TODO: uncomment this

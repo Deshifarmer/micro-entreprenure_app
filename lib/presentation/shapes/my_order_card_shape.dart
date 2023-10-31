@@ -220,7 +220,6 @@ class MyOrderCard extends StatelessWidget {
                               ///! recevie api
 
                               if (loginState is LoginSuccess) {
-                                ///! TODO: uncomment this
                                 // final received =
                                 //     await deshiFarmerAPI.receiveOrder(
                                 //   loginState.successLoginEntity.token,

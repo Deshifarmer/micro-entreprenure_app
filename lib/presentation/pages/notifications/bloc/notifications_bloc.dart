@@ -13,7 +13,5 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   FutureOr<void> _onCustomNotificationsEvent(
     CustomNotificationsEvent event,
     Emitter<NotificationsState> emit,
-  ) {
-    // TODO: Add Logic
-  }
+  ) {}
 }

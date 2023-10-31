@@ -146,7 +146,7 @@ class _OrderConformationPageState extends State<OrderConformationPage> {
               //               ),
               //         ),
 
-              //         ///! TODO: uncomment this
+              
               //         // if (selectedFarmer != null) ...[
               //         //   DetailRowConformCompo(
               //         //     field: 'নাম',
@@ -665,6 +665,7 @@ ${cartItems.getTotalPrices() + cartItems.getTotalPrices()}''',
                               context
                                   .read<UserProfileBloc>()
                                   .add(GetUserProfileEvent(token: token!));
+                                  debugPrint("GetUserProfileEvent in ConformationPage");
                               Navigator.pushAndRemoveUntil(
                                 context,
                                 HomePage.route(),
@@ -751,7 +752,7 @@ class ConfirmOrderFutreBldr extends StatelessWidget {
                 Navigator.pop(context);
               },
             );
-            // /! TODO: uncomment this
+            
             context.read<CartBloc>().add(ResetCart());
             return Column(
               children: [

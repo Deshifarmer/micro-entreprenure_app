@@ -14,6 +14,6 @@ class CommisionBloc extends Bloc<CommisionEvent, CommisionState> {
     CustomCommisionEvent event,
     Emitter<CommisionState> emit,
   ) {
-    // TODO: Add Logic
+    
   }
 }
