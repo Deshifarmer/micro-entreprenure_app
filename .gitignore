@@ -203,3 +203,5 @@ lib/presentation/pages/activity/api/entity/unit_entity.g.dart
 android/app/google-services.json
 ios/firebase_app_id_file.json
 macos/firebase_app_id_file.json
+lib/domain/entities/orders_entity/all_orders.g.dart
+lib/domain/entities/farmer_entity/all_farmer_entity2.g.dart
