@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/domain/entities/crop_entity/single_crop_entity.dart';
-import 'package:deshifarmer/domain/entities/farmer_entity/all_farmer_entity.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
 import 'package:deshifarmer/presentation/pages/activity/api/entity/unit_entity.dart';
 import 'package:deshifarmer/presentation/pages/activity/api/harvest_api.dart';
@@ -14,18 +13,18 @@ import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
 class HarvestRecordPage2 extends StatefulWidget {
   const HarvestRecordPage2({
     required this.crops,
     required this.units,
-    this.allFarmerListResp,
+    required this.allFarmerListResp,
     super.key,
   });
 
-  final AllFarmerListResp? allFarmerListResp;
+  // final AllFarmerListResp? allFarmerListResp;
+  final FarmerEntity allFarmerListResp;
   final List<SingleCropEntity> crops;
   final List<UnitEntity> units;
 
@@ -35,7 +34,7 @@ class HarvestRecordPage2 extends StatefulWidget {
 
 class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
   /// for the landsize
-  final TextEditingController selectFarmerController = TextEditingController();
+  final TextEditingController marketNameController = TextEditingController();
 
   /// chemial
   final TextEditingController selectCropController = TextEditingController();
@@ -66,7 +65,7 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
 
   Future<void> _postHarvest() async {
     // debugPrint every field field of harvest model
-    debugPrint('name -> ${selectFarmerController.text}');
+    debugPrint('name -> ${widget.allFarmerListResp.farmer_id}');
     debugPrint('image -> ${imageFieldController.text}');
     // debugPrint('note -> ${noteController.text}');
     debugPrint('price -> ${sellPriceController.text}');
@@ -76,36 +75,18 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
     );
     debugPrint('crop -> ${selectCropController.text}');
     debugPrint('location -> ${sellLocationController.text}');
-    // debugPrint('jatt -> ${jatController.text}');
 
-    if (selectFarmerController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('কৃষক নির্বাচন করুন'),
-        ),
-      );
-      return;
-    }
-    // else if (imageFieldController.text.isEmpty) {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(
-    //       content: Text('ছবি আপলোড করুন'),
-    //     ),
-    //   );
-    //   return;
-    // }
-    // else if (noteController.text.isEmpty) {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(
-    //       content: Text('নোট লিখুন'),
-    //     ),
-    //   );
-    //   return;
-    // }
-    else if (sellPriceController.text.isEmpty) {
+    if (sellPriceController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('ক্রয় মূল্য লিখুন'),
+        ),
+      );
+      return;
+    } else if (marketNameController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('বাজারের নাম লিখুন'),
         ),
       );
       return;
@@ -131,20 +112,15 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
       );
       return;
     }
-    // else if (jatController.text.isEmpty) {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(
-    //       content: Text('জাত নির্বাচন করুন'),
-    //     ),
-    //   );
-    //   return;
-    // }
+
     setState(() {
       isLoading = true;
     });
     final harvestModel = HarvestModel(
       jatt: jatController.text.isEmpty ? '' : jatController.text,
-      name: selectFarmerController.text,
+      name: widget.allFarmerListResp.farmer_id ?? '',
+      marketName:
+          marketNameController.text.isEmpty ? '' : marketNameController.text,
       image: imageFieldController.text,
       note: noteController.text.isEmpty ? '' : noteController.text,
       price: sellPriceController.text,
@@ -164,9 +140,11 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
       if (value.$1) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
+            backgroundColor: primaryColor,
             content: Text('সফলভাবে সাবমিট হয়েছে'),
           ),
         );
+        Navigator.pop(context);
         Navigator.pop(context);
         setState(() {
           isLoading = false;
@@ -190,7 +168,7 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
   @override
   void dispose() {
     searchTextController.dispose();
-    selectFarmerController.dispose();
+    // selectFarmerController.dispose();
     selectCropController.dispose();
     selectQuantityController.dispose();
     unitController.dispose();
@@ -278,135 +256,43 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'কৃষক নির্বাচন করুন',
+                    'নির্বাচিত কৃষক',
                   ),
                   //* select farmer
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton2<FarmerEntity>(
-                      buttonStyleData: ButtonStyleData(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: backgroundColor2,
-                          border: Border.all(
-                            color: Colors.black.withOpacity(0.2),
-                          ),
-                        ),
-                      ),
-                      isExpanded: true,
-                      hint: Text(
-                        'কৃষক নির্বাচন করুন',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Theme.of(context).hintColor,
-                        ),
-                      ),
-                      items: widget.allFarmerListResp?.farmers
-                          .map((item) => DropdownMenuItem(
-                                value: item,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 5,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: CachedNetworkImage(
-                                          imageUrl:
-                                              '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${item.image}',
-                                          errorWidget: (context, url, error) =>
-                                              const Icon(Icons.error),
-                                          height: 50,
-                                          width: 50,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        item.full_name ?? '',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelSmall,
-                                      ),
-                                      if (item.phone != null)
-                                        if (item.phone!.isNotEmpty)
-                                          Text(
-                                            ' (${item.phone})',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodySmall,
-                                          ),
-                                    ],
-                                  ),
-                                ),
-                              ))
-                          .toList(),
-                      value: searchedValue,
-                      onChanged: (value) {
-                        setState(() {
-                          searchedValue = value;
-                        });
-                        selectFarmerController.text = value?.farmer_id ?? '';
-                      },
-                      dropdownSearchData: DropdownSearchData(
-                        searchController: searchTextController,
-                        searchInnerWidgetHeight:
-                            getProportionateScreenHeight(50),
-                        searchInnerWidget: Container(
-                          height: getProportionateScreenHeight(50),
-                          padding: const EdgeInsets.only(
-                            top: 8,
-                            bottom: 4,
-                            right: 8,
-                            left: 8,
-                          ),
-                          child: TextFormField(
-                            expands: true,
-                            maxLines: null,
-                            controller: searchTextController,
-                            decoration: InputDecoration(
-                              isDense: true,
-                              contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 8,
-                              ),
-                              hintText: 'কৃষক অনুসন্ধান করুন....',
-                              hintStyle: const TextStyle(fontSize: 12),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                          ),
-                        ),
-                        searchMatchFn: (item, searchValue) {
-                          return item.value!.full_name
-                                  .toString()
-                                  .toLowerCase()
-                                  .contains(searchValue) ||
-                              item.value!.phone
-                                  .toString()
-                                  .toLowerCase()
-                                  .contains(searchValue) ||
-                              item.value!.farmer_id
-                                  .toString()
-                                  .toLowerCase()
-                                  .contains(searchValue) ||
-                              item.value!.usaid_id
-                                  .toString()
-                                  .toLowerCase()
-                                  .contains(searchValue);
-                        },
-                      ),
-                      //This to clear the search value when you close the menu
-                      onMenuStateChange: (isOpen) {
-                        if (!isOpen) {
-                          searchTextController.clear();
-                        }
-                      },
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 5,
                     ),
-                  ),
+                    child: Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${widget.allFarmerListResp.image}',
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                            height: 50,
+                            width: 50,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          widget.allFarmerListResp.full_name ?? '',
+                          style: Theme.of(context).textTheme.labelSmall,
+                        ),
+                        if (widget.allFarmerListResp.phone != null)
+                          if (widget.allFarmerListResp.phone!.isNotEmpty)
+                            Text(
+                              ' (${widget.allFarmerListResp.phone})',
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
@@ -493,6 +379,52 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
               padding: EdgeInsets.symmetric(
                 horizontal: 10,
               ),
+              child: Text('বাজারের নাম'),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: TextField(
+                controller: marketNameController,
+                // onTap: () async {},
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  // suffixIcon: const Icon(Icons.keyboard_arrow_down_outlined),
+                  fillColor: backgroundColor2,
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    borderSide: BorderSide(
+                      color: Colors.black.withOpacity(0.2),
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    borderSide: BorderSide(
+                      color: Colors.black.withOpacity(0.2),
+                    ),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
+                    borderSide: BorderSide(
+                      color: Colors.black.withOpacity(0.2),
+                    ),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    // vertical: 20,
+                    horizontal: 15,
+                  ),
+                  labelStyle: const TextStyle(
+                    color: Colors.black,
+                  ),
+                  hintText: '',
+                  filled: true,
+                ),
+              ),
+            ),
+            //! jatt
+            const Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 10,
+              ),
               child: Text('জাত'),
             ),
             Padding(
@@ -534,6 +466,7 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
                 ),
               ),
             ),
+
             //! quantity KG
             Row(
               children: [
@@ -770,11 +703,9 @@ class _HarvestRecordPage2State extends State<HarvestRecordPage2> {
             SizedBox(
               height: getProportionateScreenHeight(80),
             ),
-
           ],
         ),
       ),
-
       bottomNavigationBar: isLoading
           ? const Center(child: PrimaryLoadingIndicator())
           : SecondayButtonGreen(
