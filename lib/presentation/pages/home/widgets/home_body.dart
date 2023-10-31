@@ -1,4 +1,3 @@
-import 'package:deshifarmer/app/view/app.dart';
 import 'package:deshifarmer/core/params/home_page_params.dart';
 import 'package:deshifarmer/data/datasources/remote/apis/attendance_api.dart';
 import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
@@ -20,6 +19,7 @@ import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:restart_app/restart_app.dart';
 
 /// {@template home_body}
 /// Body of the HomePage.
@@ -217,6 +217,7 @@ class HomeBody extends StatelessWidget {
               context
                   .read<UserProfileBloc>()
                   .add(GetUserProfileEvent(token: token));
+              debugPrint('GetUserProfileEvent in HomeBODY refresh');
             },
             child: GestureDetector(
               onTap: () {
@@ -227,31 +228,23 @@ class HomeBody extends StatelessWidget {
                 context
                     .read<UserProfileBloc>()
                     .add(GetUserProfileEvent(token: token));
+                debugPrint('GetUserProfileEvent in HOMEBODY tap');
               },
-              child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // LottieBuilder.asset('assets/animations/failed.json'),
-                        const Text('কিছু ভুল হয়েছে'),
-                        /// a button to restart the app
-                        SecondayButtonGreen(
-                          onpress: () async {
-                            await Navigator.pushAndRemoveUntil(
-                              context,
-                              // LoginPage.route(),
-                              MaterialPageRoute(
-                                builder: (context) => const App(),
-                              ),
-                              (route) => false,
-                            );
-                          },
-                          title: 'পুনরায় চেষ্টা করুন',
-                        ),
-                      ],
+              child: const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // LottieBuilder.asset('assets/animations/failed.json'),
+                    Text('কিছু ভুল হয়েছে'),
+
+                    /// a button to restart the app
+                    SecondayButtonGreen(
+                      onpress: Restart.restartApp,
+                      title: 'পুনরায় চেষ্টা করুন',
                     ),
-                  )
-              
+                  ],
+                ),
+              ),
             ),
           );
         }
