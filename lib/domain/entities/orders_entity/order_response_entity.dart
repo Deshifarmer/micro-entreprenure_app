@@ -28,8 +28,8 @@ class OrderEntity {
   /// factory.
   factory OrderEntity.fromJson(Map<String, dynamic> json) =>
       _$OrderEntityFromJson(json);
-  final String? order_id;
   // ignore: avoid_multiple_declarations_per_line
+  final String? order_id;
   final String? me_id;
   final String? channel_id;
   final String? total_price;

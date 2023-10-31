@@ -25,9 +25,9 @@ class ProductMeta {
   final int? current_page;
   final int? form;
   final int? last_page;
+  final List<ProductMetaLinks> links;
   final String? path;
   final int? per_page;
   final int? to;
   final int? total;
-  final List<ProductMetaLinks> links;
 }

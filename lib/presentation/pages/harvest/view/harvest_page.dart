@@ -1,9 +1,6 @@
-import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
-import 'package:deshifarmer/presentation/pages/activity/activity.dart';
 import 'package:deshifarmer/presentation/pages/activity/api/harvest_api.dart';
-import 'package:deshifarmer/presentation/pages/harvest/pages/harvest_record_page2.dart';
+import 'package:deshifarmer/presentation/pages/harvest/view/harvest_farmer_select_paginate.dart';
 import 'package:deshifarmer/presentation/pages/harvest/widgets/harvest_body.dart';
-import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
@@ -27,8 +24,6 @@ class HarvestPage extends StatefulWidget {
 }
 
 class _HarvestPageState extends State<HarvestPage> {
-
-
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -54,27 +49,18 @@ class _HarvestPageState extends State<HarvestPage> {
                 setState(() {
                   isLoading = true;
                 });
-                final loginState = context.read<LoginBloc>().state;
-                final token = loginState is LoginSuccess
-                    ? loginState.successLoginEntity.token
-                    : '';
-                final allFarmerListResp = await DeshiFarmerAPI().getFarmers2(
-                  token,
-                );
 
                 final cropList = await HarvestAPI().getCropFromAnotherAPI();
                 final units = await HarvestAPI().getUnitFromAnotherAPI();
 
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => HarvestRecordPage2(
-                      crops: cropList,
-                      allFarmerListResp: allFarmerListResp,
-                      units: units,
-                    ),
-                  ),
-                );
+                await showModalBottomSheet(
+                    context: context,
+                    builder: (_) {
+                      return HarvestFarmerSelectPaginate(
+                        cropList: cropList,
+                        units: units,
+                      );
+                    });
 
                 setState(() {
                   isLoading = false;

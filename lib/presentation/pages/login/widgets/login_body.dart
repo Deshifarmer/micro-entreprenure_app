@@ -38,6 +38,7 @@ class LoginBody extends StatelessWidget {
           context
               .read<UserProfileBloc>()
               .add(GetUserProfileEvent(token: state.successLoginEntity.token));
+              debugPrint("GetUserProfileEvent in LoginBODY2");
           SharedPrefDBServices().setLoginToken(state.successLoginEntity.token);
 
           /// get my orders
@@ -54,6 +55,7 @@ class LoginBody extends StatelessWidget {
 
           UserProfileBloc()
               .add(GetUserProfileEvent(token: state.successLoginEntity.token));
+              debugPrint("GetUserProfileEvent in LogInBODY");
           Navigator.pushAndRemoveUntil(
             context,
             HomePage.route(),

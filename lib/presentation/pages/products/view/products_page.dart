@@ -20,6 +20,7 @@ class ProductsPage extends StatelessWidget {
     // const prevItem = 0;
     // final cartBloc = context.read<CartBloc>().state;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('পণ্য কিনুন'),
         actions: const [

@@ -14,4 +14,9 @@ class UserProfileFetchSuccess extends UserProfileState {
   final UserProfileEntity userProfile;
 }
 
-class UserProfileFetchFailed extends UserProfileState {}
+class UserProfileFetchFailed extends UserProfileState {
+  const UserProfileFetchFailed({
+    required this.message,
+  });
+  final String message;
+}

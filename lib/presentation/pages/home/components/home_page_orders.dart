@@ -18,9 +18,9 @@ class HomePageOrders extends StatelessWidget {
         (_, int index) {
           final orderStatus = context.read<OrderBloc>().state;
           final recentOrders = orderStatus is OrderSuccess
-              ? orderStatus.orderEntitys.orders.length > 3
-                  ? orderStatus.orderEntitys.orders.sublist(0, 3)
-                  : orderStatus.orderEntitys.orders
+              ? orderStatus.orderEntitys.data.length > 3
+                  ? orderStatus.orderEntitys.data.sublist(0, 3)
+                  : orderStatus.orderEntitys.data
               : <OrderEntity>[];
 
           return Column(

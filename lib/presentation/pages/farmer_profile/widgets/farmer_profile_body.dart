@@ -270,7 +270,7 @@ class FarmerProfileBody extends StatelessWidget {
                           // OrderCardStackView(currentOrder: currentOrder),
                           FarmerOrderCard(currentOrder: currentOrder),
                           if (index !=
-                              orderState.orderEntitys.orders.length - 1)
+                              orderState.orderEntitys.data.length - 1)
                             Divider(
                               height: 2,
                               color: Colors.black.withOpacity(0.54),

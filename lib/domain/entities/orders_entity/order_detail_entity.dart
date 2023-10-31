@@ -31,11 +31,12 @@ class OrderDetailEntity {
   factory OrderDetailEntity.fromJson(Map<String, dynamic> json) =>
       _$OrderDetailEntityFromJson(json);
   // ignore: avoid_multiple_declarations_per_line, non_constant_identifier_names
-
   final int? id;
+  //TODO: change LOCAL 2 Server
   // final int? quantity; //! LOCAL
   final String? quantity; //! Server
-  // final int? total_price;//! LOCAL
+  //TODO: change LOCAL 2 Server
+  // final int? total_price; //! LOCAL
   final String? total_price; //! server
   final ProductDetailEntity? product_details;
   final String? me_order_id;
