@@ -22,7 +22,6 @@ class AgriAdvisoryBloc extends Bloc<AgriAdvisoryEvent, AgriAdvisoryState> {
   FutureOr<void> _onAdvisoryPostEvent(AddAdvisoryEvent event, emit) async {
     emit(AgriLoading());
 
-    // /! TODO: uncomment this
     // final resp = await deshiFarmerAPI.addAdvisory(
     //   token: event.token,
     //   subject: event.subject,

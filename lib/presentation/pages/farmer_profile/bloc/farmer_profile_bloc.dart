@@ -14,6 +14,6 @@ class FarmerProfileBloc extends Bloc<FarmerProfileEvent, FarmerProfileState> {
     CustomFarmerProfileEvent event,
     Emitter<FarmerProfileState> emit,
   ) {
-    // TODO: Add Logic
+  
   }
 }

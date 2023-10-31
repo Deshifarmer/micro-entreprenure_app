@@ -74,7 +74,7 @@ class CategoryMenuItems extends StatelessWidget {
               final loginState = context.read<LoginBloc>().state;
               if (productState.companyID != null) {
                 if (loginState is LoginSuccess) {
-                  ///! TODO: uncomment this
+                  
                   // context.read<ProductsBBloc>().add(
                   //       ProductSearchEvent(
                   //         loginState.successLoginEntity.token,
@@ -86,7 +86,7 @@ class CategoryMenuItems extends StatelessWidget {
                 }
               } else {
                 /// COMPOANY IS NOT SELECTED
-                ///! TODO: uncomment this
+                
                 if (loginState is LoginSuccess) {
                   // context.read<ProductsBBloc>().add(
                   //       ProductSearchEvent(
@@ -103,7 +103,7 @@ class CategoryMenuItems extends StatelessWidget {
               // debugPrint('query -> ${productState.query}');
               // debugPrint('company -> ${productState.companyID}');
             } else {
-              ///! TODO: uncomment this
+              
               // context.read<ProductsBloc>().add(
               //       SelectCompanysEvent(
               //         null,

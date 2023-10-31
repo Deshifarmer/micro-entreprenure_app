@@ -160,7 +160,7 @@ class _SelectableGroupOrFarmerState extends State<SelectableGroupOrFarmer> {
 
                               if (value2 is GroupDetailEntity) {
                                 return const SelectFarmerList(
-                                  ///! TODO: uncomment this
+                                  
                                   // farmers: value2.farmer_list,
                                   farmers: [],
                                 );
@@ -197,7 +197,7 @@ class _SelectableGroupOrFarmerState extends State<SelectableGroupOrFarmer> {
                 return const Center(child: Text('No Group Exists'));
               } else if (state is MyFarmerSuccess) {
                 // final currentGroup = state.farmers.elementAt
-                ///! TODO: uncomment this
+                
 /*
                 return DropdownButtonFormField<FarmerEntity>(
                   dropdownColor: backgroundColor2,

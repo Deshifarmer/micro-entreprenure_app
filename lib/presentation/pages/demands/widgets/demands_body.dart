@@ -62,7 +62,7 @@ You can see the general market demand for deshi-farmer here and do your shipment
             height: getProportionateScreenHeight(20),
           ),
 
-          ///TODO: Items
+          
           /* Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

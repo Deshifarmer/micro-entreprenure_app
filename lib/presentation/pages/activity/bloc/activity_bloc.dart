@@ -14,7 +14,5 @@ class ActivityBloc extends Bloc<ActivityEvent, ActivityState> {
   FutureOr<void> _onCustomActivityEvent(
     CustomActivityEvent event,
     Emitter<ActivityState> emit,
-  ) {
-    // TODO: Add Logic
-  }
+  ) {}
 }

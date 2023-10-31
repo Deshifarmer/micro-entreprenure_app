@@ -14,6 +14,6 @@ class HarvestBloc extends Bloc<HarvestEvent, HarvestState> {
     CustomHarvestEvent event,
     Emitter<HarvestState> emit,
   ) {
-    // TODO: Add Logic
+    
   }
 }

@@ -13,7 +13,5 @@ class LogisticBloc extends Bloc<LogisticEvent, LogisticState> {
   FutureOr<void> _onCustomLogisticEvent(
     CustomLogisticEvent event,
     Emitter<LogisticState> emit,
-  ) {
-    // TODO: Add Logic
-  }
+  ) {}
 }
