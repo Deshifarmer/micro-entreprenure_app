@@ -16,14 +16,13 @@ import 'package:deshifarmer/domain/entities/category_entity/category_entity.dart
 import 'package:deshifarmer/domain/entities/company_entity/all_company_entity.dart';
 import 'package:deshifarmer/domain/entities/company_entity/company_response_entity.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/all_farmer_entity.dart';
+import 'package:deshifarmer/domain/entities/farmer_entity/all_farmer_entity2.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity_again.dart';
 import 'package:deshifarmer/domain/entities/group_detail_entity/group_detail_entity.dart';
 import 'package:deshifarmer/domain/entities/group_field_entity/all_farmer_group_field.dart';
 import 'package:deshifarmer/domain/entities/group_field_entity/group_field_entity.dart';
 import 'package:deshifarmer/domain/entities/login_entity/login_response_entity.dart';
-import 'package:deshifarmer/domain/entities/orders_entity/all_orders.dart';
-import 'package:deshifarmer/domain/entities/orders_entity/order_response_entity.dart';
 import 'package:deshifarmer/domain/entities/user_entity/user_profile_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -136,84 +135,6 @@ class DeshiFarmerAPI {
         },
       );
       return false;
-    }
-  }
-
-  ///! User ORDERS
-  Future<Result<AllOrdersEntity, Exception>> userOrder(
-    String token,
-  ) async {
-    // String _LOCAL_TOKEN = '55|9062I8GhTHqaQWFrfOu5HzcRG3df73axEgL5rBUK';
-    String localToken = '';
-    Map<String, String> auth = <String, String>{
-      'Authorization': 'Bearer ${localToken.isNotEmpty ? localToken : token}',
-    };
-    final Uri url = Uri.parse(
-      ApiDatabaseParams.orderApi,
-    );
-    debugPrint('url $url $token');
-    try {
-      _headers.addAll(auth);
-      final http.Response response = await http.get(
-        url,
-        headers: _headers,
-      );
-      if (response.statusCode == 200) {
-        // debugPrint(response.statusCode);
-        final result = await Isolate.run(() => json.decode(response.body))
-            as List<dynamic>;
-        // debugPrint('result -> $result');
-        List<OrderEntity> orderEntitys = [];
-        for (int i = 0; i < result.length; i++) {
-          final element = result[i];
-          try {
-            orderEntitys.add(
-              OrderEntity.fromJson(element as Map<String, dynamic>),
-            );
-            // debugPrint('entity added successfully -> $i');
-          } catch (e) {
-            FirebaseAnalyticsCustom.customLogEvent(
-              name: 'order_error (userOrder)',
-              parameters: <String, dynamic>{
-                'code': response.statusCode.toString(),
-                'url': url.toString(),
-                'token': token,
-                'error': e.toString(),
-              },
-            );
-            // debugPrint('exception occurd on OrderEntity $e');
-            // result2.forEach((key, value) {});
-          }
-        }
-        AllOrdersEntity successResonse = AllOrdersEntity(orderEntitys);
-
-        return Success<AllOrdersEntity, Exception>(successResonse);
-      } else {
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'order_error (userOrder)',
-          parameters: <String, dynamic>{
-            'code': response.statusCode.toString(),
-            'url': url.toString(),
-            'token': token,
-            'body': response.body,
-          },
-        );
-        return ServerFailor<AllOrdersEntity, Exception>(
-          Exception('${response.statusCode} ${response.body}'),
-        );
-      }
-    } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'order_error (userOrder)',
-        parameters: <String, dynamic>{
-          'url': url.toString(),
-          'token': token,
-          'error': e.toString(),
-        },
-      );
-      return ServerFailor<AllOrdersEntity, Exception>(
-        Exception('${e.toString().split(':').firstOrNull}'),
-      );
     }
   }
 
@@ -1641,6 +1562,63 @@ class DeshiFarmerAPI {
           }
         }
         AllFarmerListResp successResonse = AllFarmerListResp(companyE);
+
+        return successResonse;
+      } else {
+        debugPrint(
+          'farmer list getting error -> ${response.statusCode} ${response.body}',
+        );
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'farmer_list_getting_error (getFarmers2)',
+          parameters: {
+            'url': url.toString(),
+            'token': token,
+            'code': response.statusCode.toString(),
+            'error': 'farmer list getting error -> ${response.body}',
+          },
+        );
+        return null;
+      }
+    } catch (e) {
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'exception (getFarmers2)',
+        parameters: {
+          'url': url.toString(),
+          'token': token,
+          'error': e.toString(),
+        },
+      );
+      debugPrint(
+        'FArmer getting EXCEPTION -> ${e.toString().split(':').firstOrNull}',
+      );
+      return null;
+    }
+  }
+
+  //! farmer paginate 3
+  Future<AllFarmerListResp2?> getFarmers3(String token, String? query) async {
+    String localToken = '';
+    // String _LOCAL_TOKEN = '55|9062I8GhTHqaQWFrfOu5HzcRG3df73axEgL5rBUK';
+    Map<String, String> auth = <String, String>{
+      'Authorization': 'Bearer ${localToken.isNotEmpty ? localToken : token}',
+    };
+    var uri = ApiDatabaseParams.myFarmerApi;
+    final Uri url = Uri.parse(
+      uri + (query != null ? '?search=$query' : ''),
+    );
+    debugPrint('url -> $url $token');
+    try {
+      _headers.addAll(auth);
+      final http.Response response = await http.get(
+        url,
+        headers: _headers,
+      );
+      if (response.statusCode == 200) {
+        debugPrint('yeah successfully got the data');
+        final result = await Isolate.run(() => json.decode(response.body))
+            as Map<String, dynamic>;
+
+        AllFarmerListResp2 successResonse = AllFarmerListResp2.fromJson(result);
 
         return successResonse;
       } else {
