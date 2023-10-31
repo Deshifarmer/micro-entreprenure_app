@@ -40,12 +40,12 @@ class AddFarmerButton extends StatelessWidget {
           final token = loginState is LoginSuccess
               ? loginState.successLoginEntity.token
               : '';
-          debugPrint('calling user profile:(');
           context.read<UserProfileBloc>().add(
                 GetUserProfileEvent(
                   token: token,
                 ),
               );
+              debugPrint("GetUserProfileEvent in AddfarmerBUTTON");
           Future.delayed(1.seconds, () => Navigator.pop(context));
         }
       },

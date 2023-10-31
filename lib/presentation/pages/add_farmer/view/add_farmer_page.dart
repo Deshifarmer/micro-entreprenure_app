@@ -20,6 +20,7 @@ class AddFarmerPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => AddFarmerBloc(),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           leading: IconButton(
             onPressed: () => Navigator.pop(context),

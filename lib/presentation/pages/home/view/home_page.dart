@@ -54,10 +54,9 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget buildPage(BuildContext context) => Scaffold(
-        // maintainBottomViewPadding: true,
         extendBody: true,
+        resizeToAvoidBottomInset: false,
         backgroundColor: const Color(0xffF5F8FF),
-        // body: HomeView(),
         body: PageTransitionSwitcher(
           transitionBuilder: (
             Widget child,
@@ -73,7 +72,6 @@ class _HomePageState extends State<HomePage>
           },
           child: _pages[_currentIndex],
         ),
-
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: OpenContainer(
           closedBuilder: (context, action) {
