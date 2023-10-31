@@ -10,6 +10,7 @@ import 'package:deshifarmer/presentation/pages/products/components/product_card.
 import 'package:deshifarmer/presentation/pages/products/pages/view_companies.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
+import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -46,20 +47,6 @@ class _ProductsBody3State extends State<ProductsBody3> {
     _pagingController.addPageRequestListener(_fetchPage);
 
     super.initState();
-
-    // firstController.addListener(() {
-    //   if (firstController.position.pixels == firstController.position.maxScrollExtent) {
-    //     secondController.animateTo(secondController.position.minScrollExtent,
-    //         duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
-    //   }
-    // });
-
-    // secondController.addListener(() {
-    //   if (secondController.position.pixels == secondController.position.minScrollExtent) {
-    //     firstController.animateTo(firstController.position.minScrollExtent,
-    //         duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
-    //   }
-    // });
   }
 
   String companySelect = '';
@@ -101,8 +88,6 @@ class _ProductsBody3State extends State<ProductsBody3> {
   bool isTheEnd = true;
   @override
   Widget build(BuildContext context) {
-    // final productState = context.read<ProductsBloc>().state;
-    // final categoryState = context.read<CategoryBloc>().state;
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 10,
@@ -117,17 +102,6 @@ class _ProductsBody3State extends State<ProductsBody3> {
         controller: customController
           ..addListener(
             () {
-              // if (customController.position.pixels ==
-              //     customController.position.maxScrollExtent) {
-              //   debugPrint(
-              //       'CS: reached the end of list -> ${customController.position.pixels}');
-              //   debugPrint('CS: reached at the bottom of list');
-              //   // now let's make the CS false
-              //   setState(() {
-              //     isTheEnd = false;
-              //   });
-              // }
-
               // debugPrint('CS: ${customController.position}');
               if (customController.position.pixels ==
                   customController.position.maxScrollExtent) {
@@ -148,11 +122,6 @@ class _ProductsBody3State extends State<ProductsBody3> {
                     isTheEnd = false;
                   });
                 }
-                // pagingController.animateTo(
-                //   pagingController.position.minScrollExtent,
-                //   duration: const Duration(milliseconds: 500),
-                //   curve: Curves.easeInOut,
-                // );
               }
             },
           ),
@@ -221,7 +190,7 @@ class _ProductsBody3State extends State<ProductsBody3> {
                       ///! PERF: categories
                       BlocConsumer<CategoryBloc, CategoryState>(
                         listener: (context, state) {
-                          // TODO: implement listener
+                          
                         },
                         builder: (context, categoryState) {
                           if (categoryState is CategorySuccess) {
@@ -253,6 +222,17 @@ class _ProductsBody3State extends State<ProductsBody3> {
                                 });
                               },
                               enableFeedback: true,
+                              // onOpened: () {
+                              //   // clear the category
+                              //   _updateSearchParams(
+                              //     _searchTerm ?? '',
+                              //     '',
+                              //     _company ?? '',
+                              //   );
+                              //   setState(() {
+                              //     _cat = '';
+                              //   });
+                              // },
                               surfaceTintColor: backgroundColor2,
                               itemBuilder: (BuildContext context) =>
                                   categoryState.allCategoryListResp.category
@@ -283,14 +263,18 @@ class _ProductsBody3State extends State<ProductsBody3> {
                                   border: Border.all(
                                     width: 0.6,
                                     // strokeAlign: 0.6,
-                                    color: _cat != null
+                                    color: _cat != null && _cat!.isNotEmpty
                                         ? primaryColor
                                         : Colors.grey,
                                   ),
                                 ),
-                                child: const Icon(
-                                  Icons.menu,
-                                  color: Colors.black,
+                                child: Icon(
+                                  _cat != null && _cat!.isNotEmpty
+                                      ? Icons.menu_open_outlined
+                                      : Icons.menu,
+                                  color: _cat != null && _cat!.isNotEmpty
+                                      ? primaryColor
+                                      : Colors.black,
                                 ),
                               ),
                             );
@@ -502,9 +486,6 @@ class _ProductsBody3State extends State<ProductsBody3> {
                   Padding(
                     padding: const EdgeInsets.all(
                       10,
-                      // top: 10,
-                      // left: 10,
-                      // left: 15,
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -558,6 +539,38 @@ class _ProductsBody3State extends State<ProductsBody3> {
                       pagingController: _pagingController,
                       builderDelegate: PagedChildBuilderDelegate<ProductData>(
                         animateTransitions: true,
+                        noItemsFoundIndicatorBuilder: (context) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'কোন পণ্য পাওয়া যায়নি',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge!
+                                    .copyWith(
+                                      color: Colors.grey[800],
+                                    ),
+                              ),
+                              SecondayButtonGreen(
+                                  onpress: () {
+                                    productSearchController.clear();
+                                    _updateSearchParams(
+                                      '',
+                                      '',
+                                      '',
+                                    );
+                                    setState(() {
+                                      _searchTerm = '';
+                                      _cat = '';
+                                      _company = '';
+                                      companySelect = '';
+                                    });
+                                  },
+                                  title: 'আবার চেষ্টা করুন',),
+                            ],
+                          );
+                        },
                         itemBuilder: (context, item, index) => ProductCard(
                           product: item,
                         ),
