@@ -1,9 +1,8 @@
-import 'package:deshifarmer/presentation/blocs/cart/cart_bloc.dart';
 import 'package:deshifarmer/presentation/pages/cartz/bloc/bloc.dart';
-import 'package:deshifarmer/presentation/pages/cartz/components/select_farmer_methods.dart';
 import 'package:deshifarmer/presentation/pages/cartz/components/select_payment_methods.dart';
 import 'package:deshifarmer/presentation/pages/cartz/widgets/card_cart_item.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
+import 'package:deshifarmer/services/blocs/cart/cart_bloc.dart';
 // import 'package:deshifarmer/presentation/pages/cartz/widgets/cart_compocard.dart';
 import 'package:flutter/material.dart';
 
@@ -54,7 +53,7 @@ class CartzBody extends StatelessWidget {
 
               ///! select farmer
 
-              const SelectFarmerMethods(),
+              
               SizedBox(
                 height: getProportionateScreenHeight(20),
               ),

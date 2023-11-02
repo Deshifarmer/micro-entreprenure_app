@@ -1,14 +1,15 @@
 import 'package:animations/animations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deshifarmer/core/app_strings.dart';
-import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
+
 import 'package:deshifarmer/presentation/pages/add_farmer/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/pages/view_company_product2.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
+import 'package:deshifarmer/services/blocs/category/category_bloc.dart';
+import 'package:deshifarmer/services/blocs/company/company_bloc.dart';
 import 'package:flutter/material.dart';
 
 class ViewAllComapnies extends StatelessWidget {

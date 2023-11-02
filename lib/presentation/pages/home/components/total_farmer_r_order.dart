@@ -1,5 +1,3 @@
-import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/pages/farmer_listo/view/farmer_listo_page.dart';
 import 'package:deshifarmer/presentation/pages/home/components/card_of_info.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
@@ -7,6 +5,8 @@ import 'package:deshifarmer/presentation/pages/order/bloc/order_bloc.dart';
 import 'package:deshifarmer/presentation/pages/order/view/order_page.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
+import 'package:deshifarmer/services/blocs/my_farmer/my_farmer_bloc.dart';
+import 'package:deshifarmer/services/blocs/user_profile/user_profile_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

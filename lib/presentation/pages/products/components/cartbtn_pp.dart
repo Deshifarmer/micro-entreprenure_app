@@ -1,10 +1,11 @@
 
 import 'package:deshifarmer/presentation/animations/page_animations.dart';
-import 'package:deshifarmer/presentation/blocs/cart/cart_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
+
 import 'package:deshifarmer/presentation/pages/activity/activity.dart';
 import 'package:deshifarmer/presentation/pages/cartz/view/cartz_page.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
+import 'package:deshifarmer/services/blocs/cart/cart_bloc.dart';
+import 'package:deshifarmer/services/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:flutter/material.dart';
 
 class CartBtnPP extends StatelessWidget {

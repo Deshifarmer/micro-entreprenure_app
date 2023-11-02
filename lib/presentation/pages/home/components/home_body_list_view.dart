@@ -3,11 +3,7 @@ import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/core/params/home_page_params.dart';
 import 'package:deshifarmer/domain/entities/user_entity/user_profile_entity.dart';
 import 'package:deshifarmer/presentation/animations/page_animations.dart';
-import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
-import 'package:deshifarmer/presentation/cubit/groups/get_group_cubit.dart';
+
 import 'package:deshifarmer/presentation/pages/add_farmer/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/view/add_farmer_page.dart';
 import 'package:deshifarmer/presentation/pages/add_group/view/add_group_page.dart';
@@ -15,6 +11,11 @@ import 'package:deshifarmer/presentation/pages/farmer_listo/view/farmer_listo_pa
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/view/products_page.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
+import 'package:deshifarmer/services/blocs/category/category_bloc.dart';
+import 'package:deshifarmer/services/blocs/company/company_bloc.dart';
+import 'package:deshifarmer/services/blocs/my_farmer/my_farmer_bloc.dart';
+import 'package:deshifarmer/services/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
+import 'package:deshifarmer/services/cubit/groups/get_group_cubit.dart';
 import 'package:flutter/material.dart';
 
 class HomeBodyListView extends StatelessWidget {

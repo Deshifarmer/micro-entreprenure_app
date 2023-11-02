@@ -1,7 +1,5 @@
-import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/pages/farmer_listo/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/farmer_listo/components/farmer_listo_page2.dart';
-import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -22,32 +20,17 @@ class FarmerListoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => FarmerListoBloc(),
-      child: SafeArea(
-        child: WillPopScope(
-          onWillPop: () async {
-            final loginState = context.read<LoginBloc>().state;
-            final token = loginState is LoginSuccess
-                ? loginState.successLoginEntity.token
-                : '';
-            context
-                .read<UserProfileBloc>()
-                .add(GetUserProfileEvent(token: token));
-            debugPrint("GetUserProfileEvent in FarmerListoPage");
-            return true;
-          },
-          child: Scaffold(
-            appBar: AppBar(
-              title: Text(
-                'আমার কৃষক তালিকা',
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: primaryColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-            ),
-            body: const FarmerListoView(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'আমার কৃষক তালিকা',
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  color: primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
           ),
         ),
+        body: const FarmerListoView(),
       ),
     );
   }

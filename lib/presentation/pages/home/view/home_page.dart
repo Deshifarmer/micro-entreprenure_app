@@ -1,11 +1,8 @@
 import 'package:animations/animations.dart';
 import 'package:deshifarmer/core/connections/core_connections.dart';
-import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/view/add_farmer_page.dart';
 import 'package:deshifarmer/presentation/pages/farmer_listo/farmer_listo.dart';
 import 'package:deshifarmer/presentation/pages/home/widgets/home_body.dart';
-import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
-import 'package:deshifarmer/presentation/pages/order/bloc/order_bloc.dart';
 import 'package:deshifarmer/presentation/pages/order/view/order_page.dart';
 import 'package:deshifarmer/presentation/pages/profile/view/profile_page.dart';
 import 'package:deshifarmer/presentation/shapes/my_farmers_shape.dart';
@@ -116,12 +113,6 @@ class _HomePageState extends State<HomePage>
                   children: [
                     IconButton(
                       onPressed: () {
-                        final loginState = context.read<LoginBloc>().state;
-                        final token = loginState is LoginSuccess
-                            ? loginState.successLoginEntity.token
-                            : null;
-
-                        context.read<OrderBloc>().add(InitOrders(token ?? ''));
                         setState(() {
                           _currentIndex = 0;
                         });
@@ -148,13 +139,6 @@ class _HomePageState extends State<HomePage>
                   children: [
                     IconButton(
                       onPressed: () {
-                        final loginState = context.read<LoginBloc>().state;
-                        final token = loginState is LoginSuccess
-                            ? loginState.successLoginEntity.token
-                            : null;
-                        context.read<MyFarmerBloc>().add(
-                              MyFarmerFetchEvent(token ?? ''),
-                            );
                         setState(() {
                           _currentIndex = 1;
                         });
@@ -187,12 +171,9 @@ class _HomePageState extends State<HomePage>
                   children: [
                     IconButton(
                       onPressed: () {
-                        final loginState = context.read<LoginBloc>().state;
-                        final token = loginState is LoginSuccess
-                            ? loginState.successLoginEntity.token
-                            : null;
+                        
                         //     if (x == 2 || x == 0) {
-                        context.read<OrderBloc>().add(InitOrders(token ?? ''));
+                       
                         //     }
                         //     if (x == 1) {
                         //       context.read<MyFarmerBloc>().add(

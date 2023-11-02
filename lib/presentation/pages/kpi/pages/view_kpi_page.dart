@@ -1,8 +1,10 @@
+import 'package:deshifarmer/presentation/pages/attendance/attendance.dart';
 import 'package:deshifarmer/presentation/pages/home/components/card_of_dashboard.dart';
 import 'package:deshifarmer/presentation/shapes/my_farmers_shape.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
+import 'package:deshifarmer/services/blocs/user_profile/user_profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 
@@ -11,6 +13,7 @@ class ViewMyKPIPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userProfile = context.read<UserProfileBloc>().state;
     return Scaffold(
       backgroundColor: backgroundColor2,
       appBar: AppBar(
@@ -166,8 +169,10 @@ class ViewMyKPIPage extends StatelessWidget {
               height: getProportionateScreenHeight(25),
             ),
 
-            const CardOfDashboard(
-              current: 0,
+            CardOfDashboard(
+              current: userProfile is UserProfileFetchSuccess
+                  ? userProfile.userProfile.total_farmer
+                  : 0,
               target: 1000,
               title: 'নতুন কৃষকের সংখ্যা',
               painder: MyFarmersShape(
@@ -175,8 +180,10 @@ class ViewMyKPIPage extends StatelessWidget {
               ),
               isSymbol: false,
             ),
-            const CardOfDashboard(
-              current: 0,
+            CardOfDashboard(
+              current: userProfile is UserProfileFetchSuccess
+                  ? userProfile.userProfile.total_sale
+                  : 0,
               target: 1000,
               title: 'মাসিক বিক্রয় টার্গেট',
               painder: MyFarmersShape(

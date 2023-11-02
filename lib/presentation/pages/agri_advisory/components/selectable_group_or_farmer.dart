@@ -2,8 +2,7 @@ import 'package:deshifarmer/core/error/exceptions.dart';
 import 'package:deshifarmer/domain/entities/group_detail_entity/group_detail_entity.dart';
 import 'package:deshifarmer/domain/entities/group_field_entity/all_farmer_group_field.dart';
 import 'package:deshifarmer/domain/entities/group_field_entity/group_field_entity.dart';
-import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
-import 'package:deshifarmer/presentation/cubit/groups/get_group_cubit.dart';
+
 import 'package:deshifarmer/presentation/pages/activity/activity.dart';
 import 'package:deshifarmer/presentation/pages/agri_advisory/bloc/agri_advisory_bloc.dart';
 import 'package:deshifarmer/presentation/pages/agri_advisory/components/farmer_list_selectable.dart';
@@ -13,6 +12,8 @@ import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
+import 'package:deshifarmer/services/blocs/my_farmer/my_farmer_bloc.dart';
+import 'package:deshifarmer/services/cubit/groups/get_group_cubit.dart';
 import 'package:flutter/material.dart';
 
 class SelectableGroupOrFarmer extends StatefulWidget {

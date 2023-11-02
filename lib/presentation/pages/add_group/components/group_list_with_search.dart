@@ -1,7 +1,6 @@
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/domain/entities/group_field_entity/group_field_entity.dart';
 import 'package:deshifarmer/presentation/animations/page_animations.dart';
-import 'package:deshifarmer/presentation/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
 import 'package:deshifarmer/presentation/pages/activity/activity.dart';
 import 'package:deshifarmer/presentation/pages/add_group/view/create_new_group.dart';
 import 'package:deshifarmer/presentation/pages/group_detail/bloc/group_detail_bloc.dart';
@@ -10,6 +9,7 @@ import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
+import 'package:deshifarmer/services/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
