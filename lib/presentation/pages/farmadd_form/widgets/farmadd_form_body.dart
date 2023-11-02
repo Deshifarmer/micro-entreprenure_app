@@ -1,19 +1,17 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/data/datasources/local/corps/corps_db.dart';
 import 'package:deshifarmer/data/models/add_farm_model.dart';
-import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
-import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/pages/farmadd_form/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/farmadd_form/components/farm_pic_upload_field.dart';
 import 'package:deshifarmer/presentation/pages/farmadd_form/components/farmer_creationfield.dart';
+import 'package:deshifarmer/presentation/pages/farmadd_form/components/select_farmer_for_farm_paginate.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
-import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:deshifarmer/presentation/widgets/snackbar_custom.dart';
+import 'package:deshifarmer/services/cubit/select_pagi_farmer/select_paginated_farmer_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
@@ -68,6 +66,7 @@ class FarmaddFormBody extends StatelessWidget {
                       ),
                 ),
                 //! A dropdown of all farmers which has created by the USER
+                /*
                 BlocConsumer<MyFarmerBloc, MyFarmerState>(
                   listener: (context, state) {},
                   builder: (context, state) {
@@ -82,48 +81,7 @@ class FarmaddFormBody extends StatelessWidget {
                         ),
                       );
                     } else if (state is MyFarmerSuccess) {
-                      // a dummy farmer to the first index of the list
-                      // state.allFarmerListResp.farmers.insert(
-                      //   0,
-                      //   const FarmerEntity(
-                      //     farmer_id: 'x',
-                      //     full_name: '------------',
-                      //     phone: '',
-                      //     image: '',
-                      //     address: '',
-                      //     farmer_type: '',
-                      //     onboard_by: '',
-                      //     usaid_id: '',
-                      //     first_name: '',
-                      //     last_name: '',
-                      //     fathers_name: '',
-                      //     is_married: '',
-                      //     gender: '',
-                      //     date_of_birth: '',
-                      //     village: '',
-                      //     upazila: '',
-                      //     district: '',
-                      //     division: '',
-                      //     union: '',
-                      //     credit_score: '',
-                      //     residentType: '',
-                      //     land_status: '',
-                      //     year_of_stay_in: '',
-                      //     group_id: '',
-                      //     bank_details: '',
-                      //     mfs_account: '',
-                      //     current_producing_crop: '',
-                      //     focused_crop: '',
-                      //     cropping_intensity: '',
-                      //     cultivation_practice: '',
-                      //     farmer_role: '',
-                      //     farm_id: '',
-                      //     order_list: [],
-                      //   ),
-                      // );
-                      // farmAddState.farmerID.text =
-                      //     state.allFarmerListResp.farmers.first.farmer_id!;
-
+                      
                       return Padding(
                         padding: const EdgeInsets.symmetric(
                           vertical: 20,
@@ -155,9 +113,6 @@ class FarmaddFormBody extends StatelessWidget {
                           // decoration: ShapeDecoration(),
                           // itemHeight: 300,
                           elevation: 16,
-                          // value: state.allFarmerListResp.farmers.isNotEmpty
-                          //     ? state.allFarmerListResp.farmers.first
-                          //     : null,
                           items: state.allFarmerListResp.farmers
                               .toSet()
                               .toList()
@@ -207,6 +162,95 @@ class FarmaddFormBody extends StatelessWidget {
                       );
                     }
                     return const SizedBox.shrink();
+                  },
+                ),
+                */
+                // SelectPaginatedFarmerCubit
+                BlocConsumer<SelectPaginatedFarmerCubit,
+                    SelectPaginatedFarmerState>(
+                  listener: (context, state) {},
+                  builder: (context, state) {
+                    if (state is SelectPaginatedFarmer) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ListTile(
+                          onTap: () async {
+                            // SelectFarmerPaginateForFarm
+                            await showModalBottomSheet(
+                              context: context,
+                              builder: (c) {
+                                return SelectFarmerPaginateForFarm();
+                              },
+                            );
+                          },
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          tileColor: Colors.white,
+                          leading: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: CachedNetworkImage(
+                              imageUrl: checkDomain(
+                                Strings.getServerOrLocal(
+                                  ServerOrLocal.server,
+                                ),
+                              )
+                                  ? dummyImage
+                                  : '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${state.farmerEntity.image}',
+                              height: 50,
+                              width: 50,
+                              progressIndicatorBuilder: (
+                                context,
+                                url,
+                                downloadProgress,
+                              ) =>
+                                  Center(
+                                child: CircularProgressIndicator(
+                                  value: downloadProgress.progress,
+                                  color: Colors.green[600],
+                                ),
+                              ),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                            ),
+                          ),
+                          title: Text(state.farmerEntity.full_name ?? ''),
+                          subtitle: Text(state.farmerEntity.phone ?? ''),
+                          trailing: Column(
+                            children: [
+                              if (state.farmerEntity.usaid_id != null)
+                                Text(
+                                  state.farmerEntity.usaid_id ?? '',
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                ),
+                              if (state.farmerEntity.farmer_id != null)
+                                Text(
+                                  ' (${state.farmerEntity.farmer_id})',
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListTile(
+                        onTap: () async {
+                          // SelectFarmerPaginateForFarm
+                          await showModalBottomSheet(
+                              context: context,
+                              builder: (c) {
+                                return SelectFarmerPaginateForFarm();
+                              });
+                        },
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        tileColor: Colors.white,
+                        title: const Text('কৃষক নির্বাচন করুন'),
+                      ),
+                    );
                   },
                 ),
                 Text(
@@ -456,155 +500,102 @@ class FarmaddFormBody extends StatelessWidget {
                 ),
 
               if (farmAddState is! FarmAddLoading)
-                SecondayButtonGreen(
-                  // style: ButtonStyle(
-                  //   backgroundColor:
-                  //       MaterialStatePropertyAll(Colors.green[600]),
-                  // ),
-                  onpress: () async {
-                    if (farmAddState is FarmaddFormInitial) {
-                      debugPrint('farmer id -> ${farmAddState.farmerID.text}');
-                      if (farmAddState.farmerID.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          errorSnackBar('Select a farmer first'),
-                        );
-                      }
-                      if (farmAddState.farmName.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          errorSnackBar('Farm Name cannot be empty'),
-                        );
-                      } else if (farmAddState.farmLocation.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          errorSnackBar('Farm Location Cannot be empty'),
-                        );
-                      } else if (farmAddState.farmUnion.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          errorSnackBar('Union Cannot be empty'),
-                        );
-                      } else if (farmAddState.farmMouzza.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          errorSnackBar('Mouzza Cannot be Empty'),
-                        );
-                      } else if (farmAddState.farmLength.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          errorSnackBar('Farm Length Cannot be empty'),
-                        );
-                      } else if (farmAddState.farmStartingDate.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          errorSnackBar('Starting date cannot be empty'),
-                        );
-                      } else if (farmAddState.farmArea.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          errorSnackBar('Farm Area cannot be empty'),
-                        );
-                      } else if (farmAddState.farmProducingCrop.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          errorSnackBar(
-                            'Farm Producing Crop cannot be empty',
-                          ),
-                        );
-                      } else if (farmAddState.farmSoilType.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          errorSnackBar(
-                            'Farm Soil Type cannot be empty',
-                          ),
-                        );
-                      } else if (farmAddState.farmSoilType.text ==
-                          soilTypes.first) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          errorSnackBar(
-                            'Farm Soil Type cannot be empty',
-                          ),
-                        );
-                      } else {
-                        final farmModel = AddFarmModel(
-                          farmerID: farmAddState.farmerID.text,
-                          farmName: farmAddState.farmName.text,
-                          farmUnion: farmAddState.farmUnion.text,
-                          farmLocation: farmAddState.farmLocation.text,
-                          farmMouza: farmAddState.farmMouzza.text,
-                          farmLength: farmAddState.farmLength.text,
-                          farmSoilType: farmAddState.farmSoilType.text.isEmpty
-                              ? soilTypes.first
-                              : farmAddState.farmSoilType.text,
-                          farmStartingDate: farmAddState.farmStartingDate.text,
-                          farmProducingCrop:
-                              farmAddState.farmProducingCrop.text,
-// farmProducingCrop
-                          farmArea: farmAddState.farmArea.text,
-                          images: farmAddState.images,
-                        );
-                        final loginState = context.read<LoginBloc>().state;
-                        if (loginState is LoginSuccess) {
-                          context.read<FarmaddFormBloc>().add(
-                                AddFarmFormEvent(
-                                  farmModel,
-                                  loginState.successLoginEntity.token,
-                                ),
-                              );
-
-                          // showBottomSheet(
-                          //   context: context,
-                          //   builder: (context) {
-                          //     return SizedBox(
-                          //       height: MediaQuery.sizeOf(context).height / 2.5,
-                          //       child: Column(
-                          //         mainAxisAlignment: MainAxisAlignment.center,
-                          //         children: [
-                          //           const SizedBox(height: 30),
-                          //           // a loading button says adding farmer [success LOGO]
-                          //           if (farmAddState is FarmAddingSuccess)
-                          //             const Icon(
-                          //               Icons.verified,
-                          //               size: 30,
-                          //             )
-                          //           else if (farmAddState is FarmAddingFailed)
-                          //             const Icon(
-                          //               Icons.sentiment_dissatisfied,
-                          //               size: 30,
-                          //             )
-                          //           else
-                          //             const Center(
-                          //                 child: PrimaryLoadingIndicator()),
-
-                          //           const SizedBox(height: 10),
-                          //           // a text says adding farmer [congratulation]
-
-                          //           if (farmAddState is FarmAddingSuccess)
-                          //             const Text('Successfully Farm Added')
-                          //           else if (farmAddState is FarmAddingFailed)
-                          //             const Text('Failed to add Farm')
-                          //           else
-                          //             Text(
-                          //                 'Adding ${farmAddState.farmName.text} Farm.......'),
-
-                          //           const SizedBox(height: 30),
-                          //         ],
-                          //       ),
-                          //     );
-                          //   },
-                          // );
+                BlocBuilder<SelectPaginatedFarmerCubit,
+                    SelectPaginatedFarmerState>(
+                  builder: (context, state) {
+                    return SecondayButtonGreen(
+                      onpress: () async {
+                        if (farmAddState is FarmaddFormInitial &&
+                            state is SelectPaginatedFarmer) {
+                          if (farmAddState.farmName.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              errorSnackBar('Farm Name cannot be empty'),
+                            );
+                          } else if (farmAddState.farmLocation.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              errorSnackBar('Farm Location Cannot be empty'),
+                            );
+                          } else if (farmAddState.farmUnion.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              errorSnackBar('Union Cannot be empty'),
+                            );
+                          } else if (farmAddState.farmMouzza.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              errorSnackBar('Mouzza Cannot be Empty'),
+                            );
+                          } else if (farmAddState.farmLength.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              errorSnackBar('Farm Length Cannot be empty'),
+                            );
+                          } else if (farmAddState
+                              .farmStartingDate.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              errorSnackBar('Starting date cannot be empty'),
+                            );
+                          } else if (farmAddState.farmArea.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              errorSnackBar('Farm Area cannot be empty'),
+                            );
+                          } else if (farmAddState
+                              .farmProducingCrop.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              errorSnackBar(
+                                'Farm Producing Crop cannot be empty',
+                              ),
+                            );
+                          } else if (farmAddState.farmSoilType.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              errorSnackBar(
+                                'Farm Soil Type cannot be empty',
+                              ),
+                            );
+                          } else if (farmAddState.farmSoilType.text ==
+                              soilTypes.first) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              errorSnackBar(
+                                'Farm Soil Type cannot be empty',
+                              ),
+                            );
+                          } else {
+                            final farmModel = AddFarmModel(
+                              farmerID: state.farmerEntity.farmer_id!,
+                              farmName: farmAddState.farmName.text,
+                              farmUnion: farmAddState.farmUnion.text,
+                              farmLocation: farmAddState.farmLocation.text,
+                              farmMouza: farmAddState.farmMouzza.text,
+                              farmLength: farmAddState.farmLength.text,
+                              farmSoilType:
+                                  farmAddState.farmSoilType.text.isEmpty
+                                      ? soilTypes.first
+                                      : farmAddState.farmSoilType.text,
+                              farmStartingDate:
+                                  farmAddState.farmStartingDate.text,
+                              farmProducingCrop:
+                                  farmAddState.farmProducingCrop.text,
+                              // farmProducingCrop
+                              farmArea: farmAddState.farmArea.text,
+                              images: farmAddState.images,
+                            );
+                            debugPrint({
+                              'farmerID': state.farmerEntity.farmer_id,
+                              'farmName': farmAddState.farmName.text,
+                              'farmUnion': farmAddState.farmUnion.text,
+                            }.toString());
+                            final loginState = context.read<LoginBloc>().state;
+                            if (loginState is LoginSuccess) {
+                              context.read<FarmaddFormBloc>().add(
+                                    AddFarmFormEvent(
+                                      farmModel,
+                                      loginState.successLoginEntity.token,
+                                    ),
+                                  );
+                            }
+                          }
                         }
-                      }
-                    }
-
-                    /// not farmer state
+                      },
+                      title: 'ফার্ম যোগ ',
+                    );
                   },
-                  // child: farmAddState is FarmaddFormInitial
-                  //     ? const Text(
-                  //         'ফার্ম যোগ ',
-                  //         style: TextStyle(
-                  //           color: Colors.white,
-                  //         ),
-                  //       )
-                  //     : const Center(child: CircularProgressIndicator()),
-                  // child: const Text(
-                  //   'ফার্ম যোগ ',
-                  //   style: TextStyle(
-                  //     color: Colors.white,
-                  //   ),
-                  // ),
-                  title: 'ফার্ম যোগ ',
                 ),
             ],
           ),
