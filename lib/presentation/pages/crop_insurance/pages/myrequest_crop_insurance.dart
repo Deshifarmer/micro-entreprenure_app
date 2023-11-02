@@ -1,5 +1,4 @@
-import 'package:animations/animations.dart';
-import 'package:deshifarmer/presentation/pages/crop_insurance/pages/request_crop_insurance_page.dart';
+import 'package:deshifarmer/presentation/pages/crop_insurance/components/request_insurance_paginate.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:flutter/material.dart';
@@ -92,22 +91,28 @@ class MyRequestCropInsurance extends StatelessWidget {
           ],
         ),
       ),
-      // body: ,
-      bottomNavigationBar: OpenContainer(
-        openColor: backgroundColor2,
-        closedColor: backgroundColor2,
-        openBuilder: (context, action) => const RequestCropInsurance(),
-        closedBuilder: (context, action) {
-          return SecondayButtonGreen(
-            onpress: action,
-            title: 'ইন্সুরেন্স রিকোয়েস্ট দিন ',
-            // title: 'Add New Request',
+
+      // bottomNavigationBar: OpenContainer(
+      //   openColor: backgroundColor2,
+      //   closedColor: backgroundColor2,
+      //   openBuilder: (context, action) => const RequestCropInsurance(),
+      //   closedBuilder: (context, action) {
+      //     return SecondayButtonGreen(
+      //       onpress: action,
+      //       title: 'ইন্সুরেন্স রিকোয়েস্ট দিন ',
+      //       // title: 'Add New Request',
+      //     );
+      //   },
+      // ),
+      bottomNavigationBar: SecondayButtonGreen(
+        onpress: () async {
+          await showModalBottomSheet(
+            context: context,
+            builder: (context) => const SelectFarmerPaginateReqInsurance(),
           );
         },
-        // child: SecondayButtonGreen(
-        //   onpress: () {},
-        //   title: 'Add new request',
-        // ),
+        title: 'ইন্সুরেন্স রিকোয়েস্ট দিন ',
+        // title: 'Add New Request',
       ),
     );
   }
