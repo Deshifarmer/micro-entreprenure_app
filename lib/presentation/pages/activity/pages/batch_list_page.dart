@@ -1,6 +1,5 @@
 import 'package:deshifarmer/core/params/batch_params.dart';
 import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
-import 'package:deshifarmer/presentation/pages/activity/bloc/activity_bloc.dart';
 import 'package:deshifarmer/presentation/pages/activity/components/folon_batch.dart';
 import 'package:deshifarmer/presentation/pages/activity/pages/activity_type_select.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
@@ -15,9 +14,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class BatchListPage extends StatefulWidget {
   const BatchListPage({
     required this.farmID,
+    required this.farmerID,
     super.key,
   });
   final String farmID;
+  final String farmerID;
 
   @override
   State<BatchListPage> createState() => _BatchListPageState();
@@ -200,12 +201,6 @@ class _BatchListPageState extends State<BatchListPage> {
                 ),
               ),
             ),
-            // if usr scrolls 70% of the screen then add a sized box height of 100
-            // if (_scrollController.offset >
-            //     MediaQuery.of(context).size.height * 0.7)
-            //   const SizedBox(
-            //     height: 100,
-            //   ),
           ],
         ),
       ),
@@ -214,42 +209,13 @@ class _BatchListPageState extends State<BatchListPage> {
                   _crop.text.isNotEmpty &&
                   _season.isNotEmpty &&
                   _season != BatchParams.seasons.first
-              // ? SecondayButtonGreen(
-              //     btnColor: priceBoxColor,
-              //     onpress: () async {
-              //       final activityState = context.read<ActivityBloc>().state;
-              //       if (activityState is ActivityInitial) {
-              //         if (activityState.farmerID.text.isEmpty) {
-              //           // errorSnackBar('Select a farmer');
-              //           ScaffoldMessenger.of(context)
-              //               .showSnackBar(errorSnackBar('Select a farmer'));
-              //         } else if (activityState.farmID.text.isEmpty) {
-              //           ScaffoldMessenger.of(context).showSnackBar(
-              //               errorSnackBar('Select Farm for this Farmer'));
-              //         } else {
-              //           // debugPrint('get the farmer id -> ${activityState.farmerID.text}');
-              //           // debugPrint('get the farm id -> ${activityState.farmID.text}');
-              //           Navigator.push(
-              //             context,
-              //             MaterialPageRoute<ActivityTypeSelection>(
-              //               builder: (context) => ActivityTypeSelection(
-              //                 farmID: activityState.farmID.text,
-              //                 farmerID: activityState.farmerID.text,
-              //               ),
-              //             ),
-              //           );
-              //         }
-              //       }
-              //     },
-              //     title: 'পরবর্তী ',
-              //     // title: 'continue',
-              //   )
               ? BatchButtonSuccess(
                   farmID: widget.farmID,
                   season: _season,
                   token: loginState.successLoginEntity.token,
                   crop: _crop.text,
                   jatt: _jatt.text,
+                  farmerID: widget.farmerID,
                 )
               : null
           : null,
@@ -260,6 +226,7 @@ class _BatchListPageState extends State<BatchListPage> {
 class BatchButtonSuccess extends StatefulWidget {
   const BatchButtonSuccess({
     required this.season,
+    required this.farmerID,
     required this.crop,
     required this.jatt,
     required this.token,
@@ -271,6 +238,7 @@ class BatchButtonSuccess extends StatefulWidget {
   final String jatt;
   final String token;
   final String farmID;
+  final String farmerID;
 
   @override
   State<BatchButtonSuccess> createState() => _BatchButtonSuccessState();
@@ -315,34 +283,22 @@ class _BatchButtonSuccessState extends State<BatchButtonSuccess> {
                   setState(() {
                     isLoadin = false;
                   });
-                  final activityState = context.read<ActivityBloc>().state;
-                  if (activityState is ActivityInitial) {
-                    if (activityState.farmerID.text.isEmpty) {
-                      // errorSnackBar('Select a farmer');
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(errorSnackBar('Select a farmer'));
-                    } else if (activityState.farmID.text.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          errorSnackBar('Select Farm for this Farmer'),);
-                    } else {
-                      // debugPrint('get the farmer id -> ${activityState.farmerID.text}');
-                      // debugPrint('get the farm id -> ${activityState.farmID.text}');
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute<ActivityTypeSelection>(
-                          builder: (context) => ActivityTypeSelection(
-                            batchID: result.batch_id,
-                          ),
-                        ),
-                      );
-                    }
-                  }
+
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute<ActivityTypeSelection>(
+                      builder: (context) => ActivityTypeSelection(
+                        batchID: result.batch_id,
+                      ),
+                    ),
+                  );
                 } else {
                   setState(() {
                     isLoadin = false;
                   });
                   ScaffoldMessenger.of(context).showSnackBar(
-                      errorSnackBar('ব্যাচ সৃষ্টি ব্যর্থ হয়েছে'),);
+                    errorSnackBar('ব্যাচ সৃষ্টি ব্যর্থ হয়েছে'),
+                  );
                 }
               }
             },
