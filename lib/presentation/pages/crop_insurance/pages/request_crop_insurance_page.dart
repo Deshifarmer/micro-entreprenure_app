@@ -1,18 +1,20 @@
+import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
 import 'package:deshifarmer/presentation/pages/crop_insurance/bloc/bloc.dart';
-import 'package:deshifarmer/presentation/pages/crop_insurance/components/farmer_list_compo.dart';
-import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:flutter/material.dart';
 
 class RequestCropInsurance extends StatelessWidget {
-  const RequestCropInsurance({super.key});
+  const RequestCropInsurance({
+    required this.selectedFarmer,
+    super.key,
+  });
+  final FarmerEntity selectedFarmer;
 
   @override
   Widget build(BuildContext context) {
     final cropInsuranceState = context.read<CropInsuranceBloc>().state;
 
-    final loginState = context.read<LoginBloc>().state;
     return Scaffold(
       backgroundColor: backgroundColor2,
       appBar: AppBar(
@@ -23,19 +25,6 @@ class RequestCropInsurance extends StatelessWidget {
         padding: const EdgeInsets.all(13),
         child: ListView(
           children: [
-            // const Padding(
-            //   padding: EdgeInsets.symmetric(
-            //     // horizontal: 10,
-            //     vertical: 20,
-            //   ),
-            //   child: Text(
-            //     'নতুন ইন্সুরেন্স রিকোয়েস্ট ফর্ম ',
-            //     style: TextStyle(
-            //       fontSize: 18,
-            //       fontWeight: FontWeight.w600,
-            //     ),
-            //   ),
-            // ),
             const Text(
               'কৃষকের বিবরণ',
               style: TextStyle(
@@ -44,10 +33,47 @@ class RequestCropInsurance extends StatelessWidget {
                 color: primaryColor,
               ),
             ),
-
-            const Padding(
+            //! Show selected farmer
+            Padding(
               padding: EdgeInsets.all(8),
-              child: FarmerListDropDownInsurance(),
+              child: ListTile(
+                tileColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                title: Text(
+                  selectedFarmer.full_name ?? '',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                subtitle: Text(
+                  selectedFarmer.address ?? '',
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                trailing: Column(
+                  children: [
+                    Text(
+                      selectedFarmer.usaid_id ?? '',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      selectedFarmer.farmer_id ?? '',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(
@@ -94,17 +120,6 @@ class RequestCropInsurance extends StatelessWidget {
 
                 onChanged: (String? val) {
                   if (cropInsuranceState is CropInsuranceInitial) {
-                    // if (val != null) {
-                    //   if (loginState is LoginSuccess) {
-                    //     debugPrint('log in state good. Calling FarmEvent');
-                    //     // context.read<FarmerFetchFarmBloc>().add(
-                    //     //       FramFetchEvent(
-                    //     //         token: loginState.successLoginEntity.token,
-                    //     //         farmerID: val.farmer_id!,
-                    //     //       ),
-                    //     //     );
-                    //   }
-                    // }
                     if (val != null) {
                       cropInsuranceState.harvestPeriod.text = val;
                     }
@@ -174,18 +189,21 @@ class RequestCropInsurance extends StatelessWidget {
             ///
             const SizedBox(height: 20),
             SecondayButtonGreen(
-                onpress: () {
-                  debugPrint('request crop called .............\n');
-                  if (cropInsuranceState is CropInsuranceInitial) {
-                    debugPrint({
-                      'farmerid': cropInsuranceState.farmerID.text,
+              onpress: () {
+                debugPrint('request crop called .............\n');
+                if (cropInsuranceState is CropInsuranceInitial) {
+                  debugPrint(
+                    {
+                      'farmerid': selectedFarmer.farmer_id.toString(),
                       'harvest period': cropInsuranceState.harvestPeriod.text,
                       'phone': cropInsuranceState.phoneNumber.text,
                       'notes': cropInsuranceState.notes.text,
-                    }.toString(),);
-                  }
-                },
-                title: 'সাবমিট করুন ',),
+                    }.toString(),
+                  );
+                }
+              },
+              title: 'সাবমিট করুন ',
+            ),
           ],
         ),
       ),
