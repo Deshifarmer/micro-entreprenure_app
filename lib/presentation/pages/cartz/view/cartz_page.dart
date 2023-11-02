@@ -1,9 +1,9 @@
-import 'package:deshifarmer/presentation/blocs/cart/cart_bloc.dart';
-import 'package:deshifarmer/presentation/cubit/dropdown/dropdown_cubit.dart';
 import 'package:deshifarmer/presentation/pages/cartz/bloc/bloc.dart';
-import 'package:deshifarmer/presentation/pages/cartz/pages/conformation_page.dart';
+import 'package:deshifarmer/presentation/pages/cartz/components/select_farmer_paginate.dart';
 import 'package:deshifarmer/presentation/pages/cartz/widgets/cartz_body.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
+import 'package:deshifarmer/services/blocs/cart/cart_bloc.dart';
+import 'package:deshifarmer/services/cubit/dropdown/dropdown_cubit.dart';
 import 'package:flutter/material.dart';
 
 /// {@template cartz_page}
@@ -29,7 +29,7 @@ class CartzPage extends StatelessWidget {
         color: Colors.transparent,
         elevation: 0,
         child: SecondayButtonGreen(
-          onpress: () {
+          onpress: ()async {
             final cartItems = context.read<CartBloc>().state;
 
             /// check if the items are not empty
@@ -41,14 +41,16 @@ class CartzPage extends StatelessWidget {
                     content: Text('আপনার ব্যাগে কোন পণ্য নেই'),
                   ),
                 );
-              } else if (context.read<DropdownForFarmerCubit>().state == null) {
-                // show a snackbar
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('আপনার কোন কৃষক নির্বাচন করা হয়নি'),
-                  ),
-                );
-              } else if (context
+              } 
+              // else if (context.read<DropdownForFarmerCubit>().state == null) {
+              //   // show a snackbar
+              //   ScaffoldMessenger.of(context).showSnackBar(
+              //     const SnackBar(
+              //       content: Text('আপনার কোন কৃষক নির্বাচন করা হয়নি'),
+              //     ),
+              //   );
+              // }
+               else if (context
                   .read<DropdownForPaymentCubit>()
                   .state
                   .isEmpty) {
@@ -58,37 +60,36 @@ class CartzPage extends StatelessWidget {
                     content: Text('আপনার কোন পেমেন্ট পদ্ধতি নির্বাচন করা হয়নি'),
                   ),
                 );
-              } else if (context
-                      .read<DropdownForFarmerCubit>()
-                      .state
-                      ?.farmer_id ==
-                  'x') {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('আপনার কোন কৃষক নির্বাচন করা হয়নি'),
-                  ),
-                );
-              } else {
+              } 
+              // else if (context
+              //         .read<DropdownForFarmerCubit>()
+              //         .state
+              //         ?.farmer_id ==
+              //     'x') {
+              //   ScaffoldMessenger.of(context).showSnackBar(
+              //     const SnackBar(
+              //       content: Text('আপনার কোন কৃষক নির্বাচন করা হয়নি'),
+              //     ),
+              //   );
+              // }
+               else {
                 /// check if any farmer selected
                 /// if user selected user
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const OrderConformationPage(),
-                  ),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (_) => const OrderConformationPage(),
+                //   ),
+                // );
+                await showModalBottomSheet(
+                    context: context,
+                    builder: (_) {
+                      return const SelectFarmerPaginateCartz();
+                    });
               }
               return;
             }
 
-            /// check if any farmer selected
-            /// if user selected user
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (_) => const OrderConformationPage(),
-            //   ),
-            // );
           },
           title: 'অর্ডার করুন',
         ),

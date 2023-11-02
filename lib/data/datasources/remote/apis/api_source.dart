@@ -1651,4 +1651,24 @@ class DeshiFarmerAPI {
       return null;
     }
   }
+
+  //* check if auth token is valid or not
+  Future<bool> checkIfAuthenticated() async {
+    final  url = Uri.parse(
+      ApiDatabaseParams.collectOrderApi,
+    );
+    try {
+      final http.Response response = await http.get(
+        url,
+        headers: _headers,
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
 }

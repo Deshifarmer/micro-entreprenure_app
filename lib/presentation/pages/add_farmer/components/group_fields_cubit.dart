@@ -1,8 +1,8 @@
 import 'package:deshifarmer/domain/entities/group_field_entity/all_farmer_group_field.dart';
 import 'package:deshifarmer/domain/entities/group_field_entity/group_field_entity.dart';
-import 'package:deshifarmer/presentation/cubit/groups/get_group_cubit.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
+import 'package:deshifarmer/services/cubit/groups/get_group_cubit.dart';
 import 'package:flutter/material.dart';
 
 class SelectGroupExpansionTile extends StatelessWidget {

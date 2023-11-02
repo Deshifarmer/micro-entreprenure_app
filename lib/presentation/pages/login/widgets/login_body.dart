@@ -1,5 +1,5 @@
 import 'package:deshifarmer/data/datasources/local/shared_prefs/local_database_sf.dart';
-import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
+
 import 'package:deshifarmer/presentation/pages/home/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/home/view/home_page.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
@@ -8,6 +8,7 @@ import 'package:deshifarmer/presentation/pages/order/bloc/order_bloc.dart';
 import 'package:deshifarmer/presentation/shapes/deshifarmer_logo.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
+import 'package:deshifarmer/services/blocs/user_profile/user_profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -38,7 +39,7 @@ class LoginBody extends StatelessWidget {
           context
               .read<UserProfileBloc>()
               .add(GetUserProfileEvent(token: state.successLoginEntity.token));
-              debugPrint("GetUserProfileEvent in LoginBODY2");
+              debugPrint('GetUserProfileEvent in LoginBODY2');
           SharedPrefDBServices().setLoginToken(state.successLoginEntity.token);
 
           /// get my orders
@@ -55,7 +56,7 @@ class LoginBody extends StatelessWidget {
 
           UserProfileBloc()
               .add(GetUserProfileEvent(token: state.successLoginEntity.token));
-              debugPrint("GetUserProfileEvent in LogInBODY");
+              debugPrint('GetUserProfileEvent in LogInBODY');
           Navigator.pushAndRemoveUntil(
             context,
             HomePage.route(),

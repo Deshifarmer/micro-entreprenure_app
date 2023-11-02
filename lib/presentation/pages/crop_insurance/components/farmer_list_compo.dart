@@ -1,7 +1,6 @@
-import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/pages/crop_insurance/bloc/bloc.dart';
-import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
+import 'package:deshifarmer/services/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:flutter/material.dart';
 
 class FarmerListDropDownInsurance extends StatelessWidget {
@@ -9,8 +8,7 @@ class FarmerListDropDownInsurance extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final activityState = context.read<CropInsuranceBloc>().state;
-    final loginState = context.read<LoginBloc>().state;
+    
     return BlocConsumer<MyFarmerBloc, MyFarmerState>(
       listener: (context, state) {},
       builder: (context, state) {

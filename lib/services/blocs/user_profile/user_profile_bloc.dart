@@ -22,7 +22,6 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
     Emitter<UserProfileState> emit,
   ) async {
     emit(UserProfileInitial());
-    debugPrint('User Urofile event Called');
 
     final userProfile = await userProfileRepoImpl.userProfile(event.token);
 

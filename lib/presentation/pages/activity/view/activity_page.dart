@@ -1,12 +1,10 @@
-import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
 import 'package:deshifarmer/presentation/animations/page_animations.dart';
-import 'package:deshifarmer/presentation/pages/activity/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/activity/pages/activity_select_farm.dart';
 import 'package:deshifarmer/presentation/pages/activity/widgets/activity_body.dart';
-import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 
 /// {@template activity_page}
@@ -44,10 +42,10 @@ class _ActivityPageState extends State<ActivityPage> {
           horizontal: 15,
         ),
         child: isLoading
-            ? const SizedBox(
-                height: 50,
-                width: 50,
-                child: Center(
+            ? SizedBox(
+                height: getProportionateScreenHeight(50),
+                width: getProportionateScreenWidth(50),
+                child: const Center(
                   child: PrimaryLoadingIndicator(),
                 ),
               )
@@ -59,19 +57,19 @@ class _ActivityPageState extends State<ActivityPage> {
                   setState(() {
                     isLoading = true;
                   });
-                  final loginState = context.read<LoginBloc>().state;
-                  final token = loginState is LoginSuccess
-                      ? loginState.successLoginEntity.token
-                      : '';
-                  final allFarmerListResp =
-                      await DeshiFarmerAPI().getFarmers2(token);
+                  // final loginState = context.read<LoginBloc>().state;
+                  // final token = loginState is LoginSuccess
+                  //     ? loginState.successLoginEntity.token
+                  //     : '';
+                  // final allFarmerListResp =
+                  //     await DeshiFarmerAPI().getFarmers2(token);
 
                   await Navigator.push(
                     context,
                     PageAnimationWrapper.fadeThroughTransitionPageWrapper(
                       ActivityAddFarm(
-                        allFarmers: allFarmerListResp?.farmers ?? [],
-                      ),
+                          // allFarmers: allFarmerListResp?.farmers ?? [],
+                          ),
                     ),
                   );
 
@@ -126,19 +124,19 @@ class _ShowLoadingOnButtonActivityState
               setState(() {
                 isLoading = true;
               });
-              final loginState = context.read<LoginBloc>().state;
-              final token = loginState is LoginSuccess
-                  ? loginState.successLoginEntity.token
-                  : '';
-              final allFarmerListResp =
-                  await DeshiFarmerAPI().getFarmers2(token);
+              // final loginState = context.read<LoginBloc>().state;
+              // final token = loginState is LoginSuccess
+              //     ? loginState.successLoginEntity.token
+              //     : '';
+              // final allFarmerListResp =
+              //     await DeshiFarmerAPI().getFarmers2(token);
 
               await Navigator.push(
                 context,
                 PageAnimationWrapper.fadeThroughTransitionPageWrapper(
                   ActivityAddFarm(
-                    allFarmers: allFarmerListResp?.farmers ?? [],
-                  ),
+                      // allFarmers: allFarmerListResp?.farmers ?? [],
+                      ),
                 ),
               );
 

@@ -1,7 +1,5 @@
 import 'package:deshifarmer/core/params/home_page_params.dart';
 import 'package:deshifarmer/data/datasources/remote/apis/attendance_api.dart';
-import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/view/add_farmer_page.dart';
 import 'package:deshifarmer/presentation/pages/attendance/attendance.dart';
 import 'package:deshifarmer/presentation/pages/commision/commision.dart';
@@ -18,6 +16,7 @@ import 'package:deshifarmer/presentation/widgets/home_page_icon_widget.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
+import 'package:deshifarmer/services/blocs/user_profile/user_profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:restart_app/restart_app.dart';
 
@@ -36,7 +35,6 @@ class HomeBody extends StatelessWidget {
       builder: (context, state) {
         if (state is UserProfileFetchSuccess) {
           final usrProfile = state.userProfile;
-          // return HomeBodyListView(usrProfile: usrProfile);
           return CustomScrollView(
             slivers: [
               ///! App Bar
@@ -158,12 +156,6 @@ class HomeBody extends StatelessWidget {
                                 CommisionPage.route(),
                               );
                             case 'নতুন ফার্ম যোগ':
-                              // MyFarmerBloc
-                              context.read<MyFarmerBloc>().add(
-                                    MyFarmerFetchEvent(
-                                      token,
-                                    ),
-                                  );
                               await Navigator.push(
                                 context,
                                 FarmaddFormPage.route(),
@@ -236,7 +228,6 @@ class HomeBody extends StatelessWidget {
                   children: [
                     // LottieBuilder.asset('assets/animations/failed.json'),
                     Text('কিছু ভুল হয়েছে'),
-
                     /// a button to restart the app
                     SecondayButtonGreen(
                       onpress: Restart.restartApp,

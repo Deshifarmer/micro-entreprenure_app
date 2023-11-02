@@ -26,12 +26,11 @@ class ActivityState extends Equatable {
 }
 
 /// The initial state of ActivityState
-class ActivityInitial extends ActivityState {
-  ActivityInitial() : super();
+class ActivityInitial extends ActivityState {}
 
-  final TextEditingController farmerID = TextEditingController();
-  final TextEditingController farmID = TextEditingController();
-
-  @override
-  List<Object> get props => [farmID.text, farmerID.text];
+class ActivityFarmerAddState extends ActivityState {
+  const ActivityFarmerAddState(this.farmerEntity);
+  final FarmerEntity farmerEntity;
 }
+
+class ActivityLoadingState extends ActivityState {}

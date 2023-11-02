@@ -1,10 +1,10 @@
 import 'package:deshifarmer/domain/entities/category_entity/category_entity.dart';
-import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
 import 'package:deshifarmer/presentation/pages/activity/activity.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/bloc/products_bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/snackbar_custom.dart';
+import 'package:deshifarmer/services/blocs/category/category_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 

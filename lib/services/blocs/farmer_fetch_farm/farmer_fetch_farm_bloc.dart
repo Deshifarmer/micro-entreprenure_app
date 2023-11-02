@@ -11,6 +11,7 @@ class FarmerFetchFarmBloc
     extends Bloc<FarmerFetchFarmEvent, FarmerFetchFarmState> {
   FarmerFetchFarmBloc() : super(FarmerFetchFarmInitial()) {
     on<FarmerFetchFarmEvent>((event, emit) {});
+    on<FarmResetEvent>((event, emit) => emit(FarmerFetchFarmInitial()));
     on<FramFetchEvent>((FramFetchEvent event, emit) async {
       emit(FarmerFetchFarmLoading());
       final data =
@@ -29,13 +30,6 @@ class FarmerFetchFarmBloc
 
         emit(FarmerFetchFarmSuccess(value));
       }
-
-      // emit(FarmerFetchFarmFailed());
-      // if (value is AllFarmListResp) {
-      //   print('farm value is good');
-      // } else {
-      //   print('exception occured farm $value X');
-      // }
     });
   }
   final DeshiFarmerAPI _deshifarmerAPI = DeshiFarmerAPI();

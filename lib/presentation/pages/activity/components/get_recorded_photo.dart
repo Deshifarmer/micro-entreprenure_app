@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:deshifarmer/presentation/blocs/record_sowing/record_sowing_bloc.dart';
 import 'package:deshifarmer/presentation/pages/activity/activity.dart';
+import 'package:deshifarmer/services/blocs/record_sowing/record_sowing_bloc.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';

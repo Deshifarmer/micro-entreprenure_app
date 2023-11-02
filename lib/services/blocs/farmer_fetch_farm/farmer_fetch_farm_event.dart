@@ -15,3 +15,7 @@ final class FramFetchEvent extends FarmerFetchFarmEvent {
   final String token;
   final String farmerID;
 }
+
+final class FarmResetEvent extends FarmerFetchFarmEvent {
+  const FarmResetEvent();
+}

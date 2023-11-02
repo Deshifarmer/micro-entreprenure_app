@@ -1,7 +1,8 @@
-import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
+
 import 'package:deshifarmer/presentation/pages/commision/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/bloc/products_bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/components/company_card_view.dart';
+import 'package:deshifarmer/services/blocs/company/company_bloc.dart';
 import 'package:flutter/material.dart';
 
 class CampanyCircularListView extends StatelessWidget {

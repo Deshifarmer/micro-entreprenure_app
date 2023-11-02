@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
-import 'package:deshifarmer/presentation/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
-import 'package:deshifarmer/presentation/cubit/add_group/add_farmer_to_group_cubit.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
+import 'package:deshifarmer/services/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
+import 'package:deshifarmer/services/cubit/add_group/add_farmer_to_group_cubit.dart';
 import 'package:flutter/material.dart';
 
 

@@ -1,19 +1,7 @@
+import 'dart:async';
+
 import 'package:deshifarmer/data/datasources/local/shared_prefs/local_database_sf.dart';
 import 'package:deshifarmer/l10n/l10n.dart';
-import 'package:deshifarmer/presentation/blocs/cart/cart_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/category/category_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/farmer_api/add_farmer_api_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/farmer_fetch_farm/farmer_fetch_farm_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/record_sowing/record_sowing_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
-import 'package:deshifarmer/presentation/cubit/add_group/add_farmer_to_group_cubit.dart';
-import 'package:deshifarmer/presentation/cubit/dropdown/dropdown_cubit.dart';
-
-import 'package:deshifarmer/presentation/cubit/groups/get_group_cubit.dart';
-import 'package:deshifarmer/presentation/cubit/product_search/search_products_cubit_cubit.dart';
 import 'package:deshifarmer/presentation/pages/activity/activity.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:deshifarmer/presentation/pages/add_group/bloc/bloc.dart';
@@ -30,8 +18,21 @@ import 'package:deshifarmer/presentation/pages/products/bloc/products_bloc.dart'
 import 'package:deshifarmer/presentation/pages/profile/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
+import 'package:deshifarmer/services/blocs/cart/cart_bloc.dart';
+import 'package:deshifarmer/services/blocs/category/category_bloc.dart';
+import 'package:deshifarmer/services/blocs/company/company_bloc.dart';
+import 'package:deshifarmer/services/blocs/farmer_api/add_farmer_api_bloc.dart';
+import 'package:deshifarmer/services/blocs/farmer_fetch_farm/farmer_fetch_farm_bloc.dart';
+import 'package:deshifarmer/services/blocs/my_farmer/my_farmer_bloc.dart';
+import 'package:deshifarmer/services/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
+import 'package:deshifarmer/services/blocs/record_sowing/record_sowing_bloc.dart';
+import 'package:deshifarmer/services/blocs/user_profile/user_profile_bloc.dart';
+import 'package:deshifarmer/services/cubit/add_group/add_farmer_to_group_cubit.dart';
+import 'package:deshifarmer/services/cubit/dropdown/dropdown_cubit.dart';
+import 'package:deshifarmer/services/cubit/groups/get_group_cubit.dart';
+import 'package:deshifarmer/services/cubit/product_search/search_products_cubit_cubit.dart';
+import 'package:deshifarmer/services/cubit/select_pagi_farmer/select_paginated_farmer_cubit.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -87,9 +88,9 @@ class App extends StatelessWidget {
           create: (BuildContext context) => DropdownForPaymentCubit(),
         ),
 
-        BlocProvider<DropdownForFarmerCubit>(
-          create: (BuildContext context) => DropdownForFarmerCubit(),
-        ),
+        // BlocProvider<DropdownForFarmerCubit>(
+        //   create: (BuildContext context) => DropdownForFarmerCubit(),
+        // ),
         // MyFarmerBloc
         BlocProvider<MyFarmerBloc>(
           create: (BuildContext context) => MyFarmerBloc(),
@@ -121,6 +122,11 @@ class App extends StatelessWidget {
         /// add farmer to group cubit
         BlocProvider<AddFarmerToGroupCubit>(
           create: (BuildContext context) => AddFarmerToGroupCubit(),
+        ),
+
+        /// select farmer cubit
+        BlocProvider<SelectPaginatedFarmerCubit>(
+          create: (BuildContext context) => SelectPaginatedFarmerCubit(),
         ),
 
         /// update leader to group cubit
@@ -212,14 +218,13 @@ class _MyHomePaguState extends State<MyHomePagu> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('how many times the app gets called APP->MyHomePage');
     return FutureBuilder<String?>(
       future: getLoginTokenFromDB,
       builder: (context, snapshot) {
-        debugPrint('how many times the app gets called APP->MyHomePage->FB');
         if (snapshot.hasData) {
-          debugPrint('usr alrady loggen in -> ${snapshot.data}');
           if (snapshot.data != null) {
+            debugPrint('Calling Userprofile and Order from APP :)');
+
             /// a login success event
             context
                 .read<LoginBloc>()
@@ -229,12 +234,9 @@ class _MyHomePaguState extends State<MyHomePagu> {
             context
                 .read<UserProfileBloc>()
                 .add(GetUserProfileEvent(token: snapshot.data!));
-            debugPrint('GetUserProfileEvent in APP');
 
             /// get my orders
             context.read<OrderBloc>().add(InitOrders(snapshot.data!));
-            // UserProfileBloc()
-            //     .add(GetUserProfileEvent(token: snapshot.data!));
             return const HomePage();
           }
         }

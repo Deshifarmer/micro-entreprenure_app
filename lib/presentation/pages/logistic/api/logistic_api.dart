@@ -46,7 +46,7 @@ class LogisticAPI {
         body: json.encode(body),
       );
       debugPrint('status code -> ${response.statusCode}');
-      if (response.statusCode == 201) {
+      if (response.statusCode == 201 || response.statusCode == 200) {
         return true;
       } else {
         debugPrint('Lets see -> ${response.body}');
