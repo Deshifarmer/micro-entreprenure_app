@@ -1,4 +1,3 @@
-import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/order/widgets/order_body2.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
@@ -20,44 +19,17 @@ class OrderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        final loginState = context.read<LoginBloc>().state;
-        final token = loginState is LoginSuccess
-            ? loginState.successLoginEntity.token
-            : '';
-        context.read<UserProfileBloc>().add(GetUserProfileEvent(token: token));
-        return true;
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'আমার অর্ডার  সমূহ',
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: primaryColor,
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
-          // centerTitle: true,
-          leading: isBack == true
-              ? IconButton(
-                  icon: const Icon(Icons.arrow_back_ios),
-                  onPressed: () {
-                    final loginState = context.read<LoginBloc>().state;
-                    final token = loginState is LoginSuccess
-                        ? loginState.successLoginEntity.token
-                        : '';
-                    context
-                        .read<UserProfileBloc>()
-                        .add(GetUserProfileEvent(token: token));
-                    debugPrint('GetUserProfileEvent in OrderPage');
-                    Navigator.of(context).pop();
-                  },
-                )
-              : null,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'আমার অর্ডার  সমূহ',
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                color: primaryColor,
+                fontWeight: FontWeight.bold,
+              ),
         ),
-        body: const OrderView(),
       ),
+      body: const OrderView(),
     );
   }
 }

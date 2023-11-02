@@ -1,8 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deshifarmer/core/app_core.dart';
 import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
-import 'package:deshifarmer/presentation/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
+
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:deshifarmer/presentation/pages/group_detail/bloc/group_detail_bloc.dart';
 import 'package:deshifarmer/presentation/pages/group_detail/widgets/group_leader_card.dart';
@@ -12,6 +11,8 @@ import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
+import 'package:deshifarmer/services/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
+import 'package:deshifarmer/services/blocs/user_profile/user_profile_bloc.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
@@ -88,138 +89,125 @@ class GroupDetailBody extends StatelessWidget {
                                     //! show list of all the member of the group
                                     Expanded(
                                       child: ListView.builder(
-                                          itemCount: state.groupDetailEntity
-                                              .farmer_list.length,
-                                          itemBuilder: (context, index) {
-                                            final value = state
-                                                .groupDetailEntity.farmer_list
-                                                .elementAt(index);
-                                            return ListTile(
-                                              onTap: () {
-                                                // show an alert dialog if the user wants to add the farmer to the group
-                                                showDialog(
-                                                  context: context,
-                                                  builder: (context) =>
-                                                      AlertDialog(
-                                                    title: const Text(
-                                                      'লীডার সিলেক্ট করুন',
-                                                    ),
-                                                    // content: Text(
-                                                    //   'আপনি কি ${value?.full_name} কৃষককে গ্রুপের লিডার বানাতে চান?',
-                                                    // ),
-                                                    content: RichText(
-                                                      text: TextSpan(
-                                                        text: 'আপনি কি ',
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodyLarge,
-                                                        children: [
-                                                          TextSpan(
-                                                            text:
-                                                                '${value?.full_name}',
-                                                            style: Theme.of(
-                                                                    context,)
-                                                                .textTheme
-                                                                .bodyLarge!
-                                                                .copyWith(
-                                                                    color:
-                                                                        primaryColor,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,),
-                                                          ),
-                                                          const TextSpan(
-                                                            text:
-                                                                ' কৃষককে গ্রুপের লিডার বানাতে চান?',
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    actions: [
-                                                      TextButton(
-                                                        onPressed: () {
-                                                          Navigator.pop(
+                                        itemCount: state.groupDetailEntity
+                                            .farmer_list.length,
+                                        itemBuilder: (context, index) {
+                                          final value = state
+                                              .groupDetailEntity.farmer_list
+                                              .elementAt(index);
+                                          return ListTile(
+                                            onTap: () {
+                                              // show an alert dialog if the user wants to add the farmer to the group
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    AlertDialog(
+                                                  title: const Text(
+                                                    'লীডার সিলেক্ট করুন',
+                                                  ),
+                                                  // content: Text(
+                                                  //   'আপনি কি ${value?.full_name} কৃষককে গ্রুপের লিডার বানাতে চান?',
+                                                  // ),
+                                                  content: RichText(
+                                                    text: TextSpan(
+                                                      text: 'আপনি কি ',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyLarge,
+                                                      children: [
+                                                        TextSpan(
+                                                          text:
+                                                              '${value?.full_name}',
+                                                          style: Theme.of(
                                                             context,
-                                                          );
-                                                        },
-                                                        child: const Text(
-                                                          'না',
+                                                          )
+                                                              .textTheme
+                                                              .bodyLarge!
+                                                              .copyWith(
+                                                                color:
+                                                                    primaryColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
                                                         ),
+                                                        const TextSpan(
+                                                          text:
+                                                              ' কৃষককে গ্রুপের লিডার বানাতে চান?',
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(
+                                                          context,
+                                                        );
+                                                      },
+                                                      child: const Text(
+                                                        'না',
                                                       ),
-                                                      TextButton(
-                                                        onPressed: () async {
-                                                          final deshiFarmerAPI =
-                                                              DeshiFarmerAPI();
-                                                          // addFarmerToGroupAPI
-                                                          final res =
-                                                              await deshiFarmerAPI
-                                                                  .updateLeaderToGroupAPI(
-                                                            token,
-                                                            value?.farmer_id ??
-                                                                '',
-                                                            state.groupDetailEntity
-                                                                    .farmer_group_id ??
-                                                                '',
-                                                          );
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () async {
+                                                        final deshiFarmerAPI =
+                                                            DeshiFarmerAPI();
+                                                        // addFarmerToGroupAPI
+                                                        final res =
+                                                            await deshiFarmerAPI
+                                                                .updateLeaderToGroupAPI(
+                                                          token,
+                                                          value?.farmer_id ??
+                                                              '',
+                                                          state.groupDetailEntity
+                                                                  .farmer_group_id ??
+                                                              '',
+                                                        );
 
-                                                          //! check if the res is success or not
-                                                          final res2 =
-                                                              switch (res) {
-                                                            Success(
-                                                              data: final succ
-                                                            ) =>
-                                                              succ,
-                                                            ServerFailor(
-                                                              error: final err
-                                                            ) =>
-                                                              err,
-                                                          };
-                                                          if (res2 is bool) {
-                                                            if (res2 == true) {
-                                                              // successfully added
-                                                              ScaffoldMessenger
-                                                                  .of(
-                                                                context,
-                                                              ).showSnackBar(
-                                                                const SnackBar(
-                                                                  content: Text(
-                                                                    'গ্রুপের লিডার আপডেট  সম্পন্ন হয়েছে',
-                                                                  ),
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .greenAccent,
+                                                        //! check if the res is success or not
+                                                        final res2 =
+                                                            switch (res) {
+                                                          Success(
+                                                            data: final succ
+                                                          ) =>
+                                                            succ,
+                                                          ServerFailor(
+                                                            error: final err
+                                                          ) =>
+                                                            err,
+                                                        };
+                                                        if (res2 is bool) {
+                                                          if (res2 == true) {
+                                                            // successfully added
+                                                            ScaffoldMessenger
+                                                                .of(
+                                                              context,
+                                                            ).showSnackBar(
+                                                              const SnackBar(
+                                                                content: Text(
+                                                                  'গ্রুপের লিডার আপডেট  সম্পন্ন হয়েছে',
                                                                 ),
-                                                              );
-                                                              // refresh the page
-                                                              context
-                                                                  .read<
-                                                                      GroupDetailBloc>()
-                                                                  .add(
-                                                                    GroupDetailFetchEvent(
-                                                                      groupID:
-                                                                          state.groupDetailEntity.farmer_group_id ??
-                                                                              '',
-                                                                      token:
-                                                                          token,
-                                                                      // token: logINState.successLoginEntity.token,
-                                                                    ),
-                                                                  );
-                                                            } else {
-                                                              // got an error
-                                                              ScaffoldMessenger
-                                                                  .of(
-                                                                context,
-                                                              ).showSnackBar(
-                                                                SnackBar(
-                                                                  content: Text(
-                                                                    'গ্রুপের লিডার আপডেট করতে ব্যর্থ হয়েছে $res2',
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .greenAccent,
+                                                              ),
+                                                            );
+                                                            // refresh the page
+                                                            context
+                                                                .read<
+                                                                    GroupDetailBloc>()
+                                                                .add(
+                                                                  GroupDetailFetchEvent(
+                                                                    groupID: state
+                                                                            .groupDetailEntity
+                                                                            .farmer_group_id ??
+                                                                        '',
+                                                                    token:
+                                                                        token,
+                                                                    // token: logINState.successLoginEntity.token,
                                                                   ),
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .redAccent,
-                                                                ),
-                                                              );
-                                                            }
+                                                                );
                                                           } else {
                                                             // got an error
                                                             ScaffoldMessenger
@@ -228,7 +216,7 @@ class GroupDetailBody extends StatelessWidget {
                                                             ).showSnackBar(
                                                               SnackBar(
                                                                 content: Text(
-                                                                  'Got an Error $res2',
+                                                                  'গ্রুপের লিডার আপডেট করতে ব্যর্থ হয়েছে $res2',
                                                                 ),
                                                                 backgroundColor:
                                                                     Colors
@@ -236,37 +224,52 @@ class GroupDetailBody extends StatelessWidget {
                                                               ),
                                                             );
                                                           }
-                                                          Navigator.pop(
+                                                        } else {
+                                                          // got an error
+                                                          ScaffoldMessenger.of(
                                                             context,
+                                                          ).showSnackBar(
+                                                            SnackBar(
+                                                              content: Text(
+                                                                'Got an Error $res2',
+                                                              ),
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .redAccent,
+                                                            ),
                                                           );
-                                                        },
-                                                        child: const Text(
-                                                          'হ্যাঁ',
-                                                        ),
+                                                        }
+                                                        Navigator.pop(
+                                                          context,
+                                                        );
+                                                      },
+                                                      child: const Text(
+                                                        'হ্যাঁ',
                                                       ),
-                                                    ],
-                                                  ),
-                                                );
-                                              },
-                                              leading: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                  10,
+                                                    ),
+                                                  ],
                                                 ),
-                                                child: CachedNetworkImage(
-                                                  imageUrl:
-                                                      '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value?.image}',
-                                                  height: 50,
-                                                  width: 50,
-                                                ),
+                                              );
+                                            },
+                                            leading: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                10,
                                               ),
-                                              title: Text(
-                                                value?.full_name ?? '',
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value?.image}',
+                                                height: 50,
+                                                width: 50,
                                               ),
-                                              subtitle:
-                                                  Text(value?.phone ?? ''),
-                                            );
-                                          },),
+                                            ),
+                                            title: Text(
+                                              value?.full_name ?? '',
+                                            ),
+                                            subtitle: Text(value?.phone ?? ''),
+                                          );
+                                        },
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -341,9 +344,7 @@ class GroupDetailBody extends StatelessWidget {
                                   // show list of all the unassigned farmers
                                   BlocConsumer<MyUnassignFamersBloc,
                                       MyUnassignFamersState>(
-                                    listener: (context, unassignFamers) {
-                                      
-                                    },
+                                    listener: (context, unassignFamers) {},
                                     builder: (context, unassignFamers) {
                                       if (unassignFamers
                                           is MyUnassignFarmerReqSuccess) {
@@ -372,22 +373,24 @@ class GroupDetailBody extends StatelessWidget {
                                                         text: TextSpan(
                                                           text: 'আপনি কি ',
                                                           style: Theme.of(
-                                                                  context,)
-                                                              .textTheme
-                                                              .bodyLarge,
+                                                            context,
+                                                          ).textTheme.bodyLarge,
                                                           children: [
                                                             TextSpan(
                                                               text:
                                                                   '${value.full_name}',
                                                               style: Theme.of(
-                                                                      context,)
+                                                                context,
+                                                              )
                                                                   .textTheme
                                                                   .bodyLarge!
                                                                   .copyWith(
-                                                                      color:
-                                                                          primaryColor,
-                                                                      fontWeight:
-                                                                          FontWeight.bold,),
+                                                                    color:
+                                                                        primaryColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
                                                             ),
                                                             const TextSpan(
                                                               text:
@@ -408,8 +411,7 @@ class GroupDetailBody extends StatelessWidget {
                                                           ),
                                                         ),
                                                         TextButton(
-                                                          onPressed:
-                                                              () async {
+                                                          onPressed: () async {
                                                             final deshiFarmerAPI =
                                                                 DeshiFarmerAPI();
                                                             // addFarmerToGroupAPI
@@ -428,18 +430,15 @@ class GroupDetailBody extends StatelessWidget {
                                                             final res2 =
                                                                 switch (res) {
                                                               Success(
-                                                                data:
-                                                                    final succ
+                                                                data: final succ
                                                               ) =>
                                                                 succ,
                                                               ServerFailor(
-                                                                error:
-                                                                    final err
+                                                                error: final err
                                                               ) =>
                                                                 err,
                                                             };
-                                                            if (res2
-                                                                is bool) {
+                                                            if (res2 is bool) {
                                                               if (res2 ==
                                                                   true) {
                                                                 // successfully added
@@ -464,7 +463,8 @@ class GroupDetailBody extends StatelessWidget {
                                                                     .add(
                                                                       GroupDetailFetchEvent(
                                                                         groupID:
-                                                                            state.groupDetailEntity.farmer_group_id ?? '',
+                                                                            state.groupDetailEntity.farmer_group_id ??
+                                                                                '',
                                                                         token:
                                                                             token,
                                                                         // token: logINState.successLoginEntity.token,
@@ -494,8 +494,7 @@ class GroupDetailBody extends StatelessWidget {
                                                                 context,
                                                               ).showSnackBar(
                                                                 SnackBar(
-                                                                  content:
-                                                                      Text(
+                                                                  content: Text(
                                                                     'Got an Error $res2',
                                                                   ),
                                                                   backgroundColor:
