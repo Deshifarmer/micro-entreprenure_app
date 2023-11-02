@@ -1,3 +1,4 @@
+import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -6,9 +7,16 @@ class SharedPrefDBServices {
 
   /// get login Token
   Future<String?> getLoginToken() async {
+    final df = DeshiFarmerAPI();
     final prefs = await SharedPreferences.getInstance();
+    // check if the token is valid or not
+    final isAuth = await df.checkIfAuthenticated();
     // get value
-    return prefs.getString(_loginKey);
+    if (isAuth) {
+      return prefs.getString(_loginKey);
+    } else {
+      return null;
+    }
   }
 
   /// remove login Token
