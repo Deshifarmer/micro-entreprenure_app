@@ -1,6 +1,7 @@
 import 'package:deshifarmer/data/models/add_farmer_model.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/bloc/add_farmer_bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:deshifarmer/presentation/widgets/snackbar_custom.dart';
@@ -29,10 +30,10 @@ class AddFarmerButton extends StatelessWidget {
         }
         if (state is AddFarmerAPISuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               behavior: SnackBarBehavior.floating,
-              backgroundColor: Colors.green[700],
-              content: const Text('Successfully farmer Added'),
+              backgroundColor: primaryColor,
+              content: Text('Successfully farmer Added'),
             ),
           );
 

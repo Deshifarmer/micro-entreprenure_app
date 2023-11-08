@@ -105,10 +105,7 @@ class HomeBodyListView extends StatelessWidget {
                 debugPrint(logINState.successLoginEntity.token);
 
                 if (i == 4) {
-                  await context.read<GetGroupCubit>().addAllGroupFields(
-                        logINState.successLoginEntity.token,
-                      );
-                  // ignore: use_build_context_synchronously
+                  
                   await Navigator.push(context, AddFarmerPage.route());
                 } else if (i == 3) {
                   context.read<MyFarmerBloc>().add(
@@ -123,9 +120,7 @@ class HomeBodyListView extends StatelessWidget {
                     ),
                   );
                 } else if (i == 5) {
-                  await context.read<GetGroupCubit>().addAllGroupFields(
-                        logINState.successLoginEntity.token,
-                      );
+                  
 // MyUnassignFamersBloc
 
                   context.read<MyUnassignFamersBloc>().add(

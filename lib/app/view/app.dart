@@ -6,6 +6,7 @@ import 'package:deshifarmer/presentation/pages/activity/activity.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:deshifarmer/presentation/pages/add_group/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/agri_advisory/bloc/agri_advisory_bloc.dart';
+import 'package:deshifarmer/presentation/pages/agri_advisory/cubit/list_for_farmers_cubit.dart';
 import 'package:deshifarmer/presentation/pages/attendance/bloc/attendance_bloc.dart';
 import 'package:deshifarmer/presentation/pages/crop_insurance/bloc/crop_insurance_bloc.dart';
 import 'package:deshifarmer/presentation/pages/farmadd_form/bloc/farmadd_form_bloc.dart';
@@ -29,10 +30,11 @@ import 'package:deshifarmer/services/blocs/record_sowing/record_sowing_bloc.dart
 import 'package:deshifarmer/services/blocs/user_profile/user_profile_bloc.dart';
 import 'package:deshifarmer/services/cubit/add_group/add_farmer_to_group_cubit.dart';
 import 'package:deshifarmer/services/cubit/dropdown/dropdown_cubit.dart';
-import 'package:deshifarmer/services/cubit/groups/get_group_cubit.dart';
+// import 'package:deshifarmer/services/cubit/groups/get_group_cubit.dart';
 import 'package:deshifarmer/services/cubit/product_search/search_products_cubit_cubit.dart';
 import 'package:deshifarmer/services/cubit/select_pagi_farmer/select_paginated_farmer_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:upgrader/upgrader.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -95,10 +97,7 @@ class App extends StatelessWidget {
         BlocProvider<MyFarmerBloc>(
           create: (BuildContext context) => MyFarmerBloc(),
         ),
-        // add group form field CUBIT
-        BlocProvider<GetGroupCubit>(
-          create: (BuildContext context) => GetGroupCubit(),
-        ),
+        
 //AddFarmerApiBloc
 
         BlocProvider<AddFarmerApiBloc>(
@@ -173,6 +172,10 @@ class App extends StatelessWidget {
         BlocProvider<RecordSowingBloc>(
           create: (BuildContext context) => RecordSowingBloc(),
         ),
+        // ListForFarmersCubit
+        BlocProvider<ListForFarmersCubit>(
+          create: (BuildContext context) => ListForFarmersCubit(),
+        ),
       ],
       // create: (context) => SubjectBloc(),
       child: MaterialApp(
@@ -192,7 +195,9 @@ class App extends StatelessWidget {
         ),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: const MyHomePagu(),
+        home: UpgradeAlert(
+          child: const MyHomePagu(),
+        ),
       ),
     );
   }
