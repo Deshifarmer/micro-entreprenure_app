@@ -1,9 +1,11 @@
 import 'package:deshifarmer/presentation/pages/agri_advisory/bloc/bloc.dart';
+import 'package:deshifarmer/presentation/pages/agri_advisory/cubit/list_for_farmers_cubit.dart';
 import 'package:deshifarmer/presentation/pages/agri_advisory/widgets/agri_advisory_body.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:deshifarmer/presentation/widgets/snackbar_custom.dart';
+import 'package:deshifarmer/services/utils/extensions_c.dart';
 import 'package:flutter/material.dart';
 
 /// {@template agri_advisory_page}
@@ -25,49 +27,62 @@ class AgriAdvisoryPage extends StatelessWidget {
         if (state is AgriFailed) {
           ScaffoldMessenger.of(context)
               .showSnackBar(errorSnackBar('Advisory Adding failed'));
-        } else {
+        } else if (state is AgriSuccessfully) {
           ScaffoldMessenger.of(context)
               .showSnackBar(successSnackBar('Successfully Added Advisory'));
         }
-        
       },
       builder: (context, state) {
-        return Scaffold(
-          extendBody: true,
-          backgroundColor: backgroundColor2,
-          appBar: AppBar(
-            toolbarHeight: 30,
+        return WillPopScope(
+          onWillPop: () async {
+            context.read<ListForFarmersCubit>().resetListForFarmers();
+            return true;
+          },
+          child: Scaffold(
+            extendBody: true,
             backgroundColor: backgroundColor2,
-            surfaceTintColor: backgroundColor2,
-          ),
-          body: const AgriAdvisoryView(),
-          bottomNavigationBar: SecondayButtonGreen(
-            btnColor: priceBoxColor,
-            onpress: () async {
-              final agriAdvisory = context.read<AgriAdvisoryBloc>().state;
-              if (agriAdvisory is AgriAdvisoryInitial) {
-                debugPrint('Photos -> ${agriAdvisory.images}');
-                debugPrint('subject -> ${agriAdvisory.subjects.text}');
-                debugPrint('timeslot -> ${agriAdvisory.timeslots.text}');
-                debugPrint('groupid -> ${agriAdvisory.groupID.text}');
-                debugPrint('notes -> ${agriAdvisory.notes.text}');
-                debugPrint('members -> ${agriAdvisory.members.toSet().toList()}');
+            appBar: AppBar(
+              toolbarHeight: 30,
+              backgroundColor: backgroundColor2,
+              surfaceTintColor: backgroundColor2,
+            ),
+            body: const AgriAdvisoryView(),
+            bottomNavigationBar: SecondayButtonGreen(
+              btnColor: priceBoxColor,
+              onpress: () async {
+                final agriAdvisory = context.read<AgriAdvisoryBloc>().state;
+                final listForFarmers =
+                    context.read<ListForFarmersCubit>().state;
+                if (agriAdvisory is AgriAdvisoryInitial) {
+                  debugPrint('Photos -> ${agriAdvisory.images}');
+                  debugPrint('subject -> ${agriAdvisory.subjects.text}');
+                  debugPrint('timeslot -> ${agriAdvisory.timeslots.text}');
+                  debugPrint('groupid -> ${agriAdvisory.groupID.text}');
+                  debugPrint('notes -> ${agriAdvisory.notes.text}');
+                  // debugPrint(
+                  //     'members -> ${agriAdvisory.members.toSet().toList()}');
 
-                final loginState = context.read<LoginBloc>().state;
-                if (loginState is LoginSuccess) {
-                  context.read<AgriAdvisoryBloc>().add(AddAdvisoryEvent(
-                        token: loginState.successLoginEntity.token,
-                        notes: agriAdvisory.notes.text,
-                        groupID: agriAdvisory.groupID.text,
-                        subject: agriAdvisory.subjects.text,
-                        timeslot: agriAdvisory.timeslots.text,
-                        images: agriAdvisory.images,
-                        members: agriAdvisory.members.toSet().toList(),
-                      ),);
+                  // final loginState = context.read<LoginBloc>().state;
+                  // final token = loginState is LoginSuccess
+                  //     ? loginState.successLoginEntity.token
+                  //     : '';
+                  // if (listForFarmers is AddingListForFarmers ) {
+                  //   context.read<AgriAdvisoryBloc>().add(
+                  //         AddAdvisoryEvent(
+                  //           token: token,
+                  //           notes: agriAdvisory.notes.text,
+                  //           groupID: agriAdvisory.groupID.text,
+                  //           subject: agriAdvisory.subjects.text,
+                  //           timeslot: agriAdvisory.timeslots.text,
+                  //           images: agriAdvisory.images,
+                  //           members: listForFarmers.farmers.ids,
+                  //         ),
+                  //       );
+                  // }
                 }
-              }
-            },
-            title: 'সেশন রেকর্ড করুন',
+              },
+              title: 'সেশন রেকর্ড করুন',
+            ),
           ),
         );
       },
