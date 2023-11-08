@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
+import 'package:deshifarmer/domain/entities/farmer_entity/group_farmer_entity.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,7 +19,11 @@ class AgriAdvisoryBloc extends Bloc<AgriAdvisoryEvent, AgriAdvisoryState> {
   FutureOr<void> _onCustomAgriAdvisoryEvent(
     CustomAgriAdvisoryEvent event,
     Emitter<AgriAdvisoryState> emit,
-  ) {}
+  ) {
+    emit(AgriLoading());
+    emit(AgriAdvisoryInitial());
+  }
+
   FutureOr<void> _onAdvisoryPostEvent(AddAdvisoryEvent event, emit) async {
     emit(AgriLoading());
 
