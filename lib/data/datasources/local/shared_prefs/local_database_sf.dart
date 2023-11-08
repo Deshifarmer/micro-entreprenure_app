@@ -9,11 +9,12 @@ class SharedPrefDBServices {
   Future<String?> getLoginToken() async {
     final df = DeshiFarmerAPI();
     final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString(_loginKey);
     // check if the token is valid or not
-    final isAuth = await df.checkIfAuthenticated();
+    final isAuth = await df.checkIfAuthenticated(token ?? '');
     // get value
     if (isAuth) {
-      return prefs.getString(_loginKey);
+      return token;
     } else {
       return null;
     }
