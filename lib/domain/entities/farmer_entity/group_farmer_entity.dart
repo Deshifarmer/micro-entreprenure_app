@@ -1,10 +1,11 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'group_farmer_entity.g.dart';
 
 @JsonSerializable()
-class GroupFarmerEntity {
+class GroupFarmerEntity extends Equatable{
   const GroupFarmerEntity({
     required this.farmer_id,
     required this.image,
@@ -41,4 +42,11 @@ class GroupFarmerEntity {
   final String? image;
   final String? farm_area;
   final String? date_of_birth;
+  
+  @override
+  List<Object?> get props => [
+    farmer_id,
+    usaid_id,
+    phone,
+  ];
 }
