@@ -34,7 +34,6 @@ class AgriAdvisoryInitial extends AgriAdvisoryState {
   final TextEditingController subjects = TextEditingController();
   final TextEditingController timeslots = TextEditingController();
   final TextEditingController groupID = TextEditingController();
-  final List<String> members = [];
   final TextEditingController notes = TextEditingController();
 
   final List<XFile> images = [];
