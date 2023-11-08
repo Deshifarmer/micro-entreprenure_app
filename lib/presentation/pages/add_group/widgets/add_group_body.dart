@@ -1,7 +1,7 @@
-
 import 'package:deshifarmer/presentation/pages/add_group/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/add_group/components/get_farmer_listo.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/services/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
 import 'package:deshifarmer/services/cubit/groups/get_group_cubit.dart';
 import 'package:flutter/material.dart';
@@ -32,9 +32,7 @@ class AddGroupBody extends StatelessWidget {
 
           final logINState = context.read<LoginBloc>().state;
           if (logINState is LoginSuccess) {
-            context.read<GetGroupCubit>().addAllGroupFields(
-                  logINState.successLoginEntity.token,
-                );
+            
             context.read<MyUnassignFamersBloc>().add(
                   MyUnassignFarmerFetchEvent(
                     logINState.successLoginEntity.token,
@@ -43,16 +41,22 @@ class AddGroupBody extends StatelessWidget {
           }
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              backgroundColor: Colors.green,
+              backgroundColor: priceBoxColor,
               content: Text('Group Created Succesfully'),
             ),
           );
         }
       },
       builder: (context, state) {
-        return const Padding(
-          padding: EdgeInsets.all(10),
-          child: GetFarmerListo(),
+        final loginState = context.read<LoginBloc>().state;
+        final token = loginState is LoginSuccess
+            ? loginState.successLoginEntity.token
+            : '';
+        return Padding(
+          padding: const EdgeInsets.all(10),
+          child: GetFarmerListo(
+            token: token,
+          ),
         );
       },
     );
