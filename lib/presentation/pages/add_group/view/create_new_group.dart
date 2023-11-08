@@ -32,9 +32,7 @@ class CreateGroupForm extends StatelessWidget {
           if (state is GroupCreatedSuccessfully) {
             final logINState = context.read<LoginBloc>().state;
             if (logINState is LoginSuccess) {
-              context.read<GetGroupCubit>().addAllGroupFields(
-                    logINState.successLoginEntity.token,
-                  );
+          
               context.read<MyUnassignFamersBloc>().add(
                     MyUnassignFarmerFetchEvent(
                       logINState.successLoginEntity.token,
@@ -43,7 +41,7 @@ class CreateGroupForm extends StatelessWidget {
             }
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                backgroundColor: Colors.green,
+                backgroundColor: priceBoxColor,
                 content: Text('গ্রুপ সফলভাবে তৈরি করা হয়েছে'),
                 // content: Text('Group Created Succesfully'),
               ),
