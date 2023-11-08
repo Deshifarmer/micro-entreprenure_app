@@ -1,23 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 
-/*
-
-    {
-        "farmer_group_id": "FG-199d-b1934",
-        "farmer_group_name": "মোঃ শামীম হোসেন (কোদালিয়া)",
-        "cluster_id": null,
-        "isActive": "1",
-        "inactive_at": null,
-        "group_manager_id": "ME-edcb-a1801",
-        "group_leader": null,
-        "created_at": "2023-07-30T03:55:34.000000Z",
-        "updated_at": "2023-07-30T03:56:52.000000Z",
-        "color": null,
-        "total_farmers": 25
-    }
-    
-
-*/
 
 import 'package:deshifarmer/domain/entities/group_field_entity/group_leader_field.dart';
 import 'package:json_annotation/json_annotation.dart';

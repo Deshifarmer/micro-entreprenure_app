@@ -57,51 +57,6 @@ class ActivityBody extends StatelessWidget {
                         trailing: Text(currentActivity.farm_id),
                       ),
                     );
-                    // final currentFarmer =
-                    //     ActivityFarmerDetails.fromJson(
-                    //         currentActivity.farmer_details.first
-                    //             as Map<String, dynamic>);
-                    // print(currentActivity.images);
-                    // return Padding(
-                    //   padding: const EdgeInsets.symmetric(
-                    //     vertical: 10,
-                    //   ),
-                    //   // child: Row(
-                    //   //   children: [
-                    //   //     const SizedBox(width: 20),
-                    //   //     Column(
-                    //   //       crossAxisAlignment: CrossAxisAlignment.start,
-                    //   //       children: [
-                    //   //         SizedBox(
-                    //   //           width: MediaQuery.sizeOf(context).width / 1.8,
-                    //   //           child: Text(
-                    //   //             currentActivity.which_crop,
-                    //   //             style: const TextStyle(
-                    //   //               color: Colors.black,
-                    //   //               fontSize: 16,
-                    //   //               fontWeight: FontWeight.bold,
-                    //   //               height: 1,
-                    //   //             ),
-                    //   //             softWrap: true,
-                    //   //             maxLines: 2,
-                    //   //             overflow: TextOverflow.fade,
-                    //   //           ),
-                    //   //         ),
-                    //   //         const SizedBox(height: 10),
-                    //   //         Text(
-                    //   //           'Season: ${currentActivity.season}',
-                    //   //           style: const TextStyle(
-                    //   //             color: Colors.black,
-                    //   //             fontSize: 14,
-                    //   //             fontWeight: FontWeight.w400,
-                    //   //           ),
-                    //   //           maxLines: 2,
-                    //   //         ),
-                    //   //       ],
-                    //   //     ),
-                    //   //   ],
-                    //   // ),
-                    // );
                   },
                 );
         } else if (snapshot.hasError) {
