@@ -66,6 +66,7 @@ class QuickActions extends StatelessWidget {
                             // CropInsurancePage.route();
                             Navigator.push(context, CropInsurancePage.route());
                           case 'কৃষি পরামর্শ':
+                          
                             Navigator.push(
                               context,
                               AgriAdvisoryPage.route(),
@@ -73,8 +74,10 @@ class QuickActions extends StatelessWidget {
                           case 'আমার কৃষক':
                             if (loginState is LoginSuccess) {
                               context.read<MyFarmerBloc>().add(
-                                  MyFarmerFetchEvent(
-                                      loginState.successLoginEntity.token,),);
+                                    MyFarmerFetchEvent(
+                                      loginState.successLoginEntity.token,
+                                    ),
+                                  );
                             }
                             Navigator.push(
                               context,
@@ -173,14 +176,7 @@ class QuickActions extends StatelessWidget {
                               LogisticPage.route(),
                             );
                           case 'গ্রুপ':
-                            final loginState = context.read<LoginBloc>().state;
-                            final token = loginState is LoginSuccess
-                                ? loginState.successLoginEntity.token
-                                : '';
-                            // GetGroupCubit
-                            context.read<GetGroupCubit>().addAllGroupFields(
-                                  token,
-                                );
+                            
                             Navigator.push(
                               context,
                               AddGroupPage.route(),
