@@ -696,13 +696,6 @@ class DeshiFarmerAPI {
                 'error': e.toString(),
               },
             );
-// // getFarmersGroup
-            // final e2 = element;
-            // e2.forEach((key, value) {
-            //   if (value.runtimeType != String) {
-            //     debugPrint('${value.runtimeType} $key $value');
-            //   }
-            // });
           }
         }
         AllFarmerGroupFieldResp successResonse =
@@ -1653,11 +1646,16 @@ class DeshiFarmerAPI {
   }
 
   //* check if auth token is valid or not
-  Future<bool> checkIfAuthenticated() async {
-    final  url = Uri.parse(
+  Future<bool> checkIfAuthenticated(String token) async {
+    final url = Uri.parse(
       ApiDatabaseParams.collectOrderApi,
     );
+    debugPrint('checking auth -> $url');
     try {
+      final auth = {
+        'Authorization': 'Bearer $token',
+      };
+      _headers.addAll(auth);
       final http.Response response = await http.get(
         url,
         headers: _headers,
@@ -1669,6 +1667,81 @@ class DeshiFarmerAPI {
       }
     } catch (e) {
       return false;
+    }
+  }
+
+  //! Get group or empty list
+    ///* Get Group Field LIST
+  Future<AllFarmerGroupFieldResp?> getGroupFields2(
+    String token,
+  ) async {
+    Map<String, String> auth = <String, String>{
+      'Authorization': 'Bearer $token',
+    };
+    final Uri url = Uri.parse(
+      ApiDatabaseParams.getGroupsFormField,
+    );
+    debugPrint('group url -> $url $token');
+    try {
+      _headers.addAll(auth);
+      final http.Response response = await http.get(
+        url,
+        headers: _headers,
+      );
+      if (response.statusCode == 200) {
+        final result = json.decode(response.body) as List<dynamic>;
+        debugPrint(
+          'successfuly Unassign GROUPs -> ${result.runtimeType} ${result.length}',
+        );
+        List<GroupFieldEntity> companyE = [];
+        for (int i = 0; i < result.length; i++) {
+          final element = result[i] as Map<String, dynamic>;
+          // debugPrint('element runtime -> ${element.runtimeType}');
+          try {
+            companyE.add(
+              GroupFieldEntity.fromJson(element),
+            );
+          } catch (e) {
+            debugPrint(
+              'error comverting data Unassing GroupFieldEntity ->  ${element.runtimeType}, $e \n',
+            );
+            FirebaseAnalyticsCustom.customLogEvent(
+              name: 'group_error (getGroupFields)',
+              parameters: <String, dynamic>{
+                'code': response.statusCode,
+                'url': url.toString(),
+                'token': token,
+                'error': e.toString(),
+              },
+            );
+          }
+        }
+        AllFarmerGroupFieldResp successResonse =
+            AllFarmerGroupFieldResp(companyE);
+
+        return successResonse;
+      } else {
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'group_error (getGroupFields)',
+          parameters: <String, dynamic>{
+            'code': response.statusCode,
+            'url': url.toString(),
+            'token': token,
+            'body': response.body,
+          },
+        );
+        return null;
+      }
+    } catch (e) {
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'group_error (getGroupFields)',
+        parameters: <String, dynamic>{
+          'url': url.toString(),
+          'token': token,
+          'error': e.toString(),
+        },
+      );
+      return null;
     }
   }
 }
