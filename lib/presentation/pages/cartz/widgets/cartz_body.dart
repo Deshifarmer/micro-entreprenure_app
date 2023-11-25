@@ -53,7 +53,6 @@ class CartzBody extends StatelessWidget {
 
               ///! select farmer
 
-              
               SizedBox(
                 height: getProportionateScreenHeight(20),
               ),

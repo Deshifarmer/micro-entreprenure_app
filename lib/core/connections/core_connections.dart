@@ -1,8 +1,8 @@
 // import 'package:deshifarmer/main_production.dart';
 import 'dart:async';
 
-import 'package:deshifarmer/main.dart'; //! shorebird
-// import 'package:deshifarmer/main_development.dart'; //! vsRUN
+// import 'package:deshifarmer/main.dart'; //! shorebird
+import 'package:deshifarmer/main_development.dart'; //! vsRUN
 // import 'package:deshifarmer/main_production.dart'; //! Production
 import 'package:deshifarmer/presentation/widgets/no_internet_wid.dart';
 import 'package:flutter/material.dart';
