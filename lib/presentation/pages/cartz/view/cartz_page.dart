@@ -1,5 +1,7 @@
+import 'package:deshifarmer/core/params/payment_params.dart';
 import 'package:deshifarmer/presentation/pages/cartz/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/cartz/components/select_farmer_paginate.dart';
+import 'package:deshifarmer/presentation/pages/cartz/view/pages/lb_page.dart';
 import 'package:deshifarmer/presentation/pages/cartz/widgets/cartz_body.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:deshifarmer/services/blocs/cart/cart_bloc.dart';
@@ -29,7 +31,7 @@ class CartzPage extends StatelessWidget {
         color: Colors.transparent,
         elevation: 0,
         child: SecondayButtonGreen(
-          onpress: ()async {
+          onpress: () async {
             final cartItems = context.read<CartBloc>().state;
 
             /// check if the items are not empty
@@ -41,7 +43,7 @@ class CartzPage extends StatelessWidget {
                     content: Text('আপনার ব্যাগে কোন পণ্য নেই'),
                   ),
                 );
-              } 
+              }
               // else if (context.read<DropdownForFarmerCubit>().state == null) {
               //   // show a snackbar
               //   ScaffoldMessenger.of(context).showSnackBar(
@@ -50,46 +52,32 @@ class CartzPage extends StatelessWidget {
               //     ),
               //   );
               // }
-               else if (context
-                  .read<DropdownForPaymentCubit>()
-                  .state
-                  .isEmpty) {
+              else if (context.read<DropdownForPaymentCubit>().state.isEmpty) {
                 // show a snackbar
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text('আপনার কোন পেমেন্ট পদ্ধতি নির্বাচন করা হয়নি'),
                   ),
                 );
-              } 
-              // else if (context
-              //         .read<DropdownForFarmerCubit>()
-              //         .state
-              //         ?.farmer_id ==
-              //     'x') {
-              //   ScaffoldMessenger.of(context).showSnackBar(
-              //     const SnackBar(
-              //       content: Text('আপনার কোন কৃষক নির্বাচন করা হয়নি'),
-              //     ),
-              //   );
-              // }
-               else {
-                /// check if any farmer selected
-                /// if user selected user
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (_) => const OrderConformationPage(),
-                //   ),
-                // );
-                await showModalBottomSheet(
+              } else {
+                final paymentMethodChoose =
+                    context.read<DropdownForPaymentCubit>().state;
+                if (paymentMethodChoose == PaymentParams.paymentMethods.last) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (b) => LonkaBanglaPage()),
+                  );
+                } else {
+                  await showModalBottomSheet(
                     context: context,
                     builder: (_) {
                       return const SelectFarmerPaginateCartz();
-                    });
+                    },
+                  );
+                }
               }
               return;
             }
-
           },
           title: 'অর্ডার করুন',
         ),
