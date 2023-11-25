@@ -7,6 +7,7 @@ import 'package:deshifarmer/presentation/pages/crop_insurance/view/crop_insuranc
 import 'package:deshifarmer/presentation/pages/demands/demands.dart';
 import 'package:deshifarmer/presentation/pages/farmadd_form/view/farmadd_form_page.dart';
 import 'package:deshifarmer/presentation/pages/farmer_listo/farmer_listo.dart';
+import 'package:deshifarmer/presentation/pages/finance_page/view/finance_page_page.dart';
 import 'package:deshifarmer/presentation/pages/harvest/harvest.dart';
 import 'package:deshifarmer/presentation/pages/kpi/kpi.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
@@ -66,7 +67,6 @@ class QuickActions extends StatelessWidget {
                             // CropInsurancePage.route();
                             Navigator.push(context, CropInsurancePage.route());
                           case 'কৃষি পরামর্শ':
-                          
                             Navigator.push(
                               context,
                               AgriAdvisoryPage.route(),
@@ -176,7 +176,6 @@ class QuickActions extends StatelessWidget {
                               LogisticPage.route(),
                             );
                           case 'গ্রুপ':
-                            
                             Navigator.push(
                               context,
                               AddGroupPage.route(),
@@ -190,6 +189,11 @@ class QuickActions extends StatelessWidget {
                             Navigator.push(
                               context,
                               HarvestPage.route(),
+                            );
+                          case 'Finance':
+                            Navigator.push(
+                              context,
+                              FinancePagePage.route(),
                             );
                           case 'সার্ভে':
                             final url =
