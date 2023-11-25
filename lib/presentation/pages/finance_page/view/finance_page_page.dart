@@ -1,3 +1,6 @@
+import 'package:deshifarmer/presentation/pages/finance_page/pages/finance_page2.dart';
+import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:deshifarmer/presentation/pages/finance_page/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/finance_page/widgets/finance_page_body.dart';
@@ -19,8 +22,19 @@ class FinancePagePage extends StatelessWidget {
     return BlocProvider(
       create: (context) => FinancePageBloc(),
       child: Scaffold(
-        appBar: AppBar(),
-        body: FinancePageView(),
+        appBar: AppBar(
+          title: const Text('Request finance'),
+        ),
+        body: const FinancePageView(),
+        bottomNavigationBar: SecondayButtonGreen(
+          onpress: () {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(builder: (_) => const FinancePage2()),
+            );
+          },
+          title: 'continue to schedule payment',
+        ),
       ),
     );
   }
