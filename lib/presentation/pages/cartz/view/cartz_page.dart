@@ -3,6 +3,7 @@ import 'package:deshifarmer/presentation/pages/cartz/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/cartz/components/select_farmer_paginate.dart';
 import 'package:deshifarmer/presentation/pages/cartz/view/pages/lb_page.dart';
 import 'package:deshifarmer/presentation/pages/cartz/widgets/cartz_body.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:deshifarmer/services/blocs/cart/cart_bloc.dart';
 import 'package:deshifarmer/services/cubit/dropdown/dropdown_cubit.dart';
@@ -70,6 +71,7 @@ class CartzPage extends StatelessWidget {
                 } else {
                   await showModalBottomSheet(
                     context: context,
+                    backgroundColor: backgroundColor2,
                     builder: (_) {
                       return const SelectFarmerPaginateCartz();
                     },
