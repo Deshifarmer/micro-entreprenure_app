@@ -97,7 +97,7 @@ class App extends StatelessWidget {
         BlocProvider<MyFarmerBloc>(
           create: (BuildContext context) => MyFarmerBloc(),
         ),
-        
+
 //AddFarmerApiBloc
 
         BlocProvider<AddFarmerApiBloc>(
@@ -191,6 +191,9 @@ class App extends StatelessWidget {
           appBarTheme: const AppBarTheme(
             backgroundColor: backgroundColor2,
             surfaceTintColor: backgroundColor2,
+          ),
+          progressIndicatorTheme: const ProgressIndicatorThemeData(
+            color: primaryColor,
           ),
         ),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
