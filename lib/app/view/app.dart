@@ -192,6 +192,9 @@ class App extends StatelessWidget {
             backgroundColor: backgroundColor2,
             surfaceTintColor: backgroundColor2,
           ),
+          textSelectionTheme: const TextSelectionThemeData(
+            cursorColor: primaryColor,
+          ),
           progressIndicatorTheme: const ProgressIndicatorThemeData(
             color: primaryColor,
           ),
