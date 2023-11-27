@@ -5,6 +5,7 @@ import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
 import 'package:deshifarmer/presentation/pages/activity/activity.dart';
 import 'package:deshifarmer/presentation/pages/cartz/pages/conformation_page.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
 import 'package:deshifarmer/presentation/widgets/primary_loading_progress.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
@@ -15,7 +16,6 @@ class SelectFarmerPaginateCartz extends StatefulWidget {
   const SelectFarmerPaginateCartz({
     super.key,
   });
-  
 
   @override
   State<SelectFarmerPaginateCartz> createState() =>
@@ -72,6 +72,14 @@ class _SelectFarmerPaginateCartzState extends State<SelectFarmerPaginateCartz> {
   }
 
   bool isLoading = false;
+
+  @override
+  void dispose() {
+    _pagingController.dispose();
+    _searchController.dispose();
+    
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return isLoading
@@ -93,12 +101,14 @@ class _SelectFarmerPaginateCartzState extends State<SelectFarmerPaginateCartz> {
                   keyboardType: TextInputType.text,
                   onChanged: _updateSearchParams,
                   decoration: const InputDecoration(
-                    fillColor: Colors.white,
+                    fillColor: backgroundColor,
                     prefixIcon: Icon(
                       Icons.search,
                     ),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      ),
                       borderSide: BorderSide.none,
                     ),
                     contentPadding: EdgeInsets.symmetric(
