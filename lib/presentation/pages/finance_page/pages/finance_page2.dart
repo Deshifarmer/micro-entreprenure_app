@@ -1,10 +1,13 @@
+import 'package:deshifarmer/presentation/pages/finance_page/models/fianance_model.dart';
 import 'package:deshifarmer/presentation/pages/finance_page/pages/finance_page3.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 
 class FinancePage2 extends StatelessWidget {
-  const FinancePage2({super.key});
+  const FinancePage2({required this.fm, super.key});
+
+  final FinanceModel fm;
 
   @override
   Widget build(BuildContext context) {
