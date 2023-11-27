@@ -26,15 +26,17 @@ class FinancePagePage extends StatelessWidget {
           title: const Text('Request finance'),
         ),
         body: const FinancePageView(),
-        bottomNavigationBar: SecondayButtonGreen(
-          onpress: () {
-            Navigator.push(
-              context,
-              CupertinoPageRoute(builder: (_) => const FinancePage2()),
-            );
-          },
-          title: 'continue to schedule payment',
-        ),
+        // bottomNavigationBar: SecondayButtonGreen(
+        //   onpress: () {
+        //     debugPrint(
+        //         "Holy shit -> ${context.read<FinancePageBloc>().state.customProperty}");
+        //     // Navigator.push(
+        //     //   context,
+        //     //   CupertinoPageRoute(builder: (_) => const FinancePage2()),
+        //     // );
+        //   },
+        //   title: 'continue to schedule payment',
+        // ),
       ),
     );
   }
@@ -49,6 +51,6 @@ class FinancePageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const FinancePageBody();
+    return FinancePageBody();
   }
 }
