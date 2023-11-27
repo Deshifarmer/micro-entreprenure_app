@@ -87,6 +87,16 @@ class _ProductsBody3State extends State<ProductsBody3> {
 
   final TextEditingController productSearchController = TextEditingController();
   bool isTheEnd = true;
+
+  @override
+  void dispose() {
+    customController.dispose();
+    pagingController.dispose();
+    productSearchController.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -190,9 +200,7 @@ class _ProductsBody3State extends State<ProductsBody3> {
 
                       ///! PERF: categories
                       BlocConsumer<CategoryBloc, CategoryState>(
-                        listener: (context, state) {
-                          
-                        },
+                        listener: (context, state) {},
                         builder: (context, categoryState) {
                           if (categoryState is CategorySuccess) {
                             return PopupMenuButton<CategoryEntity>(
@@ -554,21 +562,22 @@ class _ProductsBody3State extends State<ProductsBody3> {
                                     ),
                               ),
                               SecondayButtonGreen(
-                                  onpress: () {
-                                    productSearchController.clear();
-                                    _updateSearchParams(
-                                      '',
-                                      '',
-                                      '',
-                                    );
-                                    setState(() {
-                                      _searchTerm = '';
-                                      _cat = '';
-                                      _company = '';
-                                      companySelect = '';
-                                    });
-                                  },
-                                  title: 'আবার চেষ্টা করুন',),
+                                onpress: () {
+                                  productSearchController.clear();
+                                  _updateSearchParams(
+                                    '',
+                                    '',
+                                    '',
+                                  );
+                                  setState(() {
+                                    _searchTerm = '';
+                                    _cat = '';
+                                    _company = '';
+                                    companySelect = '';
+                                  });
+                                },
+                                title: 'আবার চেষ্টা করুন',
+                              ),
                             ],
                           );
                         },
