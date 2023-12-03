@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
-import 'package:deshifarmer/presentation/pages/cartz/components/select_farmer_paginate.dart';
+import 'package:deshifarmer/presentation/pages/finance_page/bloc/finance_page_bloc.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
@@ -14,9 +14,10 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class SelectFarmerForFinance extends StatefulWidget {
   const SelectFarmerForFinance({
+    required this.onChanged,
     super.key,
   });
-
+  final ValueChanged<String> onChanged;
   @override
   State<SelectFarmerForFinance> createState() => _SelectFarmerForFinanceState();
 }
@@ -139,6 +140,13 @@ class _SelectFarmerForFinanceState extends State<SelectFarmerForFinance> {
                               itemBuilder: (context, farmer, index) {
                                 return InkWell(
                                   onTap: () async {
+                                    // FarmerFinancePageEvent
+                                    // context.read<FinancePageBloc>().add(
+                                    //       FarmerFinancePageEvent(
+                                    //         farmer.farmer_id ?? '',
+                                    //       ),
+                                    //     );
+                                    widget.onChanged(farmer.farmer_id ?? '');
                                     setState(() {
                                       _selectedFarmer = farmer;
                                     });
@@ -162,7 +170,8 @@ class _SelectFarmerForFinanceState extends State<SelectFarmerForFinance> {
                                                     const Icon(Icons.error),
                                             height:
                                                 getProportionateScreenHeight(
-                                                    50),
+                                              50,
+                                            ),
                                             width:
                                                 getProportionateScreenWidth(50),
                                           ),
@@ -228,9 +237,7 @@ class _SelectFarmerForFinanceState extends State<SelectFarmerForFinance> {
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-              color: Colors.black,
-            ),
+            border: Border.all(),
           ),
           child: _selectedFarmer == null
               ? Row(
