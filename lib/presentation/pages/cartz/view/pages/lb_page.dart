@@ -1,9 +1,11 @@
+import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 
 class LonkaBanglaPage extends StatelessWidget {
-  const LonkaBanglaPage({super.key});
+  const LonkaBanglaPage({required this.fm, super.key});
+  final FarmerEntity fm;
 
   @override
   Widget build(BuildContext context) {
