@@ -411,14 +411,6 @@ class _FinancePageBodyState extends State<FinancePageBody> {
                     );
                     return;
                   }
-                  // if (_varietyController.text.isEmpty) {
-                  //   ScaffoldMessenger.of(context).showSnackBar(
-                  //     const SnackBar(
-                  //       content: Text('Please select a variety'),
-                  //     ),
-                  //   );
-                  //   return;
-                  // }
                   if (_amountController.text.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
@@ -431,11 +423,17 @@ class _FinancePageBodyState extends State<FinancePageBody> {
                     farmerID: farmerID!,
                     season: season!,
                     crop: cropp!,
-                    variety: _varietyController.text,
+                    variety: _varietyController.text.isEmpty
+                        ? null
+                        : _varietyController.text,
                     pol: pol!,
-                    amount: _amountController.text,
-                    eta: _seasonEndETASalController.text,
-                    note: _noteController.text,
+                    // amount: _amountController.text,
+                    eta: _seasonEndETASalController.text.isEmpty
+                        ? null
+                        : _seasonEndETASalController.text,
+                    note: _noteController.text.isEmpty
+                        ? null
+                        : _noteController.text,
                   );
                   debugPrint(
                     'Farmer ID -> $farmerID',
@@ -462,27 +460,28 @@ class _FinancePageBodyState extends State<FinancePageBody> {
                   debugPrint(
                     'Note -> ${_noteController.text}',
                   );
-                  final loginState = context.read<LoginBloc>().state;
-                  final token = loginState is LoginSuccess
-                      ? loginState.successLoginEntity.token
-                      : '';
-                  final isReq = await FinanceAPI().postFinance(fm, token);
+                  // final loginState = context.read<LoginBloc>().state;
+                  // final token = loginState is LoginSuccess
+                  //     ? loginState.successLoginEntity.token
+                  //     : '';
+                  // final isReq = await FinanceAPI().postFinance(fm, token);
 
-                  if (isReq) {
-                    Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                          builder: (_) => FinancePage2(
-                                fm: fm,
-                              )),
-                    );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Something went wrong'),
-                      ),
-                    );
-                  }
+                  // if (isReq) {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                        builder: (_) => FinancePage2(
+                              fm: fm,
+                              ammount: int.parse(_amountController.text),
+                            )),
+                  );
+                  // } else {
+                  //   ScaffoldMessenger.of(context).showSnackBar(
+                  //     const SnackBar(
+                  //       content: Text('Something went wrong'),
+                  //     ),
+                  //   );
+                  // }
                 },
                 title: 'continue to schedule payment',
               ),
