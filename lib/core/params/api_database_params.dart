@@ -144,4 +144,8 @@ class ApiDatabaseParams {
   //! get post Logistic api
   static String postLogisticAPI =
       '${Strings.getServerOrLocal(ServerOrLocal.server)}/api/v1/me/logistic'; //*POST
+
+  //! Finance api
+  static String financeAPI =
+      '${Strings.getServerOrLocal(ServerOrLocal.local)}/api/v1/me/finance_request'; //*POST
 }
