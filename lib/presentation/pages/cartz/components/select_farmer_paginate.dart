@@ -4,6 +4,7 @@ import 'package:deshifarmer/data/datasources/remote/apis/api_source.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
 import 'package:deshifarmer/presentation/pages/activity/activity.dart';
 import 'package:deshifarmer/presentation/pages/cartz/pages/conformation_page.dart';
+import 'package:deshifarmer/presentation/pages/cartz/view/pages/lb_page.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/constraints.dart';
@@ -14,8 +15,11 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class SelectFarmerPaginateCartz extends StatefulWidget {
   const SelectFarmerPaginateCartz({
+    required this.isPayLater,
     super.key,
   });
+
+  final bool isPayLater;
 
   @override
   State<SelectFarmerPaginateCartz> createState() =>
@@ -77,9 +81,10 @@ class _SelectFarmerPaginateCartzState extends State<SelectFarmerPaginateCartz> {
   void dispose() {
     _pagingController.dispose();
     _searchController.dispose();
-    
+
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return isLoading
@@ -129,6 +134,16 @@ class _SelectFarmerPaginateCartzState extends State<SelectFarmerPaginateCartz> {
                     itemBuilder: (context, farmer, index) {
                       return InkWell(
                         onTap: () async {
+                          if (widget.isPayLater) {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (b) => LonkaBanglaPage(
+                                        fm: farmer,
+                                      )),
+                            );
+                            return;
+                          }
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
