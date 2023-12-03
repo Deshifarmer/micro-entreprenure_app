@@ -64,16 +64,24 @@ class CartzPage extends StatelessWidget {
                 final paymentMethodChoose =
                     context.read<DropdownForPaymentCubit>().state;
                 if (paymentMethodChoose == PaymentParams.paymentMethods.last) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (b) => LonkaBanglaPage()),
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (b) => LonkaBanglaPage()),
+                  // );
+
+                  await showModalBottomSheet(
+                    context: context,
+                    backgroundColor: backgroundColor2,
+                    builder: (_) {
+                      return SelectFarmerPaginateCartz(isPayLater: true);
+                    },
                   );
                 } else {
                   await showModalBottomSheet(
                     context: context,
                     backgroundColor: backgroundColor2,
                     builder: (_) {
-                      return const SelectFarmerPaginateCartz();
+                      return SelectFarmerPaginateCartz(isPayLater: false);
                     },
                   );
                 }
