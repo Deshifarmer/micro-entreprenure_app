@@ -188,6 +188,15 @@ class App extends StatelessWidget {
             backgroundColor: Colors.white,
           ),
           scaffoldBackgroundColor: backgroundColor2,
+          inputDecorationTheme: InputDecorationTheme(
+            floatingLabelStyle: TextStyle(
+              color: primaryColor,
+            ),
+          ),
+          snackBarTheme: SnackBarThemeData(
+            // actionBackgroundColor: primaryColor,
+            backgroundColor: primaryColor,
+          ),
           appBarTheme: const AppBarTheme(
             backgroundColor: backgroundColor2,
             surfaceTintColor: backgroundColor2,
