@@ -4,7 +4,7 @@ class FinanceModel {
     required this.season,
     required this.crop,
     required this.pol,
-    required this.amount,
+    // required this.amount,
     required this.note,
     this.variety,
     this.eta,
@@ -14,7 +14,7 @@ class FinanceModel {
   final String crop;
   final String? variety;
   final String pol;
-  final String amount;
+  // final String amount;
   final String? eta;
   final String? note;
 }
