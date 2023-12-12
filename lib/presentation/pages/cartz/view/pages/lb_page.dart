@@ -1,12 +1,23 @@
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
+import 'package:deshifarmer/presentation/pages/cartz/components/lb_box.dart';
+import 'package:deshifarmer/presentation/pages/cartz/components/lb_box2.dart';
+import 'package:deshifarmer/presentation/pages/order/order.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:deshifarmer/presentation/widgets/size_config.dart';
+import 'package:deshifarmer/services/blocs/cart/cart_bloc.dart';
 import 'package:flutter/material.dart';
 
-class LonkaBanglaPage extends StatelessWidget {
+class LonkaBanglaPage extends StatefulWidget {
   const LonkaBanglaPage({required this.fm, super.key});
   final FarmerEntity fm;
 
+  @override
+  State<LonkaBanglaPage> createState() => _LonkaBanglaPageState();
+}
+
+class _LonkaBanglaPageState extends State<LonkaBanglaPage> {
+  int steps = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,31 +48,38 @@ BNPL  এর মাধ্যমে কৃষক সহজেই প্রোড�
                   ),
             ),
             SizedBox(
-              // color: Colors.black87,
-              // margin: const EdgeInsets.all(8),
-              // padding: const EdgeInsets.all(8),
               height: getProportionateScreenHeight(80),
               width: MediaQuery.sizeOf(context).width,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: 10,
                 itemBuilder: (context, index) {
-                  return Container(
-                    margin: EdgeInsets.symmetric(
-                      horizontal: getProportionateScreenWidth(20),
-                      vertical: getProportionateScreenHeight(5),
-                    ),
+                  index += 1;
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        steps = index;
+                      });
+                    },
+                    child: Container(
+                      margin: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(20),
+                        vertical: getProportionateScreenHeight(5),
+                      ),
 
-                    alignment: Alignment.center,
-                    width: 50,
-                    height: 50,
-                    // padding: const EdgeInsets.all(20),
-                    decoration: const BoxDecoration(
-                      color: Color(0xffb1e4b0),
-                      // borderRadius: BorderRadius.circular(20),
-                      shape: BoxShape.circle,
+                      alignment: Alignment.center,
+                      width: 50,
+                      height: 50,
+                      // padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: index == steps
+                            ? primaryColor
+                            : const Color(0xffb1e4b0),
+                        // borderRadius: BorderRadius.circular(20),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Text('$index'),
                     ),
-                    child: Text('${index + 1}'),
                   );
                 },
               ),
@@ -96,154 +114,12 @@ BNPL  এর মাধ্যমে কৃষক সহজেই প্রোড�
                 ),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'মোট',
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: Colors.black.withOpacity(0.5),
-                            ),
-                      ),
-                      Text(
-                        '৳ 2000',
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: Colors.black.withOpacity(0.5),
-                            ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'ইন্টারেস্ট  - 9 %',
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: Colors.black.withOpacity(0.5),
-                            ),
-                      ),
-                      Text(
-                        '৳ 220',
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: Colors.black.withOpacity(0.5),
-                            ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'প্লাটফর্ম ফি',
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: Colors.black.withOpacity(0.5),
-                            ),
-                      ),
-                      Text(
-                        '৳ 60',
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: Colors.black.withOpacity(0.5),
-                            ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: getProportionateScreenHeight(20),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'সর্বমোট',
-                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                      Text(
-                        '৳ 2280',
-                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            const LBPaymentBox(),
             SizedBox(
               height: getProportionateScreenHeight(20),
             ),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: getProportionateScreenHeight(50),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        'এখন',
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: Colors.black.withOpacity(0.5),
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                      Text(
-                        'Nothing to pay',
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: Colors.black.withOpacity(0.5),
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                    ],
-                  ),
-                  for (int i = 0; i < 3; i++)
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      margin: EdgeInsets.symmetric(
-                        horizontal: getProportionateScreenWidth(20),
-                        vertical: getProportionateScreenHeight(5),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.query_builder,
-                            color: Colors.black.withOpacity(0.6),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 15),
-                            child: Text(
-                              'After 13  week',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall!
-                                  .copyWith(
-                                    color: Colors.black.withOpacity(0.6),
-                                  ),
-                            ),
-                          ),
-                          const Spacer(),
-                          Text(
-                            '৳ 760',
-                            style:
-                                Theme.of(context).textTheme.bodySmall!.copyWith(
-                                      color: Colors.black.withOpacity(0.6),
-                                    ),
-                          ),
-                        ],
-                      ),
-                    ),
-                ],
-              ),
+            LBBox2(
+              times: steps,
             ),
           ],
         ),
