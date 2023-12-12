@@ -1,5 +1,6 @@
 import 'package:deshifarmer/data/datasources/local/corps/corps_db.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 
@@ -22,7 +23,7 @@ class FarmerFocusedCorpMulti extends StatelessWidget {
               .replaceAll('}', '')
               .split(',');
           final vls = newF.map((val) {
-            return ValueItem(label: val);
+            return ValueItem(label: val, value: null);
           }).toList();
           if (vls.length == 1 && vls.first.label.isEmpty) {
             vls.removeLast();
@@ -36,11 +37,12 @@ class FarmerFocusedCorpMulti extends StatelessWidget {
               // selectedOptions:state.farmerFocusedCorpController.text ,
               chipConfig: ChipConfig(
                 wrapType: WrapType.wrap,
-                backgroundColor: Colors.green[400],
+                backgroundColor: primaryColor,
               ),
-              selectedOptionTextColor: Colors.green,
-              options:
-                  cropsDatabase.map((e) => ValueItem(label: e.name)).toList(),
+              selectedOptionTextColor: primaryColor,
+              options: cropsDatabase
+                  .map((e) => ValueItem(label: e.name, value: null))
+                  .toList(),
               onOptionSelected: (selectedOptions) {
                 // debugPrint(
                 //     'multi select controller -> ${_multiSelectController.selectedOptions}');
@@ -85,7 +87,7 @@ class FarmerCurrentProducingCorp extends StatelessWidget {
           debugPrint('new f ${newF.length} ${newF.first}');
           final vls = newF.map(
             (val) {
-              return ValueItem(label: val);
+              return ValueItem(label: val, value: null);
             },
           ).toList();
           if (vls.length == 1 && vls.first.label.isEmpty) {
@@ -100,11 +102,12 @@ class FarmerCurrentProducingCorp extends StatelessWidget {
               // selectedOptions:state.farmerFocusedCorpController.text ,
               chipConfig: ChipConfig(
                 wrapType: WrapType.wrap,
-                backgroundColor: Colors.green[400],
+                backgroundColor: primaryColor,
               ),
-              selectedOptionTextColor: Colors.green,
-              options:
-                  cropsDatabase.map((e) => ValueItem(label: e.name)).toList(),
+              selectedOptionTextColor: primaryColor,
+              options: cropsDatabase
+                  .map((e) => ValueItem(label: e.name, value: null))
+                  .toList(),
               onOptionSelected: (selectedOptions) {
                 // debugPrint(
                 //     'multi select controller -> ${_multiSelectController.selectedOptions}');
