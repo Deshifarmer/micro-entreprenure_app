@@ -1,6 +1,9 @@
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
+import 'package:deshifarmer/presentation/pages/farmer_profile/page/edit_farmer_info.dart';
 import 'package:deshifarmer/presentation/pages/farmer_profile/widgets/farmer_profile_body.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
+import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// A description for FarmerProfilePage
@@ -29,6 +32,19 @@ class FarmerProfilePage extends StatelessWidget {
       ),
       body: FarmerProfileView(
         farmerProfilePage: farmerProfilePage,
+      ),
+      bottomNavigationBar: SecondayButtonGreen(
+        onpress: () {
+          // EditFarmerDetails(farmerProfilePage: farmerProfilePage);
+          Navigator.push(
+            context,
+            CupertinoPageRoute(
+              builder: (_) =>
+                  EditFarmerDetails(farmerProfilePage: farmerProfilePage),
+            ),
+          );
+        },
+        title: 'কৃষক এর তথ্য সম্পাদনা করুন',
       ),
     );
   }
