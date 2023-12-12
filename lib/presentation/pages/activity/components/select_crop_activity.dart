@@ -25,7 +25,7 @@ class SelectCropOptional extends StatelessWidget {
           debugPrint('new f ${newF.length} ${newF.first}');
           final vls = newF.map(
             (val) {
-              return ValueItem(label: val);
+              return ValueItem(label: val, value: null);
             },
           ).toList();
           if (vls.length == 1 && vls.first.label.isEmpty) {
@@ -45,7 +45,7 @@ class SelectCropOptional extends StatelessWidget {
               ),
               selectedOptionTextColor: primaryColor,
               options:
-                  cropsDatabase.map((e) => ValueItem(label: e.name)).toList(),
+                  cropsDatabase.map((e) => ValueItem(label: e.name, value: null)).toList(),
               onOptionSelected: (selectedOptions) {
                 // debugPrint(
                 //     'multi select controller -> ${_multiSelectController.selectedOptions}');
