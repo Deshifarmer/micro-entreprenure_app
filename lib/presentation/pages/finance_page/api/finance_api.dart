@@ -3,7 +3,10 @@ import 'dart:convert';
 
 import 'package:deshifarmer/core/params/api_database_params.dart';
 import 'package:deshifarmer/presentation/pages/finance_page/models/fianance_model.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
+import 'package:deshifarmer/presentation/utils/others_helper.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class FinanceAPI {
@@ -15,10 +18,10 @@ class FinanceAPI {
   };
 
   ///! Collect ORDERS
-  FutureOr<(bool, String)> postFinance(FinanceModel fm, String token, List<String> dates,
+  FutureOr<bool> postFinance(FinanceModel fm, String token, List<String> dates,
       String schedule, double amount) async {
     debugPrint('Hit the postFinance');
-    const localToken = '7015|04Mowh4vSzKJ7qWFXJdW3L47cswaUFezTdrMOEOX';
+    const localToken = '7025|HlT6Vcy9ILrkuK6OlPZvgiRW8IWhVhJOyDdI2M4f';
     // String _LOCAL_TOKEN = '55|9062I8GhTHqaQWFrfOu5HzcRG3df73axEgL5rBUK';
     final auth = <String, String>{
       'Authorization': 'Bearer ${localToken.isNotEmpty ? localToken : token}',
@@ -51,6 +54,8 @@ class FinanceAPI {
       if (fm.note != null) {
         _body.addAll({'note': fm.note});
       }
+      debugPrint("Url -> ${url}");
+
       debugPrint('finance post body: $_body');
       final response = await http.post(
         url,
@@ -59,10 +64,40 @@ class FinanceAPI {
       );
       debugPrint('finance post response: ${response.statusCode}');
       if (response.statusCode == 200 || response.statusCode == 201) {
-        debugPrint('finance post response: ${response.body}');
-        return (true, 'Successfull');
+        final data = jsonDecode(response.body) as Map<String, dynamic>;
+        debugPrint('body -> $data');
+        if (data.containsKey('message')) {
+          showToast(data['message'].toString(), primaryColor);
+        } else {
+          showToast('Request sent successfully', primaryColor);
+        }
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   const SnackBar(
+        //     content: Text('Request sent successfully'),
+        //   ),
+        // );
+
+        return true;
       } else {
-        debugPrint('finance post response: ${response.body}');
+        debugPrint('finance post response Error: ${response.body}');
+        final error = jsonDecode(response.body) as Map<String, dynamic>;
+        if (error.containsKey('message')) {
+          showToast(error['message'].toString(), Colors.red);
+        } else {
+          showToast('Something went wrong', Colors.red);
+        }
+
+        // if (error.containsKey('which_farmer')) {
+        //   showToast(error['which_farmer'][0], Colors.red);
+        // } else if (error.containsKey('phone_no')) {
+        //   showToast(error['phone_no'][0], Colors.black);
+        // } else if (error.containsKey('password')) {
+        //   showToast(error['password'][0], Colors.black);
+        // } else if (error.containsKey('message')) {
+        //   showToast(error['message'][0], Colors.black);
+        // } else {
+        //   showToast("Something went Wrong!", Colors.black);
+        // }
         // FirebaseAnalyticsCustom.customLogEvent(
         //   name: 'collect_error (collectOrder)',
         //   parameters: <String, dynamic>{
@@ -73,7 +108,7 @@ class FinanceAPI {
         //     'body': response.body,
         //   },
         // );
-        return (false, '${response.statusCode} Failed to Post the Data');
+        return false;
       }
     } catch (e) {
       debugPrint('Some error occured: $e');
@@ -85,7 +120,7 @@ class FinanceAPI {
       //     'token': token,
       //   },
       // );
-      return (false, 'Some error Occured: $e');
+      return false;
     }
   }
 }
