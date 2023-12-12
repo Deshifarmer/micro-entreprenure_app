@@ -109,7 +109,8 @@ class _BatchListPageState extends State<BatchListPage> {
                 // decoration: ShapeDecoration(),
 
                 elevation: 16,
-                value: BatchParams.seasons.first,
+                // value: BatchParams.seasons.first,
+                hint: const Text('মৌসুম নির্বাচন করুন'),
                 items: BatchParams.seasons
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
