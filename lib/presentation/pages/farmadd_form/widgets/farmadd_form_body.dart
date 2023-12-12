@@ -460,7 +460,7 @@ class FarmaddFormBody extends StatelessWidget {
                     ),
                     selectedOptionTextColor: Colors.green,
                     options: cropsDatabase
-                        .map((e) => ValueItem(label: e.name))
+                        .map((e) => ValueItem(label: e.name, value: null))
                         .toList(),
                     onOptionSelected: (selectedOptions) {
                       // debugPrint(
