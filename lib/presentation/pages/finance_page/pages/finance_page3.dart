@@ -3,6 +3,7 @@ import 'package:deshifarmer/presentation/pages/finance_page/models/fianance_mode
 import 'package:deshifarmer/presentation/pages/home/view/home_page.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
+import 'package:deshifarmer/presentation/utils/others_helper.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
 import 'package:flutter/material.dart';
 
@@ -61,7 +62,7 @@ class _FinancePage3State extends State<FinancePage3> {
                   return const SizedBox.shrink();
                 },
                 steps: widget.dates
-                    .skip(2)
+                    // .skip(2)
                     .toList()
                     .map(
                       (e) => Step(
@@ -102,13 +103,7 @@ class _FinancePage3State extends State<FinancePage3> {
                     widget.dates,
                     widget.lastWeekdate.toString(),
                     widget.amount);
-                if (isReq.$1) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Request sent successfully'),
-                    ),
-                  );
-
+                if (isReq) {
                   setState(() {
                     isLoading = false;
                   });
@@ -121,11 +116,6 @@ class _FinancePage3State extends State<FinancePage3> {
                   setState(() {
                     isLoading = false;
                   });
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(isReq.$2),
-                    ),
-                  );
                 }
               },
               title: 'continue to schedule payment',
