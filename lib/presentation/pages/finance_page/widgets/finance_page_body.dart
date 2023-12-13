@@ -1,12 +1,10 @@
 import 'package:deshifarmer/core/params/batch_params.dart';
 import 'package:deshifarmer/domain/entities/crop_entity/single_crop_entity.dart';
 import 'package:deshifarmer/presentation/pages/activity/api/harvest_api.dart';
-import 'package:deshifarmer/presentation/pages/finance_page/api/finance_api.dart';
 import 'package:deshifarmer/presentation/pages/finance_page/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/finance_page/components/select_farmer_for_finance.dart';
 import 'package:deshifarmer/presentation/pages/finance_page/models/fianance_model.dart';
 import 'package:deshifarmer/presentation/pages/finance_page/pages/finance_page2.dart';
-import 'package:deshifarmer/presentation/pages/login/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/utils/activity_types_paramas.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';

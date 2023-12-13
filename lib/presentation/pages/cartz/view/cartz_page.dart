@@ -1,7 +1,6 @@
 import 'package:deshifarmer/core/params/payment_params.dart';
 import 'package:deshifarmer/presentation/pages/cartz/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/cartz/components/select_farmer_paginate.dart';
-import 'package:deshifarmer/presentation/pages/cartz/view/pages/lb_page.dart';
 import 'package:deshifarmer/presentation/pages/cartz/widgets/cartz_body.dart';
 import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
