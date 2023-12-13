@@ -1,9 +1,6 @@
-import 'package:deshifarmer/presentation/pages/finance_page/pages/finance_page2.dart';
-import 'package:deshifarmer/presentation/widgets/seconday_btn.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:deshifarmer/presentation/pages/finance_page/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/finance_page/widgets/finance_page_body.dart';
+import 'package:flutter/material.dart';
 
 /// {@template finance_page_page}
 /// A description for FinancePagePage
@@ -51,6 +48,6 @@ class FinancePageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FinancePageBody();
+    return const FinancePageBody();
   }
 }
