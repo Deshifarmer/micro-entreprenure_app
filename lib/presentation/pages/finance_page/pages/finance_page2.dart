@@ -36,7 +36,7 @@ class _FinancePage2State extends State<FinancePage2> {
 
   // get dates from every weekend from now
   List<String> getDates(int lastWeekdate) {
-    final now = DateTime.now();
+    final now = DateTime.now().add(Duration(days: 14));
     final dates = <String>[];
     for (var i = 0; i < lastWeekdate; i++) {
       final date = now.add(Duration(days: 7 * i));
@@ -92,7 +92,7 @@ class _FinancePage2State extends State<FinancePage2> {
                         ),
                   ),
                   Text(
-                    '${widget.ammount * 11 / 100} ',
+                    '${(widget.ammount * 11 / 100).toStringAsFixed(2)} ',
                     style: Theme.of(context).textTheme.titleSmall!.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -110,7 +110,7 @@ class _FinancePage2State extends State<FinancePage2> {
                       ),
                 ),
                 Text(
-                  'BDT ${widget.ammount + (widget.ammount * 11 / 100)}',
+                  'BDT ${(widget.ammount + (widget.ammount * 11 / 100)).toStringAsFixed(2)}',
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -288,7 +288,7 @@ class _FinancePage2State extends State<FinancePage2> {
                 lastWeekdate: splitPayment == 0 ? 0 : splitPayment,
                 dates: splitPayment == 0
                     ? [dateinput.text]
-                    : getDates(splitPayment + 2),
+                    : getDates(splitPayment),
                 amount: widget.ammount + (widget.ammount * 11 / 100),
               ),
             ),
