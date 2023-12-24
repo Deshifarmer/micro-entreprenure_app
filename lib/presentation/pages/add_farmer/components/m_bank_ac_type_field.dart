@@ -18,10 +18,13 @@ class MBankAccountType extends StatelessWidget {
           label: Text('কীসের একাউন্ট?'),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(
-              width: 2,
-            ),
+            borderSide: BorderSide.none,
           ),
+           border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        borderSide: BorderSide.none,
+                      ),
+                      contentPadding: EdgeInsets.all(10),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(width: 2),
@@ -51,19 +54,19 @@ class MBankAccountType extends StatelessWidget {
           if (addFarmerB is AddFarmerInitial) {
             addFarmerB.farmerMFSAccountTypeController.text = val.toString();
             if ('বিকাশ' == val) {
-              print('bkash pressed');
+              debugPrint('bkash pressed');
               addFarmerB.farmerMFSAccountTypeController.text = 'bkash';
             } else if ('নগদ' == val) {
-              print('nagad pressed');
+              debugPrint('nagad pressed');
               addFarmerB.farmerMFSAccountTypeController.text = 'nogod';
             } else if ('উপায়' == val) {
-              print('upay pressed');
+              debugPrint('upay pressed');
               addFarmerB.farmerMFSAccountTypeController.text = 'upay';
             } else if ('রকেট' == val) {
-              print('roket pressed');
+              debugPrint('roket pressed');
               addFarmerB.farmerMFSAccountTypeController.text = 'rocket';
             } else if ('অন্যান্য' == val) {
-              print('other pressed');
+              debugPrint('other pressed');
               addFarmerB.farmerMFSAccountTypeController.text = 'other';
             }
           }

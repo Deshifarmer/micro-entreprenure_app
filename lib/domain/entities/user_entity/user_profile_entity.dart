@@ -10,7 +10,7 @@ class UserProfileEntity {
   const UserProfileEntity({
     required this.df_id,
     required this.full_name,
-    required this.nid,
+    // required this.nid,
     required this.phone,
     required this.email,
     required this.designation,
@@ -23,7 +23,7 @@ class UserProfileEntity {
     required this.permanent_address,
     required this.home_district,
     required this.joining_date,
-    required this.type,
+    // required this.type,
     required this.gender,
     required this.department,
     required this.work_place,
@@ -40,7 +40,7 @@ class UserProfileEntity {
   final String? df_id;
   final String? full_name;
   // final String nid;
-  final int nid; //! on local its INT
+  // final int nid; //! on local its INT
   final String? phone;
   final String? email;
   final String? designation;
@@ -54,7 +54,7 @@ class UserProfileEntity {
   final String? home_district;
   final String? joining_date;
   // final String? type;
-  final int? type; //! on local its int
+  // final int? type; //! on local its int
   final String? gender;
   final String? department;
   final String? work_place;

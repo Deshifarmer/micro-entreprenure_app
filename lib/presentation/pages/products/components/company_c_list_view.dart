@@ -1,7 +1,8 @@
-import 'package:deshifarmer/presentation/blocs/company/company_bloc.dart';
+
 import 'package:deshifarmer/presentation/pages/commision/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/bloc/products_bloc.dart';
 import 'package:deshifarmer/presentation/pages/products/components/company_card_view.dart';
+import 'package:deshifarmer/services/blocs/company/company_bloc.dart';
 import 'package:flutter/material.dart';
 
 class CampanyCircularListView extends StatelessWidget {
@@ -27,43 +28,78 @@ class CampanyCircularListView extends StatelessWidget {
               itemBuilder: (context, index) {
                 final currentCompany = allCompany.allCompany.elementAt(index);
                 // final companyState = context.read<ProductsBloc>().state;
-                // print('${Strings.domain}/storage${currentCompany.photo}');
+                // debugPrint('${Strings.domain}/storage${currentCompany.photo}');
                 return BlocConsumer<ProductsBloc, ProductsState>(
                   listener: (context, companyState) {
-                    print('company states -> $companyState');
+                    debugPrint('company states -> $companyState');
                   },
                   builder: (context, companyState) {
                     return InkWell(
                       onTap: () {
+                        // final loginState = context.read<LoginBloc>().state;
+                        // final token = loginState is LoginSuccess
+                        //     ? loginState.successLoginEntity.token
+                        //     : '';
                         if (companyState is ProductComanySelect) {
                           if (currentCompany.df_id == companyState.companyID) {
                             context
                                 .read<ProductsBloc>()
                                 .add(const UnSelectCompanyEvent());
+
+                            // get the company products from ProductsBBloc
+                            // context.read<ProductsBBloc>().add(
+                            //       ProductSearchEvent(
+                            //         token,
+                            //         company: '',
+                            //         cat: '',
+                            //         query: '',
+                            //       ),
+                            //     );
                           } else {
                             context.read<ProductsBloc>().add(
-                                SelectCompanysEvent(
-                                    currentCompany.df_id ?? '',),);
+                                  SelectCompanysEvent(
+                                    currentCompany.df_id ?? '',
+                                  ),
+                                );
+
+                            // get the company products from ProductsBBloc
+                            // context.read<ProductsBBloc>().add(
+                            //       ProductSearchEvent(
+                            //         token,
+                            //         company: currentCompany.df_id ?? '',
+                            //         cat: '',
+                            //         query: '',
+                            //       ),
+                            //     );
                           }
                         } else {
                           context.read<ProductsBloc>().add(
-                              SelectCompanysEvent(currentCompany.df_id ?? ''),);
+                                SelectCompanysEvent(currentCompany.df_id ?? ''),
+                              );
                         }
-                        print("company ID -> ${currentCompany.df_id ?? ''}");
                       },
-                      child: Container(
-                        margin: const EdgeInsets.all(5),
-                        padding: const EdgeInsets.all(10),
+                      child: Tooltip(
+                        message: currentCompany.full_name ?? '',
                         decoration: BoxDecoration(
-                          color: companyState is ProductComanySelect
-                              ? currentCompany.df_id == companyState.companyID
-                                  ? Colors.green[400]!.withOpacity(0.4)
-                                  : null
-                              : null,
+                          color: Colors.green[400]!.withOpacity(0.4),
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(20)),
+                              const BorderRadius.all(Radius.circular(10)),
                         ),
-                        child: CompanyCardView(currentCompany: currentCompany),
+                        child: Container(
+                          margin: const EdgeInsets.all(5),
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: companyState is ProductComanySelect
+                                ? currentCompany.df_id == companyState.companyID
+                                    ? Colors.green[400]!.withOpacity(0.4)
+                                    : null
+                                : null,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
+                          ),
+                          child:
+                              CompanyCardView(currentCompany: currentCompany),
+                        ),
                       ),
                     );
                   },

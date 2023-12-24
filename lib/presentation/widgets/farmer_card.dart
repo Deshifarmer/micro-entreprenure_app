@@ -1,11 +1,11 @@
-import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:flutter/material.dart';
 
 class FarmerCard extends StatelessWidget {
   const FarmerCard({
-    super.key,
     required this.currentFarmer,
+    super.key,
   });
 
   final FarmerEntity? currentFarmer;
@@ -13,27 +13,63 @@ class FarmerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 10,
-          horizontal: 5,
-        ),
-        leading: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Image.network(
-            '${Strings.domain}/storage/${currentFarmer?.image}',
-            height: 50,
-            width: 50,
+      color: backgroundColor2,
+      elevation: 0,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /// farmer name
+                Text(
+                  currentFarmer?.full_name ?? '',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+
+                /// famer address
+                Text(
+                  'vill - ${currentFarmer?.village}',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
+            ),
           ),
-        ),
-        title: Text(currentFarmer?.full_name ?? ''),
-        trailing: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(currentFarmer?.phone ?? ''),
-            Text(currentFarmer?.district ?? ''),
-          ],
-        ),
+
+          /// famer phone
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 5,
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    currentFarmer?.phone ?? '',
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+
+                  /// usaid ID
+                  if (currentFarmer?.usaid_id != null)
+                    Text(
+                      'usaid : ${currentFarmer?.usaid_id}',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                ],
+              ),
+            ),
+          ),
+
+          /// menu icon button
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.more_vert,
+              color: Colors.black.withOpacity(0.54),
+            ),
+          ),
+        ],
       ),
     );
   }

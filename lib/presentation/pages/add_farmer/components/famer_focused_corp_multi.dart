@@ -1,5 +1,6 @@
 import 'package:deshifarmer/data/datasources/local/corps/corps_db.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 
@@ -11,7 +12,7 @@ class FarmerFocusedCorpMulti extends StatelessWidget {
   // final MultiSelectController _multiSelectController = MultiSelectController();
   @override
   Widget build(BuildContext context) {
-    // print('multi values from state -> $_cropsList');
+    // debugPrint('multi values from state -> $_cropsList');
     // final state = context.read<AddFarmerBloc>().state;
     return BlocConsumer<AddFarmerBloc, AddFarmerState>(
       listener: (context, state) {},
@@ -22,7 +23,7 @@ class FarmerFocusedCorpMulti extends StatelessWidget {
               .replaceAll('}', '')
               .split(',');
           final vls = newF.map((val) {
-            return ValueItem(label: val);
+            return ValueItem(label: val, value: null);
           }).toList();
           if (vls.length == 1 && vls.first.label.isEmpty) {
             vls.removeLast();
@@ -36,18 +37,19 @@ class FarmerFocusedCorpMulti extends StatelessWidget {
               // selectedOptions:state.farmerFocusedCorpController.text ,
               chipConfig: ChipConfig(
                 wrapType: WrapType.wrap,
-                backgroundColor: Colors.green[400],
+                backgroundColor: primaryColor,
               ),
-              selectedOptionTextColor: Colors.green,
-              options:
-                  cropsDatabase.map((e) => ValueItem(label: e.name)).toList(),
+              selectedOptionTextColor: primaryColor,
+              options: cropsDatabase
+                  .map((e) => ValueItem(label: e.name, value: null))
+                  .toList(),
               onOptionSelected: (selectedOptions) {
-                // print(
+                // debugPrint(
                 //     'multi select controller -> ${_multiSelectController.selectedOptions}');
                 final values = [];
-                // print(selectedOptions);
+                // debugPrint(selectedOptions);
                 for (final vi in selectedOptions) {
-                  // print(vi.label);
+                  // debugPrint(vi.label);
                   values.add(vi.label);
                 }
 
@@ -71,7 +73,7 @@ class FarmerCurrentProducingCorp extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    // print('multi values from state -> $_cropsList');
+    // debugPrint('multi values from state -> $_cropsList');
     // final state = context.read<AddFarmerBloc>().state;
     return BlocConsumer<AddFarmerBloc, AddFarmerState>(
       listener: (context, state) {},
@@ -82,10 +84,10 @@ class FarmerCurrentProducingCorp extends StatelessWidget {
               .replaceAll('}', '')
               .split(',');
 
-          print('new f ${newF.length} ${newF.first}');
+          debugPrint('new f ${newF.length} ${newF.first}');
           final vls = newF.map(
             (val) {
-              return ValueItem(label: val);
+              return ValueItem(label: val, value: null);
             },
           ).toList();
           if (vls.length == 1 && vls.first.label.isEmpty) {
@@ -100,18 +102,19 @@ class FarmerCurrentProducingCorp extends StatelessWidget {
               // selectedOptions:state.farmerFocusedCorpController.text ,
               chipConfig: ChipConfig(
                 wrapType: WrapType.wrap,
-                backgroundColor: Colors.green[400],
+                backgroundColor: primaryColor,
               ),
-              selectedOptionTextColor: Colors.green,
-              options:
-                  cropsDatabase.map((e) => ValueItem(label: e.name)).toList(),
+              selectedOptionTextColor: primaryColor,
+              options: cropsDatabase
+                  .map((e) => ValueItem(label: e.name, value: null))
+                  .toList(),
               onOptionSelected: (selectedOptions) {
-                // print(
+                // debugPrint(
                 //     'multi select controller -> ${_multiSelectController.selectedOptions}');
                 final values = [];
-                // print(selectedOptions);
+                // debugPrint(selectedOptions);
                 for (final vi in selectedOptions) {
-                  // print(vi.label);
+                  // debugPrint(vi.label);
                   values.add(vi.label);
                 }
 

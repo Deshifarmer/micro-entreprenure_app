@@ -1,9 +1,10 @@
 import 'dart:io';
 
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 
 class FarmerProfilePicUpload extends StatefulWidget {
   const FarmerProfilePicUpload({
@@ -21,10 +22,9 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
 
   //we can upload image from camera or from gallery based on parameter
   Future<void> getImage(ImageSource media) async {
-    final appDocumentsDir = await getTemporaryDirectory();
     final img = await picker.pickImage(
       source: media,
-      imageQuality: 50,
+      imageQuality: 80,
       maxHeight: 500,
       maxWidth: 500,
     );
@@ -33,7 +33,7 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
       image = img;
     });
     if (image != null) {
-      print('image size state -> ${await image!.length()}');
+      debugPrint('image size state -> ${await image!.length()}');
     }
   }
 
@@ -43,11 +43,13 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: backgroundColor2,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          title: const Text('Please choose media to select'),
+          title: const Text('একটি পদ্ধতি নির্বাচন করুন'),
           content: SizedBox(
-            height: MediaQuery.of(context).size.height / 6,
-            child: ListView(
+            height: MediaQuery.of(context).size.height / 5.5,
+            width: MediaQuery.of(context).size.width / 2,
+            child: Column(
               children: [
                 ElevatedButton(
                   //if user click this button, user can upload image from gallery
@@ -55,23 +57,59 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
                     Navigator.pop(context);
                     getImage(ImageSource.gallery);
                   },
-                  child: const Row(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        const MaterialStatePropertyAll(priceBoxColor),
+                    shape: MaterialStatePropertyAll(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                  child: Row(
                     children: [
-                      Icon(Icons.image),
-                      Text('From Gallery'),
+                      const Icon(
+                        Icons.image,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: getProportionateScreenWidth(10),
+                      ),
+                      const Text(
+                        'From Gallery',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ],
                   ),
                 ),
                 ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        const MaterialStatePropertyAll(priceBoxColor),
+                    shape: MaterialStatePropertyAll(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
                   //if user click this button. user can upload image from camera
                   onPressed: () {
                     Navigator.pop(context);
                     getImage(ImageSource.camera);
                   },
-                  child: const Row(
+                  child: Row(
                     children: [
-                      Icon(Icons.camera),
-                      Text('From Camera'),
+                      const Icon(
+                        Icons.camera,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: getProportionateScreenWidth(10),
+                      ),
+                      const Text(
+                        'From Camera',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ],
                   ),
                 ),
@@ -85,7 +123,7 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
 
   @override
   Widget build(BuildContext context) {
-    print('this is image path -> ${image?.path} from Build Widget');
+    debugPrint('this is image path -> ${image?.path} from Build Widget');
     final state = context.read<AddFarmerBloc>().state;
     if (image != null && state is AddFarmerInitial) {
       state.farmerImageController.text = image!.path;
@@ -94,14 +132,14 @@ class _FarmerProfilePicUploadState extends State<FarmerProfilePicUpload> {
       child: InkWell(
         onTap: myAlert,
         child: SizedBox(
-          height: 250,
-          width: 200,
+          height: getProportionateScreenHeight(250),
+          width: getProportionateScreenWidth(200),
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 10),
             alignment: Alignment.center,
             // padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Colors.green,
+              // color: Colors.green,
               borderRadius: BorderRadius.circular(20),
             ),
             child: state is AddFarmerInitial

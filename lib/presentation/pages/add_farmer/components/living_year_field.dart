@@ -18,15 +18,18 @@ class LivingYearFormField extends StatelessWidget {
           label: Text('কত বছর ধরে বসবাস করছে'),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(
-              width: 2,
-            ),
+            borderSide: BorderSide.none,
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(width: 2),
+            borderSide: BorderSide.none,
           ),
           filled: true,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderSide: BorderSide.none,
+          ),
+          contentPadding: EdgeInsets.all(10),
           // fillColor: Colors.greenAccent,
           // contentPadding: EdgeInsets.all(10),
         ),

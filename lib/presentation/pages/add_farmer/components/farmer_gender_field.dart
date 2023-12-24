@@ -1,11 +1,17 @@
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
 import 'package:flutter/material.dart';
 
-class GenderField extends StatelessWidget {
+class GenderField extends StatefulWidget {
   const GenderField({
     super.key,
   });
 
+  @override
+  State<GenderField> createState() => _GenderFieldState();
+}
+
+class _GenderFieldState extends State<GenderField> {
+  String _gender = '----------';
   @override
   Widget build(BuildContext context) {
     final state = context.read<AddFarmerBloc>().state;
@@ -16,27 +22,33 @@ class GenderField extends StatelessWidget {
         isExpanded: true,
         // underline: Container(),
         decoration: const InputDecoration(
-          label: Text('কৃষকটি ছেলে / মেয়ে ?'),
+          label: Text('কৃষকটি পুরুষ / মহিলা ?'),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(
-              width: 2,
-            ),
+            borderSide: BorderSide.none,
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(width: 2),
           ),
           filled: true,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderSide: BorderSide.none,
+          ),
+          contentPadding: EdgeInsets.all(10),
           // fillColor: Colors.greenAccent,
           // contentPadding: EdgeInsets.all(10),
         ),
         // decoration: ShapeDecoration(),
 
         elevation: 16,
-        value: 'Male',
-        items: <String>['Male', 'Female', 'Other']
-            .map<DropdownMenuItem<String>>((String value) {
+        value: _gender,
+        items: <String>[
+          '----------',
+          'পুরুষ',
+          'মহিলা',
+        ].map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             // alignment: Alignment.center,
             value: value,
@@ -46,6 +58,9 @@ class GenderField extends StatelessWidget {
         onChanged: (String? val) {
           if (state is AddFarmerInitial && val != null) {
             state.farmerGenderController.text = val;
+            setState(() {
+              _gender = val;
+            });
           }
           // context.read<DropdownCubit>().changeDropdownValue(val ?? '');
         },
@@ -54,11 +69,17 @@ class GenderField extends StatelessWidget {
   }
 }
 
-class MaritalStatusField extends StatelessWidget {
+class MaritalStatusField extends StatefulWidget {
   const MaritalStatusField({
     super.key,
   });
 
+  @override
+  State<MaritalStatusField> createState() => _MaritalStatusFieldState();
+}
+
+class _MaritalStatusFieldState extends State<MaritalStatusField> {
+  String _maritalStatus = '----------';
   @override
   Widget build(BuildContext context) {
     final state = context.read<AddFarmerBloc>().state;
@@ -72,13 +93,11 @@ class MaritalStatusField extends StatelessWidget {
           label: Text('বৈবাহিক অবস্থা'),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(
-              width: 2,
-            ),
+            borderSide: BorderSide.none,
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(width: 2),
+            borderSide: BorderSide.none,
           ),
           filled: true,
           // fillColor: Colors.greenAccent,
@@ -87,10 +106,11 @@ class MaritalStatusField extends StatelessWidget {
         // decoration: ShapeDecoration(),
 
         elevation: 16,
-        value: 'Married',
+        value: _maritalStatus,
         items: <String>[
-          'Married',
-          'Unmarried',
+          '----------',
+          'বিবাহিত',
+          'অবিবাহিত',
         ].map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             // alignment: Alignment.center,
@@ -102,6 +122,9 @@ class MaritalStatusField extends StatelessWidget {
           if (state is AddFarmerInitial && val != null) {
             state.farmerRelationalStatusController.text = val;
           }
+          setState(() {
+            _maritalStatus = val ?? '----------';
+          });
           // context.read<DropdownCubit>().changeDropdownValue(val ?? '');
         },
       ),

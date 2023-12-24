@@ -1,8 +1,9 @@
-import 'package:deshifarmer/presentation/blocs/cart/cart_bloc.dart';
 import 'package:deshifarmer/presentation/pages/cartz/bloc/bloc.dart';
-import 'package:deshifarmer/presentation/pages/cartz/components/select_farmer_methods.dart';
 import 'package:deshifarmer/presentation/pages/cartz/components/select_payment_methods.dart';
-import 'package:deshifarmer/presentation/pages/products/components/product_image.dart';
+import 'package:deshifarmer/presentation/pages/cartz/widgets/card_cart_item.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
+import 'package:deshifarmer/services/blocs/cart/cart_bloc.dart';
+// import 'package:deshifarmer/presentation/pages/cartz/widgets/cart_compocard.dart';
 import 'package:flutter/material.dart';
 
 /// {@template cartz_body}
@@ -25,90 +26,35 @@ class CartzBody extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             children: [
               ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: itemToList.length,
                 itemBuilder: (context, index) {
                   final currentItem = itemToList.elementAt(index);
-                  return Card(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // product row (iamge, Column -> title, company, money)
-                        Row(
-                          children: [
-                            // image
-                            Hero(
-                              tag: currentItem.value.$1.product_id ?? '',
-                              child: SizedBox(
-                                height: 100,
-                                width: 150,
-                                child:
-                                    ProductImage(product: currentItem.value.$1),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            // column -> title, company , money
-                            Column(
-                              children: [
-                                Text(
-                                  currentItem.value.$1.name ?? '',
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  softWrap: false,
-                                ),
-                                Text(currentItem.value.$1.company ?? ''),
-                                Text(
-                                  '${currentItem.value.$1.sell_price} টাকা',
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                        // element, delete icon
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Text(
-                                'x${currentItem.value.$2}',
-                                style: Theme.of(context).textTheme.labelLarge,
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  context.read<CartBloc>().add(
-                                        RemoveFromCart(
-                                          // quantity: 1,
-                                          productData: currentItem.value.$1,
-                                        ),
-                                      );
-                                },
-                                icon: const Icon(
-                                  Icons.delete,
-                                  color: Colors.red,
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
+                  return Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: CartCard2(
+                      items: currentItem.value.$2,
+                      productData: currentItem.value.$1,
                     ),
                   );
                 },
               ),
-
+              // CartCard2(
+              //     // items: 234,
+              //     // product: ,
+              //     ),
               ///! total price
               Container(
                 padding: const EdgeInsets.all(10),
                 alignment: Alignment.centerRight,
-                child: Text('Total : ${state.getTotalPrices()} টাকা'),
+                child: Text('সর্বমোট : ${state.getTotalPrices()} টাকা'),
               ),
 
               ///! select farmer
 
-              const SelectFarmerMethods(),
-              const SizedBox(
-                height: 20,
+              SizedBox(
+                height: getProportionateScreenHeight(20),
               ),
 
               ///! payment methods
@@ -116,9 +62,7 @@ class CartzBody extends StatelessWidget {
             ],
           );
         }
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
+        return const SizedBox.shrink();
       },
     );
   }

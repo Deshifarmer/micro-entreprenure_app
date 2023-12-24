@@ -1,8 +1,16 @@
-import 'package:deshifarmer/core/params/login_page_params.dart';
-import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
+import 'package:deshifarmer/data/datasources/local/shared_prefs/local_database_sf.dart';
+
 import 'package:deshifarmer/presentation/pages/home/bloc/bloc.dart';
+import 'package:deshifarmer/presentation/pages/home/view/home_page.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
+import 'package:deshifarmer/presentation/pages/login/components/password_field.dart';
+import 'package:deshifarmer/presentation/pages/order/bloc/order_bloc.dart';
+import 'package:deshifarmer/presentation/shapes/deshifarmer_logo.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
+import 'package:deshifarmer/presentation/widgets/size_config.dart';
+import 'package:deshifarmer/services/blocs/user_profile/user_profile_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 /// {@template login_body}
 /// Body of the LoginPage.
@@ -11,7 +19,14 @@ import 'package:flutter/material.dart';
 /// {@endtemplate}
 class LoginBody extends StatelessWidget {
   /// {@macro login_body}
-  const LoginBody({super.key});
+  LoginBody({super.key});
+  final TextEditingController _mobile = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+
+  Widget getDeshiFarmerLogo() => CustomPaint(
+        painter: DeshifarmerLogo(),
+        size: const Size(100, 100),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +39,28 @@ class LoginBody extends StatelessWidget {
           context
               .read<UserProfileBloc>()
               .add(GetUserProfileEvent(token: state.successLoginEntity.token));
+              debugPrint('GetUserProfileEvent in LoginBODY2');
+          SharedPrefDBServices().setLoginToken(state.successLoginEntity.token);
+
+          /// get my orders
+          context
+              .read<OrderBloc>()
+              .add(InitOrders(state.successLoginEntity.token));
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               behavior: SnackBarBehavior.floating,
-              backgroundColor: Colors.green[700],
-              content: const Text('Successfully Logged In'),
+              backgroundColor: primaryColor,
+              content: Text('Successfully Logged In'),
             ),
+          );
+
+          UserProfileBloc()
+              .add(GetUserProfileEvent(token: state.successLoginEntity.token));
+              debugPrint('GetUserProfileEvent in LogInBODY');
+          Navigator.pushAndRemoveUntil(
+            context,
+            HomePage.route(),
+            (route) => false,
           );
         }
         if (state is LoginFailed) {
@@ -42,97 +73,178 @@ class LoginBody extends StatelessWidget {
         }
       },
       builder: (context, LoginState state) {
-        return ListView(
+        return Stack(
           children: [
-            const SizedBox(
-              height: 100,
-            ),
-            // stacking image
-            Center(
-              child: Container(
-                width: 100,
-                height: 200,
-                color: Colors.blue,
+            Positioned(
+              right: -40,
+              top: getProportionateScreenHeight(200),
+              child: CircleAvatar(
+                radius: getProportionateScreenWidth(80),
+                backgroundColor: secondaryColor,
               ),
             ),
-            // Company Name
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                LoginPageParams.companyName,
-                style: theme.textTheme.titleSmall,
-                textAlign: TextAlign.start,
-              ),
-            ),
-            // a Title
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Text(
-                LoginPageParams.title,
-                style: theme.textTheme.headlineLarge!.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            // a form field for mail
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Phone Number',
-                  filled: true,
-                ),
-              ),
-            ),
-            // SizedBox(
-            //   height: 10,
-            // ),
-            // a form field for password
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  filled: true,
-                  labelText: 'Password',
-                ),
-              ),
-            ),
+              padding: const EdgeInsets.all(15),
+              child: ListView(
+                // crossAxisAlignment: CrossAxisAlignment.start,
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: getProportionateScreenHeight(
+                        MediaQuery.sizeOf(context).height * 0.1,
+                      ),
+                      left: getProportionateScreenWidth(20),
+                    ),
+                    child: getDeshiFarmerLogo(),
+                  ),
 
-            // a row with text and a button
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  'Forgot Password',
-                  style: theme.textTheme.labelSmall!.copyWith(
-                    color: Colors.blue,
-                    fontStyle: FontStyle.italic,
+                  /// a space between logo and company name
+                  SizedBox(
+                    height: getProportionateScreenHeight(
+                      MediaQuery.sizeOf(context).height * 0.25,
+                    ),
                   ),
-                ),
-                if (state is LoginLoading)
-                  CircularProgressIndicator(
-                    color: Colors.green[600],
-                  )
-                else
-                  ElevatedButton(
-                    onPressed: () async {
-                      context.read<LoginBloc>().add(
-                            CheckLoginEvent(
-                              context: context,
-                              // mail: '01896267197',
-                              mail: 'nadia@gmail.com',
-                              // pass: 'df62me',
-                              // pass: '123456',
-                              pass: 'password',
-                            ),
-                          );
-                    },
-                    child: const Text('Login'),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: getProportionateScreenHeight(5),
+                    ),
+                    child: Text(
+                      'ক্ষুদ্র উদ্যোক্তা',
+                      style: theme.textTheme.titleSmall!
+                          .copyWith(color: const Color(0xffe9edde)),
+                    ),
                   ),
-              ],
+                  Padding(
+                    padding: EdgeInsets.only(
+                      bottom: getProportionateScreenHeight(20),
+                    ),
+                    child: Text(
+                      'একাউন্ট ম্যানেজ করুন',
+                      style: theme.textTheme.headlineSmall!.copyWith(
+                        color: tertiaryColor2,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+
+                  ///! MOBILE NUMBER
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: getProportionateScreenHeight(10),
+                    ),
+                    child: TextField(
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
+                      controller: _mobile,
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.next,
+                      decoration: const InputDecoration(
+                        fillColor: tertiaryColor,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderSide: BorderSide(
+                            color: Color(0xffe9edde),
+                          ),
+                        ),
+                        hintText: 'মোবাইল নম্বর',
+
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderSide: BorderSide(
+                            color: Color(0xffe9edde),
+                          ),
+                        ),
+                        hintStyle: TextStyle(
+                          color: Color(0xff787878),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                        ),
+                        // inputer text color to white
+
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 15,
+                        ),
+                        filled: true,
+                      ),
+                    ),
+                  ),
+
+                  ///! password
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: getProportionateScreenHeight(10),
+                    ),
+                    child: PasswordTextField(
+                      password: _password,
+                      mobile: _mobile,
+                    ),
+                  ),
+
+                  /// a row where a text button 'forget password' and anotehr button to sign in
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'পাসওয়ার্ড ভুলে গেছেন?',
+                        style: TextStyle(
+                          color: Color(0xff8dd22e),
+                          // backgroundColor: textGreen,
+                        ),
+                      ),
+                      ElevatedButton(
+                        /// make this button background color textGreen
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: textGreen,
+
+                          /// border radius to 15
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                        ),
+                        onPressed: () async {
+                          if (state is LoginLoading) {
+                            return;
+                          }
+                          // print('mobile -> ${_mobile.text}');
+                          // print('password -> ${_password.text}');
+                          context.read<LoginBloc>().add(
+                                CheckLoginEvent(
+                                  context: context,
+                                  // mail: '01896267197',
+                                  // mail: 'nadia@gmail.com',
+                                  mail: _mobile.text,
+                                  // pass: 'df62me',
+                                  // pass: '123456',
+                                  // pass: 'password',
+                                  pass: _password.text,
+                                ),
+                              );
+                        },
+                        child: state is LoginLoading
+                            ? const Text(
+                                'চেকিং  ....',
+                              )
+                                .animate(
+                                  onPlay: (controller) => controller.repeat(),
+                                )
+                                .shimmer(
+                                  duration: 500.milliseconds,
+                                  color: primaryColor,
+                                )
+                            : const Text(
+                                'লগইন করুন',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         );

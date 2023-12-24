@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
-
+import 'package:deshifarmer/presentation/pages/group_detail/view/group_detail_page.dart';
 import 'package:flutter/material.dart';
-import 'package:deshifarmer/presentation/pages/add_group/pages/group_detail/group_detail.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

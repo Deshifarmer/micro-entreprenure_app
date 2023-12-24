@@ -18,10 +18,13 @@ class LivingTypeFormField extends StatelessWidget {
           label: Text('বাসস্থানের অবস্থা নির্বাচন করুন'),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(
-              width: 2,
-            ),
+            borderSide: BorderSide.none,
           ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderSide: BorderSide.none,
+          ),
+          contentPadding: EdgeInsets.all(10),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(width: 2),
@@ -33,9 +36,12 @@ class LivingTypeFormField extends StatelessWidget {
         // decoration: ShapeDecoration(),
 
         elevation: 16,
-        value: 'Own (নিজের বাড়ি)',
-        items: <String>['Own (নিজের বাড়ি)', 'Rented (ভাড়া বাড়ি)']
-            .map<DropdownMenuItem<String>>((String value) {
+        value: '----------',
+        items: <String>[
+          '----------',
+          'Own (নিজের বাড়ি)',
+          'Rented (ভাড়া বাড়ি)',
+        ].map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             // alignment: Alignment.center,
             value: value,

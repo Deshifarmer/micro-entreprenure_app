@@ -38,4 +38,7 @@ class OrderSuccess extends OrderState {
   final AllOrdersEntity orderEntitys;
 }
 
-class OrderFetchFailed extends OrderState {}
+class OrderFetchFailed extends OrderState {
+  const OrderFetchFailed({required this.message});
+  final String message;
+}

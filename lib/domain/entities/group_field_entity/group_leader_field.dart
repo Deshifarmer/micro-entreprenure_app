@@ -3,127 +3,62 @@
 import 'package:json_annotation/json_annotation.dart';
 part 'group_leader_field.g.dart';
 
+/*
+
+"farmer_id": "far-0eb0-3bb13",
+"usaid_id": null,
+"full_name": "Nadiea test",
+"first_name": "Nadiea",
+"last_name": "test",
+"district": "Manikganj",
+"phone": "01914775333",
+"gender": "Female",
+"address": "dhaka",
+"village": "dhaja",
+"image": "/image/farmer/far-0eb0-3bb13.jpg",
+"farm_area": "5778",
+"date_of_birth": "1999-10-09",
+"created_at": "2023-09-02T11:13:13.000000Z"
+
+*/
 @JsonSerializable()
 class GroupLeaderFormField {
   const GroupLeaderFormField({
-    required this.order_list,
-    required this.address,
-    required this.family_member,
-    required this.first_name,
-    required this.is_married,
-    required this.last_name,
-    required this.focused_crop,
-    required this.number_of_children,
-    required this.onboard_by,
-    required this.resident_type,
-    required this.year_of_stay_in,
-    required this.yearly_income,
-    required this.full_name,
-    required this.fathers_name,
-    required this.bank_details,
-    required this.cropping_intensity,
-    required this.farm_id,
-    required this.date_of_birth,
-    required this.farmer_type,
-    required this.farmer_role,
-    required this.mfs_account,
-    required this.land_status,
-    required this.credit_score,
-    required this.gov_farmer_id,
-    required this.cultivation_practice,
-    required this.current_producing_crop,
-    required this.onboard_date,
-    required this.is_active,
-    required this.image,
     required this.farmer_id,
-    required this.nid,
-    required this.phone,
-    required this.union,
+    required this.usaid_id,
+    required this.full_name,
+    required this.first_name,
+    required this.last_name,
     required this.gender,
-    required this.village,
-    required this.upazila,
     required this.district,
-    required this.division,
-    required this.group_id,
+    required this.phone,
+    required this.address,
+    required this.village,
+    required this.image,
+    required this.farm_area,
+    required this.date_of_birth,
+    required this.created_at,
+
+
   });
 
   factory GroupLeaderFormField.fromJson(Map<String, dynamic> json) =>
       _$GroupLeaderFormFieldFromJson(json);
+  
+  final String farmer_id;
+  final String? usaid_id;
+  final String full_name;
+  final String first_name;
+  final String last_name;
+  final String district;
+  final String phone;
+  final String gender;
+  final String address;
+  final String village;
+  final String image;
+  final String farm_area;
+  final String date_of_birth;
+  final String created_at;
 
-  final String? credit_score,
-      land_status,
-      bank_details,
-      mfs_account,
-      farmer_role,
-      farm_id;
-  final List<dynamic> order_list;
 
-  final int? nid, gov_farmer_id, number_of_children, is_active, family_member;
-  final String? farmer_id,
-      image,
-      farmer_type,
-      onboard_by,
-      first_name,
-      last_name,
-      full_name,
-      fathers_name,
-      phone,
-      is_married,
-      gender,
-      date_of_birth,
-      address,
-      village,
-      upazila,
-      district,
-      division,
-      union,
-      yearly_income,
-      year_of_stay_in,
-      group_id,
-      resident_type,
-      current_producing_crop,
-      focused_crop,
-      cropping_intensity,
-      cultivation_practice,
-      onboard_date;
 }
-
-// final String? gov_farmer_id,
-//     credit_score,
-//     land_status,
-//     bank_details,
-//     mfs_account,
-//     farmer_role,
-//     farm_id;
-
-// final String farmer_id,
-//     image,
-//     farmer_type,
-//     onboard_by,
-//     nid,
-//     first_name,
-//     last_name,
-//     full_name,
-//     fathers_name,
-//     phone,
-//     is_married,
-//     gender,
-//     date_of_birth,
-//     address,
-//     village,
-//     upazila,
-//     district,
-//     division,
-//     union,
-//     family_member,
-//     number_of_children,
-//     yearly_income,
-//     year_of_stay_in,
-//     group_id,
-//     resident_type,
-//     current_producing_crop,
-//     focused_crop,
-//     cropping_intensity,
-//     cultivation_practice,
-//     is_active,
-//     onboard_date;

@@ -15,6 +15,8 @@ part 'login_state.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc() : super(const LoginInitial()) {
     on<CheckLoginEvent>(_onSuccessLoginEvent);
+    on<LoginSuccessEvent>(_onLoalLoginSuccessEvent);
+    on<ResetLoginEvent>(_onResetLoginEvent);
   }
   LoginRepoImpl loginRepoImpl = LoginRepoImpl();
 
@@ -31,13 +33,37 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     final value = switch (result) {
       Success(data: final SuccessLoginEntity succ) => {
           emit(LoginSuccess(succ)),
-          await Navigator.pushAndRemoveUntil(
-            event.context as BuildContext,
-            HomePage.route(),
-            (route) => false,
-          )
+          
+
+          /// hit the user profile api
         },
       ServerFailor(error: final _) => emit(LoginFailed()),
     };
+  }
+
+  // on local login success event
+  FutureOr<void> _onLoalLoginSuccessEvent(
+    LoginSuccessEvent event,
+    Emitter<LoginState> emit,
+  ) async {
+    emit(LoginLoading());
+
+    emit(
+      LoginSuccess(
+        SuccessLoginEntity(
+          token: event.token,
+          df_id: '',
+          full_name: '',
+        ),
+      ),
+    );
+  }
+
+  // on reset login event
+  FutureOr<void> _onResetLoginEvent(
+    ResetLoginEvent event,
+    Emitter<LoginState> emit,
+  ) async {
+    emit(const LoginInitial());
   }
 }

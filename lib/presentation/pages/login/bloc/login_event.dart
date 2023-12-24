@@ -28,3 +28,22 @@ class CheckLoginEvent extends LoginEvent {
   @override
   List<Object> get props => [mail, pass, context];
 }
+
+/// login success event from local
+class LoginSuccessEvent extends LoginEvent {
+  const LoginSuccessEvent({
+    // required this.context,
+    required this.token,
+  });
+  // final BuildContext context;
+  final String token;
+  @override
+  List<Object> get props => [
+        token,
+      ];
+}
+
+// Reset Login Event
+class ResetLoginEvent extends LoginEvent {
+  const ResetLoginEvent();
+}

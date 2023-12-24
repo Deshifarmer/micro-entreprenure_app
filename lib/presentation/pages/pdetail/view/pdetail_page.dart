@@ -1,11 +1,13 @@
 import 'package:deshifarmer/domain/entities/products_entity/product_data_entity.dart';
 import 'package:deshifarmer/presentation/animations/page_animations.dart';
-import 'package:deshifarmer/presentation/blocs/cart/cart_bloc.dart';
-import 'package:deshifarmer/presentation/blocs/my_farmer/my_farmer_bloc.dart';
+
 import 'package:deshifarmer/presentation/pages/cartz/view/cartz_page.dart';
 import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
 import 'package:deshifarmer/presentation/pages/pdetail/bloc/bloc.dart';
 import 'package:deshifarmer/presentation/pages/pdetail/widgets/pdetail_body.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
+import 'package:deshifarmer/services/blocs/cart/cart_bloc.dart';
+import 'package:deshifarmer/services/blocs/my_farmer/my_farmer_bloc.dart';
 import 'package:flutter/material.dart';
 
 /// {@template pdetail_page}
@@ -100,6 +102,9 @@ class _PdetailPageState extends State<PdetailPage> {
       ),
       // floatingActionButton:
       bottomNavigationBar: BottomAppBar(
+        color: priceBoxColor.withOpacity(
+          0.1,
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -133,6 +138,12 @@ class _PdetailPageState extends State<PdetailPage> {
                 minimumSize: MaterialStateProperty.all(
                   Size(MediaQuery.of(context).size.width / 2, 80),
                 ),
+                backgroundColor: const MaterialStatePropertyAll(priceBoxColor),
+                shape: MaterialStatePropertyAll(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
               ),
               onPressed: () {
                 for (var i = 0; i < _itemBag; i++) {
@@ -145,11 +156,34 @@ class _PdetailPageState extends State<PdetailPage> {
                         ),
                       );
                 }
+                if (_itemBag == 0) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: const Text('পণ্য যোগ করা হয়নি'),
+                      backgroundColor: Colors.red[500],
+                    ),
+                  );
+                }
+                if (_itemBag > 0) {
+                  // context.read<CartBloc>().add(
+                  //       CartAddingEvent(),
+                  //     );
+                  // show snackbar when item added
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('পণ্য কার্ট এ যোগ হয়েছে'),
+                      backgroundColor: priceBoxColor,
+                    ),
+                  );
+                }
                 setState(() {
                   _itemBag = 0;
                 });
               },
-              child: const Text('Add to Cart'),
+              child: const Text(
+                'Add to Cart',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
             // remove button
             // quantity

@@ -12,10 +12,10 @@ class OrderEntity {
     required this.created_at,
     required this.delivery_status,
     required this.distributor_commission,
-    required this.farmerDetail,
+    required this.farmer_details,
     required this.me_commission,
     required this.me_id,
-    required this.orderDetail,
+    required this.order_details,
     required this.order_id,
     required this.payment_id,
     required this.payment_method,
@@ -28,8 +28,8 @@ class OrderEntity {
   /// factory.
   factory OrderEntity.fromJson(Map<String, dynamic> json) =>
       _$OrderEntityFromJson(json);
-  final String? order_id;
   // ignore: avoid_multiple_declarations_per_line
+  final String? order_id;
   final String? me_id;
   final String? channel_id;
   final String? total_price;
@@ -42,6 +42,6 @@ class OrderEntity {
   final String? me_commission;
   final String? created_at;
   final String? updated_at;
-  final FarmerDetailEntity? farmerDetail;
-  final List<OrderDetailEntity>? orderDetail;
+  final FarmerDetailEntity? farmer_details;
+  final List<OrderDetailEntity>? order_details;
 }

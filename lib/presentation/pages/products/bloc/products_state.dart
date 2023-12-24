@@ -28,8 +28,16 @@ class ProductsInitial extends ProductsState {
 }
 
 class ProductComanySelect extends ProductsState {
-  const ProductComanySelect(this.companyID);
+  const ProductComanySelect(
+    this.companyID,
+    this.category,
+    this.query,
+  );
   final String companyID;
+  final String? category;
+  final String? query;
   @override
-  List<Object> get props => [companyID];
+  List<Object> get props => [
+        companyID,
+      ];
 }

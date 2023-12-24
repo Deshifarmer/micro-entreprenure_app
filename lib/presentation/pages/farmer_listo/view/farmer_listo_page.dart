@@ -1,13 +1,15 @@
-import 'package:flutter/material.dart';
 import 'package:deshifarmer/presentation/pages/farmer_listo/bloc/bloc.dart';
-import 'package:deshifarmer/presentation/pages/farmer_listo/widgets/farmer_listo_body.dart';
+import 'package:deshifarmer/presentation/pages/farmer_listo/components/farmer_listo_page2.dart';
+import 'package:deshifarmer/presentation/utils/deshi_colors.dart';
+import 'package:flutter/material.dart';
 
 /// {@template farmer_listo_page}
 /// A description for FarmerListoPage
 /// {@endtemplate}
 class FarmerListoPage extends StatelessWidget {
   /// {@macro farmer_listo_page}
-  const FarmerListoPage({super.key});
+  const FarmerListoPage({super.key, this.isBack});
+  final bool? isBack;
 
   /// The static route for FarmerListoPage
   static Route<dynamic> route() {
@@ -20,8 +22,14 @@ class FarmerListoPage extends StatelessWidget {
       create: (context) => FarmerListoBloc(),
       child: Scaffold(
         appBar: AppBar(
-            // title: Text('Farmer Lists'),
-            ),
+          title: Text(
+            'আমার কৃষক তালিকা',
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  color: primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+        ),
         body: const FarmerListoView(),
       ),
     );
@@ -37,6 +45,7 @@ class FarmerListoView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const FarmerListoBody();
+    // return const FarmerListoBody();
+    return const FarmerListPage2();
   }
 }

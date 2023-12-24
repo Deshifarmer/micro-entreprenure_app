@@ -8,7 +8,7 @@ class CategoryEntity {
   CategoryEntity({
     required this.id,
     required this.image,
-    required this.is_active,
+    // required this.is_active,
     required this.title,
     required this.total_product,
   });
@@ -21,6 +21,6 @@ class CategoryEntity {
   final int total_product;
   final String title;
   final String image;
-  final String is_active;
+  // final String is_active;
   // final List<ProductListEntity> product_list;
 }

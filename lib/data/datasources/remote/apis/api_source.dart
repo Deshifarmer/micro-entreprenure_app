@@ -1,26 +1,30 @@
 // ignore_for_file: omit_local_variable_types, prefer_final_locals
 
+import 'dart:async';
 import 'dart:convert';
+import 'dart:isolate';
 
+import 'package:deshifarmer/core/analytics/firebase_analytics_custom.dart';
 import 'package:deshifarmer/core/app_core.dart';
 import 'package:deshifarmer/core/params/api_database_params.dart';
 import 'package:deshifarmer/data/models/add_farm_model.dart';
 import 'package:deshifarmer/data/models/add_farmer_model.dart';
 import 'package:deshifarmer/data/models/order_model.dart';
+import 'package:deshifarmer/domain/entities/batch/batch_entity.dart';
 import 'package:deshifarmer/domain/entities/category_entity/all_categorys.dart';
 import 'package:deshifarmer/domain/entities/category_entity/category_entity.dart';
 import 'package:deshifarmer/domain/entities/company_entity/all_company_entity.dart';
 import 'package:deshifarmer/domain/entities/company_entity/company_response_entity.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/all_farmer_entity.dart';
+import 'package:deshifarmer/domain/entities/farmer_entity/all_farmer_entity2.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
+import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity_again.dart';
 import 'package:deshifarmer/domain/entities/group_detail_entity/group_detail_entity.dart';
 import 'package:deshifarmer/domain/entities/group_field_entity/all_farmer_group_field.dart';
 import 'package:deshifarmer/domain/entities/group_field_entity/group_field_entity.dart';
 import 'package:deshifarmer/domain/entities/login_entity/login_response_entity.dart';
-import 'package:deshifarmer/domain/entities/orders_entity/all_orders.dart';
-import 'package:deshifarmer/domain/entities/orders_entity/order_response_entity.dart';
-import 'package:deshifarmer/domain/entities/products_entity/product_entity.dart';
 import 'package:deshifarmer/domain/entities/user_entity/user_profile_entity.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class DeshiFarmerAPI {
@@ -37,19 +41,27 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       '${ApiDatabaseParams.loginApi}?email=$mail&password=$pass',
     );
+    debugPrint('URL $url');
     try {
       final http.Response response = await http.post(url);
+      debugPrint('login response -> ${response.statusCode} ${response.body}');
       if (response.statusCode == 200) {
-        print(response.statusCode);
-        final result = json.decode(response.body);
-        print(result);
+        final result = await Isolate.run(() => json.decode(response.body));
         try {
           SuccessLoginEntity successResonse =
               SuccessLoginEntity.fromJson(result as Map<String, dynamic>);
 
           return Success<SuccessLoginEntity, Exception>(successResonse);
         } catch (e) {
-          print('Converting error -> $e');
+          debugPrint('error -> $e');
+          FirebaseAnalyticsCustom.customLogEvent(
+            name: 'login_error (userLogin)',
+            parameters: <String, dynamic>{
+              'code': response.statusCode,
+              'body': response.body,
+              'error': e.toString(),
+            },
+          );
           return ServerFailor<SuccessLoginEntity, Exception>(
             Exception('Server failor'),
           );
@@ -58,68 +70,120 @@ class DeshiFarmerAPI {
         //   Exception('Server failor'),
         // );
       } else {
-        print('${response.statusCode} ${response.body}');
-        // print(response.)
+        // debugPrint(response.)
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'login_error (userLogin)',
+          parameters: <String, dynamic>{
+            'code': response.statusCode,
+            'body': response.body,
+          },
+        );
         return ServerFailor<SuccessLoginEntity, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
+      debugPrint('exception on login -> $e');
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'login_error (userLogin)',
+        parameters: <String, dynamic>{
+          'error': e.toString(),
+        },
+      );
       return ServerFailor<SuccessLoginEntity, Exception>(
         Exception('Server failor'),
       );
     }
   }
 
-  ///! User ORDERS
-  Future<Result<AllOrdersEntity, Exception>> userOrder(
-    String token,
-  ) async {
+  ///! User LOGOUT
+  Future<bool> userLogout(String token) async {
     Map<String, String> auth = <String, String>{
       'Authorization': 'Bearer $token',
     };
     final Uri url = Uri.parse(
-      ApiDatabaseParams.orderApi,
+      ApiDatabaseParams.logoutApi,
     );
+
+    /// do a post request
+    // debugPrint('logout url -> $url $token');
     try {
       _headers.addAll(auth);
-      final http.Response response = await http.get(
+      final http.Response response = await http.post(
         url,
         headers: _headers,
       );
       if (response.statusCode == 200) {
-        print(response.statusCode);
-        final result = json.decode(response.body) as List<dynamic>;
-        print('result -> $result');
-        List<OrderEntity> orderEntitys = [];
-        for (int i = 0; i < result.length; i++) {
-          final element = result[i];
-          try {
-            orderEntitys.add(
-              OrderEntity.fromJson(element as Map<String, dynamic>),
-            );
-            print('entity added successfully -> $i');
-          } catch (e) {
-            final result2 = element as Map<String, dynamic>;
-            result2.forEach((key, value) {
-              print('$key $value ${value.runtimeType}');
-            });
-          }
-        }
-        AllOrdersEntity successResonse = AllOrdersEntity(orderEntitys);
-
-        return Success<AllOrdersEntity, Exception>(successResonse);
+        // debugPrint("${response.statusCode} | ${response.body}");
+        return true;
       } else {
-        print(response.statusCode);
-
-        return ServerFailor<AllOrdersEntity, Exception>(
-          Exception('Server failor'),
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'logout_error (userLogout)',
+          parameters: <String, dynamic>{
+            'code': response.statusCode,
+            'body': response.body,
+          },
         );
+        // debugPrint("${response.statusCode} | ${response.body}");
+        return false;
       }
     } catch (e) {
-      return ServerFailor<AllOrdersEntity, Exception>(
-        Exception('Server failor -> $e'),
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'logout_error (userLogout)',
+        parameters: <String, dynamic>{
+          'error': e.toString(),
+        },
       );
+      return false;
+    }
+  }
+
+  ///! Collect ORDERS
+  FutureOr<bool> collectOrder(String id, String token) async {
+    String localToken = '';
+    // String _LOCAL_TOKEN = '55|9062I8GhTHqaQWFrfOu5HzcRG3df73axEgL5rBUK';
+    Map<String, String> auth = <String, String>{
+      'Authorization': 'Bearer ${localToken.isNotEmpty ? localToken : token}',
+    };
+    final Uri url = Uri.parse(
+      ApiDatabaseParams.collectOrderApi + id,
+    );
+
+    /// do a post request
+    try {
+      _headers.addAll(auth);
+      final http.Response response = await http.put(
+        url,
+        headers: _headers,
+        body: {
+          'status': 'collected by me',
+        },
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'collect_error (collectOrder)',
+          parameters: <String, dynamic>{
+            'code': response.statusCode,
+            'url': url.toString(),
+            'token': token,
+            'method': 'put',
+            'body': response.body,
+          },
+        );
+        return false;
+      }
+    } catch (e) {
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'collect_error (collectOrder)',
+        parameters: <String, dynamic>{
+          'error': e.toString(),
+          'url': url.toString(),
+          'token': token,
+        },
+      );
+      return false;
     }
   }
 
@@ -133,24 +197,27 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.profileApi,
     );
+    debugPrint('url $url $token');
     try {
-      print('trying..................');
       _headers.addAll(auth);
       final http.Response response = await http.get(
         url,
         headers: _headers,
       );
       if (response.statusCode == 200) {
-        print('status 200');
-        final result = json.decode(response.body) as Map<String, dynamic>;
+        final result = await Isolate.run(() => json.decode(response.body))
+            as Map<String, dynamic>;
         try {
           UserProfileEntity successResonse = UserProfileEntity.fromJson(result);
           return Success<UserProfileEntity, Exception>(successResonse);
         } catch (e) {
-          print('exception occured $e');
-          result.forEach(
-            (key, value) {
-              print('$key ${value.runtimeType} $value');
+          FirebaseAnalyticsCustom.customLogEvent(
+            name: 'profile_error (userProfile)',
+            parameters: <String, dynamic>{
+              'code': response.statusCode,
+              'url': url.toString(),
+              'token': token,
+              'error': e.toString(),
             },
           );
           return ServerFailor<UserProfileEntity, Exception>(
@@ -158,13 +225,27 @@ class DeshiFarmerAPI {
           );
         }
       } else {
-        print('status CODE -> ${response.statusCode}');
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'profile_error (userProfile)',
+          parameters: <String, dynamic>{
+            'code': response.statusCode,
+            'url': url.toString(),
+            'token': token,
+            'body': response.body,
+          },
+        );
         return ServerFailor<UserProfileEntity, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
-      print('an exception occured -> $e');
+      FirebaseAnalyticsCustom.customLogEvent(
+          name: 'profile_error (userProfile)',
+          parameters: {
+            'url': url.toString(),
+            'token': token,
+            'error': e.toString(),
+          });
       return ServerFailor<UserProfileEntity, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -183,12 +264,14 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.companyListAPI,
     );
+    debugPrint('url $url $token');
     try {
       _headers.addAll(auth);
       final http.Response response = await http.get(
         url,
         headers: _headers,
       );
+      debugPrint('url $url $token');
       if (response.statusCode == 200) {
         final result = json.decode(response.body) as List<dynamic>;
         List<CompanyEntity> companyE = [];
@@ -199,22 +282,49 @@ class DeshiFarmerAPI {
               CompanyEntity.fromJson(element as Map<String, dynamic>),
             );
           } catch (e) {
-            print('error comverting data ->  ${element.runtimeType}, $e');
-            final e2 = element as Map<String, dynamic>;
-            e2.forEach((key, value) {
-              print('${value.runtimeType} $key $value');
-            });
+            FirebaseAnalyticsCustom.customLogEvent(
+              name: 'company_error (companyFetchData)',
+              parameters: <String, dynamic>{
+                'code': response.statusCode,
+                'url': url.toString(),
+                'token': token,
+                'error': e.toString(),
+              },
+            );
+            debugPrint('exception occurd on Company $e');
+            // e2.forEach((key, value) {
+            //   if (value.runtimeType != String) {
+            //     debugPrint('${value.runtimeType} $key $value');
+            //   }
+            // });
           }
         }
         AllCompanyListResp successResonse = AllCompanyListResp(companyE);
 
         return Success<AllCompanyListResp, Exception>(successResonse);
       } else {
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'company_error (companyFetchData)',
+          parameters: <String, dynamic>{
+            'code': response.statusCode,
+            'url': url.toString(),
+            'token': token,
+            'body': response.body,
+          },
+        );
         return ServerFailor<AllCompanyListResp, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'company_error (companyFetchData)',
+        parameters: <String, dynamic>{
+          'url': url.toString(),
+          'token': token,
+          'error': e.toString(),
+        },
+      );
       return ServerFailor<AllCompanyListResp, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -231,12 +341,14 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.categoryListAPI,
     );
+    debugPrint('url $url $token');
     try {
       _headers.addAll(auth);
       final http.Response response = await http.get(
         url,
         headers: _headers,
       );
+      debugPrint('url $url $token');
       if (response.statusCode == 200) {
         final result = json.decode(response.body) as List<dynamic>;
         List<CategoryEntity> companyE = [];
@@ -247,22 +359,44 @@ class DeshiFarmerAPI {
               CategoryEntity.fromJson(element as Map<String, dynamic>),
             );
           } catch (e) {
-            print('error comverting data ->  ${element.runtimeType}, $e');
-            final e2 = element as Map<String, dynamic>;
-            e2.forEach((key, value) {
-              print('${value.runtimeType} $key $value');
-            });
+            FirebaseAnalyticsCustom.customLogEvent(
+              name: 'category_error (categoryFetchData)',
+              parameters: <String, dynamic>{
+                'code': response.statusCode,
+                'url': url.toString(),
+                'token': token,
+                'error': e.toString(),
+              },
+            );
+            // final e2 = element as Map<String, dynamic>;
+            // e2.forEach((key, value) {});
           }
         }
         AllCategoryListResp successResonse = AllCategoryListResp(companyE);
 
         return Success<AllCategoryListResp, Exception>(successResonse);
       } else {
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'category_error (categoryFetchData)',
+          parameters: <String, dynamic>{
+            'code': response.statusCode,
+            'url': url.toString(),
+            'token': token,
+            'body': response.body,
+          },
+        );
         return ServerFailor<AllCategoryListResp, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
+      FirebaseAnalyticsCustom.customLogEvent(
+          name: 'category_error (categoryFetchData)',
+          parameters: {
+            'url': url.toString(),
+            'token': token,
+            'error': e.toString(),
+          });
       return ServerFailor<AllCategoryListResp, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -275,59 +409,20 @@ class DeshiFarmerAPI {
   ///!(DANGER)
   ///!(DANGER)
 
-  ///! get PRODUCTS (DONOTEDIT)
-  Future<Result<ProductEntity, Exception>> getProducts(String token) async {
-    Map<String, String> auth = <String, String>{
-      'Authorization': 'Bearer $token',
-    };
-    final Uri url = Uri.parse(
-      ApiDatabaseParams.productListAPI,
-    );
-    try {
-      _headers.addAll(auth);
-      final http.Response response = await http.get(
-        url,
-        headers: _headers,
-      );
-      if (response.statusCode == 200) {
-        print(response.statusCode);
-        final result = json.decode(response.body) as Map<String, dynamic>;
-        try {
-          ProductEntity successResonse = ProductEntity.fromJson(result);
-          return Success<ProductEntity, Exception>(successResonse);
-        } catch (e) {
-          print('error -> $e');
-          result.forEach((key, value) {
-            print('${value.runtimeType} $key ${value["name"]}');
-          });
-        }
-        return ServerFailor<ProductEntity, Exception>(
-          Exception('Server failor'),
-        );
-      } else {
-        print('not a status code : ${response.statusCode}');
-        return ServerFailor<ProductEntity, Exception>(
-          Exception('Server failor'),
-        );
-      }
-    } catch (e) {
-      return ServerFailor<ProductEntity, Exception>(
-        Exception('Server failor -> $e'),
-      );
-    }
-  }
-
-  ///! Get Product Paginate
-  Future<Result<ProductEntity, Exception>> getProductsPaginate(
+  ///* Get single Farmer LIST
+  Future<FarmerEntityAgain?> getSingleFarmer(
     String token,
-    int page,
+    String farmerID,
   ) async {
+    // String _LOCAL_TOKEN = '55|9062I8GhTHqaQWFrfOu5HzcRG3df73axEgL5rBUK';
+    String localToken = '';
     Map<String, String> auth = <String, String>{
-      'Authorization': 'Bearer $token',
+      'Authorization': 'Bearer ${localToken.isNotEmpty ? localToken : token}',
     };
     final Uri url = Uri.parse(
-      '${ApiDatabaseParams.productListPaginationAPI}$page',
+      '${ApiDatabaseParams.myFarmerApi}/$farmerID',
     );
+    debugPrint('url -> $url ${localToken.isNotEmpty ? localToken : token}');
     try {
       _headers.addAll(auth);
       final http.Response response = await http.get(
@@ -335,32 +430,54 @@ class DeshiFarmerAPI {
         headers: _headers,
       );
       if (response.statusCode == 200) {
-        print(response.statusCode);
-        final result = json.decode(response.body) as Map<String, dynamic>;
+        debugPrint('farm resp -> ${response.statusCode}');
+        final result = await Isolate.run(() => json.decode(response.body))
+            as Map<String, dynamic>;
+        debugPrint(
+          'successfuly got the fffffF -> ${result.runtimeType} ${result.length}',
+        );
         try {
-          ProductEntity successResonse = ProductEntity.fromJson(result);
-          print('${ApiDatabaseParams.productListPaginationAPI}$page');
-          print('returing the success paginated result $page');
-          return Success<ProductEntity, Exception>(successResonse);
+          final farmEntity = FarmerEntityAgain.fromJson(result);
+          return farmEntity;
         } catch (e) {
-          print('error -> $e');
-          result.forEach((key, value) {
-            print('${value.runtimeType} $key ${value["name"]}');
-          });
+          FirebaseAnalyticsCustom.customLogEvent(
+            name: 'farmer_error (getSingleFarmer)',
+            parameters: <String, dynamic>{
+              'code': response.statusCode,
+              'url': url.toString(),
+              'token': token,
+              'error': e.toString(),
+            },
+          );
+          debugPrint(
+            'error comverting data FarmerEntityAgain->  ${result.runtimeType}, $e \n',
+          );
         }
-        return ServerFailor<ProductEntity, Exception>(
-          Exception('Server failor'),
-        );
+        // debugPrint('converting to farmEntity -> ${farmEntity.runtimeType}');
+        return null;
       } else {
-        print('status code : ${response.statusCode}');
-        return ServerFailor<ProductEntity, Exception>(
-          Exception('Server failor'),
+        debugPrint('error -> ${response.statusCode} ${response.body}');
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'farmer_error (getSingleFarmer)',
+          parameters: <String, dynamic>{
+            'code': response.statusCode,
+            'url': url.toString(),
+            'token': token,
+            'body': response.body,
+          },
         );
+        return null;
       }
     } catch (e) {
-      return ServerFailor<ProductEntity, Exception>(
-        Exception('Server failor -> $e'),
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'farmer_error (getSingleFarmer)',
+        parameters: <String, dynamic>{
+          'url': url.toString(),
+          'token': token,
+          'error': e.toString(),
+        },
       );
+      return null;
     }
   }
 
@@ -369,12 +486,17 @@ class DeshiFarmerAPI {
   ///
   ///* Get the Farmer LIST
   Future<Result<AllFarmerListResp, Exception>> getFarmers(String token) async {
+    String localToken = '';
+    // String _LOCAL_TOKEN = '55|9062I8GhTHqaQWFrfOu5HzcRG3df73axEgL5rBUK';
     Map<String, String> auth = <String, String>{
-      'Authorization': 'Bearer $token',
+      'Authorization': 'Bearer ${localToken.isNotEmpty ? localToken : token}',
     };
     final Uri url = Uri.parse(
       ApiDatabaseParams.myFarmerApi,
     );
+    // debugPrint(
+    //   'getting farmers url -> $url ${localToken.isNotEmpty ? localToken : token}',
+    // );
     try {
       _headers.addAll(auth);
       final http.Response response = await http.get(
@@ -382,46 +504,65 @@ class DeshiFarmerAPI {
         headers: _headers,
       );
       if (response.statusCode == 200) {
-        final result = json.decode(response.body) as List<dynamic>;
-        print(
-          'successfuly got the result -> ${result.runtimeType} ${result.length}',
+        debugPrint('getting farmer resp -> ${response.statusCode}');
+        final result = await Isolate.run(() => json.decode(response.body))
+            as List<dynamic>;
+        debugPrint(
+          'successfuly got the farmers -> ${result.runtimeType} ${result.length}',
         );
         List<FarmerEntity> companyE = [];
         for (int i = 0; i < result.length; i++) {
           final element = result[i] as Map<String, dynamic>;
-          // print('element runtime -> ${element.runtimeType}');
+          // debugPrint('element runtime -> ${element.runtimeType}');
           try {
             companyE.add(
               FarmerEntity.fromJson(element),
             );
           } catch (e) {
-            print('error comverting data ->  ${element.runtimeType}, $e \n');
-            // e2.forEach((key, value) {
-            //   if (value.runtimeType != String) {
-            //     print('${value.runtimeType} $key $value');
-            //   }
-            // });
-
-            final e2 = element as Map<String, dynamic>;
-            print('exception occured $e');
-            e2.forEach(
-              (key, value) {
-                print('$key | ${value.runtimeType} | $value');
+            debugPrint(
+              'error comverting data FarmerEntity->  ${element.runtimeType}, $e \n',
+            );
+            FirebaseAnalyticsCustom.customLogEvent(
+              name: 'farmer_error (getFarmers)',
+              parameters: <String, dynamic>{
+                'code': response.statusCode,
+                'url': url.toString(),
+                'token': token,
+                'error': e.toString(),
               },
             );
           }
         }
         AllFarmerListResp successResonse = AllFarmerListResp(companyE);
+        debugPrint('returning successResonse -> ${companyE.length}');
 
         return Success<AllFarmerListResp, Exception>(successResonse);
       } else {
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'farmer_error (getFarmers)',
+          parameters: <String, dynamic>{
+            'code': response.statusCode,
+            'url': url.toString(),
+            'token': token,
+            'body': response.body,
+          },
+        );
         return ServerFailor<AllFarmerListResp, Exception>(
-          Exception('Server failor'),
+          Exception('${response.statusCode} ${response.body}'),
         );
       }
     } catch (e) {
+      // debugPrint('EXC#EPTION -> ${e.toString().split(':').firstOrNull}');
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'farmer_error (getFarmers)',
+        parameters: <String, dynamic>{
+          'url': url.toString(),
+          'token': token,
+          'error': e.toString(),
+        },
+      );
       return ServerFailor<AllFarmerListResp, Exception>(
-        Exception('Server failor -> $e'),
+        Exception('${e.toString().split(':').firstOrNull}'),
       );
     }
   }
@@ -436,6 +577,7 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.unassignFarmersApi,
     );
+    // debugPrint('unassign url -> $url $token');
     try {
       _headers.addAll(auth);
       final http.Response response = await http.get(
@@ -443,40 +585,68 @@ class DeshiFarmerAPI {
         headers: _headers,
       );
       if (response.statusCode == 200) {
-        final result = json.decode(response.body) as List<dynamic>;
-        print(
-          'successfuly got the Unassing LISTO -> ${result.runtimeType} ${result.length}',
-        );
+        final result = await Isolate.run(() => json.decode(response.body))
+            as List<dynamic>;
+        // debugPrint(
+        //   'successfuly got the Unassing LISTO -> ${result.runtimeType} ${result.length}',
+        // );
         List<FarmerEntity> companyE = [];
         for (int i = 0; i < result.length; i++) {
           final element = result[i] as Map<String, dynamic>;
-          // print('element runtime -> ${element.runtimeType}');
+          // debugPrint('element runtime -> ${element.runtimeType}');
           try {
             companyE.add(
               FarmerEntity.fromJson(element),
             );
           } catch (e) {
-            print(
-                'error comverting List<FarmerEntity> ->  ${element.runtimeType}, $e \n');
-            final e2 = element as Map<String, dynamic>;
-            e2.forEach((key, value) {
-              if (value.runtimeType != String) {
-                print('${value.runtimeType} $key $value');
-              }
-            });
+            FirebaseAnalyticsCustom.customLogEvent(
+              name: 'farmer_error (getUnassingFarmers)',
+              parameters: <String, dynamic>{
+                'code': response.statusCode,
+                'url': url.toString(),
+                'token': token,
+                'error': e.toString(),
+              },
+            );
+            // debugPrint(
+            //   'error comverting List<FarmerEntity> ->  ${element.runtimeType}, $e \n',
+            // );
+            // final e2 = element;
+            // e2.forEach((key, value) {
+            //   if (value.runtimeType != String) {
+            //     debugPrint('${value.runtimeType} $key $value');
+            //   }
+            // });
           }
         }
         AllFarmerListResp successResonse = AllFarmerListResp(companyE);
 
         return Success<AllFarmerListResp, Exception>(successResonse);
       } else {
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'farmer_error (getUnassingFarmers)',
+          parameters: <String, dynamic>{
+            'code': response.statusCode,
+            'url': url.toString(),
+            'token': token,
+            'body': response.body,
+          },
+        );
         return ServerFailor<AllFarmerListResp, Exception>(
-          Exception('Server failor'),
+          Exception('${response.statusCode} ${response.body}'),
         );
       }
     } catch (e) {
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'farmer_error (getUnassingFarmers)',
+        parameters: <String, dynamic>{
+          'url': url.toString(),
+          'token': token,
+          'error': e.toString(),
+        },
+      );
       return ServerFailor<AllFarmerListResp, Exception>(
-        Exception('Server failor -> $e'),
+        Exception('Server failor $e'),
       );
     }
   }
@@ -493,6 +663,7 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.getGroupsFormField,
     );
+    debugPrint('group url -> $url $token');
     try {
       _headers.addAll(auth);
       final http.Response response = await http.get(
@@ -501,28 +672,30 @@ class DeshiFarmerAPI {
       );
       if (response.statusCode == 200) {
         final result = json.decode(response.body) as List<dynamic>;
-        print(
+        debugPrint(
           'successfuly Unassign GROUPs -> ${result.runtimeType} ${result.length}',
         );
         List<GroupFieldEntity> companyE = [];
         for (int i = 0; i < result.length; i++) {
           final element = result[i] as Map<String, dynamic>;
-          // print('element runtime -> ${element.runtimeType}');
+          // debugPrint('element runtime -> ${element.runtimeType}');
           try {
             companyE.add(
               GroupFieldEntity.fromJson(element),
             );
           } catch (e) {
-            print(
+            debugPrint(
               'error comverting data Unassing GroupFieldEntity ->  ${element.runtimeType}, $e \n',
             );
-// getFarmersGroup
-            final e2 = element as Map<String, dynamic>;
-            e2.forEach((key, value) {
-              if (value.runtimeType != String) {
-                print('${value.runtimeType} $key $value');
-              }
-            });
+            FirebaseAnalyticsCustom.customLogEvent(
+              name: 'group_error (getGroupFields)',
+              parameters: <String, dynamic>{
+                'code': response.statusCode,
+                'url': url.toString(),
+                'token': token,
+                'error': e.toString(),
+              },
+            );
           }
         }
         AllFarmerGroupFieldResp successResonse =
@@ -530,11 +703,28 @@ class DeshiFarmerAPI {
 
         return Success<AllFarmerGroupFieldResp, Exception>(successResonse);
       } else {
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'group_error (getGroupFields)',
+          parameters: <String, dynamic>{
+            'code': response.statusCode,
+            'url': url.toString(),
+            'token': token,
+            'body': response.body,
+          },
+        );
         return ServerFailor<AllFarmerGroupFieldResp, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'group_error (getGroupFields)',
+        parameters: <String, dynamic>{
+          'url': url.toString(),
+          'token': token,
+          'error': e.toString(),
+        },
+      );
       return ServerFailor<AllFarmerGroupFieldResp, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -558,12 +748,10 @@ class DeshiFarmerAPI {
         url,
         headers: _headers,
       );
-      print('toekn $token \n groupid -> $groupID');
+      debugPrint('url -> $url \n token -> $token');
+      // debugPrint('toekn $token \n groupid -> $groupID');
       if (response.statusCode == 200) {
         final result = json.decode(response.body) as Map<String, dynamic>;
-        print(
-          'successfuly got GROUP detail -> ${result.runtimeType} ${result.length}',
-        );
 
         try {
           GroupDetailEntity successResonse = GroupDetailEntity.fromJson(result);
@@ -571,22 +759,48 @@ class DeshiFarmerAPI {
 
           return Success<GroupDetailEntity, Exception>(successResonse);
         } catch (e) {
-          print('got error converting to model $e');
-
-          result.forEach((key, value) {
-            print('$key ${key.runtimeType} $value');
-          });
+          FirebaseAnalyticsCustom.customLogEvent(
+            name: 'group_error (getGroupDetails)',
+            parameters: <String, dynamic>{
+              'code': response.statusCode,
+              'url': url.toString(),
+              'token': token,
+              'error': e.toString(),
+            },
+          );
+          // result.forEach((key, value) {
+          //   if (value.runtimeType != String) {
+          //     debugPrint('${value.runtimeType} $key $value');
+          //   }
+          // });
 
           return ServerFailor<GroupDetailEntity, Exception>(
             Exception('Converting Data Erro -> $e'),
           );
         }
       } else {
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'group_error (getGroupDetails)',
+          parameters: <String, dynamic>{
+            'code': response.statusCode,
+            'url': url.toString(),
+            'token': token,
+            'body': response.body,
+          },
+        );
         return ServerFailor<GroupDetailEntity, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'group_error (getGroupDetails)',
+        parameters: <String, dynamic>{
+          'url': url.toString(),
+          'token': token,
+          'error': e.toString(),
+        },
+      );
       return ServerFailor<GroupDetailEntity, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -594,7 +808,7 @@ class DeshiFarmerAPI {
   }
 
   ///! * ------------------------- POST METHODS -----------------------
-  ///
+  ///! DANGER ZONEEEEEEEEEEEEEEEEEEE
   /// adding Farmers
   Future<Result<bool, Exception>> addFarmer(
     AddFarmerModel farmerModel,
@@ -603,23 +817,21 @@ class DeshiFarmerAPI {
     // var checkIfGovtID = {};
     ///! POST BODY
 
-    var _d = farmerModel.focusedCrop
+    var d = farmerModel.focusedCrop
         ?.replaceAll('{', '')
         .replaceAll('}', '')
         .split(',');
     var focusedCorpFormat = {
-      'cropname': _d,
+      'cropname': d,
     };
-    print(_d);
 
-    var _d2 = farmerModel.currentProducingCrop
+    var d2 = farmerModel.currentProducingCrop
         ?.replaceAll('{', '')
         .replaceAll('}', '')
         .split(',');
     var currentCorpFormat = {
-      'cropname': _d2,
+      'cropname': d2,
     };
-    print(_d2);
     Map<String, String> body = <String, String>{
       'farmer_type': '1',
       // 'onboard_by': farmerModel.onboardBy ?? '', //! NOT NEEDED
@@ -629,11 +841,10 @@ class DeshiFarmerAPI {
       'last_name': farmerModel.lastName,
       'fathers_name': farmerModel.fathersName,
       'phone': farmerModel.phone,
-      'is_married': farmerModel.isMarried,
+      'is_married': farmerModel.isMarried == 'Unmarried' ? '0' : '1',
       'gender': farmerModel.gender,
-      // 'date_of_birth':
-      //     '${farmerModel.dateOfBirth.year}-${farmerModel.dateOfBirth.year}-${farmerModel.dateOfBirth.year}',
-      'date_of_birth': '1999-10-09',
+      'date_of_birth':
+          '${farmerModel.dateOfBirth.year}-${farmerModel.dateOfBirth.month}-${farmerModel.dateOfBirth.day}',
       'address': farmerModel.address,
       'village': farmerModel.village,
       'union': farmerModel.union,
@@ -655,27 +866,25 @@ class DeshiFarmerAPI {
       // 'farm_id': farmerModel.farmId.toString(),
       'year_of_stay_in': farmerModel.yearOfStayIn,
     };
-    var bDetail = farmerModel.bankDetails as Map<String, String>;
+    var bDetail = farmerModel.bankDetails! as Map<String, String>;
     if (bDetail['bank_name']!.isNotEmpty &&
         bDetail['branch_name']!.isNotEmpty &&
         bDetail['account_number']!.isNotEmpty) {
       body['bank_details'] = json.encode(farmerModel.bankDetails); //JSON
-      print('bank detail -> ${json.encode(farmerModel.bankDetails)}');
     }
-    var msfDetail = farmerModel.mfsAccount as Map<String, String>;
+    var msfDetail = farmerModel.mfsAccount! as Map<String, String>;
 
     if (msfDetail['mfs_type']!.isNotEmpty &&
         msfDetail['mfs_account']!.isNotEmpty) {
       // 'mfs_account': json.encode(farmerModel.mfsAccount), // JSON
       body['mfs_account'] = json.encode(farmerModel.mfsAccount); //JSON
-      print('msf account -> ${json.encode(farmerModel.mfsAccount)}');
     }
 
-    // print(
+    // debugPrint(
     //     'focused crop -> ${json.encode({'cropname':${_d.runtimeType} ${_d})}');
-    // print('-d -> ${json.encode(fFor)}');
+    // debugPrint('-d -> ${json.encode(fFor)}');
 
-    // print(
+    // debugPrint(
     //     'beauty -> ${farmerModel.focusedCrop?.replaceAll("{", "").replaceAll("}", "").split(" ")}');
 
     ///! POST HEADER
@@ -684,20 +893,20 @@ class DeshiFarmerAPI {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    print('token from API -> $token');
 
     ///! url to URI
     final Uri url = Uri.parse(
       ApiDatabaseParams.addFarmerApi,
       // 'https://core.deshifarmer.co/api/v1/me/add_farmer'
     );
+    debugPrint('url $url $token');
 
     ///! Trying request to SErVER
     try {
       _headers.addAll(headers);
       var request = http.MultipartRequest('POST', url);
-      // print('image path from API -> ${farmerModel.image}');
-      // print('dob -> ${body["date_of_birth"]}');
+      // debugPrint('image path from API -> ${farmerModel.image}');
+      // debugPrint('dob -> ${body["date_of_birth"]}');
       request.fields.addAll(body);
 
       request.files
@@ -706,26 +915,35 @@ class DeshiFarmerAPI {
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 201) {
-        print(
-          'server success resp -> 201 -> ${response.reasonPhrase} ${await response.stream.bytesToString()}',
-        );
-
         return Success<bool, Exception>(true);
       } else {
         var respMsg = await response.stream.bytesToString();
-        print(
-          'server resp -> ${response.statusCode}\n$respMsg',
-        );
-
-        print(
-          'message -> ${jsonDecode(respMsg)["message"]}',
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'error_comverting_data (addFarmer)',
+          parameters: {
+            'code': response.statusCode.toString(),
+            'error': respMsg,
+            'url': url.toString(),
+            'token': token,
+            'method': 'post',
+            'body': body,
+            'return': 'ServerFailor<bool, Exception>',
+          },
         );
         return ServerFailor<bool, Exception>(
           Exception(jsonDecode(respMsg)['message']),
         );
       }
     } catch (e) {
-      print('Unknown Errors -> $e');
+      FirebaseAnalyticsCustom.customLogEvent(
+          name: 'error_comverting_data (addFarmer)',
+          parameters: {
+            'error': e.toString(),
+            'url': url.toString(),
+            'token': token,
+            'body': body,
+            'return': 'ServerFailor<bool, Exception>',
+          });
       return ServerFailor<bool, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -752,12 +970,13 @@ class DeshiFarmerAPI {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    print('token from API -> $token');
 
     ///! url to URI
     final Uri url = Uri.parse(
       ApiDatabaseParams.createGroupAPI,
     );
+    debugPrint('url $url $token');
+    debugPrint('body -> $body');
 
     ///! Trying request to SErVER
     try {
@@ -769,21 +988,39 @@ class DeshiFarmerAPI {
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 201) {
-        print(
-          'server success resp -> 201 -> ${response.reasonPhrase} ${await response.stream.bytesToString()}',
-        );
-
+        debugPrint('group created successfully -> ${response.statusCode}');
         return Success<bool, Exception>(true);
       } else {
-        print(
-          'server resp -> ${response.statusCode}\n${response.reasonPhrase} ${await response.stream.bytesToString()}',
+        var respMsg = await response.stream.bytesToString();
+        debugPrint('group created failed -> ${response.statusCode} $respMsg');
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'error_comverting_data (createGroup)',
+          parameters: {
+            'code': response.statusCode.toString(),
+            'error': respMsg,
+            'url': url.toString(),
+            'token': token,
+            'method': 'post',
+            'body': body,
+            'return': 'ServerFailor<bool, Exception>',
+          },
         );
         return ServerFailor<bool, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
-      print('Unknown Errors -> $e');
+      debugPrint('group created failed -> $e');
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'error_comverting_data (createGroup)',
+        parameters: {
+          'error': e.toString(),
+          'url': url.toString(),
+          'token': token,
+          'body': body,
+          'return': 'ServerFailor<bool, Exception>',
+        },
+      );
       return ServerFailor<bool, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -797,11 +1034,6 @@ class DeshiFarmerAPI {
     String farmerID,
     String groupID,
   ) async {
-    ///! POST BODY
-    var body = json.encode({
-      'list': [farmerID]
-    });
-
     ///! POST HEADER
     Map<String, String> headers = <String, String>{
       'Accept': 'application/json',
@@ -813,34 +1045,52 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.assignFarmerToGroup(groupID),
     );
+    debugPrint('url $url $token');
 
     ///! Trying request to SErVER
     try {
       _headers.addAll(headers);
-      print('headers addde');
       var resp = await http.post(
         url,
         body: json.encode({
-          'list': [farmerID]
+          'list': [farmerID],
         }),
         headers: headers,
       );
 
-      print('farmer id -> $farmerID\n groupID -> $groupID\n token -> $token');
-
       if (resp.statusCode == 200) {
-        print('successfully done -> ${resp.statusCode} ${resp.body}');
         return Success<bool, Exception>(true);
       } else {
-        print(
-          'server resp -> ${resp.statusCode}\n${resp.body} ',
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'error_comverting_data (addFarmerToGroupAPI)',
+          parameters: {
+            'code': resp.statusCode.toString(),
+            'error': resp.body,
+            'url': url.toString(),
+            'token': token,
+            'method': 'post',
+            'body': {
+              'list': [farmerID]
+            },
+            'return': 'ServerFailor<bool, Exception>',
+          },
         );
         return ServerFailor<bool, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
-      print('Unknown Errors -> $e');
+      FirebaseAnalyticsCustom.customLogEvent(
+          name: 'error_comverting_data (addFarmerToGroupAPI)',
+          parameters: {
+            'error': e.toString(),
+            'url': url.toString(),
+            'token': token,
+            'body': {
+              'list': [farmerID]
+            },
+            'return': 'ServerFailor<bool, Exception>',
+          });
       return ServerFailor<bool, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -868,32 +1118,47 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.updateLeaderToGroup(groupID),
     );
+    debugPrint('url $url $token');
 
     ///! Trying request to SErVER
     try {
       _headers.addAll(headers);
-      print('headers addde');
       var resp = await http.put(
         url,
         body: json.encode({'group_leader': leaderID}),
         headers: headers,
       );
 
-      print('farmer id -> $leaderID\n groupID -> $groupID\n token -> $token');
-
       if (resp.statusCode == 200) {
-        print('successfully done -> ${resp.statusCode} ${resp.body}');
         return Success<bool, Exception>(true);
       } else {
-        print(
-          'server resp -> ${resp.statusCode}\n${resp.body} ',
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'error_comverting_data (updateLeaderToGroupAPI)',
+          parameters: {
+            'code': resp.statusCode.toString(),
+            'error': resp.body,
+            'url': url.toString(),
+            'token': token,
+            'method': 'put',
+            'body': {'group_leader': leaderID},
+            'return': 'ServerFailor<bool, Exception>'
+          },
         );
         return ServerFailor<bool, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
-      print('Unknown Errors -> $e');
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'error_comverting_data (updateLeaderToGroupAPI)',
+        parameters: {
+          'error': e.toString(),
+          'url': url.toString(),
+          'token': token,
+          'body': {'group_leader': leaderID},
+          'return': 'ServerFailor<bool, Exception>'
+        },
+      );
       return ServerFailor<bool, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -909,12 +1174,11 @@ class DeshiFarmerAPI {
     String long,
   ) async {
     ///! POST BODY
-    var _d = farmModel.farmProducingCrop
+    var d = farmModel.farmProducingCrop
         .replaceAll('{', '')
         .replaceAll('}', '')
         .split(',');
-    var focusedCorpFormat = json.encode(_d);
-    print(_d);
+    var focusedCorpFormat = json.encode(d);
 
     Map<String, String> body = <String, String>{
       'farmer_id': farmModel.farmerID,
@@ -933,7 +1197,6 @@ class DeshiFarmerAPI {
       'starting_date': farmModel.farmStartingDate,
       'current_crop': focusedCorpFormat,
     };
-    print('farm add body -> $body');
 
     ///! POST HEADER
     Map<String, String> headers = <String, String>{
@@ -946,15 +1209,12 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.farmAddAPI,
     );
+    debugPrint('url $url $token');
     try {
       _headers.addAll(headers);
       var request = http.MultipartRequest('POST', url);
       request.fields.addAll(body);
-
-      int checkLoop = 0;
       for (final img in farmModel.images.toSet().toList()) {
-        checkLoop++;
-        print('$checkLoop -> ${img.path}');
         request.files.add(
           await http.MultipartFile.fromPath(
             'gallery[]',
@@ -966,26 +1226,35 @@ class DeshiFarmerAPI {
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 201) {
-        print(
-          'server success resp -> 201 -> ${response.reasonPhrase} ${await response.stream.bytesToString()}',
-        );
-
         return Success<bool, Exception>(true);
       } else {
         var respMsg = await response.stream.bytesToString();
-        print(
-          'server resp -> ${response.statusCode}\n$respMsg',
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'error_comverting_data (addFarm)',
+          parameters: {
+            'code': response.statusCode.toString(),
+            'error': respMsg,
+            'url': url.toString(),
+            'token': token,
+            'body': body,
+            'return': 'ServerFailor<bool, Exception>'
+          },
         );
 
-        print(
-          'message -> ${jsonDecode(respMsg)["message"]}',
-        );
         return ServerFailor<bool, Exception>(
           Exception(jsonDecode(respMsg)['message']),
         );
       }
     } catch (e) {
-      print('Unknown Errors -> $e');
+      FirebaseAnalyticsCustom.customLogEvent(
+          name: 'error_comverting_data (addFarm)',
+          parameters: {
+            'error': e.toString(),
+            'url': url.toString(),
+            'token': token,
+            'body': body,
+            'return': 'ServerFailor<bool, Exception>'
+          });
       return ServerFailor<bool, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -1018,8 +1287,6 @@ class DeshiFarmerAPI {
       //     }
       // ],
     });
-    print('this is order body -> $body');
-    print('this is order body -> $orderModelsToMaps(orders)');
 
     ///! POST HEADER
     Map<String, String> headers = <String, String>{
@@ -1032,35 +1299,449 @@ class DeshiFarmerAPI {
     final Uri url = Uri.parse(
       ApiDatabaseParams.inputerOrderApi,
     );
+    debugPrint('url $url $token');
 
     ///! Trying request to SErVER
     try {
       _headers.addAll(headers);
-      print('headers addde');
       var resp = await http.post(
         url,
         body: body,
         headers: headers,
       );
 
-      // print('farmer id -> $farmerID\n groupID -> $groupID\n token -> $token');
+      // debugPrint('farmer id -> $farmerID\n groupID -> $groupID\n token -> $token');
 
       if (resp.statusCode == 201) {
-        print('successfully done -> ${resp.statusCode} ${resp.body}');
         return Success<bool, Exception>(true);
       } else {
-        print(
-          'server resp -> ${resp.statusCode}\n${resp.body} ',
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'error_comverting_data (placeAnOrder)',
+          parameters: {
+            'code': resp.statusCode.toString(),
+            'error': resp.body,
+            'url': url.toString(),
+            'token': token,
+            'body': body,
+            'return': 'ServerFailor<bool, Exception>'
+          },
         );
         return ServerFailor<bool, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
-      print('Unknown Errors -> $e');
+      FirebaseAnalyticsCustom.customLogEvent(
+          name: 'error_comverting_data (placeAnOrder)',
+          parameters: {
+            'error': e.toString(),
+            'url': url.toString(),
+            'token': token,
+            'body': body,
+            'return': 'ServerFailor<bool, Exception>'
+          });
       return ServerFailor<bool, Exception>(
         Exception('Server failor -> $e'),
       );
+    }
+  }
+
+  ///! Batch Creation API
+  Future<BatchEnity?> batchCreationAPI({
+    required String token,
+    required String farmID,
+    required String season,
+    required String whichCrop,
+  }) async {
+    Map<String, String> auth = <String, String>{
+      'Authorization': 'Bearer $token',
+    };
+    final Uri url = Uri.parse(
+      ApiDatabaseParams.batchCreationAPI,
+    );
+    debugPrint('batch url -> $url $token');
+
+    try {
+      _headers.addAll(auth);
+      final http.Response response = await http.post(
+        url,
+        body: {
+          'farm_id': farmID,
+          'season': season,
+          'which_crop': whichCrop,
+        },
+        headers: _headers,
+      );
+      final x = {
+        'farm_id': farmID,
+        'season': season,
+        'which_crop': whichCrop,
+      };
+      debugPrint('status code -> ${response.statusCode}');
+      debugPrint('body -> $x');
+      if (response.statusCode == 201) {
+        final result = await Isolate.run(() => json.decode(response.body))
+            as Map<String, dynamic>;
+        debugPrint(
+          'successfuly got the batch LISTO -> ${result.runtimeType} ${result.length}',
+        );
+        try {
+          BatchEnity successResonse = BatchEnity.fromJson(result);
+          return successResonse;
+        } catch (e) {
+          FirebaseAnalyticsCustom.customLogEvent(
+            name: 'error_comverting_data (batchCreationAPI)',
+            parameters: {
+              'code': response.statusCode.toString(),
+              'error': e.toString(),
+              'url': url.toString(),
+              'token': token,
+              'body': x,
+              'return': 'returning null'
+              // 'element': element.toString(),
+            },
+          );
+          debugPrint(
+            'error comverting data BatchEnity ->  ${result.runtimeType}, $e \n',
+          );
+        }
+        return null;
+      } else {
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'error_comverting_data (batchCreationAPI)',
+          parameters: {
+            'code': response.statusCode.toString(),
+            // 'error': e.toString(),
+            'url': url.toString(),
+            'token': token,
+            'return': 'returning null'
+            // 'element': element.toString(),
+          },
+        );
+        return null;
+      }
+    } catch (e) {
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'error_comverting_data (batchCreationAPI)',
+        parameters: {
+          'error': e.toString(),
+          'url': url.toString(),
+          'token': token,
+          'return': 'returning null'
+        },
+      );
+      return null;
+    }
+  }
+
+  //! batch getting api
+  Future<List<BatchEnity>?> getFarmBatches({
+    required String token,
+    required String farmID,
+  }) async {
+    Map<String, String> auth = <String, String>{
+      'Authorization': 'Bearer $token',
+    };
+    final Uri url = Uri.parse(
+      '${ApiDatabaseParams.batchListAPI}?farm_id=$farmID',
+    );
+    debugPrint('batch get url -> $url $token');
+    try {
+      _headers.addAll(auth);
+      final http.Response response = await http.get(
+        url,
+        headers: _headers,
+      );
+      debugPrint('status code -> ${response.statusCode}');
+      if (response.statusCode == 200) {
+        final result = await Isolate.run(() => json.decode(response.body))
+            as List<dynamic>;
+        debugPrint(
+          'successfuly got the batch LISTO -> ${result.runtimeType} ${result.length}',
+        );
+        List<BatchEnity> companyE = [];
+        for (int i = 0; i < result.length; i++) {
+          final element = result[i] as Map<String, dynamic>;
+          // debugPrint('element runtime -> ${element.runtimeType}');
+          try {
+            companyE.add(
+              BatchEnity.fromJson(element),
+            );
+          } catch (e) {
+            debugPrint(
+              'error comverting data BatchEnity ->  ${element.runtimeType}, $e \n',
+            );
+            FirebaseAnalyticsCustom.customLogEvent(
+              name: 'error_comverting_data (getFarmBatches)',
+              parameters: {
+                'code': response.statusCode.toString(),
+                'error': e.toString(),
+                'url': url.toString(),
+                'token': token,
+                'element': element.toString(),
+                'return': 'returning List<BatchEnity>',
+              },
+            );
+          }
+        }
+        return companyE;
+      } else {
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'error_comverting_data (getFarmBatches)',
+          parameters: {
+            'code': response.statusCode.toString(),
+            // 'error': e.toString(),
+            'url': url.toString(),
+            'token': token,
+            'return': 'returning null'
+            // 'element': element.toString(),
+          },
+        );
+        return null;
+      }
+    } catch (e) {
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'error_comverting_data (getFarmBatches)',
+        parameters: {
+          'error': e.toString(),
+          'url': url.toString(),
+          'token': token,
+        },
+      );
+      return null;
+    }
+  }
+
+  /// get farmers without any shit
+  ///* Get the Farmer LIST
+  Future<AllFarmerListResp?> getFarmers2(String token) async {
+    String localToken = '';
+    // String _LOCAL_TOKEN = '55|9062I8GhTHqaQWFrfOu5HzcRG3df73axEgL5rBUK';
+    Map<String, String> auth = <String, String>{
+      'Authorization': 'Bearer ${localToken.isNotEmpty ? localToken : token}',
+    };
+    final Uri url = Uri.parse(
+      ApiDatabaseParams.myFarmerApi,
+    );
+    debugPrint('url -> $url $token');
+    try {
+      _headers.addAll(auth);
+      final http.Response response = await http.get(
+        url,
+        headers: _headers,
+      );
+      if (response.statusCode == 200) {
+        debugPrint('yeah successfully got the data');
+        final result = await Isolate.run(() => json.decode(response.body))
+            as List<dynamic>;
+        List<FarmerEntity> companyE = [];
+        for (int i = 0; i < result.length; i++) {
+          final element = result[i] as Map<String, dynamic>;
+          try {
+            companyE.add(
+              FarmerEntity.fromJson(element),
+            );
+          } catch (e) {
+            FirebaseAnalyticsCustom.customLogEvent(
+              name: 'error_comverting_data (getFarmers2)',
+              parameters: {
+                'code': response.statusCode.toString(),
+                'error': e.toString(),
+                'url': url.toString(),
+                'token': token,
+                'element': element.toString(),
+              },
+            );
+          }
+        }
+        AllFarmerListResp successResonse = AllFarmerListResp(companyE);
+
+        return successResonse;
+      } else {
+        debugPrint(
+          'farmer list getting error -> ${response.statusCode} ${response.body}',
+        );
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'farmer_list_getting_error (getFarmers2)',
+          parameters: {
+            'url': url.toString(),
+            'token': token,
+            'code': response.statusCode.toString(),
+            'error': 'farmer list getting error -> ${response.body}',
+          },
+        );
+        return null;
+      }
+    } catch (e) {
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'exception (getFarmers2)',
+        parameters: {
+          'url': url.toString(),
+          'token': token,
+          'error': e.toString(),
+        },
+      );
+      debugPrint(
+        'FArmer getting EXCEPTION -> ${e.toString().split(':').firstOrNull}',
+      );
+      return null;
+    }
+  }
+
+  //! farmer paginate 3
+  Future<AllFarmerListResp2?> getFarmers3(String token, String? query) async {
+    String localToken = '';
+    // String _LOCAL_TOKEN = '55|9062I8GhTHqaQWFrfOu5HzcRG3df73axEgL5rBUK';
+    Map<String, String> auth = <String, String>{
+      'Authorization': 'Bearer ${localToken.isNotEmpty ? localToken : token}',
+    };
+    var uri = ApiDatabaseParams.myFarmerApi;
+    final Uri url = Uri.parse(
+      uri + (query != null ? '?search=$query' : ''),
+    );
+    debugPrint('url -> $url $token');
+    try {
+      _headers.addAll(auth);
+      final http.Response response = await http.get(
+        url,
+        headers: _headers,
+      );
+      if (response.statusCode == 200) {
+        debugPrint('yeah successfully got the data');
+        final result = await Isolate.run(() => json.decode(response.body))
+            as Map<String, dynamic>;
+
+        AllFarmerListResp2 successResonse = AllFarmerListResp2.fromJson(result);
+
+        return successResonse;
+      } else {
+        debugPrint(
+          'farmer list getting error -> ${response.statusCode} ${response.body}',
+        );
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'farmer_list_getting_error (getFarmers2)',
+          parameters: {
+            'url': url.toString(),
+            'token': token,
+            'code': response.statusCode.toString(),
+            'error': 'farmer list getting error -> ${response.body}',
+          },
+        );
+        return null;
+      }
+    } catch (e) {
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'exception (getFarmers2)',
+        parameters: {
+          'url': url.toString(),
+          'token': token,
+          'error': e.toString(),
+        },
+      );
+      debugPrint(
+        'FArmer getting EXCEPTION -> ${e.toString().split(':').firstOrNull}',
+      );
+      return null;
+    }
+  }
+
+  //* check if auth token is valid or not
+  Future<bool> checkIfAuthenticated(String token) async {
+    final url = Uri.parse(
+      ApiDatabaseParams.collectOrderApi,
+    );
+    debugPrint('checking auth -> $url');
+    try {
+      final auth = {
+        'Authorization': 'Bearer $token',
+      };
+      _headers.addAll(auth);
+      final http.Response response = await http.get(
+        url,
+        headers: _headers,
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
+  //! Get group or empty list
+    ///* Get Group Field LIST
+  Future<AllFarmerGroupFieldResp?> getGroupFields2(
+    String token,
+  ) async {
+    Map<String, String> auth = <String, String>{
+      'Authorization': 'Bearer $token',
+    };
+    final Uri url = Uri.parse(
+      ApiDatabaseParams.getGroupsFormField,
+    );
+    debugPrint('group url -> $url $token');
+    try {
+      _headers.addAll(auth);
+      final http.Response response = await http.get(
+        url,
+        headers: _headers,
+      );
+      if (response.statusCode == 200) {
+        final result = json.decode(response.body) as List<dynamic>;
+        debugPrint(
+          'successfuly Unassign GROUPs -> ${result.runtimeType} ${result.length}',
+        );
+        List<GroupFieldEntity> companyE = [];
+        for (int i = 0; i < result.length; i++) {
+          final element = result[i] as Map<String, dynamic>;
+          // debugPrint('element runtime -> ${element.runtimeType}');
+          try {
+            companyE.add(
+              GroupFieldEntity.fromJson(element),
+            );
+          } catch (e) {
+            debugPrint(
+              'error comverting data Unassing GroupFieldEntity ->  ${element.runtimeType}, $e \n',
+            );
+            FirebaseAnalyticsCustom.customLogEvent(
+              name: 'group_error (getGroupFields)',
+              parameters: <String, dynamic>{
+                'code': response.statusCode,
+                'url': url.toString(),
+                'token': token,
+                'error': e.toString(),
+              },
+            );
+          }
+        }
+        AllFarmerGroupFieldResp successResonse =
+            AllFarmerGroupFieldResp(companyE);
+
+        return successResonse;
+      } else {
+        FirebaseAnalyticsCustom.customLogEvent(
+          name: 'group_error (getGroupFields)',
+          parameters: <String, dynamic>{
+            'code': response.statusCode,
+            'url': url.toString(),
+            'token': token,
+            'body': response.body,
+          },
+        );
+        return null;
+      }
+    } catch (e) {
+      FirebaseAnalyticsCustom.customLogEvent(
+        name: 'group_error (getGroupFields)',
+        parameters: <String, dynamic>{
+          'url': url.toString(),
+          'token': token,
+          'error': e.toString(),
+        },
+      );
+      return null;
     }
   }
 }

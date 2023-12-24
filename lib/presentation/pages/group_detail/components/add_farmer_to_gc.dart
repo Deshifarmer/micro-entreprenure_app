@@ -1,12 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deshifarmer/core/app_strings.dart';
 import 'package:deshifarmer/domain/entities/farmer_entity/farmer_entity.dart';
-import 'package:deshifarmer/presentation/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
-import 'package:deshifarmer/presentation/cubit/add_group/add_farmer_to_group_cubit.dart';
 import 'package:deshifarmer/presentation/pages/add_farmer/add_farmer.dart';
+import 'package:deshifarmer/presentation/widgets/constraints.dart';
+import 'package:deshifarmer/services/blocs/my_unassign_farmers/my_unassign_famers_bloc.dart';
+import 'package:deshifarmer/services/cubit/add_group/add_farmer_to_group_cubit.dart';
 import 'package:flutter/material.dart';
 
-/// TODO: Assigned Farmes in the Group api
-/// TODO: Group leader Select API
+
 
 class AddFarmerToTheAGroup extends StatelessWidget {
   const AddFarmerToTheAGroup({super.key});
@@ -15,7 +16,7 @@ class AddFarmerToTheAGroup extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<MyUnassignFamersBloc, MyUnassignFamersState>(
       listener: (context, state) {
-        // TODO: implement listener
+        
       },
       builder: (context, state) {
         if (state is MyUnassignFarmerReqSuccess) {
@@ -29,7 +30,7 @@ class AddFarmerToTheAGroup extends StatelessWidget {
               borderRadius: const BorderRadius.all(Radius.circular(15)),
               isExpanded: true,
               decoration: const InputDecoration(
-                label: Text(('কৃষক সিলেক্ট করুন')),
+                label: Text('কৃষক সিলেক্ট করুন'),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(10),
@@ -58,8 +59,9 @@ class AddFarmerToTheAGroup extends StatelessWidget {
                   child: ListTile(
                     leading: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        '${Strings.domain}/storage/${value.image}',
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            '${Strings.getServerOrLocal(ServerOrLocal.server)}/storage/${value.image}',
                         height: 50,
                         width: 50,
                       ),
@@ -74,14 +76,14 @@ class AddFarmerToTheAGroup extends StatelessWidget {
                   context
                       .read<AddFarmerToGroupCubit>()
                       .addFarmer(val?.farmer_id ?? '');
-                  print('farmer id -> ${val?.farmer_id}');
+                  debugPrint('farmer id -> ${val?.farmer_id}');
                 }
               },
             ),
           );
         }
 
-        return Text('no mfarjk');
+        return const Text('no mfarjk');
       },
     );
 
