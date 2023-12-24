@@ -17,7 +17,6 @@ import 'package:http/http.dart' as http;
 class HarvestAPI {
   final Map<String, String> _headers = <String, String>{
     'Accept': 'application/json',
-    // 'Authorization': 'Bearer ${ApiKeys.urlBayToken}',
   };
 
   //! get CROP from different API
