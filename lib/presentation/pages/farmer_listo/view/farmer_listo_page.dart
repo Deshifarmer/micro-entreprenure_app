@@ -1,0 +1,61 @@
+import 'package:deshifarmer/presentation/blocs/user_profile/user_profile_bloc.dart';
+import 'package:deshifarmer/presentation/pages/farmer_listo/bloc/bloc.dart';
+import 'package:deshifarmer/presentation/pages/farmer_listo/widgets/farmer_listo_body.dart';
+import 'package:deshifarmer/presentation/pages/login/bloc/login_bloc.dart';
+import 'package:flutter/material.dart';
+
+/// {@template farmer_listo_page}
+/// A description for FarmerListoPage
+/// {@endtemplate}
+class FarmerListoPage extends StatelessWidget {
+  /// {@macro farmer_listo_page}
+  const FarmerListoPage({super.key, this.isBack});
+  final bool? isBack;
+
+  /// The static route for FarmerListoPage
+  static Route<dynamic> route() {
+    return MaterialPageRoute<dynamic>(builder: (_) => const FarmerListoPage());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => FarmerListoBloc(),
+      child: SafeArea(
+        child: WillPopScope(
+          onWillPop: () async {
+            final loginState = context.read<LoginBloc>().state;
+            final token = loginState is LoginSuccess
+                ? loginState.successLoginEntity.token
+                : '';
+            context
+                .read<UserProfileBloc>()
+                .add(GetUserProfileEvent(token: token));
+            return true;
+          },
+          child: Scaffold(
+            appBar: isBack != null
+                ? AppBar(
+                    // title: Text('আমার কৃষক তালিকা'),
+                    )
+                : null,
+            body: const FarmerListoView(),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// {@template farmer_listo_view}
+/// Displays the Body of FarmerListoView
+/// {@endtemplate}
+class FarmerListoView extends StatelessWidget {
+  /// {@macro farmer_listo_view}
+  const FarmerListoView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const FarmerListoBody();
+  }
+}

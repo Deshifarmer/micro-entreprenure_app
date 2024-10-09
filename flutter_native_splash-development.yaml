@@ -1,0 +1,21 @@
+# flutter_native_splash-development.yaml
+flutter_native_splash:
+  color: "#0e2924"
+  image: assets/logo/nice.png
+  # image: assets/logo/deshifarmer.png
+  # branding: assets/logo/nice.png
+  color_dark: "#0e2924"
+  # image: assets/logo_lockup_flutter_vertical.png
+  # image_dark: assets/logo-development.png
+  # branding_dark: assets/logo/nice.png
+  # fullscreen: true
+  android_gravity: center
+  # branding_mode: center
+
+  android_12:
+    # image: assets/logo-development.png
+    icon_background_color: "#0e2924"
+    # image_dark: assets/logo/nice.png
+    # branding: assets/logo/nice.png
+    # icon_background_color_dark: "#121212"
+  web: false

@@ -1,0 +1,4 @@
+enum ProductCategorys {
+  seed,
+  pesticide,
+}
