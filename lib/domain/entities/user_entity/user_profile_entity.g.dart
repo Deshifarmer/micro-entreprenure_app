@@ -34,8 +34,8 @@ UserProfileEntity _$UserProfileEntityFromJson(Map<String, dynamic> json) =>
       transactions: (json['transactions'] as List<dynamic>)
           .map((e) => Transaction.fromJson(e as Map<String, dynamic>))
           .toList(),
-      total_sale: json['total_sale'] as int,
-      total_farmer: json['total_farmer'] as int,
+      total_sale: (json['total_sale'] as num).toInt(),
+      total_farmer: (json['total_farmer'] as num).toInt(),
     );
 
 Map<String, dynamic> _$UserProfileEntityToJson(UserProfileEntity instance) =>

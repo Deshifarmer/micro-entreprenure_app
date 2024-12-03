@@ -8,10 +8,10 @@ part of 'category_entity.dart';
 
 CategoryEntity _$CategoryEntityFromJson(Map<String, dynamic> json) =>
     CategoryEntity(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       image: json['image'] as String,
       title: json['title'] as String,
-      total_product: json['total_product'] as int,
+      total_product: (json['total_product'] as num).toInt(),
     );
 
 Map<String, dynamic> _$CategoryEntityToJson(CategoryEntity instance) =>

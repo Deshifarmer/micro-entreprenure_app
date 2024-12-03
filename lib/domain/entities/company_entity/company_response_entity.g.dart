@@ -8,7 +8,7 @@ part of 'company_response_entity.dart';
 
 CompanyEntity _$CompanyEntityFromJson(Map<String, dynamic> json) =>
     CompanyEntity(
-      total_product: json['total_product'] as int,
+      total_product: (json['total_product'] as num).toInt(),
       full_name: json['full_name'] as String?,
       df_id: json['df_id'] as String?,
       channel: json['channel'] as String?,
