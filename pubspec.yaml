@@ -16,9 +16,9 @@ dependencies:
   dotted_border: ^2.0.0+3
   dropdown_button2: ^2.3.9
   equatable: ^2.0.5
-  firebase_analytics: ^10.6.2
-  firebase_core: ^2.20.0
-  firebase_crashlytics: ^3.4.2
+  firebase_analytics: any
+  firebase_core: any
+  firebase_crashlytics: any
   flutter:
     sdk: flutter
   flutter_animate: ^4.2.0+1
