@@ -98,7 +98,7 @@ class ApiDatabaseParams {
     String lat,
     String lon,
   ) =>
-      'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$weatherAPIKey&units=metric';
+      'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=90c80ed73e6258c82389e83487f872d5&units=metric';
 
   /// batch creation api
   static String batchCreationAPI =

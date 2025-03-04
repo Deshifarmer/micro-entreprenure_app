@@ -46,7 +46,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace "co.deshifarmer.me"
-    compileSdkVersion 34
+    compileSdkVersion 35
     // compileSdkVersion flutter.compileSdkVersion
 //    ndkVersion flutter.ndkVersion
     ndkVersion = "25.1.8937393"
@@ -73,6 +73,7 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
     }
 
     signingConfigs {
