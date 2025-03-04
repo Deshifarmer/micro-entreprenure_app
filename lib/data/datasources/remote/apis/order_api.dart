@@ -43,28 +43,28 @@ class OrderAPI {
 
         return Success<AllOrdersEntity, Exception>(successResonse);
       } else {
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'order_error (userOrder)',
-          parameters: <String, dynamic>{
-            'code': response.statusCode.toString(),
-            'url': url.toString(),
-            'token': token,
-            'body': response.body,
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'order_error (userOrder)',
+        //   parameters: <String, dynamic>{
+        //     'code': response.statusCode.toString(),
+        //     'url': url.toString(),
+        //     'token': token,
+        //     'body': response.body,
+        //   },
+        // );
         return ServerFailor<AllOrdersEntity, Exception>(
           Exception('${response.statusCode} ${response.body}'),
         );
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'order_error (userOrder)',
-        parameters: <String, dynamic>{
-          'error': e.toString(),
-          'url': url.toString(),
-          'token': token,
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'order_error (userOrder)',
+      //   parameters: <String, dynamic>{
+      //     'error': e.toString(),
+      //     'url': url.toString(),
+      //     'token': token,
+      //   },
+      // );
       return ServerFailor<AllOrdersEntity, Exception>(
         Exception('${e.toString().split(':').firstOrNull}'),
       );
@@ -99,29 +99,29 @@ class OrderAPI {
 
         return (successResonse,'Nice');
       } else {
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'order_error (userOrder)',
-          parameters: <String, dynamic>{
-            'code': response.statusCode.toString(),
-            'url': url.toString(),
-            'token': token,
-            'body': response.body,
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'order_error (userOrder)',
+        //   parameters: <String, dynamic>{
+        //     'code': response.statusCode.toString(),
+        //     'url': url.toString(),
+        //     'token': token,
+        //     'body': response.body,
+        //   },
+        // );
         // return ServerFailor<AllOrdersEntity, Exception>(
         //   Exception('${response.statusCode} ${response.body}'),
         // );
         return (null,'${response.statusCode} ${response.body}');
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'order_error (userOrder)',
-        parameters: <String, dynamic>{
-          'error': e.toString(),
-          'url': url.toString(),
-          'token': token,
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'order_error (userOrder)',
+      //   parameters: <String, dynamic>{
+      //     'error': e.toString(),
+      //     'url': url.toString(),
+      //     'token': token,
+      //   },
+      // );
       // return ServerFailor<AllOrdersEntity, Exception>(
       //   Exception('${e.toString().split(':').firstOrNull}'),
       // );
@@ -152,27 +152,27 @@ class OrderAPI {
       if (response.statusCode == 200) {
         return true;
       } else {
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'collect_error (collectOrder)',
-          parameters: <String, dynamic>{
-            'code': response.statusCode,
-            'url': url.toString(),
-            'token': token,
-            'method': 'put',
-            'body': response.body,
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'collect_error (collectOrder)',
+        //   parameters: <String, dynamic>{
+        //     'code': response.statusCode,
+        //     'url': url.toString(),
+        //     'token': token,
+        //     'method': 'put',
+        //     'body': response.body,
+        //   },
+        // );
         return false;
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'collect_error (collectOrder)',
-        parameters: <String, dynamic>{
-          'error': e.toString(),
-          'url': url.toString(),
-          'token': token,
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'collect_error (collectOrder)',
+      //   parameters: <String, dynamic>{
+      //     'error': e.toString(),
+      //     'url': url.toString(),
+      //     'token': token,
+      //   },
+      // );
       return false;
     }
   }

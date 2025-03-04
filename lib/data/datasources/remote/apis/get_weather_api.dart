@@ -32,35 +32,35 @@ Future<WeatherEntity?> getCurrentWeather() async {
         final successResonse = WeatherEntity.fromJson(result);
         return successResonse;
       } catch (e) {
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'weather_error',
-          parameters: {
-            'error': e.toString(),
-            'url': url.toString(),
-            'body': response.body,
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'weather_error',
+        //   parameters: {
+        //     'error': e.toString(),
+        //     'url': url.toString(),
+        //     'body': response.body,
+        //   },
+        // );
       }
       return null;
     } else {
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'weather_error',
-        parameters: {
-          'error': response.statusCode,
-          'url': url.toString(),
-          'body': response.body,
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'weather_error',
+      //   parameters: {
+      //     'error': response.statusCode,
+      //     'url': url.toString(),
+      //     'body': response.body,
+      //   },
+      // );
       return null;
     }
   } catch (e) {
-    FirebaseAnalyticsCustom.customLogEvent(
-      name: 'weather_error',
-      parameters: {
-        'error': e.toString(),
-        'url': url.toString(),
-      },
-    );
+    // FirebaseAnalyticsCustom.customLogEvent(
+    //   name: 'weather_error',
+    //   parameters: {
+    //     'error': e.toString(),
+    //     'url': url.toString(),
+    //   },
+    // );
     return null;
   }
 }

@@ -46,13 +46,13 @@ class ProductFetchAPI {
         } catch (e) {
           debugPrint('error -> $e');
           // result.forEach((key, value) {});
-          FirebaseAnalyticsCustom.customLogEvent(
-              name: 'product_search_error',
-              parameters: {
-                'error': e.toString(),
-                'url': url.toString(),
-                'body': response.body,
-              });
+          // FirebaseAnalyticsCustom.customLogEvent(
+          //     name: 'product_search_error',
+          //     parameters: {
+          //       'error': e.toString(),
+          //       'url': url.toString(),
+          //       'body': response.body,
+          //     });
         }
         // return ServerFailor<ProductEntity, Exception>(
         //   Exception('Server failor'),
@@ -62,27 +62,27 @@ class ProductFetchAPI {
         // return ServerFailor<ProductEntity, Exception>(
         //   Exception('Server failor'),
         // );
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'product_search_error',
-          parameters: {
-            'error': response.statusCode,
-            'url': url.toString(),
-            'body': response.body,
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'product_search_error',
+        //   parameters: {
+        //     'error': response.statusCode,
+        //     'url': url.toString(),
+        //     'body': response.body,
+        //   },
+        // );
         return null;
       }
     } catch (e) {
       // return ServerFailor<ProductEntity, Exception>(
       //   Exception('Server failor -> $e'),
       // );
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'product_search_error',
-        parameters: {
-          'error': e.toString(),
-          'url': url.toString(),
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'product_search_error',
+      //   parameters: {
+      //     'error': e.toString(),
+      //     'url': url.toString(),
+      //   },
+      // );
       return null;
     }
   }

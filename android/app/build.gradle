@@ -95,24 +95,24 @@ android {
     }
 
     flavorDimensions "default"
-    productFlavors {
-        production {
-            dimension "default"
-            applicationIdSuffix ""
-            manifestPlaceholders = [appName: "MAP App"]
-            // manifestPlaceholders = [appName: "Deshifarmer"]
-        }
-        staging {
-            dimension "default"
-            applicationIdSuffix ".stg"
-            manifestPlaceholders = [appName: "[STG] Deshifarmer"]
-        }
-        development {
-            dimension "default"
-            applicationIdSuffix ".dev"
-            manifestPlaceholders = [appName: "[DEV] Deshifarmer"]
-        }
-    }
+//    productFlavors {
+//        production {
+//            dimension "default"
+//            applicationIdSuffix ""
+//            manifestPlaceholders = [appName: "MAP App"]
+//            // manifestPlaceholders = [appName: "Deshifarmer"]
+//        }
+//        staging {
+//            dimension "default"
+//            applicationIdSuffix ".stg"
+//            manifestPlaceholders = [appName: "[STG] Deshifarmer"]
+//        }
+//        development {
+//            dimension "default"
+//            applicationIdSuffix ".dev"
+//            manifestPlaceholders = [appName: "[DEV] Deshifarmer"]
+//        }
+//    }
 
     buildTypes {
         release {
@@ -125,6 +125,10 @@ android {
             signingConfig signingConfigs.debug
             // signingConfig signingConfigs.debug
         }
+    }
+
+    dependencies {
+        implementation 'androidx.multidex:multidex:2.0.1'
     }
 }
 

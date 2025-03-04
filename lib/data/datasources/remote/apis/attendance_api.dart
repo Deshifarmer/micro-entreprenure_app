@@ -54,26 +54,26 @@ class AttendanceAPI {
         debugPrint(
           'error occured cut -> ${response.statusCode} ${await response.stream.bytesToString()}}',
         );
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'check_out_error',
-          parameters: {
-            'error': response.statusCode,
-            'body': await response.stream.bytesToString(),
-            'url': url.toString(),
-            'token': token,
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'check_out_error',
+        //   parameters: {
+        //     'error': response.statusCode,
+        //     'body': await response.stream.bytesToString(),
+        //     'url': url.toString(),
+        //     'token': token,
+        //   },
+        // );
         return (false, '');
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'check_out_error',
-        parameters: {
-          'error': e.toString(),
-          'url': url.toString(),
-          'token': token,
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'check_out_error',
+      //   parameters: {
+      //     'error': e.toString(),
+      //     'url': url.toString(),
+      //     'token': token,
+      //   },
+      // );
       debugPrint('error occured no checkout -> $e');
       return (false, '');
     }
@@ -103,26 +103,26 @@ class AttendanceAPI {
         debugPrint(
           'error occured on getting todays attendance -> ${response.statusCode} ${response.body}',
         );
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'todays_attendance_error',
-          parameters: {
-            'error': response.statusCode,
-            'body': response.body,
-            'url': url.toString(),
-            'token': token,
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'todays_attendance_error',
+        //   parameters: {
+        //     'error': response.statusCode,
+        //     'body': response.body,
+        //     'url': url.toString(),
+        //     'token': token,
+        //   },
+        // );
         return null;
       }
     } catch (e) {
       debugPrint('error occured on getting todays attendance -> $e');
-      FirebaseAnalyticsCustom.customLogEvent(
-          name: 'todays_attendance_error',
-          parameters: {
-            'error': e.toString(),
-            'url': url.toString(),
-            'token': token,
-          });
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //     name: 'todays_attendance_error',
+      //     parameters: {
+      //       'error': e.toString(),
+      //       'url': url.toString(),
+      //       'token': token,
+      //     });
       return null;
     }
   }
@@ -157,26 +157,26 @@ class AttendanceAPI {
         debugPrint(
           'error occured on getting attendance history -> ${response.statusCode} ${response.body}',
         );
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'attendance_history_error',
-          parameters: {
-            'error': response.statusCode,
-            'body': response.body,
-            'url': url.toString(),
-            'token': token,
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'attendance_history_error',
+        //   parameters: {
+        //     'error': response.statusCode,
+        //     'body': response.body,
+        //     'url': url.toString(),
+        //     'token': token,
+        //   },
+        // );
         return (<AttendaceHistoryEntity>[], false);
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'attendance_history_error',
-        parameters: {
-          'error': e.toString(),
-          'url': url.toString(),
-          'token': token,
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'attendance_history_error',
+      //   parameters: {
+      //     'error': e.toString(),
+      //     'url': url.toString(),
+      //     'token': token,
+      //   },
+      // );
       debugPrint('error occured on getting attendance history -> $e');
       return (<AttendaceHistoryEntity>[], false);
     }
@@ -220,29 +220,29 @@ class AttendanceAPI {
             'check in response -> ${await response.stream.bytesToString()}');
         return (true, true);
       } else {
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'check_in_error',
-          parameters: {
-            'error': response.statusCode,
-            'body': await response.stream.bytesToString(),
-            'url': url.toString(),
-            'token': token,
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'check_in_error',
+        //   parameters: {
+        //     'error': response.statusCode,
+        //     'body': await response.stream.bytesToString(),
+        //     'url': url.toString(),
+        //     'token': token,
+        //   },
+        // );
         debugPrint(
           'check in failed -> ${response.statusCode} ${await response.stream.bytesToString()} }',
         );
         return (false, false);
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'check_in_error',
-        parameters: {
-          'error': e.toString(),
-          'url': url.toString(),
-          'token': token,
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'check_in_error',
+      //   parameters: {
+      //     'error': e.toString(),
+      //     'url': url.toString(),
+      //     'token': token,
+      //   },
+      // );
       debugPrint('check in error occured -> $e');
       return (false, false);
     }

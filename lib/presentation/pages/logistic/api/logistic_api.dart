@@ -50,25 +50,25 @@ class LogisticAPI {
         return true;
       } else {
         debugPrint('Lets see -> ${response.body}');
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'harvest_error',
-          parameters: {
-            'error': response.statusCode,
-            'url': url.toString(),
-            'body': body.toString(),
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'harvest_error',
+        //   parameters: {
+        //     'error': response.statusCode,
+        //     'url': url.toString(),
+        //     'body': body.toString(),
+        //   },
+        // );
         return false;
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'harvest_error',
-        parameters: {
-          'error': e.toString(),
-          'url': url.toString(),
-          'body': body.toString(),
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'harvest_error',
+      //   parameters: {
+      //     'error': e.toString(),
+      //     'url': url.toString(),
+      //     'body': body.toString(),
+      //   },
+      // );
       return false;
     }
   }
@@ -107,36 +107,36 @@ class LogisticAPI {
             debugPrint(
               'error comverting data BatchEnity ->  ${element.runtimeType}, $e \n',
             );
-            FirebaseAnalyticsCustom.customLogEvent(
-              name: 'batch_error',
-              parameters: {
-                'error': e.toString(),
-                'url': url.toString(),
-                'body': response.body,
-              },
-            );
+            // FirebaseAnalyticsCustom.customLogEvent(
+            //   name: 'batch_error',
+            //   parameters: {
+            //     'error': e.toString(),
+            //     'url': url.toString(),
+            //     'body': response.body,
+            //   },
+            // );
           }
         }
         return harvestList;
       } else {
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'batch_error',
-          parameters: {
-            'error': response.statusCode,
-            'url': url.toString(),
-            'body': response.body,
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'batch_error',
+        //   parameters: {
+        //     'error': response.statusCode,
+        //     'url': url.toString(),
+        //     'body': response.body,
+        //   },
+        // );
         return null;
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'batch_error',
-        parameters: {
-          'error': e.toString(),
-          'url': url.toString(),
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'batch_error',
+      //   parameters: {
+      //     'error': e.toString(),
+      //     'url': url.toString(),
+      //   },
+      // );
       return null;
     }
   }

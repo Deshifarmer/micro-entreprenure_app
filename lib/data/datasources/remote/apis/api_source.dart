@@ -54,14 +54,14 @@ class DeshiFarmerAPI {
           return Success<SuccessLoginEntity, Exception>(successResonse);
         } catch (e) {
           debugPrint('error -> $e');
-          FirebaseAnalyticsCustom.customLogEvent(
-            name: 'login_error (userLogin)',
-            parameters: <String, dynamic>{
-              'code': response.statusCode,
-              'body': response.body,
-              'error': e.toString(),
-            },
-          );
+          // FirebaseAnalyticsCustom.customLogEvent(
+          //   name: 'login_error (userLogin)',
+          //   parameters: <String, dynamic>{
+          //     'code': response.statusCode,
+          //     'body': response.body,
+          //     'error': e.toString(),
+          //   },
+          // );
           return ServerFailor<SuccessLoginEntity, Exception>(
             Exception('Server failor'),
           );
@@ -71,25 +71,25 @@ class DeshiFarmerAPI {
         // );
       } else {
         // debugPrint(response.)
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'login_error (userLogin)',
-          parameters: <String, dynamic>{
-            'code': response.statusCode,
-            'body': response.body,
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'login_error (userLogin)',
+        //   parameters: <String, dynamic>{
+        //     'code': response.statusCode,
+        //     'body': response.body,
+        //   },
+        // );
         return ServerFailor<SuccessLoginEntity, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
       debugPrint('exception on login -> $e');
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'login_error (userLogin)',
-        parameters: <String, dynamic>{
-          'error': e.toString(),
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'login_error (userLogin)',
+      //   parameters: <String, dynamic>{
+      //     'error': e.toString(),
+      //   },
+      // );
       return ServerFailor<SuccessLoginEntity, Exception>(
         Exception('Server failor'),
       );
@@ -117,23 +117,23 @@ class DeshiFarmerAPI {
         // debugPrint("${response.statusCode} | ${response.body}");
         return true;
       } else {
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'logout_error (userLogout)',
-          parameters: <String, dynamic>{
-            'code': response.statusCode,
-            'body': response.body,
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'logout_error (userLogout)',
+        //   parameters: <String, dynamic>{
+        //     'code': response.statusCode,
+        //     'body': response.body,
+        //   },
+        // );
         // debugPrint("${response.statusCode} | ${response.body}");
         return false;
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'logout_error (userLogout)',
-        parameters: <String, dynamic>{
-          'error': e.toString(),
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'logout_error (userLogout)',
+      //   parameters: <String, dynamic>{
+      //     'error': e.toString(),
+      //   },
+      // );
       return false;
     }
   }
@@ -162,27 +162,27 @@ class DeshiFarmerAPI {
       if (response.statusCode == 200) {
         return true;
       } else {
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'collect_error (collectOrder)',
-          parameters: <String, dynamic>{
-            'code': response.statusCode,
-            'url': url.toString(),
-            'token': token,
-            'method': 'put',
-            'body': response.body,
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'collect_error (collectOrder)',
+        //   parameters: <String, dynamic>{
+        //     'code': response.statusCode,
+        //     'url': url.toString(),
+        //     'token': token,
+        //     'method': 'put',
+        //     'body': response.body,
+        //   },
+        // );
         return false;
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'collect_error (collectOrder)',
-        parameters: <String, dynamic>{
-          'error': e.toString(),
-          'url': url.toString(),
-          'token': token,
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'collect_error (collectOrder)',
+      //   parameters: <String, dynamic>{
+      //     'error': e.toString(),
+      //     'url': url.toString(),
+      //     'token': token,
+      //   },
+      // );
       return false;
     }
   }
@@ -211,41 +211,41 @@ class DeshiFarmerAPI {
           UserProfileEntity successResonse = UserProfileEntity.fromJson(result);
           return Success<UserProfileEntity, Exception>(successResonse);
         } catch (e) {
-          FirebaseAnalyticsCustom.customLogEvent(
-            name: 'profile_error (userProfile)',
-            parameters: <String, dynamic>{
-              'code': response.statusCode,
-              'url': url.toString(),
-              'token': token,
-              'error': e.toString(),
-            },
-          );
+          // FirebaseAnalyticsCustom.customLogEvent(
+          //   name: 'profile_error (userProfile)',
+          //   parameters: <String, dynamic>{
+          //     'code': response.statusCode,
+          //     'url': url.toString(),
+          //     'token': token,
+          //     'error': e.toString(),
+          //   },
+          // );
           return ServerFailor<UserProfileEntity, Exception>(
             Exception('Server failor'),
           );
         }
       } else {
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'profile_error (userProfile)',
-          parameters: <String, dynamic>{
-            'code': response.statusCode,
-            'url': url.toString(),
-            'token': token,
-            'body': response.body,
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'profile_error (userProfile)',
+        //   parameters: <String, dynamic>{
+        //     'code': response.statusCode,
+        //     'url': url.toString(),
+        //     'token': token,
+        //     'body': response.body,
+        //   },
+        // );
         return ServerFailor<UserProfileEntity, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-          name: 'profile_error (userProfile)',
-          parameters: {
-            'url': url.toString(),
-            'token': token,
-            'error': e.toString(),
-          });
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //     name: 'profile_error (userProfile)',
+      //     parameters: {
+      //       'url': url.toString(),
+      //       'token': token,
+      //       'error': e.toString(),
+      //     });
       return ServerFailor<UserProfileEntity, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -282,15 +282,15 @@ class DeshiFarmerAPI {
               CompanyEntity.fromJson(element as Map<String, dynamic>),
             );
           } catch (e) {
-            FirebaseAnalyticsCustom.customLogEvent(
-              name: 'company_error (companyFetchData)',
-              parameters: <String, dynamic>{
-                'code': response.statusCode,
-                'url': url.toString(),
-                'token': token,
-                'error': e.toString(),
-              },
-            );
+            // FirebaseAnalyticsCustom.customLogEvent(
+            //   name: 'company_error (companyFetchData)',
+            //   parameters: <String, dynamic>{
+            //     'code': response.statusCode,
+            //     'url': url.toString(),
+            //     'token': token,
+            //     'error': e.toString(),
+            //   },
+            // );
             debugPrint('exception occurd on Company $e');
             // e2.forEach((key, value) {
             //   if (value.runtimeType != String) {
@@ -303,28 +303,28 @@ class DeshiFarmerAPI {
 
         return Success<AllCompanyListResp, Exception>(successResonse);
       } else {
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'company_error (companyFetchData)',
-          parameters: <String, dynamic>{
-            'code': response.statusCode,
-            'url': url.toString(),
-            'token': token,
-            'body': response.body,
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'company_error (companyFetchData)',
+        //   parameters: <String, dynamic>{
+        //     'code': response.statusCode,
+        //     'url': url.toString(),
+        //     'token': token,
+        //     'body': response.body,
+        //   },
+        // );
         return ServerFailor<AllCompanyListResp, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'company_error (companyFetchData)',
-        parameters: <String, dynamic>{
-          'url': url.toString(),
-          'token': token,
-          'error': e.toString(),
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'company_error (companyFetchData)',
+      //   parameters: <String, dynamic>{
+      //     'url': url.toString(),
+      //     'token': token,
+      //     'error': e.toString(),
+      //   },
+      // );
       return ServerFailor<AllCompanyListResp, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -359,15 +359,15 @@ class DeshiFarmerAPI {
               CategoryEntity.fromJson(element as Map<String, dynamic>),
             );
           } catch (e) {
-            FirebaseAnalyticsCustom.customLogEvent(
-              name: 'category_error (categoryFetchData)',
-              parameters: <String, dynamic>{
-                'code': response.statusCode,
-                'url': url.toString(),
-                'token': token,
-                'error': e.toString(),
-              },
-            );
+            // FirebaseAnalyticsCustom.customLogEvent(
+            //   name: 'category_error (categoryFetchData)',
+            //   parameters: <String, dynamic>{
+            //     'code': response.statusCode,
+            //     'url': url.toString(),
+            //     'token': token,
+            //     'error': e.toString(),
+            //   },
+            // );
             // final e2 = element as Map<String, dynamic>;
             // e2.forEach((key, value) {});
           }
@@ -376,27 +376,27 @@ class DeshiFarmerAPI {
 
         return Success<AllCategoryListResp, Exception>(successResonse);
       } else {
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'category_error (categoryFetchData)',
-          parameters: <String, dynamic>{
-            'code': response.statusCode,
-            'url': url.toString(),
-            'token': token,
-            'body': response.body,
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'category_error (categoryFetchData)',
+        //   parameters: <String, dynamic>{
+        //     'code': response.statusCode,
+        //     'url': url.toString(),
+        //     'token': token,
+        //     'body': response.body,
+        //   },
+        // );
         return ServerFailor<AllCategoryListResp, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-          name: 'category_error (categoryFetchData)',
-          parameters: {
-            'url': url.toString(),
-            'token': token,
-            'error': e.toString(),
-          });
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //     name: 'category_error (categoryFetchData)',
+      //     parameters: {
+      //       'url': url.toString(),
+      //       'token': token,
+      //       'error': e.toString(),
+      //     });
       return ServerFailor<AllCategoryListResp, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -440,15 +440,15 @@ class DeshiFarmerAPI {
           final farmEntity = FarmerEntityAgain.fromJson(result);
           return farmEntity;
         } catch (e) {
-          FirebaseAnalyticsCustom.customLogEvent(
-            name: 'farmer_error (getSingleFarmer)',
-            parameters: <String, dynamic>{
-              'code': response.statusCode,
-              'url': url.toString(),
-              'token': token,
-              'error': e.toString(),
-            },
-          );
+          // FirebaseAnalyticsCustom.customLogEvent(
+          //   name: 'farmer_error (getSingleFarmer)',
+          //   parameters: <String, dynamic>{
+          //     'code': response.statusCode,
+          //     'url': url.toString(),
+          //     'token': token,
+          //     'error': e.toString(),
+          //   },
+          // );
           debugPrint(
             'error comverting data FarmerEntityAgain->  ${result.runtimeType}, $e \n',
           );
@@ -457,26 +457,26 @@ class DeshiFarmerAPI {
         return null;
       } else {
         debugPrint('error -> ${response.statusCode} ${response.body}');
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'farmer_error (getSingleFarmer)',
-          parameters: <String, dynamic>{
-            'code': response.statusCode,
-            'url': url.toString(),
-            'token': token,
-            'body': response.body,
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'farmer_error (getSingleFarmer)',
+        //   parameters: <String, dynamic>{
+        //     'code': response.statusCode,
+        //     'url': url.toString(),
+        //     'token': token,
+        //     'body': response.body,
+        //   },
+        // );
         return null;
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'farmer_error (getSingleFarmer)',
-        parameters: <String, dynamic>{
-          'url': url.toString(),
-          'token': token,
-          'error': e.toString(),
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'farmer_error (getSingleFarmer)',
+      //   parameters: <String, dynamic>{
+      //     'url': url.toString(),
+      //     'token': token,
+      //     'error': e.toString(),
+      //   },
+      // );
       return null;
     }
   }
@@ -522,15 +522,15 @@ class DeshiFarmerAPI {
             debugPrint(
               'error comverting data FarmerEntity->  ${element.runtimeType}, $e \n',
             );
-            FirebaseAnalyticsCustom.customLogEvent(
-              name: 'farmer_error (getFarmers)',
-              parameters: <String, dynamic>{
-                'code': response.statusCode,
-                'url': url.toString(),
-                'token': token,
-                'error': e.toString(),
-              },
-            );
+            // FirebaseAnalyticsCustom.customLogEvent(
+            //   name: 'farmer_error (getFarmers)',
+            //   parameters: <String, dynamic>{
+            //     'code': response.statusCode,
+            //     'url': url.toString(),
+            //     'token': token,
+            //     'error': e.toString(),
+            //   },
+            // );
           }
         }
         AllFarmerListResp successResonse = AllFarmerListResp(companyE);
@@ -538,29 +538,29 @@ class DeshiFarmerAPI {
 
         return Success<AllFarmerListResp, Exception>(successResonse);
       } else {
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'farmer_error (getFarmers)',
-          parameters: <String, dynamic>{
-            'code': response.statusCode,
-            'url': url.toString(),
-            'token': token,
-            'body': response.body,
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'farmer_error (getFarmers)',
+        //   parameters: <String, dynamic>{
+        //     'code': response.statusCode,
+        //     'url': url.toString(),
+        //     'token': token,
+        //     'body': response.body,
+        //   },
+        // );
         return ServerFailor<AllFarmerListResp, Exception>(
           Exception('${response.statusCode} ${response.body}'),
         );
       }
     } catch (e) {
       // debugPrint('EXC#EPTION -> ${e.toString().split(':').firstOrNull}');
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'farmer_error (getFarmers)',
-        parameters: <String, dynamic>{
-          'url': url.toString(),
-          'token': token,
-          'error': e.toString(),
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'farmer_error (getFarmers)',
+      //   parameters: <String, dynamic>{
+      //     'url': url.toString(),
+      //     'token': token,
+      //     'error': e.toString(),
+      //   },
+      // );
       return ServerFailor<AllFarmerListResp, Exception>(
         Exception('${e.toString().split(':').firstOrNull}'),
       );
@@ -599,15 +599,15 @@ class DeshiFarmerAPI {
               FarmerEntity.fromJson(element),
             );
           } catch (e) {
-            FirebaseAnalyticsCustom.customLogEvent(
-              name: 'farmer_error (getUnassingFarmers)',
-              parameters: <String, dynamic>{
-                'code': response.statusCode,
-                'url': url.toString(),
-                'token': token,
-                'error': e.toString(),
-              },
-            );
+            // FirebaseAnalyticsCustom.customLogEvent(
+            //   name: 'farmer_error (getUnassingFarmers)',
+            //   parameters: <String, dynamic>{
+            //     'code': response.statusCode,
+            //     'url': url.toString(),
+            //     'token': token,
+            //     'error': e.toString(),
+            //   },
+            // );
             // debugPrint(
             //   'error comverting List<FarmerEntity> ->  ${element.runtimeType}, $e \n',
             // );
@@ -623,28 +623,28 @@ class DeshiFarmerAPI {
 
         return Success<AllFarmerListResp, Exception>(successResonse);
       } else {
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'farmer_error (getUnassingFarmers)',
-          parameters: <String, dynamic>{
-            'code': response.statusCode,
-            'url': url.toString(),
-            'token': token,
-            'body': response.body,
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'farmer_error (getUnassingFarmers)',
+        //   parameters: <String, dynamic>{
+        //     'code': response.statusCode,
+        //     'url': url.toString(),
+        //     'token': token,
+        //     'body': response.body,
+        //   },
+        // );
         return ServerFailor<AllFarmerListResp, Exception>(
           Exception('${response.statusCode} ${response.body}'),
         );
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'farmer_error (getUnassingFarmers)',
-        parameters: <String, dynamic>{
-          'url': url.toString(),
-          'token': token,
-          'error': e.toString(),
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'farmer_error (getUnassingFarmers)',
+      //   parameters: <String, dynamic>{
+      //     'url': url.toString(),
+      //     'token': token,
+      //     'error': e.toString(),
+      //   },
+      // );
       return ServerFailor<AllFarmerListResp, Exception>(
         Exception('Server failor $e'),
       );
@@ -687,15 +687,15 @@ class DeshiFarmerAPI {
             debugPrint(
               'error comverting data Unassing GroupFieldEntity ->  ${element.runtimeType}, $e \n',
             );
-            FirebaseAnalyticsCustom.customLogEvent(
-              name: 'group_error (getGroupFields)',
-              parameters: <String, dynamic>{
-                'code': response.statusCode,
-                'url': url.toString(),
-                'token': token,
-                'error': e.toString(),
-              },
-            );
+            // FirebaseAnalyticsCustom.customLogEvent(
+            //   name: 'group_error (getGroupFields)',
+            //   parameters: <String, dynamic>{
+            //     'code': response.statusCode,
+            //     'url': url.toString(),
+            //     'token': token,
+            //     'error': e.toString(),
+            //   },
+            // );
           }
         }
         AllFarmerGroupFieldResp successResonse =
@@ -703,28 +703,28 @@ class DeshiFarmerAPI {
 
         return Success<AllFarmerGroupFieldResp, Exception>(successResonse);
       } else {
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'group_error (getGroupFields)',
-          parameters: <String, dynamic>{
-            'code': response.statusCode,
-            'url': url.toString(),
-            'token': token,
-            'body': response.body,
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'group_error (getGroupFields)',
+        //   parameters: <String, dynamic>{
+        //     'code': response.statusCode,
+        //     'url': url.toString(),
+        //     'token': token,
+        //     'body': response.body,
+        //   },
+        // );
         return ServerFailor<AllFarmerGroupFieldResp, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'group_error (getGroupFields)',
-        parameters: <String, dynamic>{
-          'url': url.toString(),
-          'token': token,
-          'error': e.toString(),
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'group_error (getGroupFields)',
+      //   parameters: <String, dynamic>{
+      //     'url': url.toString(),
+      //     'token': token,
+      //     'error': e.toString(),
+      //   },
+      // );
       return ServerFailor<AllFarmerGroupFieldResp, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -759,15 +759,15 @@ class DeshiFarmerAPI {
 
           return Success<GroupDetailEntity, Exception>(successResonse);
         } catch (e) {
-          FirebaseAnalyticsCustom.customLogEvent(
-            name: 'group_error (getGroupDetails)',
-            parameters: <String, dynamic>{
-              'code': response.statusCode,
-              'url': url.toString(),
-              'token': token,
-              'error': e.toString(),
-            },
-          );
+          // FirebaseAnalyticsCustom.customLogEvent(
+          //   name: 'group_error (getGroupDetails)',
+          //   parameters: <String, dynamic>{
+          //     'code': response.statusCode,
+          //     'url': url.toString(),
+          //     'token': token,
+          //     'error': e.toString(),
+          //   },
+          // );
           // result.forEach((key, value) {
           //   if (value.runtimeType != String) {
           //     debugPrint('${value.runtimeType} $key $value');
@@ -779,28 +779,28 @@ class DeshiFarmerAPI {
           );
         }
       } else {
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'group_error (getGroupDetails)',
-          parameters: <String, dynamic>{
-            'code': response.statusCode,
-            'url': url.toString(),
-            'token': token,
-            'body': response.body,
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'group_error (getGroupDetails)',
+        //   parameters: <String, dynamic>{
+        //     'code': response.statusCode,
+        //     'url': url.toString(),
+        //     'token': token,
+        //     'body': response.body,
+        //   },
+        // );
         return ServerFailor<GroupDetailEntity, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'group_error (getGroupDetails)',
-        parameters: <String, dynamic>{
-          'url': url.toString(),
-          'token': token,
-          'error': e.toString(),
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'group_error (getGroupDetails)',
+      //   parameters: <String, dynamic>{
+      //     'url': url.toString(),
+      //     'token': token,
+      //     'error': e.toString(),
+      //   },
+      // );
       return ServerFailor<GroupDetailEntity, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -852,7 +852,8 @@ class DeshiFarmerAPI {
       'district': farmerModel.district,
       'division': farmerModel.division,
       // 'resident_type': 'Rental', //* OWN/Rental
-      'resident_type': farmerModel.residentType, //* OWN/Rental
+      'resident_type': farmerModel.residentType,
+      //* OWN/Rental
       'family_member': farmerModel.familyMember,
       'number_of_children': farmerModel.numberOfChildren,
       'yearly_income': farmerModel.yearlyIncome,
@@ -861,8 +862,10 @@ class DeshiFarmerAPI {
       'farm_type': farmerModel.farmType.toString(),
       // 'bank_details': json.encode(farmerModel.bankDetails), //JSON
       // 'mfs_account': json.encode(farmerModel.mfsAccount), // JSON
-      'current_producing_crop': json.encode(currentCorpFormat), // JSON
-      'focused_crop': json.encode(focusedCorpFormat), // JSON
+      'current_producing_crop': json.encode(currentCorpFormat),
+      // JSON
+      'focused_crop': json.encode(focusedCorpFormat),
+      // JSON
       // 'farm_id': farmerModel.farmId.toString(),
       'year_of_stay_in': farmerModel.yearOfStayIn,
     };
@@ -918,32 +921,32 @@ class DeshiFarmerAPI {
         return Success<bool, Exception>(true);
       } else {
         var respMsg = await response.stream.bytesToString();
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'error_comverting_data (addFarmer)',
-          parameters: {
-            'code': response.statusCode.toString(),
-            'error': respMsg,
-            'url': url.toString(),
-            'token': token,
-            'method': 'post',
-            'body': body,
-            'return': 'ServerFailor<bool, Exception>',
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'error_comverting_data (addFarmer)',
+        //   parameters: {
+        //     'code': response.statusCode.toString(),
+        //     'error': respMsg,
+        //     'url': url.toString(),
+        //     'token': token,
+        //     'method': 'post',
+        //     'body': body,
+        //     'return': 'ServerFailor<bool, Exception>',
+        //   },
+        // );
         return ServerFailor<bool, Exception>(
           Exception(jsonDecode(respMsg)['message']),
         );
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-          name: 'error_comverting_data (addFarmer)',
-          parameters: {
-            'error': e.toString(),
-            'url': url.toString(),
-            'token': token,
-            'body': body,
-            'return': 'ServerFailor<bool, Exception>',
-          });
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //     name: 'error_comverting_data (addFarmer)',
+      //     parameters: {
+      //       'error': e.toString(),
+      //       'url': url.toString(),
+      //       'token': token,
+      //       'body': body,
+      //       'return': 'ServerFailor<bool, Exception>',
+      //     });
       return ServerFailor<bool, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -993,34 +996,34 @@ class DeshiFarmerAPI {
       } else {
         var respMsg = await response.stream.bytesToString();
         debugPrint('group created failed -> ${response.statusCode} $respMsg');
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'error_comverting_data (createGroup)',
-          parameters: {
-            'code': response.statusCode.toString(),
-            'error': respMsg,
-            'url': url.toString(),
-            'token': token,
-            'method': 'post',
-            'body': body,
-            'return': 'ServerFailor<bool, Exception>',
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'error_comverting_data (createGroup)',
+        //   parameters: {
+        //     'code': response.statusCode.toString(),
+        //     'error': respMsg,
+        //     'url': url.toString(),
+        //     'token': token,
+        //     'method': 'post',
+        //     'body': body,
+        //     'return': 'ServerFailor<bool, Exception>',
+        //   },
+        // );
         return ServerFailor<bool, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
       debugPrint('group created failed -> $e');
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'error_comverting_data (createGroup)',
-        parameters: {
-          'error': e.toString(),
-          'url': url.toString(),
-          'token': token,
-          'body': body,
-          'return': 'ServerFailor<bool, Exception>',
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'error_comverting_data (createGroup)',
+      //   parameters: {
+      //     'error': e.toString(),
+      //     'url': url.toString(),
+      //     'token': token,
+      //     'body': body,
+      //     'return': 'ServerFailor<bool, Exception>',
+      //   },
+      // );
       return ServerFailor<bool, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -1061,36 +1064,36 @@ class DeshiFarmerAPI {
       if (resp.statusCode == 200) {
         return Success<bool, Exception>(true);
       } else {
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'error_comverting_data (addFarmerToGroupAPI)',
-          parameters: {
-            'code': resp.statusCode.toString(),
-            'error': resp.body,
-            'url': url.toString(),
-            'token': token,
-            'method': 'post',
-            'body': {
-              'list': [farmerID]
-            },
-            'return': 'ServerFailor<bool, Exception>',
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'error_comverting_data (addFarmerToGroupAPI)',
+        //   parameters: {
+        //     'code': resp.statusCode.toString(),
+        //     'error': resp.body,
+        //     'url': url.toString(),
+        //     'token': token,
+        //     'method': 'post',
+        //     'body': {
+        //       'list': [farmerID]
+        //     },
+        //     'return': 'ServerFailor<bool, Exception>',
+        //   },
+        // );
         return ServerFailor<bool, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-          name: 'error_comverting_data (addFarmerToGroupAPI)',
-          parameters: {
-            'error': e.toString(),
-            'url': url.toString(),
-            'token': token,
-            'body': {
-              'list': [farmerID]
-            },
-            'return': 'ServerFailor<bool, Exception>',
-          });
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //     name: 'error_comverting_data (addFarmerToGroupAPI)',
+      //     parameters: {
+      //       'error': e.toString(),
+      //       'url': url.toString(),
+      //       'token': token,
+      //       'body': {
+      //         'list': [farmerID]
+      //       },
+      //       'return': 'ServerFailor<bool, Exception>',
+      //     });
       return ServerFailor<bool, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -1132,33 +1135,33 @@ class DeshiFarmerAPI {
       if (resp.statusCode == 200) {
         return Success<bool, Exception>(true);
       } else {
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'error_comverting_data (updateLeaderToGroupAPI)',
-          parameters: {
-            'code': resp.statusCode.toString(),
-            'error': resp.body,
-            'url': url.toString(),
-            'token': token,
-            'method': 'put',
-            'body': {'group_leader': leaderID},
-            'return': 'ServerFailor<bool, Exception>'
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'error_comverting_data (updateLeaderToGroupAPI)',
+        //   parameters: {
+        //     'code': resp.statusCode.toString(),
+        //     'error': resp.body,
+        //     'url': url.toString(),
+        //     'token': token,
+        //     'method': 'put',
+        //     'body': {'group_leader': leaderID},
+        //     'return': 'ServerFailor<bool, Exception>'
+        //   },
+        // );
         return ServerFailor<bool, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'error_comverting_data (updateLeaderToGroupAPI)',
-        parameters: {
-          'error': e.toString(),
-          'url': url.toString(),
-          'token': token,
-          'body': {'group_leader': leaderID},
-          'return': 'ServerFailor<bool, Exception>'
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'error_comverting_data (updateLeaderToGroupAPI)',
+      //   parameters: {
+      //     'error': e.toString(),
+      //     'url': url.toString(),
+      //     'token': token,
+      //     'body': {'group_leader': leaderID},
+      //     'return': 'ServerFailor<bool, Exception>'
+      //   },
+      // );
       return ServerFailor<bool, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -1229,32 +1232,32 @@ class DeshiFarmerAPI {
         return Success<bool, Exception>(true);
       } else {
         var respMsg = await response.stream.bytesToString();
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'error_comverting_data (addFarm)',
-          parameters: {
-            'code': response.statusCode.toString(),
-            'error': respMsg,
-            'url': url.toString(),
-            'token': token,
-            'body': body,
-            'return': 'ServerFailor<bool, Exception>'
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'error_comverting_data (addFarm)',
+        //   parameters: {
+        //     'code': response.statusCode.toString(),
+        //     'error': respMsg,
+        //     'url': url.toString(),
+        //     'token': token,
+        //     'body': body,
+        //     'return': 'ServerFailor<bool, Exception>'
+        //   },
+        // );
 
         return ServerFailor<bool, Exception>(
           Exception(jsonDecode(respMsg)['message']),
         );
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-          name: 'error_comverting_data (addFarm)',
-          parameters: {
-            'error': e.toString(),
-            'url': url.toString(),
-            'token': token,
-            'body': body,
-            'return': 'ServerFailor<bool, Exception>'
-          });
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //     name: 'error_comverting_data (addFarm)',
+      //     parameters: {
+      //       'error': e.toString(),
+      //       'url': url.toString(),
+      //       'token': token,
+      //       'body': body,
+      //       'return': 'ServerFailor<bool, Exception>'
+      //     });
       return ServerFailor<bool, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -1315,31 +1318,31 @@ class DeshiFarmerAPI {
       if (resp.statusCode == 201) {
         return Success<bool, Exception>(true);
       } else {
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'error_comverting_data (placeAnOrder)',
-          parameters: {
-            'code': resp.statusCode.toString(),
-            'error': resp.body,
-            'url': url.toString(),
-            'token': token,
-            'body': body,
-            'return': 'ServerFailor<bool, Exception>'
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'error_comverting_data (placeAnOrder)',
+        //   parameters: {
+        //     'code': resp.statusCode.toString(),
+        //     'error': resp.body,
+        //     'url': url.toString(),
+        //     'token': token,
+        //     'body': body,
+        //     'return': 'ServerFailor<bool, Exception>'
+        //   },
+        // );
         return ServerFailor<bool, Exception>(
           Exception('Server failor'),
         );
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-          name: 'error_comverting_data (placeAnOrder)',
-          parameters: {
-            'error': e.toString(),
-            'url': url.toString(),
-            'token': token,
-            'body': body,
-            'return': 'ServerFailor<bool, Exception>'
-          });
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //     name: 'error_comverting_data (placeAnOrder)',
+      //     parameters: {
+      //       'error': e.toString(),
+      //       'url': url.toString(),
+      //       'token': token,
+      //       'body': body,
+      //       'return': 'ServerFailor<bool, Exception>'
+      //     });
       return ServerFailor<bool, Exception>(
         Exception('Server failor -> $e'),
       );
@@ -1389,47 +1392,47 @@ class DeshiFarmerAPI {
           BatchEnity successResonse = BatchEnity.fromJson(result);
           return successResonse;
         } catch (e) {
-          FirebaseAnalyticsCustom.customLogEvent(
-            name: 'error_comverting_data (batchCreationAPI)',
-            parameters: {
-              'code': response.statusCode.toString(),
-              'error': e.toString(),
-              'url': url.toString(),
-              'token': token,
-              'body': x,
-              'return': 'returning null'
-              // 'element': element.toString(),
-            },
-          );
+          // FirebaseAnalyticsCustom.customLogEvent(
+          //   name: 'error_comverting_data (batchCreationAPI)',
+          //   parameters: {
+          //     'code': response.statusCode.toString(),
+          //     'error': e.toString(),
+          //     'url': url.toString(),
+          //     'token': token,
+          //     'body': x,
+          //     'return': 'returning null'
+          //     // 'element': element.toString(),
+          //   },
+          // );
           debugPrint(
             'error comverting data BatchEnity ->  ${result.runtimeType}, $e \n',
           );
         }
         return null;
       } else {
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'error_comverting_data (batchCreationAPI)',
-          parameters: {
-            'code': response.statusCode.toString(),
-            // 'error': e.toString(),
-            'url': url.toString(),
-            'token': token,
-            'return': 'returning null'
-            // 'element': element.toString(),
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'error_comverting_data (batchCreationAPI)',
+        //   parameters: {
+        //     'code': response.statusCode.toString(),
+        //     // 'error': e.toString(),
+        //     'url': url.toString(),
+        //     'token': token,
+        //     'return': 'returning null'
+        //     // 'element': element.toString(),
+        //   },
+        // );
         return null;
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'error_comverting_data (batchCreationAPI)',
-        parameters: {
-          'error': e.toString(),
-          'url': url.toString(),
-          'token': token,
-          'return': 'returning null'
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'error_comverting_data (batchCreationAPI)',
+      //   parameters: {
+      //     'error': e.toString(),
+      //     'url': url.toString(),
+      //     'token': token,
+      //     'return': 'returning null'
+      //   },
+      // );
       return null;
     }
   }
@@ -1471,43 +1474,43 @@ class DeshiFarmerAPI {
             debugPrint(
               'error comverting data BatchEnity ->  ${element.runtimeType}, $e \n',
             );
-            FirebaseAnalyticsCustom.customLogEvent(
-              name: 'error_comverting_data (getFarmBatches)',
-              parameters: {
-                'code': response.statusCode.toString(),
-                'error': e.toString(),
-                'url': url.toString(),
-                'token': token,
-                'element': element.toString(),
-                'return': 'returning List<BatchEnity>',
-              },
-            );
+            // FirebaseAnalyticsCustom.customLogEvent(
+            //   name: 'error_comverting_data (getFarmBatches)',
+            //   parameters: {
+            //     'code': response.statusCode.toString(),
+            //     'error': e.toString(),
+            //     'url': url.toString(),
+            //     'token': token,
+            //     'element': element.toString(),
+            //     'return': 'returning List<BatchEnity>',
+            //   },
+            // );
           }
         }
         return companyE;
       } else {
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'error_comverting_data (getFarmBatches)',
-          parameters: {
-            'code': response.statusCode.toString(),
-            // 'error': e.toString(),
-            'url': url.toString(),
-            'token': token,
-            'return': 'returning null'
-            // 'element': element.toString(),
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'error_comverting_data (getFarmBatches)',
+        //   parameters: {
+        //     'code': response.statusCode.toString(),
+        //     // 'error': e.toString(),
+        //     'url': url.toString(),
+        //     'token': token,
+        //     'return': 'returning null'
+        //     // 'element': element.toString(),
+        //   },
+        // );
         return null;
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'error_comverting_data (getFarmBatches)',
-        parameters: {
-          'error': e.toString(),
-          'url': url.toString(),
-          'token': token,
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'error_comverting_data (getFarmBatches)',
+      //   parameters: {
+      //     'error': e.toString(),
+      //     'url': url.toString(),
+      //     'token': token,
+      //   },
+      // );
       return null;
     }
   }
@@ -1542,16 +1545,16 @@ class DeshiFarmerAPI {
               FarmerEntity.fromJson(element),
             );
           } catch (e) {
-            FirebaseAnalyticsCustom.customLogEvent(
-              name: 'error_comverting_data (getFarmers2)',
-              parameters: {
-                'code': response.statusCode.toString(),
-                'error': e.toString(),
-                'url': url.toString(),
-                'token': token,
-                'element': element.toString(),
-              },
-            );
+            // FirebaseAnalyticsCustom.customLogEvent(
+            //   name: 'error_comverting_data (getFarmers2)',
+            //   parameters: {
+            //     'code': response.statusCode.toString(),
+            //     'error': e.toString(),
+            //     'url': url.toString(),
+            //     'token': token,
+            //     'element': element.toString(),
+            //   },
+            // );
           }
         }
         AllFarmerListResp successResonse = AllFarmerListResp(companyE);
@@ -1561,26 +1564,26 @@ class DeshiFarmerAPI {
         debugPrint(
           'farmer list getting error -> ${response.statusCode} ${response.body}',
         );
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'farmer_list_getting_error (getFarmers2)',
-          parameters: {
-            'url': url.toString(),
-            'token': token,
-            'code': response.statusCode.toString(),
-            'error': 'farmer list getting error -> ${response.body}',
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'farmer_list_getting_error (getFarmers2)',
+        //   parameters: {
+        //     'url': url.toString(),
+        //     'token': token,
+        //     'code': response.statusCode.toString(),
+        //     'error': 'farmer list getting error -> ${response.body}',
+        //   },
+        // );
         return null;
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'exception (getFarmers2)',
-        parameters: {
-          'url': url.toString(),
-          'token': token,
-          'error': e.toString(),
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'exception (getFarmers2)',
+      //   parameters: {
+      //     'url': url.toString(),
+      //     'token': token,
+      //     'error': e.toString(),
+      //   },
+      // );
       debugPrint(
         'FArmer getting EXCEPTION -> ${e.toString().split(':').firstOrNull}',
       );
@@ -1618,26 +1621,26 @@ class DeshiFarmerAPI {
         debugPrint(
           'farmer list getting error -> ${response.statusCode} ${response.body}',
         );
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'farmer_list_getting_error (getFarmers2)',
-          parameters: {
-            'url': url.toString(),
-            'token': token,
-            'code': response.statusCode.toString(),
-            'error': 'farmer list getting error -> ${response.body}',
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'farmer_list_getting_error (getFarmers2)',
+        //   parameters: {
+        //     'url': url.toString(),
+        //     'token': token,
+        //     'code': response.statusCode.toString(),
+        //     'error': 'farmer list getting error -> ${response.body}',
+        //   },
+        // );
         return null;
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'exception (getFarmers2)',
-        parameters: {
-          'url': url.toString(),
-          'token': token,
-          'error': e.toString(),
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'exception (getFarmers2)',
+      //   parameters: {
+      //     'url': url.toString(),
+      //     'token': token,
+      //     'error': e.toString(),
+      //   },
+      // );
       debugPrint(
         'FArmer getting EXCEPTION -> ${e.toString().split(':').firstOrNull}',
       );
@@ -1671,7 +1674,7 @@ class DeshiFarmerAPI {
   }
 
   //! Get group or empty list
-    ///* Get Group Field LIST
+  ///* Get Group Field LIST
   Future<AllFarmerGroupFieldResp?> getGroupFields2(
     String token,
   ) async {
@@ -1705,15 +1708,15 @@ class DeshiFarmerAPI {
             debugPrint(
               'error comverting data Unassing GroupFieldEntity ->  ${element.runtimeType}, $e \n',
             );
-            FirebaseAnalyticsCustom.customLogEvent(
-              name: 'group_error (getGroupFields)',
-              parameters: <String, dynamic>{
-                'code': response.statusCode,
-                'url': url.toString(),
-                'token': token,
-                'error': e.toString(),
-              },
-            );
+            // FirebaseAnalyticsCustom.customLogEvent(
+            //   name: 'group_error (getGroupFields)',
+            //   parameters: <String, dynamic>{
+            //     'code': response.statusCode,
+            //     'url': url.toString(),
+            //     'token': token,
+            //     'error': e.toString(),
+            //   },
+            // );
           }
         }
         AllFarmerGroupFieldResp successResonse =
@@ -1721,26 +1724,26 @@ class DeshiFarmerAPI {
 
         return successResonse;
       } else {
-        FirebaseAnalyticsCustom.customLogEvent(
-          name: 'group_error (getGroupFields)',
-          parameters: <String, dynamic>{
-            'code': response.statusCode,
-            'url': url.toString(),
-            'token': token,
-            'body': response.body,
-          },
-        );
+        // FirebaseAnalyticsCustom.customLogEvent(
+        //   name: 'group_error (getGroupFields)',
+        //   parameters: <String, dynamic>{
+        //     'code': response.statusCode,
+        //     'url': url.toString(),
+        //     'token': token,
+        //     'body': response.body,
+        //   },
+        // );
         return null;
       }
     } catch (e) {
-      FirebaseAnalyticsCustom.customLogEvent(
-        name: 'group_error (getGroupFields)',
-        parameters: <String, dynamic>{
-          'url': url.toString(),
-          'token': token,
-          'error': e.toString(),
-        },
-      );
+      // FirebaseAnalyticsCustom.customLogEvent(
+      //   name: 'group_error (getGroupFields)',
+      //   parameters: <String, dynamic>{
+      //     'url': url.toString(),
+      //     'token': token,
+      //     'error': e.toString(),
+      //   },
+      // );
       return null;
     }
   }
