@@ -12,7 +12,7 @@ dependencies:
   bloc: ^8.1.2
   cached_network_image: ^3.3.0
   carousel_slider: ^4.2.1
-  connectivity_plus: ^5.0.1
+#  connectivity_plus: ^5.0.1
   dotted_border: ^2.0.0+3
   dropdown_button2: ^2.3.9
   equatable: ^2.0.5

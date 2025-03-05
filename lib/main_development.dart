@@ -6,10 +6,10 @@ import 'package:deshifarmer/services/utils/connection_services.dart';
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
 
-late final ConnectivityService connectionService;
+// late final ConnectivityService connectionService;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  connectionService = await ConnectivityService(Connectivity()).init();
+  // connectionService = await ConnectivityService(Connectivity()).init();
   // await Firebase.initializeApp(
   //   options: DefaultFirebaseOptions.currentPlatform,
   // );
